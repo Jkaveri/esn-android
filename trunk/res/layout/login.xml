@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#CC0033">
+    
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:gravity="center"
+	    android:orientation="vertical"
+	    >
+	    
+	    <ImageView 
+	        android:id="@+id/ivLogo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	         android:src="@drawable/logo"
+	         android:layout_marginBottom="10dp"
+	        />
+	    
+	   	<EditText 
+	   	    android:width="273dp"
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_height="45dp"
+	   	    android:background="#FFF"
+	   	    android:layout_marginBottom="5dp"
+	   	    android:text="@string/txtEmail"
+	   	    android:textSize="15dp"
+	   	    android:textColor="#000"
+	   	    android:gravity="center|left"
+	   	    android:paddingLeft="10dp"
+	   	    />
+	   	
+	   	<EditText 
+	   	    android:width="273dp"
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_height="45dp"
+	   	    android:background="#FFF"
+	   	    android:layout_marginBottom="5dp"
+	   	    android:text="@string/txtPassword"
+	   	    android:textSize="15dp"
+	   	    android:textColor="#000"
+	   	    android:gravity="center|left"
+	   	    android:paddingLeft="10dp"
+	   	    android:inputType="textPassword"
+	   	    />
+	      
+	    <LinearLayout 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        >
+	        
+	        <Button 
+            android:id="@+id/btLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btLogin"
+            android:width="140dp"
+            android:onClick="LoginClicked"
+            />
+	        <Button 
+            android:id="@+id/btBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btBack"
+            android:width="140dp"
+            android:onClick="BackClicked"
+            />
+	    </LinearLayout>
+	      
+	</LinearLayout>
+</LinearLayout>
