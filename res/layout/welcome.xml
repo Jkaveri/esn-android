@@ -2,46 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:background="#CC0033"
-    >
+    android:orientation="vertical" >
 
-    <LinearLayout 
-        android:orientation="vertical"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        >
-        
-        <ImageView 
+        android:orientation="vertical" >
+
+        <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo"            
-            />
-        <Button 
+            android:src="@drawable/main_logo" />
+
+        <Button
             android:id="@+id/btLoginFB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btLoginFB"
-            android:width="250dp"
-            />
-        <Button 
+            android:width="250dp" />
+
+        <Button
             android:id="@+id/btLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btLogin"
-            android:width="250dp"
             android:onClick="LoginClicked"
-            /> 
-        <Button 
+            android:text="@string/btLogin"
+            android:width="250dp" />
+
+        <Button
             android:id="@+id/btSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btSignUp"
-            android:width="250dp"
             android:onClick="RegisterClicked"
-            />              
+            android:text="@string/btSignUp"
+            android:width="250dp" />
     </LinearLayout>
-    
+
 </LinearLayout>

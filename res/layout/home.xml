@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ScrollView
+    <com.google.android.maps.MapView
+        android:id="@+id/gmapView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:apiKey="0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg"
+        android:clickable="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:paddingTop="?actionBarSize" >
-
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
-        </LinearLayout>
-    </ScrollView>
-
-</FrameLayout>
+</RelativeLayout>
