@@ -7,16 +7,16 @@
 	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:orientation="vertical" >
+	    android:orientation="vertical" 
+	    android:paddingLeft="10dp"
+	    android:paddingRight="10dp"
+	    >
 	    
 	    <LinearLayout 
 	        android:orientation="horizontal"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginLeft="5dp"
-	        android:layout_marginRight="5dp"
-	        >
+	        android:layout_marginTop="5dp">
 	        
 	        <ImageView 
 	            android:layout_width="wrap_content"
@@ -30,58 +30,36 @@
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="10dp"
 	            >
-	            
-	            <EditText 
-		   	    android:width="214dp"
-		   	    android:layout_width="wrap_content"
-		   	    android:layout_height="wrap_content"
-		   	    android:height="40dp"
-		   	    android:layout_marginBottom="5dp"
-		   	    android:text="@string/txtFirstName"
-		   	    android:textSize="15dp"
-		   	    android:textColor="#000"
-		   	    android:gravity="center|left"
-		   	    android:paddingLeft="10dp"
-		   	    />
-		   	
-		   	<EditText 
-		   	    android:width="220dp"
-		   	    android:layout_width="wrap_content"
-		   	    android:layout_height="wrap_content"
-		   	    android:height="40dp"
-		   	    
-		   	    android:layout_marginBottom="5dp"
-		   	    android:text="@string/txtLastName"
-		   	    android:textSize="15dp"
-		   	    android:textColor="#000"
-		   	    android:gravity="center|left"
-		   	    android:paddingLeft="10dp"
-		   	    />
+	       
 	        </LinearLayout>
 	    </LinearLayout>
 	    
-	    <LinearLayout 
-	        android:orientation="vertical"
+	    <TableLayout
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="5dp"
-	        android:layout_marginRight="5dp" 
-	        android:layout_marginTop="15dp"      
-	        >
-	    
-	        <LinearLayout 
-	            android:orientation="horizontal"
-	            android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:stretchColumns="1"
+    		android:layout_marginTop="15dp">
+
+	        <TextView 
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            >
-		        <TextView 
+	            android:text="@string/lbAccount"
+	            android:textStyle="normal"
+	            />
+	        <View
+        		android:layout_height="2dip"
+        		android:background="#FF909090"
+        		android:layout_marginBottom="10dp" />
+    		<TableRow>       
+        		<TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="@string/tvEmail"
-		            android:textSize="15dp"
+		            android:textSize="12dp"
 		            android:layout_marginBottom="10dp"
-		            android:textColor="#FFF"
-		            android:background="#000"
+		            android:textColor="#000"
+		            android:layout_marginRight="10dp"
+		            android:textStyle="normal"
 		            />
 
 		        <EditText
@@ -89,105 +67,140 @@
 		            android:layout_height="wrap_content"
 		            android:layout_marginBottom="10dp"
 		            android:ems="10"
-		            android:gravity="center|left"
+		            android:gravity="right"
 		            android:height="40dp"
 		            android:paddingLeft="10dp"
-		            android:text="@string/txtEmail"
 		            android:textColor="#000"
 		            android:textSize="15dp" >
 
 		            <requestFocus />
 		        </EditText>
-
-			 </LinearLayout>
-		    
-		     <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/tvPassword"
-	            android:textSize="20dp"
-	            android:layout_marginBottom="10dp"
-	            android:textColor="#000"
+    		</TableRow>
+    		<TableRow >
+        
+        		<TextView 
+	            	android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	            	android:text="@string/tvPassword"
+	            	android:textSize="12dp"
+	            	android:layout_marginBottom="10dp"
+	            	android:textColor="#000"
 	            />
-		    <EditText 
+		    	<EditText 
 			   	    android:layout_width="fill_parent"
 			   	    android:layout_height="wrap_content"
-			   	    android:height="40dp"
-			   	    
+			   	    android:height="40dp"			   	    
 			   	    android:layout_marginBottom="10dp"
-			   	    android:text="@string/txtPassword"
 			   	    android:textSize="15dp"
 			   	    android:textColor="#000"
 			   	    android:gravity="center|left"
 			   	    android:paddingLeft="10dp"
 			   	    />
-		    
-		     <TextView 
+    		</TableRow>
+    		
+    		<TextView 
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="@string/tvPhone"
-	            android:textSize="20dp"
-	            android:layout_marginBottom="10dp"
-	            android:textColor="#000"
+	            android:text="@string/lbPerson"
+	            android:layout_marginTop="20dp"
 	            />
-		    <EditText 
+	        <View
+        		android:layout_height="2dip"
+        		android:background="#FF909090"
+        		android:layout_marginBottom="10dp" />
+	        
+	        <TableRow >
+	        
+	            <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/tvFullName"
+		            android:textSize="12dp"
+		            android:layout_marginBottom="10dp"
+		            android:textColor="#000"
+		            
+		            />
+	            <EditText 
+		   	    android:width="214dp"
+		   	    android:layout_width="wrap_content"
+		   	    android:layout_height="wrap_content"
+		   	    android:height="40dp"
+		   	    android:layout_marginBottom="5dp"
+		   	    android:textSize="15dp"
+		   	    android:textColor="#000"
+		   	    android:paddingLeft="10dp"
+		   	    />
+		   	
+		   	
+	        </TableRow>
+	        
+    		<TableRow>
+    		    <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/tvBirthday"
+		            android:textSize="12dp"
+		            android:layout_marginBottom="10dp"
+		            android:textColor="#000"
+		            />
+		    	<EditText 
 			   	    android:layout_width="fill_parent"
 			   	    android:layout_height="wrap_content"
 			   	    android:height="40dp"
 			   	    
 			   	    android:layout_marginBottom="10dp"
-			   	    android:text="@string/txtPhone"
 			   	    android:textSize="15dp"
 			   	    android:textColor="#000"
-			   	    android:gravity="center|left"
 			   	    android:paddingLeft="10dp"
 			   	    />
-		    
-		     <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/tvBirthday"
-	            android:textSize="20dp"
-	            android:layout_marginBottom="10dp"
-	            android:textColor="#000"
-	            />
-		    <EditText 
-			   	    android:layout_width="fill_parent"
+    		</TableRow>
+			<TableRow >
+		    	<TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/tvPhone"
+		            android:textSize="12dp"
+		            android:layout_marginBottom="10dp"
+		            android:textColor="#000"
+		            />
+				<EditText 
+			  	    android:layout_width="fill_parent"
 			   	    android:layout_height="wrap_content"
 			   	    android:height="40dp"
-			   	    
-			   	    android:layout_marginBottom="10dp"
-			   	    android:text="@string/txtBirthday"
-			   	    android:textSize="15dp"
-			   	    android:textColor="#000"
-			   	    android:gravity="center|left"
-			   	    android:paddingLeft="10dp"
-			   	    />
-		    
-		     <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/tvGender"
-	            android:textSize="20dp"
-	            android:layout_marginBottom="10dp"
-	            android:textColor="#000"
-	            />
-
-		     <RadioButton
-		         android:id="@+id/radioButton1"
-		         android:layout_width="wrap_content"
-		         android:layout_height="wrap_content"
-		         android:text="@string/rbtMale" />
-
-		     <RadioButton
-		         android:id="@+id/radioButton2"
-		         android:layout_width="wrap_content"
-		         android:layout_height="wrap_content"
-		         android:text="@string/rdbFemale" />
-		  
-		</LinearLayout>
-		
-	    <LinearLayout 
+				   	android:layout_marginBottom="10dp"
+				 	android:textSize="15dp"
+				   	android:textColor="#000"
+				   	android:paddingLeft="10dp"/>	    
+			</TableRow>
+			<TableRow >
+		    	<TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/tvGender"
+		            android:textSize="12dp"
+		            android:layout_marginBottom="10dp"
+		            android:textColor="#000"
+		            />
+		    	<RadioGroup 
+		    	    android:orientation="vertical"
+		    	    >
+		    		<RadioButton
+			        	android:id="@+id/radioButton1"
+			         	android:layout_width="wrap_content"
+			         	android:layout_height="35dp"
+			         	android:textSize="12dp"
+			         	android:text="@string/rdbMale" />
+		    		<RadioButton
+			         	android:id="@+id/radioButton1"
+			         	android:textSize="12dp"
+			         	android:layout_width="wrap_content"
+			         	android:layout_height="35dp"
+			         	android:text="@string/rdbFemale" />	
+		    	</RadioGroup>
+			    
+		    </TableRow>
+		</TableLayout>	
+		<LinearLayout 
 	        android:orientation="horizontal"
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
@@ -195,14 +208,16 @@
 	        >
 	        <Button 
 	            android:id="@+id/btLogin"
-	            android:layout_width="140dp"
-	            android:layout_height="wrap_content"
+	            android:layout_width="155dp"
+	            android:layout_height="35dp"
+	            android:textSize="12dp"
 	            android:text="@string/btJoin"
 	            />
 	        <Button 
 	            android:id="@+id/btCancel"
-	            android:layout_width="140dp"
-	            android:layout_height="wrap_content"
+	            android:layout_width="155dp"
+	            android:layout_height="35dp"
+	            android:textSize="12dp"
 	            android:text="@string/btCancel"
 	            android:onClick="CancelClicked"
 	            />
@@ -219,11 +234,12 @@
 	            android:layout_width="wrap_content"
 	            android:text="@string/hlService"
 	            android:layout_height="wrap_content"	
+	            android:textSize="12dp"
 	            android:layout_marginRight="30dp"            
 	            />
 	        <TextView 
-
 	            android:layout_width="wrap_content"
+	            android:textSize="12dp"
   	            android:layout_height="wrap_content"	  
 	             android:text="@string/hlPolicy"          
 	            />	       

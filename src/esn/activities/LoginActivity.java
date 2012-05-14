@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class LoginActivity extends Activity {
 
@@ -26,6 +27,17 @@ public class LoginActivity extends Activity {
 		setResult(RESULT_CANCELED, intent);
 		
 		finish();
+	}
+	
+	public void EmailClicked(View view) {
+		
+		TextView email = (TextView)findViewById(R.id.txtEmail);
+		email.setText("");
+	}
+	
+	public void PasswordClicked(View view) {
+		TextView pass = (TextView)findViewById(R.id.txtPass);
+		pass.setText("");
 	}
 	
 	public void LoginClicked(View view)

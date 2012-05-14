@@ -17,28 +17,30 @@
             android:layout_height="wrap_content"
             android:src="@drawable/main_logo" />
 
-        <Button
-            android:id="@+id/btLoginFB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btLoginFB"
-            android:width="250dp" />
-
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_height="30dp"
+            android:src="@drawable/loginfb"
+            android:layout_width="200dp"
+            android:layout_marginBottom="2dp"
+             />
         <Button
             android:id="@+id/btLogin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:onClick="LoginClicked"
             android:text="@string/btLogin"
-            android:width="250dp" />
+            android:width="200dp"
+            android:textSize="12dp"
+             />
 
         <Button
             android:id="@+id/btSignUp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:onClick="RegisterClicked"
             android:text="@string/btSignUp"
-            android:width="250dp" />
+            android:width="200dp"
+            android:textSize="12dp" />
     </LinearLayout>
-
 </LinearLayout>
