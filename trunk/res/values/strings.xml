@@ -13,11 +13,11 @@
 	<string name="btLogin">Login</string>
 	<string name="btSignUp">Signup</string>
 	
-	<string name="txtEmail">Examle@domain.com</string>
-	<string name="txtPassword">***</string>
+	<string name="txtEmail">Email</string>
+	<string name="txtPassword">Password</string>
 	<string name="btBack">Back</string>
 	
-	<string name="txtFirstName">First Name</string>
+	<string name="tvFullName">Full Name</string>
 	<string name="txtLastName">Last Name</string>
 	<string name="txtPhone">0908 123 456</string>
 	<string name="txtBirthday">01/01/1990</string>
@@ -35,7 +35,9 @@
 	
 	<string name="hlService">Term of Service</string>
 	<string name="hlPolicy">Privacy and Policy</string>
-	<string name="rbtMale">Male</string>
+	<string name="rdbMale">Male</string>
 	<string name="rdbFemale">Female</string>
 
+	<string name="lbAccount">Account Info</string>
+	<string name="lbPerson">Personal Info</string>
 </resources>

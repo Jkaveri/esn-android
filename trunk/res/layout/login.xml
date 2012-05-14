@@ -16,34 +16,36 @@
 	        android:id="@+id/ivLogo"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	         android:src="@drawable/logo"
+	         android:src="@drawable/main_logo"
 	         android:layout_marginBottom="10dp"
 	        />
 	    
 	   	<EditText 
-	   	    android:width="273dp"
-	   	    android:layout_width="wrap_content"
-	   	    android:layout_height="45dp"
+	   	    android:id="@+id/txtEmail"
+	   	    android:layout_width="200dp"
+	   	    android:layout_height="30dp"
 	   	    android:background="#FFF"
 	   	    android:layout_marginBottom="5dp"
 	   	    android:text="@string/txtEmail"
-	   	    android:textSize="15dp"
+	   	    android:textSize="12dp"
 	   	    android:textColor="#000"
 	   	    android:gravity="center|left"
-	   	    android:paddingLeft="10dp"
+	   	    android:paddingLeft="5dp"
+	   	    android:onClick="EmailClicked"
 	   	    />
 	   	
-	   	<EditText 
-	   	    android:width="273dp"
-	   	    android:layout_width="wrap_content"
-	   	    android:layout_height="45dp"
+	   	<EditText 	   	    
+	   	    android:id="@+id/txtPass"
+	   	    android:layout_width="200dp"
+	   	    android:layout_height="30dp"
 	   	    android:background="#FFF"
+	   	    android:onClick="PasswordClicked"
 	   	    android:layout_marginBottom="5dp"
 	   	    android:text="@string/txtPassword"
-	   	    android:textSize="15dp"
+	   	    android:textSize="12dp"
 	   	    android:textColor="#000"
 	   	    android:gravity="center|left"
-	   	    android:paddingLeft="10dp"
+	   	    android:paddingLeft="5dp"
 	   	    android:inputType="textPassword"
 	   	    />
 	      
@@ -56,17 +58,20 @@
 	        <Button 
             android:id="@+id/btLogin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:text="@string/btLogin"
-            android:width="140dp"
+            android:width="103dp"
+            android:textSize="12dp"
             android:onClick="LoginClicked"
+            android:focusable="true"
             />
 	        <Button 
             android:id="@+id/btBack"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:text="@string/btBack"
-            android:width="140dp"
+            android:width="103dp"
+            android:textSize="12dp"
             android:onClick="BackClicked"
             />
 	    </LinearLayout>
