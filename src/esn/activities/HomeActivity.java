@@ -10,6 +10,9 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
+import esn.adapters.ViewTypesListAdapter;
+import esn.models.ListNavigationItem;
+
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
@@ -22,16 +25,15 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.TableLayout.LayoutParams;
 
-public class HomeActivity extends SherlockMapActivity implements OnNavigationListener {
+public class HomeActivity extends SherlockMapActivity implements
+		OnNavigationListener {
 	private MapView mapView;
 	private MapController mapController;
 	private Resources res;
-	private String[] mViewTypes;
-	public static int THEME = R.style.Theme_Sherlock;
+	private ListNavigationItem[] mNavigationItems;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(THEME);
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
 		res = getResources();
@@ -43,11 +45,19 @@ public class HomeActivity extends SherlockMapActivity implements OnNavigationLis
 	}
 
 	private void setupListNavigate() {
-		mViewTypes = res.getStringArray(R.array.view_types);
+		mNavigationItems = new ListNavigationItem[2];
+		mNavigationItems[0] = new ListNavigationItem();
+		mNavigationItems[0].setText("View as Map");
+		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
+
+		mNavigationItems[1] = new ListNavigationItem();
+		mNavigationItems[1].setText("View as List");
+		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
+
 		Context context = getSupportActionBar().getThemedContext();
 
-		ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(
-				context, R.array.view_types, R.layout.sherlock_spinner_item);
+		ViewTypesListAdapter list = new ViewTypesListAdapter(context,
+				R.layout.sherlock_spinner_item, mNavigationItems);
 		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
@@ -58,12 +68,14 @@ public class HomeActivity extends SherlockMapActivity implements OnNavigationLis
 		/** setup action bar **/
 		/* getSupportActionBar().hide(); */
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayUseLogoEnabled(false);
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		// setup background for top action bar
-		getSupportActionBar().setBackgroundDrawable(
-				getResources().getDrawable(R.drawable.main_transparent));
-		// setup for split items
-		getSupportActionBar().setSplitBackgroundDrawable(
-				getResources().getDrawable(R.drawable.black_transparent));
+//		getSupportActionBar().setBackgroundDrawable(
+//				getResources().getDrawable(R.drawable.main_transparent));
+//		// setup for split items
+//		getSupportActionBar().setSplitBackgroundDrawable(
+//				getResources().getDrawable(R.drawable.black_transparent));
 	}
 
 	private void setupMap() {
@@ -114,7 +126,8 @@ public class HomeActivity extends SherlockMapActivity implements OnNavigationLis
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-	   	Toast.makeText(this, mViewTypes[itemPosition], Toast.LENGTH_LONG).show();
+		Toast.makeText(this, mNavigationItems[itemPosition].getText(),
+				Toast.LENGTH_SHORT).show();
 		return true;
 	}
 }

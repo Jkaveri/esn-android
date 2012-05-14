@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <!-- app name -->
     <string name="app_name">ESN</string>
-    
-    <string name="hello">Hello World, ESNActivity!</string>
-    <string name="app_name">ESN</string>
+    <!-- welcome -->
     <string name="app_register">Register</string>
     <string name="app_login">Login</string>
-    <string name="app_home">Home</string>
-    
 	<string name="btLoginFB">Login With Facebook</string>
+    <!-- Login -->
 	<string name="btLogin">Login</string>
 	<string name="btSignUp">Signup</string>
-	
 	<string name="txtEmail">Email</string>
 	<string name="txtPassword">Password</string>
 	<string name="btBack">Back</string>
@@ -37,7 +33,7 @@
 	<string name="hlPolicy">Privacy and Policy</string>
 	<string name="rdbMale">Male</string>
 	<string name="rdbFemale">Female</string>
-
+ <string name='item'>Item</string>
 	<string name="lbAccount">Account Info</string>
 	<string name="lbPerson">Personal Info</string>
 </resources>
