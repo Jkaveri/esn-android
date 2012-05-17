@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- app name -->
     <string name="app_name">ESN</string>
     <!-- welcome -->
     <string name="app_register">Register</string>
     <string name="app_login">Login</string>
-	<string name="btLoginFB">Login With Facebook</string>
+    <string name="btLoginFB">Login With Facebook</string>
     <!-- Login -->
-	<string name="btLogin">Login</string>
-	<string name="btSignUp">Signup</string>
-	<string name="txtEmail">Email</string>
-	<string name="txtPassword">Password</string>
-	<string name="btBack">Back</string>
-	
-	<string name="tvFullName">Full Name</string>
-	<string name="txtLastName">Last Name</string>
-	<string name="txtPhone">0908 123 456</string>
-	<string name="txtBirthday">01/01/1990</string>
-	<string name="txtGender">Male</string>
-	
-	<string name="btJoin">Join</string>
-	<string name="btCancel">Cancel</string>
-	
-	<string name="tvEmail">Email</string>
-	<string name="tvPassword">Password</string>	
-	
-	<string name="tvPhone">Phone</string>
-	<string name="tvBirthday">Birthday</string>
-	<string name="tvGender">Gender</string>
-	
-	<string name="hlService">Term of Service</string>
-	<string name="hlPolicy">Privacy and Policy</string>
-	<string name="rdbMale">Male</string>
-	<string name="rdbFemale">Female</string>
- <string name='item'>Item</string>
-	<string name="lbAccount">Account Info</string>
-	<string name="lbPerson">Personal Info</string>
+    <string name="btLogin">Login</string>
+    <string name="btSignUp">Signup</string>
+    <string name="txtEmail">Email</string>
+    <string name="txtPassword">Password</string>
+    <string name="btBack">Back</string>
+    <string name="tvFullName">Full Name</string>
+    <string name="txtLastName">Last Name</string>
+    <string name="txtPhone">0908 123 456</string>
+    <string name="txtBirthday">01/01/1990</string>
+    <string name="txtGender">Male</string>
+    <string name="btJoin">Join</string>
+    <string name="btCancel">Cancel</string>
+    <string name="tvEmail">Email</string>
+    <string name="tvPassword">Password</string>
+    <string name="tvPhone">Phone</string>
+    <string name="tvBirthday">Birthday</string>
+    <string name="tvGender">Gender</string>
+    <string name="hlService">Term of Service</string>
+    <string name="hlPolicy">Privacy and Policy</string>
+    <string name="rdbMale">Male</string>
+    <string name="rdbFemale">Female</string>
+    <string name="item">Item</string>
+    <string name="lbAccount">Account Info</string>
+    <string name="lbPerson">Personal Info</string>
+    <string name="map_current_location_title">Current</string>
+    <string name="map_current_location_subtitle">You are here!</string>
+    <string name="finding_current_location">Finding current location</string>
+
 </resources>
