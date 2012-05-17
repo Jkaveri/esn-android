@@ -6,12 +6,14 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 import esn.adapters.ViewTypesListAdapter;
 import esn.models.ListNavigationItem;
+import esn.models.Maps;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -27,10 +29,10 @@ import android.widget.TableLayout.LayoutParams;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
-	private MapView mapView;
 	private MapController mapController;
 	private Resources res;
 	private ListNavigationItem[] mNavigationItems;
+	private Maps map;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +81,14 @@ public class HomeActivity extends SherlockMapActivity implements
 	}
 
 	private void setupMap() {
+		
 		/** setup map **/
-		mapView = (MapView) findViewById(R.id.gmapView);
-		// mapView.setBuiltInZoomControls(true);
-		mapController = mapView.getController();
-		mapController.setZoom(12);
+		MapView mapView = (MapView) findViewById(R.id.gmapView);
+		map = new Maps(this, mapView);
+		//set zoom level to 14
+		map.setZoom(14);
+		map.setCurrMarkerIcon(R.drawable.ic_current_location);
+		map.displayCurrentLocation();
 	}
 
 	@Override
@@ -115,6 +120,9 @@ public class HomeActivity extends SherlockMapActivity implements
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		// TODO Auto-generated method stub
+		if(item.getTitle().equals("settings")){
+			
+		}
 		return super.onMenuItemSelected(featureId, item);
 	}
 
