@@ -1,38 +1,30 @@
 package esn.activities;
 
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 import esn.adapters.ViewTypesListAdapter;
 import esn.models.ListNavigationItem;
 import esn.models.Maps;
+import esn.models.SearchActionMode;
 
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Path.FillType;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Toast;
-import android.widget.TableLayout.LayoutParams;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
-	private MapController mapController;
-	private Resources res;
 	private ListNavigationItem[] mNavigationItems;
 	private Maps map;
+	private ActionMode mMode;
+	private Resources res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,19 +65,19 @@ public class HomeActivity extends SherlockMapActivity implements
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		// setup background for top action bar
-//		getSupportActionBar().setBackgroundDrawable(
-//				getResources().getDrawable(R.drawable.main_transparent));
-//		// setup for split items
-//		getSupportActionBar().setSplitBackgroundDrawable(
-//				getResources().getDrawable(R.drawable.black_transparent));
+		// getSupportActionBar().setBackgroundDrawable(
+		// getResources().getDrawable(R.drawable.main_transparent));
+		// // setup for split items
+		// getSupportActionBar().setSplitBackgroundDrawable(
+		// getResources().getDrawable(R.drawable.black_transparent));
 	}
 
 	private void setupMap() {
-		
+
 		/** setup map **/
 		MapView mapView = (MapView) findViewById(R.id.gmapView);
 		map = new Maps(this, mapView);
-		//set zoom level to 14
+		// set zoom level to 14
 		map.setZoom(14);
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
 		map.displayCurrentLocation();
@@ -101,9 +93,10 @@ public class HomeActivity extends SherlockMapActivity implements
 
 		menu.add("Search")
 				.setIcon(R.drawable.ic_search)
+				.setActionView(R.layout.collapsible_edittext)
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
-								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+								| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		menu.add("Labels")
 				.setIcon(R.drawable.ic_labels)
 				.setShowAsAction(
@@ -119,11 +112,13 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
-		// TODO Auto-generated method stub
-		if(item.getTitle().equals("settings")){
-			
+		String itemTitle = item.getTitle().toString();
+		if (itemTitle.equals("Search")) {
+			item.collapseActionView();
+			return true;
+		} else {
+			return super.onMenuItemSelected(featureId, item);
 		}
-		return super.onMenuItemSelected(featureId, item);
 	}
 
 	@Override
