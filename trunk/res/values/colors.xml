@@ -4,4 +4,5 @@
     <drawable name="black_transparent">#aa000000</drawable>
     <drawable name="light_transparent">#AAFFFFFF</drawable>
     <drawable name="main_transparent">#AACC0033</drawable>
+    <drawable name="transparent">#00FFFFFF</drawable>
 </resources>
