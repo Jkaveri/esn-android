@@ -36,4 +36,16 @@
     <string name="map_current_location_subtitle">You are here!</string>
     <string name="finding_current_location">Finding current location</string>
     <string name="search">Search</string>
+    <!-- Edit Profile -->
+    <string name="lbEdit_Profile">Edit Profile</string>
+    <string name="tv_edit_Name">Edit Full Name</string>
+    <string name="tv_edit_DayOfBirth">Edit Date Of Birth</string>
+    <string name="tv_edit_Phone">Edit Phone</string>
+    <string name="btDone">Done</string>
+    <string name="btCancel">Cancel</string>
+    <!-- Change password -->
+    <string name="lbChange_Pass">Change Password</string>
+    <string name="tv_current_pass">Current Pass</string>
+    <string name="tv_new_pass">New Pass</string>
+    <string name="tv_confirm_pass">Confirm Pass</string>
 </resources>
