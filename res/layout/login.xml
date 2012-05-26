@@ -75,6 +75,13 @@
             android:onClick="BackClicked"
             />
 	    </LinearLayout>
-	      
+	    <TextView 
+	        android:id="@+id/tvForgotPassgord"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Forgot your password?"
+	        android:textSize="10dp"
+	        android:textColor="#FFF"
+	        />
 	</LinearLayout>
 </LinearLayout>

@@ -19,8 +19,8 @@
 	        android:layout_marginTop="5dp">
 	        
 	        <ImageView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
+	            android:layout_width="70dp"
+	            android:layout_height="70dp"
 	            android:src="@drawable/avatar"
 	            />
 	        
@@ -29,8 +29,33 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="10dp"
-	            >
-	       
+	            >	    
+	            		
+	            <EditText
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginBottom="10dp"
+		            android:ems="10"
+		            android:height="30dp"
+		            android:paddingLeft="10dp"
+		            android:textColor="#000"
+		            android:textSize="12dp"
+		            android:background="#FFF"
+		            android:text="@string/tvFist"		            
+		            ></EditText>		           
+		            
+	            <EditText
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginBottom="10dp"
+		            android:ems="10"
+		            android:height="30dp"
+		            android:paddingLeft="10dp"
+		            android:textColor="#000"
+		            android:textSize="12dp"
+		            android:background="#FFF"
+		            android:text="@string/txtLastName"
+		            ></EditText>		
 	        </LinearLayout>
 	    </LinearLayout>
 	    
@@ -56,8 +81,7 @@
 		            android:layout_height="wrap_content"
 		            android:text="@string/tvEmail"
 		            android:textSize="12dp"
-		            android:layout_marginBottom="10dp"
-		            android:textColor="#000"
+		            android:textColor="#FFF"
 		            android:layout_marginRight="10dp"
 		            android:textStyle="normal"
 		            />
@@ -65,36 +89,35 @@
 		        <EditText
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
 		            android:ems="10"
-		            android:gravity="right"
-		            android:height="40dp"
+		            android:height="30dp"
 		            android:paddingLeft="10dp"
 		            android:textColor="#000"
-		            android:textSize="15dp" >
-
-		            <requestFocus />
+		            android:textSize="12dp"
+		            android:background="#FFF">
 		        </EditText>
     		</TableRow>
-    		<TableRow >
-        
+    		<TableRow
+    		    android:layout_marginTop="10dp"
+    		    android:layout_marginBottom="15dp">        
         		<TextView 
 	            	android:layout_width="wrap_content"
 	            	android:layout_height="wrap_content"
 	            	android:text="@string/tvPassword"
 	            	android:textSize="12dp"
 	            	android:layout_marginBottom="10dp"
-	            	android:textColor="#000"
+	            	android:textColor="#FFF"
+	            	android:layout_marginRight="10dp"
 	            />
 		    	<EditText 
 			   	    android:layout_width="fill_parent"
 			   	    android:layout_height="wrap_content"
-			   	    android:height="40dp"			   	    
-			   	    android:layout_marginBottom="10dp"
-			   	    android:textSize="15dp"
+			   	    android:height="30dp"
+			   	    android:textSize="12dp"
 			   	    android:textColor="#000"
 			   	    android:gravity="center|left"
 			   	    android:paddingLeft="10dp"
+			   	    android:background="#FFF"
 			   	    />
     		</TableRow>
     		
@@ -102,84 +125,62 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="@string/lbPerson"
-	            android:layout_marginTop="20dp"
 	            />
 	        <View
         		android:layout_height="2dip"
         		android:background="#FF909090"
-        		android:layout_marginBottom="10dp" />
-	        
-	        <TableRow >
-	        
-	            <TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tvFullName"
-		            android:textSize="12dp"
-		            android:layout_marginBottom="10dp"
-		            android:textColor="#000"
-		            
-		            />
-	            <EditText 
-		   	    android:width="214dp"
-		   	    android:layout_width="wrap_content"
-		   	    android:layout_height="wrap_content"
-		   	    android:height="40dp"
-		   	    android:layout_marginBottom="5dp"
-		   	    android:textSize="15dp"
-		   	    android:textColor="#000"
-		   	    android:paddingLeft="10dp"
-		   	    />
-		   	
-		   	
-	        </TableRow>
-	        
-    		<TableRow>
+        		android:layout_marginBottom="10dp"
+        		/>	        
+	      
+    		<TableRow
+    		    android:layout_marginTop="0dp"
+    		    >
     		    <TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="@string/tvBirthday"
 		            android:textSize="12dp"
-		            android:layout_marginBottom="10dp"
-		            android:textColor="#000"
+		            android:textColor="#FFF"
 		            />
 		    	<EditText 
 			   	    android:layout_width="fill_parent"
 			   	    android:layout_height="wrap_content"
-			   	    android:height="40dp"
-			   	    
-			   	    android:layout_marginBottom="10dp"
-			   	    android:textSize="15dp"
+			   	    android:height="30dp"
+			   	    android:background="#FFF"
+			   	    android:textSize="12dp"
 			   	    android:textColor="#000"
 			   	    android:paddingLeft="10dp"
 			   	    />
     		</TableRow>
-			<TableRow >
+			<TableRow
+			    android:layout_marginTop="10dp">
 		    	<TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="@string/tvPhone"
 		            android:textSize="12dp"
-		            android:layout_marginBottom="10dp"
-		            android:textColor="#000"
+		            android:textColor="#FFF"
 		            />
 				<EditText 
 			  	    android:layout_width="fill_parent"
 			   	    android:layout_height="wrap_content"
-			   	    android:height="40dp"
-				   	android:layout_marginBottom="10dp"
-				 	android:textSize="15dp"
+			   	    android:height="30dp"
+				 	android:textSize="12dp"
 				   	android:textColor="#000"
-				   	android:paddingLeft="10dp"/>	    
+				   	android:paddingLeft="10dp"
+				   	android:background="#FFF"/>	    
 			</TableRow>
-			<TableRow >
+			<TableRow
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="10dp"			    
+			    >
 		    	<TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="@string/tvGender"
 		            android:textSize="12dp"
 		            android:layout_marginBottom="10dp"
-		            android:textColor="#000"
+		            android:textColor="#FFF"
 		            />
 		    	<RadioGroup 
 		    	    android:orientation="vertical"
@@ -231,6 +232,7 @@
 	        android:gravity="center_horizontal"
 	        >
 	        <TextView 
+	            android:id="@+id/lkService"
 	            android:layout_width="wrap_content"
 	            android:text="@string/hlService"
 	            android:layout_height="wrap_content"	
@@ -238,6 +240,7 @@
 	            android:layout_marginRight="30dp"            
 	            />
 	        <TextView 
+	            android:id="@+id/lkPolicy"
 	            android:layout_width="wrap_content"
 	            android:textSize="12dp"
   	            android:layout_height="wrap_content"	  
