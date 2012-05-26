@@ -6,7 +6,7 @@
         android:id="@+id/gmapView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg"
+        android:apiKey="0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg"
         android:clickable="true" />
 
 </RelativeLayout>

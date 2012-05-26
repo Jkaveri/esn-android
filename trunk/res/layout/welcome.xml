@@ -17,13 +17,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/main_logo" />
 
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_height="30dp"
-            android:src="@drawable/loginfb"
-            android:layout_width="200dp"
+        
+        <com.facebook.android.LoginButton
+	        android:id="@+id/btloginfb"
+	        android:src="@drawable/loginfb"
+	        android:layout_width="wrap_content"	        
             android:layout_marginBottom="2dp"
-             />
+            android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btLogin"
             android:layout_width="wrap_content"
