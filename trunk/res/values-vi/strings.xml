@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- app name -->
+    <string name="app_name">ESN</string>
+    <!-- welcome -->
+    <string name="app_register">Đăng ký</string>
+    <string name="app_profile">Profile</string>
+    <string name="app_login">Login</string>
+    <string name="btLoginFB">Đăng kí với facebook</string>
+    <!-- Login -->
+	<string name="btLogin">Đăng nhập</string>
+	<string name="btSignUp">Đăng ký</string>
+	<string name="txtEmail">Email</string>
+	<string name="txtPassword">Mật khẩu</string>
+	<string name="btBack">Trở về</string>	<string name="tvFist">Tên</string>
+	<string name="txtLastName">Họ</string>
+	<string name="txtPhone">0908 123 456</string>
+	<string name="txtBirthday">01/01/1990</string>
+	<string name="txtGender">Male</string>
+	
+	<string name="btJoin">Join</string>
+	<string name="btCancel">Hủy</string>
+	
+	<string name="tvEmail">Email</string>
+	<string name="tvPassword">Mật khẩu</string>	
+	
+	<string name="tvPhone">Số điện thoại</string>
+	<string name="tvBirthday">Ngày sinh</string>
+	<string name="tvGender">Giới tính</string>
+	
+	<string name="hlService">Quy định về dịch vụ</string>
+	<string name="hlPolicy">Chính sách riêng tư</string>
+	<string name="rdbMale">Nam</string>
+	<string name="rdbFemale">Nữ</string>
+    <string name="map_current_location_title">Vị trí hiện tại</string>
+    <string name="map_current_location_subtitle">Bạn đang ở đây</string>
+ 	<string name='item'>Item</string>
+    <string name="finding_current_location">Đang tìm vị trí hiện tại</string>
+	<string name="lbAccount">Thông tin tài khoản</string>
+    <string name="search">Tìm kiếm</string>
+    <!-- Edit Profile -->
+	<string name="lbPerson">Thông tin cá nhân</string>
+    <string name="lbEdit_Profile">Chỉnh sửa hồ sơ cá nhân</string>
+	<string name="enter">Đăng nhập bằng tài khoản facebook</string>
+	<string name="request">Request!</string>
+    <string name="hello">Hello World!</string>
+    <string name="tv_edit_Name">Chỉnh sửa họ và tên</string>
+    <string name="tv_edit_DayOfBirth">Chỉnh sửa ngày sinh</string>
+    <string name="tv_edit_Phone">Chỉnh sửa số điện thoại</string>
+    <string name="upload">Đăng tải hình ảnh</string><string name="post">Wall Post!</string>
+    <string name="btDone">Lưu</string>
+    <string name="delete">Delete Post</string>
+    <string name="btCancel">Hủy</string>
+    
+    <!-- Change password -->
+    <string name="lbChange_Pass">Đổi mật khẩu</string>
+    <string name="lblPosition">Vị trí</string>
+	<string name="rdbShow">Hiện ví trí</string>
+	<string name="rdbHide">Ẩn vị trí</string>
+	<string name="lblProfile">Chỉnh sửa hồ sơ cá nhân</string>
+    <string name="tv_current_pass">Mật khẩu hiện tại</string>
+    <string name="tv_new_pass">Mật khẩu mới</string>
+    <string name="tv_confirm_pass">Xác nhận mật khẩu mới</string>
+	<string name="lblPic">Thay đổi ảnh cá nhân</string>
+	<string name="lblChangePass">Đổi mật khẩu</string>
+	<string name="lblHelp">Giúp đỡ</string>
+	<string name="lblAbout">Giới thiệu về ESN</string>
+	<string name="lblTerms">Điều khoản</string>
+	<string name="btnLogOut">Đăng xuất</string>
+	
+	<string name="btDone">Done</string>
+	<string name="btLogout">Logout</string>
+	<string name="esn.location.must_enable_gps">Bạn chưa bật GPS</string>
+	<string name="esn.location.your_location_not_found">Không tìm thấy địa điểm bạn muốn tìm</string>
+	<string name="esn.selectLabel.activityTitle">Chọn nhãn</string>
+	<string name="esn.labels.accidents">Tai nạn</string>
+	<string name="esn.labels.polices">Cảnh sát</string>
+	<string name="esn.addNewEvent.title">Tiêu đề</string>
+	<string name="esn.addNewEvent.description">Mô tả</string>
+	<string name="esn.addNewEvent.add">Tạo mới</string>
+	<string name="esn.addNewEvent.cancel">Hủy</string>
+	<string name="esn.addNewEvent.coordinate">Tọa độ</string>
+</resources>
