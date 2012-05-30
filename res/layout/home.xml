@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
     <com.google.android.maps.MapView
         android:id="@+id/gmapView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg"
+        android:apiKey="0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg"
         android:clickable="true" />
+
+    <ImageButton
+        android:id="@+id/btnDetectLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="64dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/bg_access_current_location"
+        android:src="@drawable/ic_access_location"
+        android:onClick="btnDetectMyLocation" />
 
 </RelativeLayout>

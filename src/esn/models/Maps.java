@@ -1,9 +1,15 @@
 package esn.models;
 
+import java.io.IOException;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
 
 import esn.activities.R;
 
@@ -28,10 +35,13 @@ public class Maps implements LocationListener {
 	private int currMarkerIcon;
 	private ProgressDialog dialog;
 	private Handler handler;
+	protected Geocoder geoCoder;
+	private Resources res;
 
 	public Maps(Context context, MapView map) {
 		this.map = map;
 		this.context = context;
+		this.res = context.getResources();
 		this.mapController = map.getController();
 		handler = new Handler();
 	}
@@ -82,18 +92,80 @@ public class Maps implements LocationListener {
 		map.getOverlays().add(marker);
 	}
 
-	public void search(String query) {
+	public void search(final String query) {
+		// show dialog
+		dialog = ProgressDialog.show(context, "Search...",
+				"Searching your request");
+		dialog.show();
+		Thread th = new Thread() {
+			public void run() {
+				try {
+					Thread.sleep(500);
+					// get geo coder
+					geoCoder = new Geocoder(context);
+					// search by address
 
+					handler.post(new Runnable() {
+
+						@Override
+						public void run() {
+							boolean isFirst = true;
+							List<Address> listAddress = null;
+							try {
+								listAddress = geoCoder.getFromLocationName(
+										query, 5);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							GeoPoint point = null;
+							// with every address
+							for (Address address : listAddress) {
+
+								// get point
+								point = new GeoPoint((int) (address
+										.getLatitude() * 1E6), (int) (address
+										.getLongitude() * 1E6));
+								// initialize itemOverlay with current point
+								EsnOverlayItem itemOverlay = new EsnOverlayItem(
+										point, address.getCountryName(),
+										address.getLocality());
+								setMarker(itemOverlay, R.drawable.pointer);
+								if (isFirst) {
+									mapController.setCenter(point);
+									isFirst = false;
+								}
+
+							}
+							dialog.hide();
+							mapController.animateTo(map.getMapCenter());
+						}
+
+					});
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		};
+		th.start();
 	}
 
 	public void setMap(MapView map) {
 		this.map = map;
 	}
 
+	public MapView getMap() {
+		return map;
+	}
+
 	public void setContext(Context context) {
 		this.context = context;
 	}
-
+	public Context getContext(){
+		return this.context;
+	}
 	public void setZoom(int level) {
 		mapController.setZoom(level);
 	}
@@ -114,7 +186,12 @@ public class Maps implements LocationListener {
 			Criteria criteria = new Criteria();
 			String provider = locationManager.getBestProvider(criteria, false);
 			currLocation = locationManager.getLastKnownLocation(provider);
-
+		} else {
+			Toast.makeText(
+					context,
+					context.getResources().getString(
+							R.string.esn_location_must_enable_gps),
+					Toast.LENGTH_LONG);
 		}
 		return currLocation;
 
@@ -129,7 +206,7 @@ public class Maps implements LocationListener {
 			public void run() {
 
 				try {
-
+					Thread.sleep(500);
 					handler.post(new Runnable() {
 
 						@Override
@@ -149,15 +226,16 @@ public class Maps implements LocationListener {
 								dialog.hide();
 							} else {
 								dialog.hide();
+								Toast.makeText(
+										context,
+										res.getString(R.string.esn_location_your_location_not_found),
+										Toast.LENGTH_SHORT).show();
 							}
 
 						}
 					});
 				} catch (Exception e) {
-					System.out
-							.println("-----------------------ERROR-----------------------------");
-					System.out.println(e.getMessage());
-					System.out.println(e.getStackTrace());
+					e.printStackTrace();
 				}
 			}
 		};
@@ -190,7 +268,7 @@ public class Maps implements LocationListener {
 	}
 
 	@Override
-	public void onProviderEnabled(String arg0) {
+	public void onProviderEnabled(String stri) {
 		// TODO Auto-generated method stub
 
 	}
@@ -208,5 +286,5 @@ public class Maps implements LocationListener {
 	public void setCurrMarkerIcon(int currMarkerIcon) {
 		this.currMarkerIcon = currMarkerIcon;
 	}
-
+	
 }

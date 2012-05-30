@@ -46,6 +46,12 @@
         <activity
             android:name=".ProfileActivity">
         </activity>      
+          <activity
+            android:name=".AddNewEvent">
+        </activity>
+          <activity
+            android:name=".SelectEventLabel">
+        </activity>
     </application>
 
 </manifest>

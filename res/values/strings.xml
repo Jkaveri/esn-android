@@ -71,4 +71,14 @@
 	
 	<string name="btDone">Done</string>
 	<string name="btLogout">Logout</string>
+	<string name="esn.location.must_enable_gps">You must enable gps</string>
+	<string name="esn.location.your_location_not_found">Your Location Not Found</string>
+	<string name="esn.selectLabel.activityTitle">Select label</string>
+	<string name="esn.labels.accidents">Accidents</string>
+	<string name="esn.labels.polices">Polices</string>
+	<string name="esn.addNewEvent.title">Title</string>
+	<string name="esn.addNewEvent.description">Description</string>
+	<string name="esn.addNewEvent.add">Add</string>
+	<string name="esn.addNewEvent.cancel">Cancel</string>
+	<string name="esn.addNewEvent.coordinate">Coordinate</string>
 </resources>
