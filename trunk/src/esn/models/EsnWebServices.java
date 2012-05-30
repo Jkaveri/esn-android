@@ -1,5 +1,6 @@
 package esn.models;
 
+import java.lang.reflect.Type;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -15,6 +16,7 @@ public class EsnWebServices {
 	public String url;
 	public int soapEnvelopeVer;
 	public boolean dotNet;
+	public SoapSerializationEnvelope envelope;
 
 	public EsnWebServices(String NAMESPACE, String URL) {
 		this.namespace = NAMESPACE;
@@ -22,7 +24,9 @@ public class EsnWebServices {
 		this.dotNet = true;
 		this.soapEnvelopeVer = SoapEnvelope.VER11;
 	}
-
+	public void addMaping(String name,Class<?> type){
+		this.envelope.addMapping(this.namespace, name, type);
+	}
 	/**
 	 * Invoke a Web Service Method
 	 * 
@@ -38,7 +42,7 @@ public class EsnWebServices {
 			String methodName) {
 
 		SoapObject request = GetSoapObject(methodName);
-		SoapSerializationEnvelope envelope = GetEnvelope(request, true);
+		this.envelope = GetEnvelope(request, true);
 		return MakeCall(url, envelope, namespace, methodName);
 	}
 
@@ -79,16 +83,16 @@ public class EsnWebServices {
 			request.addProperty(pi);
 		}
 		// get envelope by request and use .net
-		SoapSerializationEnvelope envelope = GetEnvelope(request);
-		return MakeCall(url, envelope, namespace, methodName);
+		this.envelope = GetEnvelope(request);
+		return MakeCall(url, this.envelope, namespace, methodName);
 	}
 
 	public SoapObject InvokeMethod(String methodName) {
 		// inititalize request
 		SoapObject request = GetSoapObject(methodName);
 		// get envelope by request and use .net
-		SoapSerializationEnvelope envelope = GetEnvelope(request);
-		return MakeCall(this.url, envelope, this.namespace, methodName);
+		this.envelope = GetEnvelope(request);
+		return MakeCall(this.url, this.envelope, this.namespace, methodName);
 	}
 
 	public SoapObject InvokeMethod(String methodName,
@@ -115,8 +119,8 @@ public class EsnWebServices {
 			request.addProperty(pi);
 		}
 		// get envelope by request and use .net
-		SoapSerializationEnvelope envelope = GetEnvelope(request);
-		return MakeCall(this.url, envelope, this.namespace, methodName);
+		this.envelope = GetEnvelope(request);
+		return MakeCall(this.url, this.envelope, this.namespace, methodName);
 	}
 
 	/**
@@ -142,7 +146,7 @@ public class EsnWebServices {
 				soapAction += methodName;
 			}
 			transport.call(soapAction, envelope);
-			return (SoapObject) envelope.getResponse();
+			return (SoapObject) envelope.bodyIn;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
