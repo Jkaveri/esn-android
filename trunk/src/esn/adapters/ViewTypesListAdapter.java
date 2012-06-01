@@ -1,7 +1,7 @@
 package esn.adapters;
 
 import esn.activities.R;
-import esn.models.ListNavigationItem;
+import esn.classes.ListNavigationItem;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;

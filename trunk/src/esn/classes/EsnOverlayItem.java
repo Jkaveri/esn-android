@@ -1,4 +1,4 @@
-package esn.models;
+package esn.classes;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MyLocationOverlay;

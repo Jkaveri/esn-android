@@ -3,7 +3,7 @@ package esn.adapters;
 import java.util.List;
 
 import esn.activities.R;
-import esn.models.SettingListViewModel;
+import esn.classes.SettingListViewModel;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;

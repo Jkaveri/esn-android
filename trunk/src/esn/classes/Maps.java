@@ -1,4 +1,4 @@
-package esn.models;
+package esn.classes;
 
 import java.io.IOException;
 import java.util.List;

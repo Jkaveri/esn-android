@@ -1,4 +1,4 @@
-package esn.models;
+package esn.classes;
 
 public class Trial {
 

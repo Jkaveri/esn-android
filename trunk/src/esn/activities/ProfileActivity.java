@@ -22,7 +22,7 @@ import com.facebook.android.Util;
 
 import esn.adapters.FacebookConnect;
 import esn.adapters.InteractiveArrayAdapter;
-import esn.models.SettingListViewModel;
+import esn.classes.SettingListViewModel;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

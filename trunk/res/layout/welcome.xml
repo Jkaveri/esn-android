@@ -18,12 +18,13 @@
             android:src="@drawable/main_logo" />
 
         
-        <com.facebook.android.LoginButton
+        <ImageButton
 	        android:id="@+id/btloginfb"
 	        android:src="@drawable/loginfb"
 	        android:layout_width="wrap_content"	        
-            android:layout_marginBottom="2dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:onClick="btnLoginfbClicked"/>
+        
         <Button
             android:id="@+id/btLogin"
             android:layout_width="wrap_content"

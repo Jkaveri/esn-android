@@ -1,252 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical" 
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    >
-	    
-	    <LinearLayout 
-	        android:orientation="horizontal"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp">
-	        
-	        <ImageView 
-	            android:layout_width="70dp"
-	            android:layout_height="70dp"
-	            android:src="@drawable/avatar"
-	            />
-	        
-	        <LinearLayout 
-	            android:orientation="vertical"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dp"
-	            >	    
-	            		
-	            <EditText
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:ems="10"
-		            android:height="30dp"
-		            android:paddingLeft="10dp"
-		            android:textColor="#000"
-		            android:textSize="12dp"
-		            android:background="#FFF"
-		            android:text="@string/tvFist"		            
-		            ></EditText>		           
-		            
-	            <EditText
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:ems="10"
-		            android:height="30dp"
-		            android:paddingLeft="10dp"
-		            android:textColor="#000"
-		            android:textSize="12dp"
-		            android:background="#FFF"
-		            android:text="@string/txtLastName"
-		            ></EditText>		
-	        </LinearLayout>
-	    </LinearLayout>
-	    
-	    <TableLayout
-	        android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:stretchColumns="1"
-    		android:layout_marginTop="15dp">
+    android:layout_height="fill_parent" >
 
-	        <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/lbAccount"
-	            android:textStyle="normal"
-	            />
-	        <View
-        		android:layout_height="2dip"
-        		android:background="#FF909090"
-        		android:layout_marginBottom="10dp" />
-    		<TableRow>       
-        		<TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tvEmail"
-		            android:textSize="12dp"
-		            android:textColor="#FFF"
-		            android:layout_marginRight="10dp"
-		            android:textStyle="normal"
-		            />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
 
-		        <EditText
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:ems="10"
-		            android:height="30dp"
-		            android:paddingLeft="10dp"
-		            android:textColor="#000"
-		            android:textSize="12dp"
-		            android:background="#FFF">
-		        </EditText>
-    		</TableRow>
-    		<TableRow
-    		    android:layout_marginTop="10dp"
-    		    android:layout_marginBottom="15dp">        
-        		<TextView 
-	            	android:layout_width="wrap_content"
-	            	android:layout_height="wrap_content"
-	            	android:text="@string/tvPassword"
-	            	android:textSize="12dp"
-	            	android:layout_marginBottom="10dp"
-	            	android:textColor="#FFF"
-	            	android:layout_marginRight="10dp"
-	            />
-		    	<EditText 
-			   	    android:layout_width="fill_parent"
-			   	    android:layout_height="wrap_content"
-			   	    android:height="30dp"
-			   	    android:textSize="12dp"
-			   	    android:textColor="#000"
-			   	    android:gravity="center|left"
-			   	    android:paddingLeft="10dp"
-			   	    android:background="#FFF"
-			   	    />
-    		</TableRow>
-    		
-    		<TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/lbPerson"
-	            />
-	        <View
-        		android:layout_height="2dip"
-        		android:background="#FF909090"
-        		android:layout_marginBottom="10dp"
-        		/>	        
-	      
-    		<TableRow
-    		    android:layout_marginTop="0dp"
-    		    >
-    		    <TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tvBirthday"
-		            android:textSize="12dp"
-		            android:textColor="#FFF"
-		            />
-		    	<EditText 
-			   	    android:layout_width="fill_parent"
-			   	    android:layout_height="wrap_content"
-			   	    android:height="30dp"
-			   	    android:background="#FFF"
-			   	    android:textSize="12dp"
-			   	    android:textColor="#000"
-			   	    android:paddingLeft="10dp"
-			   	    />
-    		</TableRow>
-			<TableRow
-			    android:layout_marginTop="10dp">
-		    	<TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tvPhone"
-		            android:textSize="12dp"
-		            android:textColor="#FFF"
-		            />
-				<EditText 
-			  	    android:layout_width="fill_parent"
-			   	    android:layout_height="wrap_content"
-			   	    android:height="30dp"
-				 	android:textSize="12dp"
-				   	android:textColor="#000"
-				   	android:paddingLeft="10dp"
-				   	android:background="#FFF"/>	    
-			</TableRow>
-			<TableRow
-				android:layout_marginTop="10dp"
-				android:layout_marginBottom="10dp"			    
-			    >
-		    	<TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tvGender"
-		            android:textSize="12dp"
-		            android:layout_marginBottom="10dp"
-		            android:textColor="#FFF"
-		            />
-		    	<RadioGroup 
-		    	    android:orientation="vertical"
-		    	    >
-		    		<RadioButton
-			        	android:id="@+id/radioButton1"
-			         	android:layout_width="wrap_content"
-			         	android:layout_height="35dp"
-			         	android:textSize="12dp"
-			         	android:text="@string/rdbMale" />
-		    		<RadioButton
-			         	android:id="@+id/radioButton1"
-			         	android:textSize="12dp"
-			         	android:layout_width="wrap_content"
-			         	android:layout_height="35dp"
-			         	android:text="@string/rdbFemale" />	
-		    	</RadioGroup>
-			    
-		    </TableRow>
-		</TableLayout>	
-		<LinearLayout 
-	        android:orientation="horizontal"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-	        android:gravity="center"
-	        >
-	        <Button 
-	            android:id="@+id/btLogin"
-	            android:layout_width="155dp"
-	            android:layout_height="35dp"
-	            android:textSize="12dp"
-	            android:text="@string/btJoin"
-	            />
-	        <Button 
-	            android:id="@+id/btCancel"
-	            android:layout_width="155dp"
-	            android:layout_height="35dp"
-	            android:textSize="12dp"
-	            android:text="@string/btCancel"
-	            android:onClick="CancelClicked"
-	            />
-	    </LinearLayout>
-	    
-	    <LinearLayout 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginBottom="20dp"
-	        android:layout_marginTop="20dp"
-	        android:gravity="center_horizontal"
-	        >
-	        <TextView 
-	            android:id="@+id/lkService"
-	            android:layout_width="wrap_content"
-	            android:text="@string/hlService"
-	            android:layout_height="wrap_content"	
-	            android:textSize="12dp"
-	            android:layout_marginRight="30dp"            
-	            />
-	        <TextView 
-	            android:id="@+id/lkPolicy"
-	            android:layout_width="wrap_content"
-	            android:textSize="12dp"
-  	            android:layout_height="wrap_content"	  
-	             android:text="@string/hlPolicy"          
-	            />	       
-	        	 
-	    </LinearLayout>
-	</LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/avatar" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/esn.register.txtFirstName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvFist" >
+                </EditText>
+
+                <EditText
+                    android:id="@+id/esn.register.txtLastname"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txtLastName" >
+                </EditText>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:stretchColumns="1" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbAccount"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:background="#FF909090" />
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvEmail"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/esn.register.txtEmail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </EditText>
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvPassword" />
+
+                <EditText
+                    android:id="@+id/esn.register.txtPassword"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left" />
+            </TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbPerson" />
+
+            <View
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:background="#FF909090" />
+
+            <TableRow android:layout_marginTop="0dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvBirthday" />
+
+                <EditText
+                    android:id="@+id/esn.register.txtBirthday"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="DD/MM/YYYY" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvPhone" />
+
+                <EditText
+                    android:id="@+id/esn.register.txtPhone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvGender" />
+
+                <RadioGroup android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/esn.register.rbMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rdbMale" />
+
+                    <RadioButton
+                        android:id="@+id/esn.register.rbFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rdbFemale" />
+                </RadioGroup>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/esn.register.btnJoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btJoin" />
+
+            <Button
+                android:id="@+id/btCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="CancelClicked"
+                android:text="@string/btCancel" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/lkService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="@string/hlService"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/lkPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hlPolicy"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+
 </ScrollView>
