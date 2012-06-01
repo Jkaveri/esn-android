@@ -7,9 +7,9 @@ import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
 
 import esn.adapters.EsnListAdapter;
-import esn.models.EsnListItem;
-import esn.models.EsnWebServices;
-import esn.models.EventLabels;
+import esn.classes.EsnListItem;
+import esn.classes.EsnWebServices;
+import esn.classes.EventLabels;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;

@@ -1,9 +1,11 @@
-package esn.models;
+package esn.classes;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -17,15 +19,23 @@ public class EsnWebServices {
 	public int soapEnvelopeVer;
 	public boolean dotNet;
 	public SoapSerializationEnvelope envelope;
-
+	private ArrayList<SoapMaping> mapings = new ArrayList<SoapMaping>();
 	public EsnWebServices(String NAMESPACE, String URL) {
+		
 		this.namespace = NAMESPACE;
 		this.url = URL;
 		this.dotNet = true;
 		this.soapEnvelopeVer = SoapEnvelope.VER11;
 	}
 	public void addMaping(String name,Class<?> type){
-		this.envelope.addMapping(this.namespace, name, type);
+		mapings.add(new SoapMaping(this.namespace, name, type));
+	}
+	private void addMaping(){
+		if(mapings.size()>0 && this.envelope!=null){
+			for(SoapMaping maping:mapings){
+				this.envelope.addMapping(maping.getNamespace(), maping.getName(), maping.getClazz());
+			}
+		}
 	}
 	/**
 	 * Invoke a Web Service Method
@@ -99,7 +109,7 @@ public class EsnWebServices {
 			Hashtable<String, Object> params) {
 		// inititalize request
 		SoapObject request = GetSoapObject(methodName);
-
+		
 		// get all keys
 		Enumeration<String> keys = params.keys();
 		while (keys.hasMoreElements()) {
@@ -120,6 +130,7 @@ public class EsnWebServices {
 		}
 		// get envelope by request and use .net
 		this.envelope = GetEnvelope(request);
+		
 		return MakeCall(this.url, this.envelope, this.namespace, methodName);
 	}
 
@@ -177,10 +188,11 @@ public class EsnWebServices {
 	 */
 	private SoapSerializationEnvelope GetEnvelope(SoapObject soap,
 			boolean dotNet) {
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+		envelope = new SoapSerializationEnvelope(
 				this.soapEnvelopeVer);
 		envelope.setOutputSoapObject(soap);
 		envelope.dotNet = dotNet;
+		addMaping();
 		return envelope;
 	}
 

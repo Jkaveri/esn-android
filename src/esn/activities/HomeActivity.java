@@ -31,9 +31,9 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 
 import esn.adapters.ViewTypesListAdapter;
-import esn.models.EsnWebServices;
-import esn.models.ListNavigationItem;
-import esn.models.Maps;
+import esn.classes.EsnWebServices;
+import esn.classes.ListNavigationItem;
+import esn.classes.Maps;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
@@ -133,6 +133,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		// settings
 		menu.add("Settings").setIcon(R.drawable.ic_settings)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		menu.add("Navigate").setIcon(R.drawable.ic_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 
@@ -239,7 +240,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		String itemTitle = item.getTitle().toString();
 		if (itemTitle.equals("Search")) {
 			item.collapseActionView();
-
+			 
 			return true;
 		}
 		if (itemTitle.equals("New Event")) {

@@ -16,7 +16,6 @@
 
 package com.facebook.android;
 
-import com.facebook.android.BaseRequestListener;
 import com.facebook.android.SessionEvents.AuthListener;
 import com.facebook.android.SessionEvents.LogoutListener;
 import com.facebook.android.Facebook.DialogListener;
@@ -80,9 +79,8 @@ public class LoginButton extends ImageButton {
             if (mFb.isSessionValid()) {
                 SessionEvents.onLogoutBegin();
                 AsyncFacebookRunner asyncRunner = new AsyncFacebookRunner(mFb);
-                asyncRunner.logout(getContext(), new LogoutRequestListener());
             } else {
-                mFb.authorize(mActivity, mPermissions,
+   mFb.authorize(mActivity, mPermissions,
                               new LoginDialogListener());
             }
         }
@@ -106,17 +104,7 @@ public class LoginButton extends ImageButton {
         }
     }
     
-    public class LogoutRequestListener extends BaseRequestListener {
-        public void onComplete(String response, final Object state) {
-            // callback should be run in the original thread, 
-            // not the background thread
-            mHandler.post(new Runnable() {
-                public void run() {
-                    SessionEvents.onLogoutFinish();
-                }
-            });
-        }
-    }
+    
     
     public class SessionListener implements AuthListener, LogoutListener {
         

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import esn.adapters.InteractiveArrayAdapter;
-import esn.models.SettingListViewModel;
+import esn.classes.SettingListViewModel;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
