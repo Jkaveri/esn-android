@@ -81,4 +81,7 @@
 	<string name="esn.addNewEvent.add">Add</string>
 	<string name="esn.addNewEvent.cancel">Cancel</string>
 	<string name="esn.addNewEvent.coordinate">Coordinate</string>
+	
+	<string name="esn.register.date"></string>
+	
 </resources>

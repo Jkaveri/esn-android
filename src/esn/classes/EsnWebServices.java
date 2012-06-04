@@ -18,8 +18,11 @@ public class EsnWebServices {
 	public String url;
 	public int soapEnvelopeVer;
 	public boolean dotNet;
+	
 	public SoapSerializationEnvelope envelope;
+	
 	private ArrayList<SoapMaping> mapings = new ArrayList<SoapMaping>();
+	
 	public EsnWebServices(String NAMESPACE, String URL) {
 		
 		this.namespace = NAMESPACE;
