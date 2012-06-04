@@ -31,14 +31,14 @@
                     android:id="@+id/esn.register.txtFirstName"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvFist" >
+                    android:hint="@string/txtLastName" >
                 </EditText>
 
                 <EditText
                     android:id="@+id/esn.register.txtLastname"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/txtLastName" >
+                    android:hint="@string/txtLastName" >
                 </EditText>
             </LinearLayout>
         </LinearLayout>
@@ -71,7 +71,9 @@
                 <EditText
                     android:id="@+id/esn.register.txtEmail"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tvEmail"
+                    >
                 </EditText>
             </TableRow>
 
@@ -85,10 +87,13 @@
                     android:text="@string/tvPassword" />
 
                 <EditText
-                    android:id="@+id/esn.register.txtPassword"
+                    android:id="@+id/esn.register.Password"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center|left" />
+                    android:gravity="center|left" 
+                    android:password="true"
+                    android:hint="@string/tvPassword"
+                    />
             </TableRow>
 
             <TextView
@@ -112,7 +117,8 @@
                     android:id="@+id/esn.register.txtBirthday"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="DD/MM/YYYY" />
+                    android:onClick="DatePickerDialogShow"
+                    android:hint="@string/esn.register.date" />
             </TableRow>
 
             <TableRow android:layout_marginTop="10dp" >
@@ -125,7 +131,9 @@
                 <EditText
                     android:id="@+id/esn.register.txtPhone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tvPhone"
+                    />
             </TableRow>
 
             <TableRow
@@ -164,6 +172,7 @@
                 android:id="@+id/esn.register.btnJoin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="RegisterClicked"
                 android:text="@string/btJoin" />
 
             <Button

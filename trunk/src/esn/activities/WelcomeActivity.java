@@ -38,6 +38,7 @@ public class WelcomeActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
+		
 		mFacebook = new Facebook(APP_ID);// init facebook
 		mAsyncRunner = new AsyncFacebookRunner(mFacebook);//init async runner 
 		prefEdit = getPreferences(MODE_PRIVATE); // get preferences (stored)
