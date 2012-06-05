@@ -68,7 +68,6 @@
 	<string name="lblAbout">About</string>
 	<string name="lblTerms">Terms</string>
 	<string name="btnLogOut">Log Out</string>
-	
 	<string name="btDone">Done</string>
 	<string name="btLogout">Logout</string>
 	<string name="esn.location.must_enable_gps">You must enable gps</string>
@@ -83,5 +82,14 @@
 	<string name="esn.addNewEvent.coordinate">Coordinate</string>
 	
 	<string name="esn.register.date"></string>
+	
+	
+	<!-- Option page -->
+	<string name="tvPosition">Set Position</string>
+	<string name="text_On">On position</string>
+	<string name="text_Off">Off position</string>
+	<string name="tvEditProfile">Edit Profile</string>
+	<string name="tvChangePass">Change Password</string>
+	<string name="btnLogout">Logout</string>
 	
 </resources>
