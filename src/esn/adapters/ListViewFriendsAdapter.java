@@ -3,9 +3,11 @@ package esn.adapters;
 import java.util.ArrayList;
 
 import esn.activities.R;
-import esn.models.ItemBean;
+import esn.classes.Utils;
+import esn.models.FriendsListsDTO;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +15,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListViewCustomAdapter extends BaseAdapter {
+public class ListViewFriendsAdapter extends BaseAdapter {
 
 	public ArrayList<Object> itemList;
 	public Activity context;
 	public LayoutInflater inflater;
 
-	public ListViewCustomAdapter(Activity context, ArrayList<Object> itemList) {
+	public ListViewFriendsAdapter(Activity context, ArrayList<Object> itemList) {
 		super();
 
 		this.context = context;
@@ -72,11 +74,16 @@ public class ListViewCustomAdapter extends BaseAdapter {
 		} else
 			holder = (ViewHolder) convertView.getTag();
 
-		ItemBean bean = (ItemBean) itemList.get(position);
-
-		holder.imgViewLogo.setImageResource(bean.getImage());
-		holder.txtViewTitle.setText(bean.getTitle());
-		holder.txtViewDescription.setText(bean.getDescription());
+		FriendsListsDTO bean = (FriendsListsDTO) itemList.get(position);
+		if(bean.avatarURL != null && !bean.avatarURL.equals("")){
+			Bitmap bm =  Utils.getBitmapFromURL(bean.avatarURL);
+			holder.imgViewLogo.setImageBitmap(bm);
+		}else{
+			holder.imgViewLogo.setImageResource(R.drawable.ic_no_avata);
+		}
+		
+		holder.txtViewTitle.setText(bean.name);
+		holder.txtViewDescription.setText("Chua co");
 
 		return convertView;
 	}
