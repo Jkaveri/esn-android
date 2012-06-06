@@ -7,11 +7,10 @@ import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.MapView;
-import esn.adapters.ListViewCustomAdapter;
+import esn.adapters.ListViewFriendsAdapter;
 import esn.adapters.ViewTypesListAdapter;
 import esn.classes.ListNavigationItem;
 import esn.classes.Maps;
-import esn.models.ItemBean;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -34,9 +33,8 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	private MapView mapView;
 	
 	private ListView lstFdEvents;
-	private ListViewCustomAdapter adapter;
+	private ListViewFriendsAdapter adapter;
     private ArrayList<Object> itemList;
-    private ItemBean bean;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,7 @@ public class FriendEventsActivity extends SherlockMapActivity implements
         addObjectToList(R.drawable.ic_settings, "Settings", "Settings desc");
         
         lstFdEvents = (ListView)findViewById(R.id.lisvFdEvents);
-		adapter = new ListViewCustomAdapter(this, itemList);
+		adapter = new ListViewFriendsAdapter(this, itemList);
 		lstFdEvents.setAdapter(adapter);
 		lstFdEvents.setOnItemClickListener(this);
 	}
@@ -66,11 +64,11 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	 // Add one item into the Array List
 	private void addObjectToList(int image, String title, String desc)
     {
-        bean = new ItemBean();
-        bean.setDescription(desc);
-        bean.setImage(image);
-        bean.setTitle(title);
-        itemList.add(bean);
+//        bean = new ItemBean();
+//        bean.setDescription(desc);
+//        bean.setImage(image);
+//        bean.setTitle(title);
+//        itemList.add(bean);
     }
 	
 	private void setupFdEvent() {
@@ -118,8 +116,8 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	@Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
         // TODO Auto-generated method stub
-        ItemBean bean = (ItemBean)adapter.getItem(position);
-        Toast.makeText(this, "Title => "+bean.getTitle()+" n Description => "+bean.getDescription(), Toast.LENGTH_SHORT).show();
+//        ItemBean bean = (ItemBean)adapter.getItem(position);
+//        Toast.makeText(this, "Title => "+bean.getTitle()+" n Description => "+bean.getDescription(), Toast.LENGTH_SHORT).show();
     }
 
 	@Override
