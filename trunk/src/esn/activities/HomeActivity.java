@@ -243,6 +243,13 @@ public class HomeActivity extends SherlockMapActivity implements
 			 
 			return true;
 		}
+		
+		if (itemTitle.equals("Friends")) {
+			Intent intenFdsList = new Intent(this, FriendListActivity.class);
+			startActivity(intenFdsList);
+			return true;
+		}
+		
 		if (itemTitle.equals("New Event")) {
 			Intent intent = new Intent(this, AddNewEvent.class);
 			startActivityForResult(intent, REQUEST_CODE_ADD_NEW_EVENT);
