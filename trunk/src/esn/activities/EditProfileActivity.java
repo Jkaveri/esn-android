@@ -16,6 +16,6 @@ public class EditProfileActivity extends Activity {
 	}
 	
 	public void CancelClicked(View button) {
-		setContentView(R.layout.option);
+//		setContentView(R.layout.option);
 	}
 }
