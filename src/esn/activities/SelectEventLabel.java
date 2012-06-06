@@ -9,7 +9,7 @@ import org.ksoap2.serialization.SoapObject;
 import esn.adapters.EsnListAdapter;
 import esn.classes.EsnListItem;
 import esn.classes.EsnWebServices;
-import esn.classes.EventLabels;
+import esn.models.EventType;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;

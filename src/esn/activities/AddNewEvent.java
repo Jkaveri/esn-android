@@ -1,5 +1,6 @@
 package esn.activities;
 
+import esn.models.Events;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class AddNewEvent extends Activity {
 				.getText().toString();
 		String description = ((TextView) findViewById(R.id.esn_addNewEvent_txtDescription))
 				.getText().toString();
+		Events event = new Events();
 		homeData.putExtra("eventTitle", title);
 		homeData.putExtra("eventDescription", description);
 		setResult(RESULT_OK, homeData);

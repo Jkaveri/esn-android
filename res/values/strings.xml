@@ -109,5 +109,5 @@
 	<string name="btn.Friends.Lists.Diaglog.Visit">Visit</string>
 	<string name="btn.Friends.Lists.Diaglog.Unfriend">Unfriend</string>
 	<string name="btn.Friends.Lists.Diaglog.Close">Close</string>
-	
+	<string name="esn.global.dateFormat">MM-dd-yyyy</string>
 </resources>
