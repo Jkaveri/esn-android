@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +35,9 @@ import esn.adapters.ViewTypesListAdapter;
 import esn.classes.EsnWebServices;
 import esn.classes.ListNavigationItem;
 import esn.classes.Maps;
+import esn.models.EventType;
+import esn.models.Events;
+import esn.models.EventsManager;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
@@ -42,13 +46,14 @@ public class HomeActivity extends SherlockMapActivity implements
 	private Resources res;
 	public static final int REQUEST_CODE_ADD_NEW_EVENT = 1;
 	private boolean isPotentialLongPress;
+	protected Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
 		res = getResources();
-
+		handler = new Handler();
 		setContentView(R.layout.home);
 		setupActionBar();
 		setupMap();
@@ -66,11 +71,9 @@ public class HomeActivity extends SherlockMapActivity implements
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();
-
 		ViewTypesListAdapter list = new ViewTypesListAdapter(context,
 				R.layout.sherlock_spinner_item, mNavigationItems);
 		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		getSupportActionBar().setListNavigationCallbacks(list, this);
 	}
@@ -95,9 +98,29 @@ public class HomeActivity extends SherlockMapActivity implements
 		MapView mapView = (MapView) findViewById(R.id.gmapView);
 		map = new Maps(this, mapView);
 		// set zoom level to 14
-		map.setZoom(14);
+		map.setZoom(5);
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
 		// map.displayCurrentLocation();
+
+		new Thread() {
+			@Override
+			public void run() {
+				EventsManager manager = new EventsManager();
+				final Events[] events = manager.getAll();
+				handler.post(new Runnable() {
+
+					@Override
+					public void run() {
+						for (Events event : events) {
+							GeoPoint point = new GeoPoint(
+									(int) (event.EventLat * 1E6),
+									(int) (event.EventLong * 1E6));
+							map.setMarker(point, event.Title,event.Description,EventType.getDrawable(event.EventTypeID));
+						}
+					}
+				});
+			}
+		}.start();
 	}
 
 	@Override
@@ -133,7 +156,8 @@ public class HomeActivity extends SherlockMapActivity implements
 		// settings
 		menu.add("Settings").setIcon(R.drawable.ic_settings)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		menu.add("Navigate").setIcon(R.drawable.ic_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("Navigate").setIcon(R.drawable.ic_search)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 
@@ -240,7 +264,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		String itemTitle = item.getTitle().toString();
 		if (itemTitle.equals("Search")) {
 			item.collapseActionView();
-			 
+
 			return true;
 		}
 		

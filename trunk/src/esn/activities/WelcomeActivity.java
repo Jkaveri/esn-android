@@ -75,6 +75,7 @@ public class WelcomeActivity extends Activity {
 							access_token);
 					pref.putLong("fb_access_token_expires",
 							mFacebook.getAccessExpires());
+					pref.commit();
 					mAsyncRunner.request("me", new RequestListener() {
 
 						@Override
