@@ -39,6 +39,7 @@
     <string name="finding_current_location">Finding current location</string>
 	<string name="lbAccount">Account Info</string>
     <string name="search">Search</string>
+    
     <!-- Edit Profile -->
 	<string name="lbPerson">Personal Info</string>
     <string name="lbEdit_Profile">Edit Profile</string>
@@ -80,17 +81,25 @@
 	<string name="esn.addNewEvent.add">Add</string>
 	<string name="esn.addNewEvent.cancel">Cancel</string>
 	<string name="esn.addNewEvent.coordinate">Coordinate</string>
-	
 	<string name="esn.register.date"></string>
 	
-	
-	<!-- Option page -->
-	<string name="tvPosition">Set Position</string>
-	<string name="text_On">On position</string>
-	<string name="text_Off">Off position</string>
-	<string name="tvEditProfile">Edit Profile</string>
-	<string name="tvChangePass">Change Password</string>
-	<string name="btnLogout">Logout</string>
+	<!-- Settings page -->
+	<string name="esn.settings.app_settings">Application Settings</string>
+	<string name="esn.settings.subscript.app_settings">Setting in your app</string>
+	<string name="esn.settings.account">Accounts</string>
+	<string name="esn.settings.subscript.account">Setting account</string>
+	<string name="esn.settings.provition">Term</string>
+	<string name="esn.settings.subscript.provition">Read provition</string>
+	<string name="esn.settings.help">Help</string>
+	<string name="esn.settings.subscript.help">How to use app</string>
+	<string name="esn.settings.logout">Logout</string>
+	<string name="esn.settings.subscript.logout">Logout your app</string>
+	<string name="esn.settings.account.changepass">Change Password</string>
+	<string name="esn.settings.account.sub.changepass">Change Password</string>
+	<string name="esn.settings.account.editprofile">Edit Profile</string>
+	<string name="esn.settings.account.sub.editprofile">Edit Profile</string>
+	<string name="help">In this introductory Google Apps webinar</string>
+	<string name="term">In this introductory term</string>
 	
 	<string name="key.maps.googleAPI">0UKnO3qYoNtyMrP7ZfmZ2u0f6EjryZV-xHwC5QA</string>
 	

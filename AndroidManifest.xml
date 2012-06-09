@@ -66,6 +66,38 @@
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow">
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
+        <activity
+            android:name=".SettingsAccountActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
+        <activity
+            android:name=".SettingsAppActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
+        <activity
+            android:name=".SettingsHelpActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
+        <activity
+            android:name=".SettingsTermActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
+        <activity
+            android:name=".SettingsLogoutActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
+        <activity
+            android:name=".ChangePassActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:theme="@android:style/Theme.Black" >
+        </activity>
     </application>
 
 </manifest>

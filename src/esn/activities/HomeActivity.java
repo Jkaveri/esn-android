@@ -278,7 +278,13 @@ public class HomeActivity extends SherlockMapActivity implements
 			Intent intent = new Intent(this, AddNewEvent.class);
 			startActivityForResult(intent, REQUEST_CODE_ADD_NEW_EVENT);
 			return true;
-		} else {
+		} 
+		if (itemTitle.equals("Settings")) {
+			Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		else {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}
