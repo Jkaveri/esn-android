@@ -2,6 +2,8 @@ package esn.activities;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
