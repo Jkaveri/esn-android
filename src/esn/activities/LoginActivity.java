@@ -57,13 +57,6 @@ public class LoginActivity extends Activity {
 
 	public void LoginClicked(View view) {
 
-			
-		/*
-		 * dialog = new ProgressDialog(this);
-		 * dialog.setTitle(this.getResources().getString(R.string.app_login));
-		 * dialog.setTitle(getResources().getString(R.string.app_register));
-		 * dialog.show();
-		 */
 		new Thread() {
 			public void run() {
 
@@ -74,8 +67,7 @@ public class LoginActivity extends Activity {
 				EditText txtPass = (EditText) findViewById(R.id.esn_login_pass);
 				user.Email = txtEmail.getText().toString();
 
-				String passEncript = Md5Encript.md5(txtPass.getText()
-						.toString());
+				String passEncript = Md5Encript.md5(txtPass.getText().toString());
 
 				user.Password = passEncript;
 				user = usermManager.Login(user);

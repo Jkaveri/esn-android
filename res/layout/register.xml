@@ -17,8 +17,10 @@
             android:orientation="horizontal" >
 
             <ImageView
+                android:id="@+id/esn.register.avatar"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:onClick="AvatarClicked"
                 android:src="@drawable/avatar" />
 
             <LinearLayout
@@ -203,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hlPolicy"
-                android:textSize="12dp" />
+                android:textSize="12dp" />            
         </LinearLayout>
     </LinearLayout>
 
