@@ -88,7 +88,13 @@ public class UsersManager {
 		//parameter (tham so truyen vao ham)
 		Hashtable<String, Object> params = new Hashtable<String, Object>();
 		//them tham so user
-		params.put("user", user);
+		//params.put("user", user);
+		
+		String a = user.Email;
+		String b = user.Password;
+		
+		params.put("email", user.Email);
+		params.put("password", user.Password);
 		//add maping
 		service.addMaping("Users", Users.class);
 		//goi ham nhan ve ket qua

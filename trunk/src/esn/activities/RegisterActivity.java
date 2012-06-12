@@ -10,25 +10,37 @@ import org.kobjects.isodate.IsoDate;
 import com.facebook.android.Util;
 
 import esn.adapters.Md5Encript;
+import esn.classes.Base64;
+import esn.classes.HttpHelper;
 import esn.models.Users;
 import esn.models.UsersManager;
 import android.R.bool;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 
@@ -221,4 +233,120 @@ public class RegisterActivity extends Activity {
 			};
 		}.start();
 	}
+	
+	public void AvatarClicked(View view) {
+		
+		final CharSequence[] items = {"Photo Gallery","Camera","Cancel"};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Choose");
+		
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		    	if(item==0)
+		    	{
+		    		OpenPhotoGallery();		    		
+		    	}
+		    	else if(item==1)
+		    	{
+		    		OpenCamera();
+		    	}
+		    	else
+		    	{
+		    		return;
+		    	}
+		    }
+		});
+		
+		builder.show();
+	}
+	
+	private static final int CAMERA_PIC_REQUEST = 1337;  
+	
+	public void OpenCamera()
+	{
+		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		
+		startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);  
+		
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		ImageView image = (ImageView)findViewById(R.id.esn_register_avatar);
+		
+		if(requestCode == CAMERA_PIC_REQUEST)
+		{
+			if(resultCode == RESULT_OK)
+			{
+				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+				
+				
+				image.setImageBitmap(thumbnail);
+			}
+		}
+		else if(requestCode==SELECT_PICTURE)
+		{
+			if(resultCode == RESULT_OK)
+			{
+				Uri selectedImageUri = data.getData();
+                selectedImagePath = getPath(selectedImageUri);
+                image.setImageURI(selectedImageUri);
+			}
+		}
+	}
+	
+	
+	public String getPath(Uri uri) 
+	{
+		String[] projection = { MediaStore.Images.Media.DATA };		
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(column_index);
+	}
+	
+	private static final int SELECT_PICTURE = 1;
+	private String selectedImagePath;
+	
+	public void OpenPhotoGallery()
+	{
+		Intent intent = new Intent();
+		
+		intent.setType("image/*");
+	    intent.setAction(Intent.ACTION_GET_CONTENT);
+	    startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
+	}	
+	
+	
+	public void Uploader(String imagePath)
+	{
+		new Thread()
+		{
+			public void run() {
+				Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),1);
+
+				java.io.ByteArrayOutputStream bao = new java.io.ByteArrayOutputStream();
+				
+				bitmapOrg.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+
+				byte [] ba = bao.toByteArray();
+				
+				String ba1=Base64.encodeBytes(ba);
+
+				try{
+
+					HttpHelper helper = new HttpHelper("");
+					Bundle param= new Bundle();
+					param.putString("image", ba1);
+					helper.invokeWebMethod("UploadImage",param);
+				}
+				catch(Exception e){
+
+					Log.e("log_tag", "Error in http connection "+e.toString());
+
+				}
+			}
+		}.start();
+	}	
 }
