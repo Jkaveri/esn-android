@@ -7,14 +7,14 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import esn.adapters.ListViewFriendsAdapter;
-import esn.classes.Utils;
+import esn.classes.ImageLoader;
 import esn.models.FriendsListsDTO;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ActionMode;
 import android.view.View;
 import android.view.Window;
@@ -31,20 +31,31 @@ public class FriendListActivity extends SherlockActivity implements
 		OnNavigationListener, OnItemClickListener {
 	private ActionMode mMode;
 	private Resources res;
-	
 	private ListView lstFriend;
 	private ListViewFriendsAdapter adapter;
-    private ArrayList<Object> itemList;
-
+	private FriendListActivity context;
+	private Handler handler;
+	private ArrayList<FriendsListsDTO> itemList;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
+		
+		handler = new Handler();
+		context = this;
 		setRes(getResources());
 		setContentView(R.layout.friends_list);
 		setupActionBar();
 		setupListNavigate();
 		setupFriendList();
+	}
+	
+	@Override
+	public void onDestroy() {
+		adapter.imageLoader.stopThread();
+		lstFriend.setAdapter(null);
+		super.onDestroy();
 	}
 
 	private void setupListNavigate() {
@@ -59,49 +70,54 @@ public class FriendListActivity extends SherlockActivity implements
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
 	}
 	
-	 // Add one item into the Array List
-	private void addObjectToList(int accID, String avtURL, String title, String desc)
-    {
-		FriendsListsDTO bean = new FriendsListsDTO();
-        bean.name = title;
-        bean.avatarURL = avtURL;
-        bean.accID = accID;
-        itemList.add(bean);
-    }
-
 	private void setupFriendList() {
-		itemList = new ArrayList<Object>();
-        addObjectToList(1, "", "LÃ½ Ngá»�c BiÃªn", "Search desc");
-        addObjectToList(2, "", "Ä�Ã o Minh HoÃ ng", "Settings desc");
-        addObjectToList(3, "", "Shan Lee Yu", "Status");
-        
-        /////////////////////////////////////////////////////
-        lstFriend = (ListView)findViewById(R.id.lisvFriends);
-		adapter = new ListViewFriendsAdapter(this, itemList);
+//		Thread thr = new Thread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				
+//				FriendsManager frdMng = new FriendsManager();
+//				itemList = frdMng.getFriendsList(1, 2);
+//				
+//				handler.post(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						lstFriend = (ListView)findViewById(R.id.lisvFriends);
+//						adapter = new ListViewFriendsAdapter(context, itemList);
+//						lstFriend.setAdapter(adapter);
+//						lstFriend.setOnItemClickListener(context);
+//					}
+//				});
+//			}
+//		});
+//		
+//		thr.start();
+		
+		
+		////////////////////
+		itemList = new ArrayList<FriendsListsDTO>();		
+		itemList.add(new FriendsListsDTO(1, "Huyền Vũ", "http://a3.twimg.com/profile_images/740897825/AndroidCast-350_normal.png"));
+		itemList.add(new FriendsListsDTO(1, "Thiện Trương Quang", "http://a3.twimg.com/profile_images/670625317/aam-logo-v3-twitter.png"));
+		lstFriend = (ListView)findViewById(R.id.lisvFriends);
+		adapter = new ListViewFriendsAdapter(context, itemList);
 		lstFriend.setAdapter(adapter);
-		lstFriend.setOnItemClickListener(this);
+		lstFriend.setOnItemClickListener(context);
 	}
 	
 	@Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
 		FriendsListsDTO bean = (FriendsListsDTO)adapter.getItem(position);
-        
         final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.diag_frd_slec);
 //		dialog.setTitle("Title...");
 		TextView dis = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_Discript);
-		dis.setText("Discription");		
+		dis.setText("Discription");
 		TextView fullname = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_FullName);
 		fullname.setText(bean.name);
 		ImageView image = (ImageView) dialog.findViewById(R.id.img_Friends_Diaglog_Avatar);
-		
-		if(bean.avatarURL != null && !bean.avatarURL.equals("")){
-			Bitmap bm =  Utils.getBitmapFromURL(bean.avatarURL);
-			image.setImageBitmap(bm);
-		}else{
-			image.setImageResource(R.drawable.ic_no_avata);
-		}
+		adapter.imageLoader.displayImage(bean.avatarURL, this, image);
 		Button btnVisit = (Button) dialog.findViewById(R.id.btn_Friends_Diaglog_Visit);
 		// if button is clicked, close the custom dialog
 		btnVisit.setOnClickListener(new OnClickListener() {

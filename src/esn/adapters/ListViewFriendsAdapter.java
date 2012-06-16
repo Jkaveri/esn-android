@@ -3,11 +3,10 @@ package esn.adapters;
 import java.util.ArrayList;
 
 import esn.activities.R;
-import esn.classes.Utils;
+import esn.classes.ImageLoader;
 import esn.models.FriendsListsDTO;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,76 +15,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ListViewFriendsAdapter extends BaseAdapter {
+	private Activity activity;
+	private ArrayList<FriendsListsDTO> data;
+	private static LayoutInflater inflater = null;
+	public ImageLoader imageLoader;
 
-	public ArrayList<Object> itemList;
-	public Activity context;
-	public LayoutInflater inflater;
-
-	public ListViewFriendsAdapter(Activity context, ArrayList<Object> itemList) {
-		super();
-
-		this.context = context;
-		this.itemList = itemList;
-
-		this.inflater = (LayoutInflater) context
+	public ListViewFriendsAdapter(Activity a, ArrayList<FriendsListsDTO> listFrd) {
+		this.activity = a;
+		this.data = listFrd;
+		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.imageLoader = new ImageLoader(activity.getApplicationContext());
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return itemList.size();
+		return data.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return itemList.get(position);
+		return data.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public static class ViewHolder {
-		ImageView imgViewLogo;
-		TextView txtViewTitle;
-		TextView txtViewDescription;
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+		View vi = convertView;
+		if (convertView == null)
+			vi = inflater.inflate(R.layout.listitem_row, null);
 
-		ViewHolder holder;
-		if (convertView == null) {
-			holder = new ViewHolder();
-			convertView = inflater.inflate(R.layout.listitem_row, null);
-
-			holder.imgViewLogo = (ImageView) convertView
-					.findViewById(R.id.imgViewLogo);
-			holder.txtViewTitle = (TextView) convertView
-					.findViewById(R.id.txtViewTitle);
-			holder.txtViewDescription = (TextView) convertView
-					.findViewById(R.id.txtViewDescription);
-			convertView.setTag(holder);
-		} else
-			holder = (ViewHolder) convertView.getTag();
-
-		FriendsListsDTO bean = (FriendsListsDTO) itemList.get(position);
-		if(bean.avatarURL != null && !bean.avatarURL.equals("")){
-			Bitmap bm =  Utils.getBitmapFromURL(bean.avatarURL);
-			holder.imgViewLogo.setImageBitmap(bm);
-		}else{
-			holder.imgViewLogo.setImageResource(R.drawable.ic_no_avata);
-		}
-		
-		holder.txtViewTitle.setText(bean.name);
-		holder.txtViewDescription.setText("Chua co");
-
-		return convertView;
+		TextView title = (TextView) vi.findViewById(R.id.txtViewTitle);
+		ImageView image = (ImageView) vi.findViewById(R.id.imgViewLogo);
+		TextView discrip = (TextView) vi.findViewById(R.id.txtViewDescription);
+		title.setText(data.get(position).name);
+		discrip.setText("Descript " + data.get(position).accID);//So ban chung
+		imageLoader.displayImage(data.get(position).avatarURL, activity, image);
+		return vi;
 	}
-
 }

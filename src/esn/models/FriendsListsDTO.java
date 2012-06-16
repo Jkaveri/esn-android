@@ -10,6 +10,16 @@ public class FriendsListsDTO implements KvmSerializable{
 	public String name;
 	public String avatarURL;
 	
+	public FriendsListsDTO(){
+	}
+	
+	
+	public FriendsListsDTO(int accID, String name, String avtURL){
+		this.accID = accID;
+		this.name = name;
+		this.avatarURL = avtURL;
+	}
+	
 	@Override
 	public Object getProperty(int index) {
 		switch (index) {
@@ -58,6 +68,8 @@ public class FriendsListsDTO implements KvmSerializable{
 			break;
 		case 2:
 			avatarURL = obj.toString();
+			break;
+		default:
 			break;
 		}
 	}
