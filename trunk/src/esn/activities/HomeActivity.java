@@ -8,11 +8,14 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -101,26 +104,6 @@ public class HomeActivity extends SherlockMapActivity implements
 		map.setZoom(5);
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
 		// map.displayCurrentLocation();
-
-		new Thread() {
-			@Override
-			public void run() {
-				EventsManager manager = new EventsManager();
-				final Events[] events = manager.getAll();
-				handler.post(new Runnable() {
-
-					@Override
-					public void run() {
-						for (Events event : events) {
-							GeoPoint point = new GeoPoint(
-									(int) (event.EventLat * 1E6),
-									(int) (event.EventLong * 1E6));
-							map.setMarker(point, event.Title,event.Description,EventType.getDrawable(event.EventTypeID));
-						}
-					}
-				});
-			}
-		}.start();
 	}
 
 	@Override
@@ -190,10 +173,9 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	private void longestTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			// get current point
 			final GeoPoint p = map.getMap().getProjection()
-					.fromPixels((int) event.getX(), (int) event.getY());// get
-																		// current
-																		// point
+					.fromPixels((int) event.getX(), (int) event.getY());
 
 			new Thread(new Runnable() {
 				public void run() {
@@ -267,24 +249,23 @@ public class HomeActivity extends SherlockMapActivity implements
 
 			return true;
 		}
-		
+
 		if (itemTitle.equals("Friends")) {
 			Intent intenFdsList = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsList);
 			return true;
 		}
-		
+
 		if (itemTitle.equals("New Event")) {
 			Intent intent = new Intent(this, AddNewEvent.class);
 			startActivityForResult(intent, REQUEST_CODE_ADD_NEW_EVENT);
 			return true;
-		} 
+		}
 		if (itemTitle.equals("Settings")) {
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			return true;
-		}
-		else {
+		} else {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}
@@ -309,15 +290,41 @@ public class HomeActivity extends SherlockMapActivity implements
 	}
 
 	@Override
-	protected boolean isRouteDisplayed() {
-
-		return false;
-	}
-
-	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		Toast.makeText(this, mNavigationItems[itemPosition].getText(),
 				Toast.LENGTH_SHORT).show();
 		return true;
 	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+
+		return false;
+	}
+
+	private class loadEventsThread extends Thread {
+		@Override
+		public void run() {
+			Location current = map.getCurrentLocation();
+			if (current != null) {
+				EventsManager manager = new EventsManager();
+				final Events[] events = manager.getAvailableEvents();
+				handler.post(new Runnable() {
+
+					@Override
+					public void run() {
+						for (Events event : events) {
+							GeoPoint point = new GeoPoint(
+									(int) (event.EventLat * 1E6),
+									(int) (event.EventLong * 1E6));
+							map.setMarker(point, event.Title,
+									event.Description,
+									EventType.getDrawable(event.EventTypeID));
+						}
+					}
+				});
+			}
+		}
+	}
+
 }

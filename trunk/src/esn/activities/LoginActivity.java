@@ -1,16 +1,14 @@
 package esn.activities;
 
-import com.facebook.android.Facebook;
-import com.facebook.android.Util;
-
-import esn.adapters.Md5Encript;
-import esn.models.Users;
+import esn.classes.Sessions;
 import esn.models.UsersManager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -23,19 +21,27 @@ public class LoginActivity extends Activity {
 
 	Intent intent;
 
-	private final int REQUEST_CODE_CREATE_LOGIN_HOME = 1;
-
 	private ProgressDialog dialog;
-	
+
 	private Handler handler;
-	
+
 	private Context context;
+
+	public SharedPreferences pref;
+
+	public String email;
+
+	private Sessions session;
+
+	public String password;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.login);
+		session = Sessions.getInstance(context);
 
 		intent = this.getIntent();
 		handler = new Handler();
@@ -57,46 +63,56 @@ public class LoginActivity extends Activity {
 
 	public void LoginClicked(View view) {
 
-		new Thread() {
-			public void run() {
+		dialog = new ProgressDialog(this);
+		dialog.setTitle(this.getResources().getString(R.string.app_login));
+		dialog.setTitle(getResources().getString(R.string.app_register));
+		dialog.show();
+		LoginThread loginThread = new LoginThread();
+		loginThread.start();
+	}
 
-				UsersManager usermManager = new UsersManager();
-				Users user = new Users();
+	public class LoginThread extends Thread {
+		public LoginThread() {
+		}
 
-				EditText txtEmail = (EditText) findViewById(R.id.esn_login_Email);
-				EditText txtPass = (EditText) findViewById(R.id.esn_login_pass);
-				user.Email = txtEmail.getText().toString();
+		@Override
+		public void run() {
+			UsersManager usermManager = new UsersManager();
+			EditText txtEmail = (EditText) findViewById(R.id.esn_login_Email);
+			EditText txtPass = (EditText) findViewById(R.id.esn_login_pass);
+			email = txtEmail.getText().toString();
+			password = txtPass.getText().toString();
+			if (usermManager.Login(email, password)) {
 
-				String passEncript = Md5Encript.md5(txtPass.getText().toString());
-
-				user.Password = passEncript;
-				user = usermManager.Login(user);
-				// dialog.hide();
-
-				if (user != null) {
-					Intent intentLogin = new Intent(getApplicationContext(),
-							HomeActivity.class);
-					startActivityForResult(intentLogin,
-							REQUEST_CODE_CREATE_LOGIN_HOME);
-				} else {
-					handler.post(new Runnable() {
-
-						@Override
-						public void run() {
-
-							Util.showAlert(context, "Warning",
-									"Incorrect information !");
-						}
-					});
-				}
-			};
-		}.start();
+				handler.post(new loginSuccess());
+			} else {
+				handler.post(new loginFail());
+			}
+		}
 
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		super.onActivityResult(requestCode, resultCode, data);
+	private class loginFail implements Runnable {
+		@Override
+		public void run() {
+			dialog.dismiss();
+			AlertDialog.Builder alert = new AlertDialog.Builder(context);
+			alert.setTitle("Failed!");
+			alert.setMessage("Username or password is wrong!");
+			alert.show();
+		}
 	}
+
+	private class loginSuccess implements Runnable {
+		@Override
+		public void run() {
+			session.put("email", email);
+			session.put("password", password);
+			dialog.dismiss();
+			Intent intent = new Intent(context, HomeActivity.class);
+			startActivity(intent);
+			finish();
+		}
+	}
+
 }
