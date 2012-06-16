@@ -1,5 +1,6 @@
 package esn.models;
 
+import java.util.Date;
 import java.util.Hashtable;
 
 import org.kobjects.isodate.IsoDate;
@@ -14,8 +15,10 @@ import esn.classes.EsnWebServices;
 public class UsersManager {
 
 	
-	String NAMESPACE = "http://esnservice.somee.com/";	 
-    String URL = "http://esnservice.somee.com/accountservice.asmx";
+//	String NAMESPACE = "http://esnservice.somee.com/";	 
+  //  String URL = "http://esnservice.somee.com/accountservice.asmx";
+	String NAMESPACE = "http://localhost/";	 
+	String URL = "http://10.0.2.2:3333/AccountsWS.asmx";
 	
 	private EsnWebServices service = new EsnWebServices(NAMESPACE, URL);
 	
@@ -64,22 +67,35 @@ public class UsersManager {
 		return ListUser;
 	}
 	
-	public Boolean Register(Users user)
+	public Users Register(String firstName, String lastName, String email, String password, String birthday,
+            String phone, boolean gender)
 	{
 		String METHOD_NAME = "Register";
 		
 		Hashtable<String, Object> params = new Hashtable<String, Object>();
 		
-		params.put("user", user);
-		
-		service.addMaping("Users", Users.class);
+		params.put("firstName", firstName);
+		params.put("lastName", firstName);
+		params.put("email", email);
+		params.put("password", password);
+		params.put("birthday", birthday);
+		params.put("phone", phone);
+		params.put("gender", gender);
 		
 		SoapObject responseObject = service.InvokeMethod(METHOD_NAME,params);
-					
-		return Boolean.parseBoolean(responseObject.toString());
+		if(responseObject!=null){
+			SoapObject userSoap = (SoapObject)responseObject.getProperty(0);
+			int userFieldCount = userSoap.getAttributeCount();
+			Users user = new  Users();
+			for(int i = 0; i<userFieldCount;i++){
+				user.setProperty(i, userSoap.getProperty(i));
+			}
+			return user;
+		}
+		return null;
 	}
 	
-	public Users Login(Users user)
+	public boolean Login(String email, String password)
 	{
 		// dat bien user = null
 		Users  usr = null;
@@ -88,31 +104,21 @@ public class UsersManager {
 		//parameter (tham so truyen vao ham)
 		Hashtable<String, Object> params = new Hashtable<String, Object>();
 		//them tham so user
-		//params.put("user", user);
-		
-		String a = user.Email;
-		String b = user.Password;
-		
-		params.put("email", user.Email);
-		params.put("password", user.Password);
-		//add maping
-		service.addMaping("Users", Users.class);
+		params.put("email", email);
+		params.put("password", password);
 		//goi ham nhan ve ket qua
-		SoapObject result = service.InvokeMethod(METHOD_NAME,params);
+		SoapObject resultWraper = service.InvokeMethod(METHOD_NAME,params);
 		//neu ket qua !=null
-		if(result.getPropertyCount()>0)
+		if(resultWraper.getPropertyCount()>0)
 		{
 			//lay ket qua (user)
-			SoapObject userResult = (SoapObject) result.getProperty(0);	
-			//khoi tao user
-			usr = new Users();
-			//set email
-			usr.Email = userResult.getProperty(0).toString();
-			//set password
-			usr.Name = userResult.getProperty(3).toString();
+			String loginResult =resultWraper.getProperty(0).toString();	
+			if(Boolean.parseBoolean(loginResult)){
+				return true;
+			}
 			
 		}
-		return usr;
+		return false;
 		
 	}
 	

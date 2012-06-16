@@ -180,12 +180,13 @@ public class Maps implements LocationListener {
 		boolean enabled = locationManager
 				.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		// set event listener for current location is change
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-				0, this);
+		
 		if (enabled) {
 			Criteria criteria = new Criteria();
 			String provider = locationManager.getBestProvider(criteria, false);
 			currLocation = locationManager.getLastKnownLocation(provider);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+					0, this);
 		} else {
 			Toast.makeText(
 					context,

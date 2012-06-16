@@ -12,7 +12,6 @@ public class ChangePassActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.change_pass);
 		
 	}
