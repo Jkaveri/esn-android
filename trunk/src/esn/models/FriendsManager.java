@@ -47,11 +47,7 @@ public class FriendsManager {
 		return frdList;
 	}
 
-//	public Events setEntity(Events event) {
-//		Hashtable<String, Object> params = new Hashtable<String, Object>();
-//		params.put("event", event);
-//		service.addMaping("Events", Events.class);
-//		SoapObject response = service.InvokeMethod("InserEvent", params);
-//		return event;
-//	}
+	public boolean unfriend(int accID, int friendID) {
+		return true;
+	}
 }
