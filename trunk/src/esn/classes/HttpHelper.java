@@ -5,14 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.ByteArrayBuffer;
@@ -29,7 +32,7 @@ public class HttpHelper {
 	}
 
 	private HttpResponse post(String url, Bundle headers,
-			List<NameValuePair> params) throws ClientProtocolException,
+			JSONObject params) throws ClientProtocolException,
 			IOException {
 		// instance client
 		HttpClient client = new DefaultHttpClient();
@@ -42,7 +45,8 @@ public class HttpHelper {
 			}
 		}
 		if (params != null) {
-			httpPost.setEntity(new UrlEncodedFormEntity(params));
+			
+			httpPost.setEntity(new StringEntity(params.toString(), "UTF-8"));
 		}
 		// execute request
 		return client.execute(httpPost);
@@ -79,7 +83,7 @@ public class HttpHelper {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public JSONObject invokeWebMethod(String method, Bundle params)
+	public JSONObject invokeWebMethod(String method, JSONObject params)
 			throws JSONException, IOException {
 		// init result
 		JSONObject result = null;
@@ -88,27 +92,18 @@ public class HttpHelper {
 		headers.putString("Content-Type", "application/json");
 		headers.putString("Content-Encoding", "utf-8");
 		// set params
-		List<NameValuePair> dataParams = null;
-		if (params != null) {
-			// instance dataParams
-			dataParams = new ArrayList<NameValuePair>();
-			// duyet het cac key trong params
-			for (String key : params.keySet()) {
-				dataParams.add(new BasicNameValuePair(key, params
-						.getString(key)));
-			}
-		}
 		String url_method = this.url + method;
 		// execute post request
-		HttpResponse response = post(url_method, headers, dataParams);
+		HttpResponse response = post(url_method, headers, params);
 		// get input stream
 		InputStream in = response.getEntity().getContent();
+		String jsonString = read(in);
 		// get result
-		result = new JSONObject(read(in));
-		if (result.has("d")) {
-			result = result.getJSONObject("d");
+		if(jsonString!= null && jsonString.length() > 0){
+			result = new JSONObject(jsonString);
+			return result;
 		}
-		return result;
+		return null;
 	}
 
 	public JSONObject get(String method) throws ClientProtocolException,
