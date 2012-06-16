@@ -31,10 +31,10 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	private ActionMode mMode;
 	private Resources res;
 	private MapView mapView;
-	
+
 	private ListView lstFdEvents;
 	private ListViewFriendsAdapter adapter;
-    private ArrayList<Object> itemList;
+	private ArrayList<Object> itemList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,37 +52,38 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 
 	private void setupListView() {
 		itemList = new ArrayList<Object>();
-        addObjectToList(R.drawable.ic_search, "Search", "Search desc");
-        addObjectToList(R.drawable.ic_settings, "Settings", "Settings desc");
-        
-        lstFdEvents = (ListView)findViewById(R.id.lisvFdEvents);
-		adapter = new ListViewFriendsAdapter(this, itemList);
+		addObjectToList(R.drawable.ic_search, "Search", "Search desc");
+		addObjectToList(R.drawable.ic_settings, "Settings", "Settings desc");
+
+		lstFdEvents = (ListView) findViewById(R.id.lisvFdEvents);
+//		adapter = new ListViewFriendsAdapter(this, itemList);
 		lstFdEvents.setAdapter(adapter);
 		lstFdEvents.setOnItemClickListener(this);
 	}
 
-	 // Add one item into the Array List
-	private void addObjectToList(int image, String title, String desc)
-    {
-//        bean = new ItemBean();
-//        bean.setDescription(desc);
-//        bean.setImage(image);
-//        bean.setTitle(title);
-//        itemList.add(bean);
-    }
-	
+	// Add one item into the Array List
+	private void addObjectToList(int image, String title, String desc) {
+		// bean = new ItemBean();
+		// bean.setDescription(desc);
+		// bean.setImage(image);
+		// bean.setTitle(title);
+		// itemList.add(bean);
+	}
+
 	private void setupFdEvent() {
-		
+
 	}
 
 	private void setupListNavigate() {
 		mNavigationItems = new ListNavigationItem[2];
 		mNavigationItems[0] = new ListNavigationItem();
-		mNavigationItems[0].setText(getString(R.string.str_Friends_Events_ViewAsMap));
+		mNavigationItems[0]
+				.setText(getString(R.string.str_Friends_Events_ViewAsMap));
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
 
 		mNavigationItems[1] = new ListNavigationItem();
-		mNavigationItems[1].setText(getString(R.string.str_Friends_Events_ViewAsList));
+		mNavigationItems[1]
+				.setText(getString(R.string.str_Friends_Events_ViewAsList));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();
@@ -112,13 +113,16 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
 		map.displayCurrentLocation();
 	}
-	
+
 	@Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-        // TODO Auto-generated method stub
-//        ItemBean bean = (ItemBean)adapter.getItem(position);
-//        Toast.makeText(this, "Title => "+bean.getTitle()+" n Description => "+bean.getDescription(), Toast.LENGTH_SHORT).show();
-    }
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		// ItemBean bean = (ItemBean)adapter.getItem(position);
+		// Toast.makeText(this,
+		// "Title => "+bean.getTitle()+" n Description => "+bean.getDescription(),
+		// Toast.LENGTH_SHORT).show();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,11 +132,11 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
 								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		menu.add("Search")
-		.setIcon(R.drawable.ic_search)
-		.setActionView(R.layout.collapsible_edittext)
-		.setShowAsAction(
-				MenuItem.SHOW_AS_ACTION_IF_ROOM
-						| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+				.setIcon(R.drawable.ic_search)
+				.setActionView(R.layout.collapsible_edittext)
+				.setShowAsAction(
+						MenuItem.SHOW_AS_ACTION_IF_ROOM
+								| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		return true;
 	}
 
@@ -142,12 +146,12 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 		if (itemTitle.equals("Search")) {
 			item.collapseActionView();
 			return true;
-		}else if(itemTitle.equals("FriendList")){
+		} else if (itemTitle.equals("FriendList")) {
 			finish();
 			Intent intenFdsLists = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsLists);
 			return true;
-		}else {
+		} else {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}
@@ -161,12 +165,13 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		String postTitle = mNavigationItems[itemPosition].getText().toString();
-		Toast.makeText(this, postTitle , Toast.LENGTH_SHORT).show();
-		
-		if(postTitle.equals(getString(R.string.str_Friends_Events_ViewAsMap))){
+		Toast.makeText(this, postTitle, Toast.LENGTH_SHORT).show();
+
+		if (postTitle.equals(getString(R.string.str_Friends_Events_ViewAsMap))) {
 			lstFdEvents.setVisibility(View.INVISIBLE);
 			mapView.setVisibility(View.VISIBLE);
-		}else if(postTitle.equals(getString(R.string.str_Friends_Events_ViewAsList))){
+		} else if (postTitle
+				.equals(getString(R.string.str_Friends_Events_ViewAsList))) {
 			lstFdEvents.setVisibility(View.VISIBLE);
 			mapView.setVisibility(View.INVISIBLE);
 		}
