@@ -19,7 +19,9 @@ public class Sessions {
 		}
 		return instance;
 	}
-
+	public void clear(){
+		pref.edit().clear();
+	}
 	public void put(String key, int value) {
 		pref.edit().putInt(key, value).commit();
 	}
