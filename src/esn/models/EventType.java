@@ -12,57 +12,19 @@ import esn.activities.R;
 import android.graphics.drawable.Drawable;
 
 public class EventType implements KvmSerializable {
-	private int EventTypeID;
-	private String EventTypeName;
-	private String LabelImage;
-	private Date Time;
-	private Boolean Status;
+	public int EventTypeID;
+	public String EventTypeName;
+	public String LabelImage;
+	public String Slug;
+	public int Time;
+	public int Status;
 
-	public int getEventTypeID() {
-		return EventTypeID;
-	}
-
-	public void setEventTypeID(int eventTypeID) {
-		EventTypeID = eventTypeID;
-	}
-
-	public String getEventTypeName() {
-		return EventTypeName;
-	}
-
-	public void setEventTypeName(String eventTypeName) {
-		EventTypeName = eventTypeName;
-	}
-
-	public String getLabelImage() {
-		return LabelImage;
-	}
-
-	public void setLabelImage(String labelImage) {
-		LabelImage = labelImage;
-	}
-
-	public Date getTime() {
-		return Time;
-	}
-
-	public void setTime(Date time) {
-		Time = time;
-	}
-
-	public Boolean getStatus() {
-		return Status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.Status = status;
-	}
-
-	public static int getDrawable(int eventTypeID) {
+	
+	public static int getIconId(int eventTypeID,int level) {
 		int default_icon = R.drawable.ic_event_label_1;
 		try {
-			Field field = esn.activities.R.drawable.class.getField("ic_event_label_"
-					+ eventTypeID);
+			Field field = esn.activities.R.drawable.class.getField("ic_event_type_"
+					+ eventTypeID+"_"+level);
 
 			if (field != null) {
 				String value = field.get(esn.activities.R.class).toString();
@@ -77,7 +39,8 @@ public class EventType implements KvmSerializable {
 		}
 		return default_icon;
 	}
-
+	
+	
 	@Override
 	public Object getProperty(int index) {
 		// TODO Auto-generated method stub

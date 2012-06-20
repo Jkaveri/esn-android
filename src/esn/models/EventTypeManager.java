@@ -1,37 +1,39 @@
 package esn.models;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
-import org.ksoap2.serialization.SoapObject;
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import esn.classes.EsnWebServices;
+import esn.classes.HttpHelper;
+import esn.classes.Utils;
 
 public class EventTypeManager {
-	final String NAMESPACE = "http://localhost/";
-	final String URL = "http://10.0.2.2:3333/EventsWS.asmx";
-	EsnWebServices services = new EsnWebServices(NAMESPACE, URL);
+	final String NAMESPACE = "http://esn.com.vn/";
+	final String URL = "http://10.0.2.2/esn/EventsWS.asmx";
+	HttpHelper helper = new HttpHelper(URL);
 
 	public EventTypeManager() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<EventType> getList() {
+	public List<EventType> getList() throws ClientProtocolException,
+			IOException, JSONException, IllegalArgumentException,
+			IllegalAccessException {
 		List<EventType> list = new ArrayList<EventType>();
-		Hashtable<String, Object> params = new Hashtable<String, Object>();
-		SoapObject response = services.InvokeMethod("GetListEventTypes");
-		if(response!=null && response.getPropertyCount()>0){
-			SoapObject soapListEventType = (SoapObject) response.getProperty(0);
-			//duyet tung event type
-			for (int i = 0; i < soapListEventType.getPropertyCount(); i++) {
-				SoapObject soapEventType = (SoapObject) soapListEventType.getProperty(i);
-				EventType type = new EventType();
-				for(int j = 0;i<soapEventType.getPropertyCount();j++){
-					type.setProperty(j, soapEventType.getProperty(j));
-					
-				}
-				list.add(type);
+
+		JSONObject response = helper.invokeWebMethod("GetListEventTypes");
+		if (response != null) {
+			JSONArray eventTypeArr = response.getJSONArray("d");
+			for (int i = 0; i < eventTypeArr.length(); i++) {
+				JSONObject jsonEventType = eventTypeArr.getJSONObject(i);
+				EventType eventType = new EventType();
+				Utils.JsonToObject(jsonEventType, eventType);
+				list.add(eventType);
 			}
 		}
 		return list;

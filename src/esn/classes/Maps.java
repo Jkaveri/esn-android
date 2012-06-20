@@ -1,6 +1,7 @@
 package esn.classes;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -15,20 +16,27 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.DragEvent;
+import android.view.View.OnDragListener;
+import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import esn.activities.HomeActivity;
 import esn.activities.R;
+import esn.models.Events;
 
 public class Maps implements LocationListener {
 	private MapView map;
 	private MapController mapController;
 	private Context context;
-	private Markers marker;
+	private EsnItemizedOverlay marker;
 	private Location currLocation;
 	private GeoPoint currPoint;
 	private boolean displayCurrentLocation = false;
@@ -37,61 +45,87 @@ public class Maps implements LocationListener {
 	private Handler handler;
 	protected Geocoder geoCoder;
 	private Resources res;
-
+	private List<Overlay> mapOverlays;
+	private ArrayList<Events> events;
 	public Maps(Context context, MapView map) {
 		this.map = map;
 		this.context = context;
 		this.res = context.getResources();
 		this.mapController = map.getController();
+		mapOverlays = map.getOverlays();
 		handler = new Handler();
+		events = new ArrayList<Events>();
+		
 	}
-
-	public void setMarker(EsnOverlayItem item, int drawable) {
+	public void addEvent(Events event){
+		events.add(event);
+	}
+	public void removeEvent(Events event){
+		events.remove(event);
+	}
+	public Events getEvent(int index){
+		return events.get(index);
+	}
+	
+	public void setOnTouchEvent(OnTouchListener l){
+		this.map.setOnTouchListener(l);
+	
+	}
+	public void setOnDragListener(OnDragListener l){
+		this.map.setOnDragListener(l);
+	}
+	public void hideAllBallon(){
+		if(marker!=null){
+			marker.hideAllBalloons();
+		}
+	}
+	
+	public void setMarker(EventOverlayItem item, int drawable) {
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
 		// instance HelloItemizedOverlay with image
-		marker = new Markers(context, markerIcon);
+		marker = new EsnItemizedOverlay(markerIcon, map);
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
 		// set marker
-		map.getOverlays().add(marker);
+		mapOverlays.add(marker);
 	}
 
-	public void setMarker(EsnOverlayItem item, Drawable drawable) {
+	public void setMarker(EventOverlayItem item, Drawable drawable) {
 		// instance HelloItemizedOverlay with image
-		marker = new Markers(context, drawable);
+		marker = new EsnItemizedOverlay(drawable, map);
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
 		// set marker
-		map.getOverlays().add(marker);
+		mapOverlays.add(marker);
 	}
 
+	public void setMarker(GeoPoint point, String title, String subtitle,int eventId,
+			int drawable) {
+		// create overlay item
+		EventOverlayItem item = new EventOverlayItem(point, title, subtitle,eventId);
+		// get pointer image
+		Drawable markerIcon = context.getResources().getDrawable(drawable);
+		// instance HelloItemizedOverlay with image
+		marker = new EsnItemizedOverlay(markerIcon, map);
+		// add itemOVerlay to itemizedOverlay
+		marker.addOverlay(item);
+		// set marker
+		mapOverlays.add(marker);
+	}
 	public void setMarker(GeoPoint point, String title, String subtitle,
 			int drawable) {
 		// create overlay item
-		EsnOverlayItem item = new EsnOverlayItem(point, title, subtitle);
+		EventOverlayItem item = new EventOverlayItem(point, title, subtitle);
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
 		// instance HelloItemizedOverlay with image
-		marker = new Markers(context, markerIcon);
+		marker = new EsnItemizedOverlay(markerIcon, map);
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
 		// set marker
-		map.getOverlays().add(marker);
+		mapOverlays.add(marker);
 	}
-
-	public void setMarker(GeoPoint point, String title, String subtitle,
-			Drawable drawable) {
-		// create overlay item
-		EsnOverlayItem item = new EsnOverlayItem(point, title, subtitle);
-		// instance HelloItemizedOverlay with image
-		marker = new Markers(context, drawable);
-		// add itemOVerlay to itemizedOverlay
-		marker.addOverlay(item);
-		// set marker
-		map.getOverlays().add(marker);
-	}
-
 	public void search(final String query) {
 		// show dialog
 		dialog = ProgressDialog.show(context, "Search...",
@@ -127,9 +161,9 @@ public class Maps implements LocationListener {
 										.getLatitude() * 1E6), (int) (address
 										.getLongitude() * 1E6));
 								// initialize itemOverlay with current point
-								EsnOverlayItem itemOverlay = new EsnOverlayItem(
+								EventOverlayItem itemOverlay = new EventOverlayItem(
 										point, address.getCountryName(),
-										address.getLocality());
+										address.getLocality(),0);
 								setMarker(itemOverlay, R.drawable.pointer);
 								if (isFirst) {
 									mapController.setCenter(point);
@@ -173,7 +207,19 @@ public class Maps implements LocationListener {
 	public void setCenter(GeoPoint point) {
 		mapController.setCenter(point);
 	}
-
+	public GeoPoint getCenter(){
+		return map.getMapCenter();
+	}
+	public int getZoomLevel() {
+		// TODO Auto-generated method stub
+		return map.getZoomLevel();
+	}
+	public boolean zoomIn(){
+		return mapController.zoomIn();
+	}
+	public boolean zoomOut(){
+		return mapController.zoomOut();
+	}
 	public Location getCurrentLocation() {
 		LocationManager locationManager = (LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE);
@@ -185,8 +231,8 @@ public class Maps implements LocationListener {
 			Criteria criteria = new Criteria();
 			String provider = locationManager.getBestProvider(criteria, false);
 			currLocation = locationManager.getLastKnownLocation(provider);
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-					0, this);
+			handler.post(new LocationUpudate(locationManager));
+			
 		} else {
 			Toast.makeText(
 					context,
@@ -287,5 +333,18 @@ public class Maps implements LocationListener {
 	public void setCurrMarkerIcon(int currMarkerIcon) {
 		this.currMarkerIcon = currMarkerIcon;
 	}
+	private class LocationUpudate implements Runnable{
+		
+		private LocationManager locationManager;
+		public LocationUpudate(LocationManager manager) {
+			locationManager = manager;
+		}
+		@Override
+		public void run() {
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+					0, Maps.this);
+		}
+	}
+	
 	
 }

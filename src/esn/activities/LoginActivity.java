@@ -1,6 +1,11 @@
 package esn.activities;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+
 import esn.classes.Sessions;
+import esn.models.Users;
 import esn.models.UsersManager;
 
 import android.app.Activity;
@@ -13,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -106,14 +112,39 @@ public class LoginActivity extends Activity {
 
 	private class loginSuccess implements Runnable {
 		@Override
-		public void run() {
+		public void run() {			
 			session.put("email", email);
 			session.put("password", password);
+			new GetUserInfoThread().start();
 			dialog.dismiss();
 			Intent intent = new Intent(context, HomeActivity.class);
 			startActivity(intent);
 			finish();
 		}
 	}
-
+	private class GetUserInfoThread extends Thread{
+		@Override
+		public void run() {
+			UsersManager manager = new UsersManager();
+			
+			try {
+				Users user = manager.RetrieveByEmail(session.get("email", ""));
+				if(user!=null){
+					session.currentUser = user;
+				}
+			} catch (IllegalArgumentException e) {
+				Log.e("esn", e.getMessage());
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
