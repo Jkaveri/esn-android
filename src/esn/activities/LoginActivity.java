@@ -41,6 +41,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.login);
+		
 		session = Sessions.getInstance(context);
 
 		intent = this.getIntent();
@@ -64,9 +65,10 @@ public class LoginActivity extends Activity {
 	public void LoginClicked(View view) {
 
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.app_login));
-		dialog.setTitle(getResources().getString(R.string.app_register));
+		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
+		dialog.setMessage("Waiting ....");
 		dialog.show();
+		
 		LoginThread loginThread = new LoginThread();
 		loginThread.start();
 	}
@@ -83,7 +85,6 @@ public class LoginActivity extends Activity {
 			email = txtEmail.getText().toString();
 			password = txtPass.getText().toString();
 			if (usermManager.Login(email, password)) {
-
 				handler.post(new loginSuccess());
 			} else {
 				handler.post(new loginFail());

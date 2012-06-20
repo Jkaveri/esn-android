@@ -41,7 +41,8 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/app_register">
+            android:label="@string/app_register"
+            android:theme="@android:style/Theme.Black.NoTitleBar">
         </activity>
         
         <activity
@@ -69,35 +70,52 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:label="@string/app_Setting"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsAccountActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:label="@string/app_Setting_Account"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsAppActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:label="@string/app_Setting_ApplicationSetting"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsHelpActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:label="@string/app_Setting_Help"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow"  >
         </activity>
         <activity
             android:name=".SettingsTermActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:label="@string/app_Setting_Terms"
+            android:theme="@style/esn.theme.light">
         </activity>
         <activity
             android:name=".SettingsLogoutActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:label="@string/app_name"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".ChangePassActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:icon="@drawable/logo"
+            android:label="@string/app_Setting_Account_ChangePassword"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".EditProfileActivity"
-            android:theme="@android:style/Theme.Black" >
+            android:icon="@drawable/logo"
+            android:label="@string/app_Setting_Account_ChangeProfile"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
     </application>
 

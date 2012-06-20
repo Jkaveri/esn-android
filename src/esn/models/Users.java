@@ -15,100 +15,105 @@ import android.R.integer;
 
 public class Users implements KvmSerializable {
 	
-	public String Email;	
-	public String Password;	
-	public int RoleID;	
 	public int AccID;
-	public String Name;	
-	public String Address;	
-	public String District;	
-	public String City;	
-	public String Country;	
-	public String Avatar;	
-	public String Phone;	
-	public String DateOfBirth;	
-	public boolean Gender;	
-	public int ShareID;	
-	public String Favorite;	
-	public String AccessToken;	
-	public String VerificationCode;	
+	public int RoleID;
+	public String Email;	
+	public String Password;
+	public String AccessToken;
+	public String VerificationCode;
 	public Date DayCreate;	
-	public Boolean IsOnline;	
-	public int Status;
+	public Boolean IsOnline;
+	public int Status;	
+	public String Name;
+	public String Birthday;
+	public boolean Gender;
+	public String Phone;
+	public String Address;
+	public String Street;
+	public String District;
+	public String City;
+	public String Country;
+	public String Favorite;
+	public String Avatar;
+	
 	
 	public Users(){}
 	
-	public Users(String email, String password, int roleId, int accId, String name,String address, String district, String city, String country, String avatar,String phone, String dateOfBirth,boolean gender, int shareId, String favorite,String accessToken, String verificationCode, Date dayCreate,Boolean isOnline, int status)
+	public Users(int accId, int roleId,String email, String password,String accessToken, String verificationCode, 
+			Date dayCreate,Boolean isOnline, int status,String name, String birthday, boolean gender,String phone,
+			String address,String street,String district, String city, String country, String favorite, String avatar )
 	{
+		AccID = accId;
+		RoleID = roleId;		
 		Email = email;
 		Password = password;
-		RoleID = roleId;
-		AccID = accId;
-		Name = name;
-		Address=address;
-		District=district;
-		City = city;
-		Country = country;
-		Avatar = avatar;
-		Phone = phone;
-		DateOfBirth=dateOfBirth;
-		Gender = gender;
-		ShareID=shareId;
-		Favorite=favorite;
 		AccessToken=accessToken;
 		VerificationCode = verificationCode;
 		DayCreate=dayCreate;
-		IsOnline=isOnline;
-		Status = status;		
+		IsOnline=isOnline;		
+		Status = status;
+		Name=name;
+		Birthday = birthday;
+		Gender = gender;
+		Phone = phone;
+		Address = address;
+		Street = street;
+		District = district;
+		City = city;
+		Country = country;
+		Favorite = favorite;
+		Avatar = avatar;
 	}
 	
 	@Override
 	public Object getProperty(int index) {
 		switch (index) {
-		case 0:
-			return Email;	
-		case 1 :
-			return Password;
-		case 2 :
-			return RoleID;
-		case 3 :
+		
+		case 0 :
 			return AccID;
+		case 1 :
+			return RoleID;
+		case 2:
+			return Email;	
+		case 3 :
+			return Password;		
 		case 4:
-			return Name;
-		case 5 : 
-			return Address;
-		case 6 :
-			return District;
-		case 7 :
-			return City;
-		case 8 :
-			return Country;
-		case 9 : 
-			return Avatar;
-		case 10 :
-			return Phone;
-		case 11 :
-			return DateOfBirth;
-		case 12 :
-			return Gender;
-		case 13 :
-			return ShareID;
-		case 14 :
-			return Favorite;					
-		case 15 : 
 			return AccessToken;
-		case 16 : 
+		case 5 : 
 			return VerificationCode;
-		case 17 :
+		case 6 :
 			return DayCreate;
-		case 18 :
+		case 7 :
 			return IsOnline;
-		case 19 :
+		case 8 :
 			return Status;
+		case 9 :
+			return Name;
+		case 10 :
+			return Birthday;
+		case 11:
+			return Gender;
+		case 12:
+			return Phone;
+		case 13 :
+			return Address;
+		case 14 :
+			return Street;
+		case 15 :
+			return District;
+		case 16 :
+			return City;
+		case 17 :
+			return Country;
+		case 18 :
+			return Favorite;
+		case 19:
+			return Avatar;
+		case 20:
+			return Avatar;
 		default:
 			return null;
-		}
-		
+		}		
 	}
 
 	@Override
@@ -121,65 +126,44 @@ public class Users implements KvmSerializable {
 	public void getPropertyInfo(int index, Hashtable arg1, PropertyInfo info) {
 		switch (index) {
 		case 0 :
-			info.name = "Email";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 1 :
-			info.name = "Password";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 2 :
-			info.name = "RoleID";
-			info.type = PropertyInfo.INTEGER_CLASS;
-		case 3 :
 			info.name = "AccID";
 			info.type = PropertyInfo.INTEGER_CLASS;
+		case 1 :
+			info.name = "RoleID";
+			info.type = PropertyInfo.INTEGER_CLASS;				
+		case 2 :
+			info.name = "Email";
+			info.type = PropertyInfo.STRING_CLASS;
+		case 3 :
+			info.name = "Password";
+			info.type = PropertyInfo.STRING_CLASS;	
 		case 4 :
-			info.name = "Name";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 5 :
-			info.name = "Address";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 6 :
-			info.name = "District";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 7 :
-			info.name = "City";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 8 :
-			info.name = "Country";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 9 :
-			info.name = "Avatar";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 10 :
-			info.name = "Phone";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 11 :
-			info.name = "DateOfBirth";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 12 : 
-			info.name = "Gender";
-			info.type = PropertyInfo.BOOLEAN_CLASS;
-		case 13 :
-			info.name = "ShareID";
-			info.type = PropertyInfo.INTEGER_CLASS;
-		case 14 :
-			info.name = "Favorite";
-			info.type = PropertyInfo.STRING_CLASS;
-		case 15 :
 			info.name = "AccessToken";
 			info.type = PropertyInfo.STRING_CLASS;
-		case 16 :
+		case 5 :
 			info.name = "VerificationCode";
 			info.type = PropertyInfo.STRING_CLASS;
-		case 17 :
+		case 6 :
 			info.name = "DayCreate";
 			info.type = MarshalDate.DATE_CLASS;
-		case 18 :
+		case 7 :
 			info.name = "IsOnline";
 			info.type = PropertyInfo.BOOLEAN_CLASS;
-		case 19 :
+		case 8 :			
 			info.name = "Status";
-			info.type = PropertyInfo.INTEGER_CLASS;;
+			info.type = PropertyInfo.INTEGER_CLASS;
+		case 9 :
+			info.name="Name";
+			info.type = PropertyInfo.STRING_CLASS;
+		case 10 :
+			info.name = "Birthday";
+			info.type = PropertyInfo.STRING_CLASS;
+		case 11 :
+			info.name = "Gender";
+			info.type = PropertyInfo.BOOLEAN_CLASS;
+		case 12 :
+			info.name = "Phone";
+			info.type = PropertyInfo.STRING_CLASS;
 		default:
 			break;
 		}
@@ -188,65 +172,43 @@ public class Users implements KvmSerializable {
 	@Override
 	public void setProperty(int index, Object value) {
 		switch (index) {
-		case 0:	
-			Email = value.toString();
-			break;
-		case 1:
-			Password = value.toString();
-			break;
-		case 2 :
-			RoleID = Integer.parseInt(value.toString());
-			break;
-		case 3 :
+		case 0 :
 			AccID = Integer.parseInt(value.toString());
 			break;
-		case 4 : 
-			Name = value.toString();
+		case 1 :
+			RoleID = Integer.parseInt(value.toString());
+			break;		
+		case 2:	
+			Email = value.toString();
 			break;
-		case 5 :
-			Address = value.toString();
+		case 3:
+			Password = value.toString();
 			break;
-		case 6 :
-			District = value.toString();
-			break;
-		case 7 :
-			City = value.toString();
-			break;
-		case 8 :
-			Country = value.toString();
-			break;
-		case 9 :
-			Avatar = value.toString();
-			break;
-		case 10 :
-			Phone = value.toString();
-			break;
-		case 11 :
-			DateOfBirth = value.toString();
-			break;
-		case 12 :
-			Gender = Boolean.parseBoolean(value.toString());
-			break;
-		case 13 :
-			ShareID = Integer.parseInt(value.toString());
-			break;
-		case 14 :
-			Favorite = value.toString();
-			break;
-		case 15 :
+		case 4 :
 			AccessToken = value.toString();
 			break;
-		case 16 :
+		case 5 :
 			VerificationCode = value.toString();
 			break;
-		case 17 :
+		case 6 :
 			DayCreate = IsoDate.stringToDate(value.toString(),0);
 			break;
-		case 18 :
+		case 7 :
 			IsOnline = Boolean.parseBoolean(value.toString());
 			break;
-		case 19 :
+		case 8 :
 			Status = Integer.parseInt(value.toString());
+			break;
+		case 9 :
+			Name = value.toString();
+		case 10 :
+			Birthday = value.toString();
+			break;
+		case 11 :
+			Gender = Boolean.parseBoolean(value.toString());
+			break;
+		case 12 :
+			Phone = value.toString();
 			break;
 		default:
 			break;

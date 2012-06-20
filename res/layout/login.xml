@@ -10,6 +10,8 @@
 	    android:layout_height="fill_parent"
 	    android:gravity="center"
 	    android:orientation="vertical"
+	    android:paddingLeft="16dp"
+	    android:paddingRight="16dp"
 	    >
 	    
 	    <ImageView 
@@ -22,63 +24,57 @@
 	    
 	   	<EditText 
 	   	    android:id="@+id/esn_login_Email"
-	   	    android:layout_width="200dp"
-	   	    android:layout_height="30dp"
+	   	    android:layout_width="fill_parent"
+	   	    android:layout_height="wrap_content"
 	   	    android:background="#FFF"
-	   	    android:layout_marginBottom="5dp"
 	   	    android:hint="@string/txtEmail"
-	   	    android:textSize="12dp"
 	   	    android:textColor="#000"
-	   	    android:gravity="center|left"
 	   	    android:paddingLeft="5dp"
+	   	    android:paddingRight="5dp"
+	   	    android:layout_marginBottom="4dp"
+	   	    android:layout_marginTop="4dp"
+	   	    android:layout_marginLeft="3dp"
+	   	    android:layout_marginRight="3dp"
+	   	    android:paddingTop="8dp"
+	   	    android:paddingBottom="8dp"
 	   	    />
 	   	
 	   	<EditText 	   	    
 	   	    android:id="@+id/esn_login_pass"
-	   	    android:layout_width="200dp"
-	   	    android:layout_height="30dp"
+	   	    android:layout_width="fill_parent"
+	   	    android:layout_height="wrap_content"
 	   	    android:background="#FFF"
-	   	    android:layout_marginBottom="5dp"
+	   	    android:layout_marginBottom="4dp"
+	   	    android:layout_marginTop="4dp"
 	   	    android:hint="@string/txtPassword"
-	   	    android:textSize="12dp"
 	   	    android:textColor="#000"
-	   	    android:gravity="center|left"
 	   	    android:paddingLeft="5dp"
+	   	    android:paddingRight="5dp"
 	   	    android:inputType="textPassword"
+	   	    android:paddingTop="8dp"
+	   	    android:paddingBottom="8dp"
+	   	    android:layout_marginLeft="3dp"
+	   	    android:layout_marginRight="3dp"
 	   	    />
-	      
-	    <LinearLayout 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        >
-	        
-	        <Button 
+	      	  
+	   	<Button 
             android:id="@+id/btLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:text="@string/btLogin"
-            android:width="103dp"
-            android:textSize="12dp"
             android:onClick="LoginClicked"
             android:focusable="true"
-            />
-	        <Button 
-            android:id="@+id/btBack"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="@string/btBack"
-            android:width="103dp"
-            android:textSize="12dp"
-            android:onClick="BackClicked"
-            />
-	    </LinearLayout>
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            />	        
+	   
 	    <TextView 
 	        android:id="@+id/tvForgotPassgord"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="Forgot your password?"
 	        android:textSize="10dp"
+	        android:textStyle="bold"
 	        android:textColor="#FFF"
 	        />
 	</LinearLayout>

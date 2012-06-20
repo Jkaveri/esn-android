@@ -46,9 +46,9 @@
 	<string name="enter">Log in to Facebook</string>
 	<string name="request">Request!</string>
     <string name="hello">Hello World!</string>
-    <string name="tv_edit_Name">Edit Full Name</string>
-    <string name="tv_edit_DayOfBirth">Edit Date Of Birth</string>
-    <string name="tv_edit_Phone">Edit Phone</string>
+    <string name="tv_edit_Name">Full Name</string>
+    <string name="tv_edit_DayOfBirth">Date Of Birth</string>
+    <string name="tv_edit_Phone">Phone</string>
     <string name="upload">Upload Photo</string><string name="post">Wall Post!</string>
     <string name="btDone">Done</string>
     <string name="delete">Delete Post</string>
@@ -119,4 +119,46 @@
 	<string name="btn.Friends.Lists.Diaglog.Unfriend">Unfriend</string>
 	<string name="btn.Friends.Lists.Diaglog.Close">Close</string>
 	<string name="esn.global.dateFormat">MM-dd-yyyy</string>
+	<string name="esn.global.Error">Error</string>
+	<string name="esn.global.ConnectionError">Connection error !</string>
+	<string name="app_Processing">Processing</string>
+	
+	<string name="app.register.RequireFistName">Full Name not blank !</string>
+	<string name="app.register.RequireLastName">Last Name not blank !</string>
+	<string name="app.register.RequirePassword">Password not blank !</string>
+	<string name="app.register.ValidateEmail">Invalid Email Addresss !</string>
+	<string name="app.register.EmailExists">Email Exists!</string>
+	<string name="app.register.Name">Full Name!</string>
+	
+	<string-array name="Gender_arrays">
+        <item>Male</item>
+        <item>Female</item>        
+    </string-array>
+    
+    <string name="app.register.ddlName">Choose a gender</string>
+    <string name="app.global.Email">Email</string>
+    <string name="app.global.RequireAllField">Enter all fields !</string>
+    
+    <string name="app.changepassword.requirecurrentpassword">Current password is required !</string>
+    <string name="app.changepassword.requirepassword">Password is required !</string>
+    <string name="app.changepassword.requirerepeatpassword">Repeat password is required !</string>
+    <string name="app.changepassword.passwordnotmatch">Password not match !</string>
+    <string name="app.changepassword.currentpasswordinccorect">Current password inccorect !</string>
+    
+    <string name="tv_Edit_Profile_ChangeAddress">Edit Address</string>
+    <string name="tv_Edit_Profile_Address">Address</string>
+    <string name="tv_Edit_Profile_Street">Street</string>
+    <string name="tv_Edit_Profile_District">District</string>
+    <string name="tv_Edit_Profile_City">City</string>
+    <string name="tv_Edit_Profile_Country">Country</string>
+    <string name="tv_Edit_Profile_Other">Edit Other</string>
+    <string name="tv_Edit_Profile_Favorite">Favorite</string>
+    
+    <string name="app_Setting_Account_ChangePassword">Change Password</string>
+    <string name="app_Setting_Account_ChangeProfile">Edit Profile</string>
+    <string name="app_Setting_ApplicationSetting">Application</string>
+    <string name="app_Setting_Terms">Terms</string>
+    <string name="app_Setting_Help">Help</string>
+    <string name="app_Setting_Account">Account</string>
+    <string name="app_Setting">Setting</string>
 </resources>

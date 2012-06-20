@@ -89,7 +89,9 @@ public class HttpHelper {
 		JSONObject result = null;
 
 		Bundle headers = new Bundle();
+		
 		headers.putString("Content-Type", "application/json");
+		
 		headers.putString("Content-Encoding", "utf-8");
 		// set params
 		String url_method = this.url + method;
@@ -101,6 +103,7 @@ public class HttpHelper {
 		// get result
 		if(jsonString!= null && jsonString.length() > 0){
 			result = new JSONObject(jsonString);
+			
 			return result;
 		}
 		return null;

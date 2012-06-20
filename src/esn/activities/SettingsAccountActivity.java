@@ -30,10 +30,10 @@ public class SettingsAccountActivity extends Activity implements OnItemClickList
 		
 		// Change password
 		adapter.add(new EsnListItem(res.getString(R.string.esn_settings_account_changepass), 
-				res.getString(R.string.esn_settings_account_sub_changepass), R.drawable.ic_setting_app));
+				res.getString(R.string.esn_settings_account_sub_changepass), R.drawable.ic_setting_app_dark));
 		// Edit profile
 		adapter.add(new EsnListItem(res.getString(R.string.esn_settings_account_editprofile),
-				res.getString(R.string.esn_settings_account_sub_editprofile), R.drawable.ic_setting_acc));
+				res.getString(R.string.esn_settings_account_sub_editprofile), R.drawable.ic_setting_acc_dark));
 		
 		settingList.setAdapter(adapter);
 		

@@ -5,208 +5,176 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal" >
-
-            <ImageView
-                android:id="@+id/esn.register.avatar"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:onClick="AvatarClicked"
-                android:src="@drawable/avatar" />
-
-            <LinearLayout
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="10dp"
+        android:background="#CC0033">
+        
+        	<LinearLayout 
+        	    android:layout_width="fill_parent"
+        	    android:layout_height="wrap_content"
+        	    android:gravity="center"
+        	    android:layout_marginTop="15dp"
+        	    android:layout_marginBottom="15dp"
+        	    >
+        	    <ImageView
+		            android:id="@+id/ivLogo"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:src="@drawable/applogo"/>        	    
+        	</LinearLayout>        	
+        	
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ACCOUNT"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="3dp"
+	   	    	android:layout_marginRight="3dp"/>            
+            
+        	<EditText
+	        	android:id="@+id/esn.register.txtEmail"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dp"
+	            android:layout_marginBottom="5dp"
+	            android:hint="@string/tvEmail"
+	            android:background="#FFFFFF"
+	            android:paddingLeft="5dp"
+	            android:height="40dp"
+	            android:paddingTop="7dp"
+	            android:paddingBottom="7dp"
+	            android:paddingRight="5dp"
+	            android:layout_marginLeft="3dp"
+	   	    	android:layout_marginRight="3dp"
+	            android:singleLine="true"/>
+	        <EditText
+	            android:id="@+id/esn.register.Password"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dp"
+	            android:layout_marginBottom="10dp"
+	            android:background="#FFFFFF"
+	            android:height="40dp"
+	            android:password="true"
+                android:paddingLeft="5dp"
+                android:paddingTop="7dp"
+	            android:paddingBottom="7dp"
+	            android:paddingRight="5dp"
+	            android:singleLine="true"
+	            android:layout_marginLeft="3dp"
+	   	    	android:layout_marginRight="3dp"
+	            android:hint="@string/tvPassword"/>    
+	        
+           	<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="INFOMATION"
+                android:textStyle="bold"
+                android:layout_marginLeft="3dp"
+	   	    	android:layout_marginRight="3dp"
+                android:textColor="#FFFFFF"/> 
+                
+            <EditText
+           		android:id="@+id/esn.register.txtFullName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical" >
-
-                <EditText
-                    android:id="@+id/esn.register.txtFirstName"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/txtLastName" >
-                </EditText>
-
-                <EditText
-                    android:id="@+id/esn.register.txtLastname"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/txtLastName" >
-                </EditText>
-            </LinearLayout>
-        </LinearLayout>
-
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:stretchColumns="1" >
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:background="#FFFFFF"
+                android:height="40dp"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"                
+                android:paddingTop="7dp"
+	            android:paddingBottom="7dp"
+	            android:paddingRight="5dp"
+	            android:singleLine="true"
+	            android:layout_marginLeft="3dp"
+	   	    	android:layout_marginRight="3dp"
+                android:hint="@string/app.register.Name" />
+                        
+             <Spinner
+			        android:id="@+id/esn.register.ddlGender"
+			        android:layout_width="110dp"
+			        android:layout_height="40dp"
+			        android:entries="@array/Gender_arrays"
+			        android:prompt="@string/app.register.ddlName"
+			        android:height="40dp"
+			        android:layout_marginTop="5dp"
+			        android:layout_marginBottom="5dp"
+			        android:paddingLeft="5dp"
+			        android:spinnerMode="dialog"
+			        android:layout_marginLeft="3dp"	   	    	
+			        android:popupBackground="#33b5e5"
+			        android:background="#FFFFFF"/>
+            
+            <EditText
+                android:id="@+id/esn.register.txtBirthday"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lbAccount"
-                android:textStyle="normal" />
-
-            <View
-                android:layout_height="2dip"
-                android:layout_marginBottom="10dp"
-                android:background="#FF909090" />
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvEmail"
-                    android:textStyle="normal" />
-
-                <EditText
-                    android:id="@+id/esn.register.txtEmail"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/tvEmail"
-                    >
-                </EditText>
-            </TableRow>
-
-            <TableRow
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvPassword" />
-
-                <EditText
-                    android:id="@+id/esn.register.Password"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center|left" 
-                    android:password="true"
-                    android:hint="@string/tvPassword"
-                    />
-            </TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:onClick="DatePickerDialogShow"
+                android:editable="false"
+                android:height="40dp"
+                android:background="#FFFFFF"                
+                android:paddingLeft="5dp"
+                android:layout_marginLeft="3dp"
+	   	    	android:layout_marginRight="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:hint="@string/esn.register.date" />
+            
+            <EditText
+                android:id="@+id/esn.register.txtPhone"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lbPerson" />
-
-            <View
-                android:layout_height="2dip"
-                android:layout_marginBottom="10dp"
-                android:background="#FF909090" />
-
-            <TableRow android:layout_marginTop="0dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvBirthday" />
-
-                <EditText
-                    android:id="@+id/esn.register.txtBirthday"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="DatePickerDialogShow"
-                    android:hint="@string/esn.register.date" />
-            </TableRow>
-
-            <TableRow android:layout_marginTop="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvPhone" />
-
-                <EditText
-                    android:id="@+id/esn.register.txtPhone"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/tvPhone"
-                    />
-            </TableRow>
-
-            <TableRow
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvGender" />
-
-                <RadioGroup android:orientation="horizontal" >
-
-                    <RadioButton
-                        android:id="@+id/esn.register.rbMale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rdbMale" />
-
-                    <RadioButton
-                        android:id="@+id/esn.register.rbFemale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rdbFemale" />
-                </RadioGroup>
-            </TableRow>
-        </TableLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/esn.register.btnJoin"
-                android:layout_width="wrap_content"
+                android:height="40dp"
+                android:paddingLeft="5dp"
+                android:background="#FFFFFF"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:singleLine="true"
+                android:paddingTop="7dp"
+	            android:paddingBottom="7dp"
+	            android:layout_marginLeft="3dp"
+	   	    	android:layout_marginRight="3dp"
+	            android:paddingRight="5dp"
+                android:hint="@string/tvPhone"
+                android:inputType="number"/>   
+        
+           <Button android:id="@+id/btnRegister"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"                
                 android:onClick="RegisterClicked"
-                android:text="@string/btJoin" />
-
-            <Button
-                android:id="@+id/btCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="CancelClicked"
-                android:text="@string/btCancel" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal" >
-
-            <TextView
+                android:text="@string/app_register"
+                android:textColor="#FFFFFF"
+                android:textStyle="normal"/>
+        
+           <LinearLayout 
+        	    android:layout_width="fill_parent"
+        	    android:layout_height="wrap_content"
+        	    android:gravity="center"
+        	    android:orientation="horizontal"
+        	    android:layout_marginBottom="10dp">
+        	    <TextView
                 android:id="@+id/lkService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
                 android:text="@string/hlService"
-                android:textSize="12dp" />
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"/>
 
-            <TextView
+           <TextView
                 android:id="@+id/lkPolicy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hlPolicy"
-                android:textSize="12dp" />            
-        </LinearLayout>
-    </LinearLayout>
+                android:textColor="#FFFFFF"                
+                android:textSize="12dp" />
+        	</LinearLayout>              
+    </LinearLayout>    
 
 </ScrollView>
