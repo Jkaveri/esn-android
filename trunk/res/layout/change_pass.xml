@@ -10,6 +10,7 @@
 	    android:orientation="vertical" 
 	    android:paddingLeft="10dp"
 	    android:paddingRight="10dp"
+	    android:paddingTop="50dp"
 	    >
 	    
 	    <TableLayout
@@ -23,35 +24,62 @@
 	            android:layout_height="wrap_content"
 	            android:text="@string/lbChange_Pass"
 	            android:textStyle="normal"
+	            android:textColor="#000000"
 	            />
 	        <View
         		android:layout_height="2dip"
-        		android:background="#ffffff"
+        		android:background="#000000"
         		android:layout_marginBottom="10dp" />
-    		<TableRow>       
+	        <TableRow>       
         		<TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/app.global.Email"
+		            android:textSize="12dp"
+		            android:layout_marginBottom="10dp"
+		            android:textColor="#000000"
+		            android:layout_marginRight="10dp"
+		            android:textStyle="normal"
+		            />
+		        <EditText
+		            android:id="@+id/esn.changepass.email"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginBottom="10dp"
+		            android:ems="10"
+		            android:editable="false"
+		            android:height="40dp"
+		            android:paddingLeft="5dp"
+		            android:paddingRight="5dp"
+		            android:textColor="#000000"
+		            android:textSize="15dp" >
+		            <requestFocus />
+		        </EditText>
+    		</TableRow>
+    		<TableRow>       
+        		<TextView         		    
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="@string/tv_current_pass"
 		            android:textSize="12dp"
 		            android:layout_marginBottom="10dp"
-		            android:textColor="#ffffff"
+		            android:textColor="#000000"
 		            android:layout_marginRight="10dp"
 		            android:textStyle="normal"
 		            />
 
 		        <EditText
+		            android:id="@+id/esn.changepass.currentpassword"
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_marginBottom="10dp"
 		            android:ems="10"
-		            android:gravity="right"
 		            android:height="40dp"
-		            android:paddingLeft="10dp"
-		            android:textColor="#ffffff"
+		            android:paddingLeft="5dp"
+		            android:paddingRight="5dp"
+		            android:textColor="#000000"
+		            android:password="true"
 		            android:textSize="15dp" >
-
-		            <requestFocus />
 		        </EditText>
     		</TableRow>
     		<TableRow >
@@ -62,17 +90,19 @@
 	            	android:text="@string/tv_new_pass"
 	            	android:textSize="12dp"
 	            	android:layout_marginBottom="10dp"
-	            	android:textColor="#ffffff"
+	            	android:textColor="#000000"
 	            />
         		
 		    	<EditText 
+		    	    android:id="@+id/esn.changepass.newpassword"
 			   	    android:layout_width="match_parent"
 			   	    android:layout_height="wrap_content"
 			   	    android:height="40dp"			   	    
 			   	    android:layout_marginBottom="10dp"
 			   	    android:textSize="15dp"
-			   	    android:textColor="#ffffff"
-			   	    android:gravity="center|left"
+			   	    android:password="true"
+			   	    android:textColor="#000000"
+			   	    android:paddingRight="5dp"
 			   	    android:paddingLeft="10dp"
 			   	    />
     		</TableRow>
@@ -85,20 +115,21 @@
 		            android:text="@string/tv_confirm_pass"
 		            android:textSize="12dp"
 		            android:layout_marginBottom="10dp"
-		            android:textColor="#ffffff"
+		            android:textColor="#000000"
 		            
 		            />
 	            <EditText 
+	                android:id="@+id/esn.changepass.repeatnewpassword"
 			   	    android:width="214dp"
 			   	    android:layout_width="wrap_content"
 			   	    android:layout_height="wrap_content"
 			   	    android:height="40dp"
 			   	    android:layout_marginBottom="5dp"
 			   	    android:textSize="15dp"
-			   	    android:textColor="#ffffff"
-			   	    android:paddingLeft="10dp" />
-		   	
-		   	
+			   	    android:textColor="#000000"
+			   	    android:password="true"
+			   	    android:paddingLeft="5dp"
+			   	    android:paddingRight="5dp" />
 	        </TableRow>
 	        
 		</TableLayout>	
@@ -111,19 +142,11 @@
 	        >
 	        <Button 
 	            android:id="@+id/btLogin"
-	            android:layout_width="155dp"
-	            android:layout_height="35dp"
-	            android:textSize="12dp"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
 	            android:text="@string/btDone"
-	            />
-	        <Button 
-	            android:id="@+id/btCancel"
-	            android:layout_width="155dp"
-	            android:layout_height="35dp"
-	            android:textSize="12dp"
-	            android:text="@string/btCancel"
-	            android:onClick="changePassCancelClicked"
-	            />
+	            android:onClick="ChangePasswordClicked"
+	            />	      
 	    </LinearLayout>
 	    
 	</LinearLayout>

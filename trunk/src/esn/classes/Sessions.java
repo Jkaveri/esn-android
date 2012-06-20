@@ -20,7 +20,10 @@ public class Sessions {
 		return instance;
 	}
 	public void clear(){
-		pref.edit().clear();
+		if(pref!=null)
+		{
+			pref.edit().clear().commit();
+		}		
 	}
 	public void put(String key, int value) {
 		pref.edit().putInt(key, value).commit();

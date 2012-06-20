@@ -1,21 +1,33 @@
 package esn.activities;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 import com.facebook.android.Util;
 
+import esn.activities.LoginActivity.LoginThread;
 import esn.classes.Base64;
 import esn.classes.HttpHelper;
 import esn.models.Users;
 import esn.models.UsersManager;
 import android.R.bool;
+import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,16 +39,20 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.text.format.Formatter;
 import android.text.method.LinkMovementMethod;
 
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 
@@ -51,8 +67,19 @@ public class RegisterActivity extends Activity {
 	private static final int DATE_DIALOG_ID = 3;
 
 	Context context;
+	
 	private Handler handler;
+	
+	private ProgressDialog dialog;
 
+	public SharedPreferences pref;
+	
+	UsersManager usersManager = new UsersManager();
+
+	private Resources res;
+	
+	private static boolean checkEmail=false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -64,6 +91,8 @@ public class RegisterActivity extends Activity {
 		context = this;
 		handler = new Handler();
 
+		res = getResources();
+		
 		boolean isFbSignup = intent.getBooleanExtra("facebookSignup", false);
 		if (isFbSignup) {
 			String first_name = intent.getStringExtra("first_name");
@@ -71,20 +100,32 @@ public class RegisterActivity extends Activity {
 			String birthday = intent.getStringExtra("birthday");
 			String gender = intent.getStringExtra("gender");
 			String email = intent.getStringExtra("email");
-			((TextView) findViewById(R.id.esn_register_txtFirstName))
-					.setText(first_name);
-			((TextView) findViewById(R.id.esn_register_txtLastname))
-					.setText(last_name);
+			((TextView) findViewById(R.id.esn_register_txtFullName))
+					.setText(first_name + " " + last_name );
 			((TextView) findViewById(R.id.esn_register_txtEmail))
 					.setText(email);
 			((TextView) findViewById(R.id.esn_register_txtBirthday))
 					.setText(birthday);
 			if (gender.equals("male"))
-				((RadioButton) findViewById(R.id.esn_register_rbMale))
-						.setChecked(true);
+			{
+				Spinner sp = (Spinner)findViewById(R.id.esn_register_ddlGender);
+				
+				ArrayAdapter arr = (ArrayAdapter)sp.getAdapter();
+				
+				int pos = arr.getPosition("Male");
+						
+				sp.setSelection(pos);			
+			}
 			else
-				((RadioButton) findViewById(R.id.esn_register_rbFemale))
-						.setChecked(true);
+			{
+				Spinner sp = (Spinner)findViewById(R.id.esn_register_ddlGender);
+				
+				ArrayAdapter arr = (ArrayAdapter)sp.getAdapter();
+				
+				int pos = arr.getPosition("Female");
+						
+				sp.setSelection(pos);	
+			}
 
 		}
 		TextView sv = (TextView) findViewById(R.id.lkService);
@@ -114,7 +155,8 @@ public class RegisterActivity extends Activity {
 		mYear = c.get(Calendar.YEAR);
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
-		updateDisplay();
+		
+		mDateDisplay.setHint("Birthday");
 	}
 
 	private void updateDisplay() {
@@ -150,178 +192,266 @@ public class RegisterActivity extends Activity {
 	}
 
 	public void RegisterClicked(View view) {
-		new Thread() {
-			public void run() {
-				Users user = new Users();
-
-				EditText email = (EditText) findViewById(R.id.esn_register_txtEmail);
-
-				user.Email = email.getText().toString().trim();
-
-				EditText password = (EditText) findViewById(R.id.esn_register_Password);
-
-				String pass = password.getText().toString().trim();
-
-				user.Password = pass;
-
-				EditText fName = (EditText) findViewById(R.id.esn_register_txtFirstName);
-				EditText lName = (EditText) findViewById(R.id.esn_register_txtLastname);
-
-				user.Name = fName.getText().toString().trim()
-						+ lName.getText().toString().trim();
-
-				EditText birthday = (EditText) findViewById(R.id.esn_register_txtBirthday);
-				/*
-				 * SimpleDateFormat curFormater = new
-				 * SimpleDateFormat("MM/dd/yyyy");
-				 * 
-				 * Date dateObj = null; try { dateObj =
-				 * curFormater.parse(birthday.getText().toString().trim()); }
-				 * catch (ParseException e) {
-				 * 
-				 * e.printStackTrace(); }
-				 * 
-				 * user.DateOfBirth = dateObj;
-				 */
-
-				user.DateOfBirth = birthday.getText().toString();
-
-				EditText phone = (EditText) findViewById(R.id.esn_register_txtPhone);
-
-				user.Phone = phone.getText().toString().trim();
-
-				RadioButton gender = (RadioButton) findViewById(R.id.esn_register_rbMale);
-
-				if (gender.isChecked()) {
-					user.Gender = true;
-				} else {
-					user.Gender = false;
-				}
-
-				UsersManager usersManager = new UsersManager();
-
-				user = usersManager.Register(fName.toString(),
-						lName.toString(), user.Email, user.Password,
-						user.DateOfBirth, user.Phone, user.Gender);
-
-				if (user != null) {
-					Intent intentLogin = new Intent(getApplicationContext(),
-							LoginActivity.class);
-					startActivityForResult(intentLogin,
-							REQUEST_CODE_CREATE_LOGIN_LOGIN);
-				} else {
-					handler.post(new Runnable() {
-
-						@Override
-						public void run() {
-
-							Util.showAlert(context, "Warning",
-									"Incorrect information !");
-						}
-					});
-				}
-			};
-		}.start();
+		
+		Boolean valid = ValidateEmail();
+		
+		int require = ValidateRequire();
+		
+		final EditText email = (EditText)findViewById(R.id.esn_register_txtEmail);
+		
+		if(valid==false)
+		{
+						
+			email.setError(res.getString(R.string.app_register_ValidateEmail), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			return;
+		}
+		else if(require==1)
+		{
+			EditText name = (EditText)findViewById(R.id.esn_register_txtFullName);
+			name.setError(res.getString(R.string.app_register_RequireFistName), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			return;
+		}
+		else if(require == 2)
+		{
+			EditText pass = (EditText)findViewById(R.id.esn_register_Password);
+			pass.setError(res.getString(R.string.app_register_RequirePassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			return;
+		}
+		else
+		{
+			new Thread(){
+				public void run() {
+					
+					if(usersManager.CheckEmailExists(email.getText().toString()))
+					{
+						handler.post(new Runnable() {
+							
+							@Override
+							public void run() {
+								Util.showAlert(context, "Error", "Email is exists !");
+							}
+						});
+						
+					}
+					else
+					{
+						handler.post(new Runnable() {
+							
+							@Override
+							public void run() {
+								dialog = new ProgressDialog(RegisterActivity.this);
+								dialog.setTitle(getResources().getString(R.string.app_Processing));
+								dialog.setMessage("Waiting ....");
+								dialog.show();	
+								
+								RegistertThread registerThread = new RegistertThread();
+								registerThread.start();							
+							}
+						});
+									
+						
+					}
+					
+				};
+			}.start();
+		}		
 	}
 
-	public void AvatarClicked(View view) {
-
-		final CharSequence[] items = { "Photo Gallery", "Camera", "Cancel" };
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Choose");
-
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-				if (item == 0) {
-					OpenPhotoGallery();
-				} else if (item == 1) {
-					OpenCamera();
-				} else {
-					return;
-				}
-			}
-		});
-
-		builder.show();
-	}
-
-	private static final int CAMERA_PIC_REQUEST = 1337;
-
-	public void OpenCamera() {
-		Intent cameraIntent = new Intent(
-				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
-		startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ImageView image = (ImageView) findViewById(R.id.esn_register_avatar);
-
-		if (requestCode == CAMERA_PIC_REQUEST) {
-			if (resultCode == RESULT_OK) {
-				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-
-				image.setImageBitmap(thumbnail);
-			}
-		} else if (requestCode == SELECT_PICTURE) {
-			if (resultCode == RESULT_OK) {
-				Uri selectedImageUri = data.getData();
-				selectedImagePath = getPath(selectedImageUri);
-				image.setImageURI(selectedImageUri);
-			}
+	private Boolean ValidateEmail()
+	{
+		final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
+	              "[a-zA-Z0-9+._%-+]{1,256}" +
+	              "@" +
+	              "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" +
+	              "(" +
+	              "." +
+	              "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" +
+	              ")+"
+	          );
+		
+		EditText txtEmail = (EditText)findViewById(R.id.esn_register_txtEmail);
+		String email = txtEmail.getText().toString();
+		
+		if(EMAIL_ADDRESS_PATTERN.matcher(email).matches())            
+		{
+			return true;		
+		}
+		
+		return false;
+	}	
+	
+	private int ValidateRequire()
+	{
+		EditText txtfName = (EditText)findViewById(R.id.esn_register_txtFullName);
+		
+		EditText txtPassword = (EditText)findViewById(R.id.esn_register_Password);
+		
+		if(txtfName.getText().toString().isEmpty())
+		{
+			return 1;
+		}		
+		else if(txtPassword.getText().toString().isEmpty())
+		{
+			return 2;
+		}
+		else
+		{
+			return 0;
 		}
 	}
-
-	public String getPath(Uri uri) {
-		String[] projection = { MediaStore.Images.Media.DATA };
-		Cursor cursor = managedQuery(uri, projection, null, null, null);
-		int column_index = cursor
-				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-		cursor.moveToFirst();
-		return cursor.getString(column_index);
+	
+	
+	private void CheckEmailExists()
+	{
+		CheckExistsThread email = new CheckExistsThread();
+		
+		email.start();
+		
 	}
-
-	private static final int SELECT_PICTURE = 1;
-	private String selectedImagePath;
-
-	public void OpenPhotoGallery() {
-		Intent intent = new Intent();
-
-		intent.setType("image/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		startActivityForResult(Intent.createChooser(intent, "Select Picture"),
-				SELECT_PICTURE);
-	}
-
-	public void Uploader(String imagePath) {
-		new Thread() {
+	
+	public class CheckExistsThread extends Thread{
+			
+			public CheckExistsThread() {
+				
+			}
+			@Override
 			public void run() {
-				Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),
-						1);
-
-				java.io.ByteArrayOutputStream bao = new java.io.ByteArrayOutputStream();
-
-				bitmapOrg.compress(Bitmap.CompressFormat.JPEG, 90, bao);
-
-				byte[] ba = bao.toByteArray();
-
-				String ba1 = Base64.encodeBytes(ba);
-
-				try {
-
-					HttpHelper helper = new HttpHelper("");
-					Bundle param = new Bundle();
-					param.putString("image", ba1);
-					helper.invokeWebMethod("UploadImage", param);
-				} catch (Exception e) {
-
-					Log.e("log_tag", "Error in http connection " + e.toString());
-
+				EditText txtEmail = (EditText)findViewById(R.id.esn_register_txtEmail);
+				
+				String email = txtEmail.getText().toString();
+				
+				boolean checkEmail = usersManager.CheckEmailExists(email);
+				
+				if(checkEmail==true)
+				{
+					handler.post(new EmailExists());					
+				}
+				else
+				{
+					RegistertThread registerThread = new RegistertThread();
+					registerThread.start();
 				}
 			}
-		}.start();
+	}
+	public class RegistertThread extends Thread{
+		
+		public RegistertThread() {
+			
+		}
+		@Override
+		public void run() {			
+			
+			Users user = new Users();
+			
+			EditText txtEmail = (EditText)findViewById(R.id.esn_register_txtEmail);
+						
+			EditText txtfName = (EditText)findViewById(R.id.esn_register_txtFullName);
+			
+			user.Name = txtfName.getText().toString();			
+			
+			user.Email = txtEmail.getText().toString();
+			
+			EditText txtPassword = (EditText)findViewById(R.id.esn_register_Password);
+			user.Password = txtPassword.getText().toString();
+				
+			EditText txtBirthday = (EditText)findViewById(R.id.esn_register_txtBirthday);
+				
+			String bd = txtBirthday.getText().toString();
+			
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {
+					
+				bd = sFormat.format(format.parse(bd));
+				
+			} catch (ParseException e) {
+				return;
+			}
+				
+			user.Birthday = bd;	
+			EditText phone = (EditText)findViewById(R.id.esn_register_txtPhone);
+				
+			user.Phone = phone.getText().toString();
+				
+			Spinner ddlGender = (Spinner)findViewById(R.id.esn_register_ddlGender);
+			
+			String gender = ddlGender.getSelectedItem().toString();
+			
+			if(gender.equals("Male"))
+			{
+				user.Gender=true;
+			}
+			else
+			{
+				user.Gender = false;
+			}			
+			user.AccessToken="_";
+			
+			int rs = usersManager.Register(user);
+				
+			if(rs != 0)
+			{
+				handler.post(new registerSuccesful());
+			}
+			else
+			{
+				handler.post(new registerFail());
+			}			
+		}
+	}
+	
+	private class registerSuccesful implements Runnable{
+		@Override
+		public void run() {
+			dialog.dismiss();			
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			
+			builder.setMessage("Kích hoạt tài khoản ?")
+			       .setCancelable(false)
+			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   
+			        	   EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
+			        	   
+			        	   String email = txtemail.getText().toString();
+			        	   
+			        	   String[] arr = email.split("@");
+			        	   
+			        	   String url = arr[1].toString();
+			        	   
+			        	   url="http://"+url;
+			        	   
+			        	   Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			        	   
+			        	   startActivity(browse);
+			           }
+			       })
+			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   Intent intent = new Intent(context, LoginActivity.class);
+			   				startActivity(intent);
+			   				finish();
+			           }
+			});
+			
+			builder.show();
+		}
+	}
+	private class registerFail implements Runnable{
+		@Override
+		public void run() {
+			dialog.dismiss();
+			
+			Util.showAlert(context, "Error", "Register Fail. Try Again.");			
+		}
+	}
+	
+	private class EmailExists implements Runnable{
+		@Override
+		public void run() {
+			checkEmail = true;			
+		}
 	}
 }

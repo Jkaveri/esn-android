@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.CharacterData;
 
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
@@ -17,6 +18,7 @@ import com.facebook.android.Util;
 import esn.classes.Sessions;
 import esn.models.UsersManager;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -31,10 +33,12 @@ import android.widget.EditText;
 public class WelcomeActivity extends Activity {
 
 	private final int REQUEST_CODE_CREATE_LOGIN = 1;
+	
 	private final int REQUEST_CODE_CREATE_REGISTER = 3;
-	private final String[] FB_PERMISSIONS = { "email", "user_events",
-			"user_birthday" };
+	
+	private final String[] FB_PERMISSIONS = { "email", "user_events","user_birthday" };
 	// Login by fB
+	
 	public static final String APP_ID = "175185989209026";
 	private Facebook mFacebook;
 	private SharedPreferences prefEdit;
@@ -46,12 +50,16 @@ public class WelcomeActivity extends Activity {
 	public String email;
 	public Handler handler;
 
+	UsersManager usersManager = new UsersManager();
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
+		
 		context = this;
 		handler = new Handler();
+		
 		// application session
 		session = Sessions.getInstance(context);
 		// init facebook
@@ -60,8 +68,9 @@ public class WelcomeActivity extends Activity {
 		mAsyncRunner = new AsyncFacebookRunner(mFacebook);
 		// get fb acess token was stored
 		String fbAccessToken = session.get("fb_access_token", null);
-
-		long fbAccessExpires = session.get("fb_access_token_expires", 0);
+		// cho long do
+		long fbAccessExpires = session.get("fb_access_token_expires", Long.MIN_VALUE);
+		
 		if (fbAccessToken != null) {
 			mFacebook.setAccessToken(fbAccessToken);
 		}
@@ -69,13 +78,15 @@ public class WelcomeActivity extends Activity {
 			mFacebook.setAccessExpires(fbAccessExpires);
 		}
 		if (session.logined()) {
-			executeLogin();
+			
+			executeLogin();				
 		}
 
 	}
 
 	public void btnLoginfbClicked(View view) {
 		if (!mFacebook.isSessionValid()) {// if access token is expired
+			
 			mFacebook.authorize(this, FB_PERMISSIONS, new DialogListener() {
 
 				@Override
@@ -89,29 +100,45 @@ public class WelcomeActivity extends Activity {
 
 						@Override
 						public void onComplete(String response, Object state) {
-							Intent intent = new Intent(getBaseContext(),
-									RegisterActivity.class);
-
+							
 							try {
 								JSONObject accountInfo = Util
 										.parseJson(response);
-								intent.putExtra("facebookSignup", true);
-								intent.putExtra("fb_id",
-										accountInfo.getString("id"));
-								intent.putExtra("name",
-										accountInfo.getString("name"));
-								intent.putExtra("first_name",
-										accountInfo.getString("first_name"));
-								intent.putExtra("last_name",
-										accountInfo.getString("last_name"));
-								intent.putExtra("email",
-										accountInfo.getString("email"));
-								intent.putExtra("gender",
-										accountInfo.getString("gender"));
-								intent.putExtra("birthday",
-										accountInfo.getString("birthday"));
-								startActivity(intent);
-								finish();
+								
+								String email = accountInfo.getString("email");
+								
+								Boolean checkEmail = usersManager.CheckEmailExists(email);
+								
+								if(checkEmail==true)
+								{
+									Intent intent = new Intent(getBaseContext(),HomeActivity.class);
+									startActivity(intent);
+									finish();
+								}
+								else
+								{
+									Intent intent = new Intent(getBaseContext(),RegisterActivity.class);
+									
+									intent.putExtra("facebookSignup", true);
+									intent.putExtra("fb_id",
+											accountInfo.getString("id"));
+									intent.putExtra("name",
+											accountInfo.getString("name"));
+									intent.putExtra("first_name",
+											accountInfo.getString("first_name"));
+									intent.putExtra("last_name",
+											accountInfo.getString("last_name"));
+									intent.putExtra("email",
+											accountInfo.getString("email"));
+									intent.putExtra("gender",
+											accountInfo.getString("gender"));
+									intent.putExtra("birthday",
+											accountInfo.getString("birthday"));
+									
+									startActivity(intent);
+									finish();
+								}
+								
 							} catch (FacebookError e) {
 								e.printStackTrace();
 							} catch (JSONException e) {
@@ -164,6 +191,8 @@ public class WelcomeActivity extends Activity {
 	}
 
 	public void LoginClicked(View view) {
+		
+		
 		if (!mFacebook.isSessionValid()) {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);
@@ -171,29 +200,39 @@ public class WelcomeActivity extends Activity {
 			Intent intent = new Intent(this, HomeActivity.class);
 			startActivity(intent);
 		}
+		
 		finish();
+		
 	}
 
 	public void RegisterClicked(View view) {
+		
+		
 		if (mFacebook.isSessionValid()) {
 			Intent intent = new Intent(this, HomeActivity.class);
-			startActivity(intent);
+			startActivity(intent);			
 		} else {
 			Intent intent = new Intent(this, RegisterActivity.class);
 			startActivity(intent);
 		}
 		finish();
+		
 	}
 
 	private void executeLogin() {
+		
 		dialog = new ProgressDialog(this);
+		
 		dialog.setTitle(this.getResources().getString(R.string.app_login));
-		dialog.setTitle(getResources().getString(R.string.app_register));
+		dialog.setMessage("Waiting ....");
 		dialog.show();
 		email = session.get("email", null);
 		password = session.get("password", null);
+		
 		LoginThread loginThread = new LoginThread();
+		
 		loginThread.start();
+		
 	}
 
 	@Override
@@ -212,6 +251,7 @@ public class WelcomeActivity extends Activity {
 			if (usermManager.Login(email, password)) {
 
 				handler.post(new loginSuccess());
+				
 			} else {
 
 				handler.post(new loginFail());

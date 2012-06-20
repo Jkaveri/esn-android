@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/ivLogo"
@@ -21,27 +21,32 @@
         <ImageButton
 	        android:id="@+id/btloginfb"
 	        android:src="@drawable/loginfb"
-	        android:layout_width="wrap_content"	        
+	        android:layout_width="fill_parent"	        
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:onClick="btnLoginfbClicked"/>
         
-        <Button
-            android:id="@+id/btLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+        <Button android:id="@+id/btLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"                
             android:onClick="LoginClicked"
             android:text="@string/btLogin"
-            android:width="200dp"
-            android:textSize="12dp"
-             />
-
-        <Button
-            android:id="@+id/btSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+        
+        <Button android:id="@+id/btSignUp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"               
             android:onClick="RegisterClicked"
             android:text="@string/btSignUp"
-            android:width="200dp"
-            android:textSize="12dp" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
     </LinearLayout>
 </LinearLayout>

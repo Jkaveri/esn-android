@@ -73,10 +73,12 @@ public class ImageLoader {
 
 		// from web
 		try {
+			
 			Bitmap bitmap = null;
+			
 			URL imageUrl = new URL(url);
-			HttpURLConnection conn = (HttpURLConnection) imageUrl
-					.openConnection();
+			
+			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
 			InputStream is = conn.getInputStream();

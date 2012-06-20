@@ -1,11 +1,17 @@
 package esn.activities;
 
+import com.facebook.android.SessionEvents.LogoutListener;
+
+import esn.activities.LoginActivity.LoginThread;
 import esn.adapters.EsnListAdapter;
 import esn.classes.EsnListItem;
+import esn.classes.Sessions;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -22,31 +28,42 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 	private EsnListAdapter adapter;
 	private Resources res;
 
+	private Sessions session;
+	private Context context;
+	
+	private ProgressDialog dialog;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
 		res = getResources();
+		
 		setContentView(R.layout.settings);
+		
+		context = this;
+		
+		session = Sessions.getInstance(context);
+		
 		ListView settingList = (ListView) findViewById(R.id.setting_list);
 		
 		adapter = new EsnListAdapter();
 		
 		// Account setting
 				adapter.add(new EsnListItem(res.getString(R.string.esn_settings_account),
-						res.getString(R.string.esn_settings_subscript_account), R.drawable.ic_setting_acc));
+						res.getString(R.string.esn_settings_subscript_account), R.drawable.ic_setting_acc_dark));
 		// Application setting
 		adapter.add(new EsnListItem(res.getString(R.string.esn_settings_app_settings), 
-				res.getString(R.string.esn_settings_subscript_app_settings), R.drawable.ic_setting_app));
+				res.getString(R.string.esn_settings_subscript_app_settings), R.drawable.ic_setting_app_dark));
 		// Term
 		adapter.add(new EsnListItem(res.getString(R.string.esn_settings_provition),
-				res.getString(R.string.esn_settings_subscript_provition), R.drawable.ic_setting_term));
+				res.getString(R.string.esn_settings_subscript_provition), R.drawable.ic_setting_term_dark));
 		// Help
 		adapter.add(new EsnListItem(res.getString(R.string.esn_settings_help),
-				res.getString(R.string.esn_settings_subscript_help), R.drawable.ic_setting_help));
+				res.getString(R.string.esn_settings_subscript_help), R.drawable.ic_setting_help_dark));
 		// Logout
 		adapter.add(new EsnListItem(res.getString(R.string.esn_settings_logout), 
-				res.getString(R.string.esn_settings_subscript_logout), R.drawable.ic_setting_logout));
+				res.getString(R.string.esn_settings_subscript_logout), R.drawable.ic_setting_logout_dark));
 		
 		settingList.setAdapter(adapter);
 		
@@ -55,7 +72,7 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
-		// TODO Auto-generated method stub
+		
 		Intent intent;
 		if (index == 0) {
 			intent = new Intent(this, SettingsAccountActivity.class);
@@ -79,15 +96,13 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
-								
+								ExecuteLogout();
 							}
 						})
 						.setNegativeButton("No", new DialogInterface.OnClickListener() {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
 								
 							}
 						});
@@ -95,5 +110,13 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 			alert.show();
 		}
 	} // end onItemClick
+	
+	public void ExecuteLogout()
+	{	
+		session.clear();
+		
+		Intent intent = new Intent(context, WelcomeActivity.class);
+		startActivity(intent);		
+	}
 }
 
