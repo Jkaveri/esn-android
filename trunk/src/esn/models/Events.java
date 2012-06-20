@@ -15,23 +15,19 @@ import android.text.format.DateFormat;
 import esn.classes.MarshalDouble;
 
 public class Events implements KvmSerializable {
-	public int EventID;
-	public int AccID;
-	public int EventTypeID;
-	public String Title;
-	public String Description;
-	public String Picture;
-	public Date DayCreate;
-	public Double EventLat;
-	public Double EventLong;
-	public int ShareID;
-	public int Like;
-	public int Dislike;
-	public boolean Status;
-	public String LabelImage;
-	public int AccID1;
-	public String Name;
-	public String Avatar;
+	 public int EventID;
+     public int AccID;
+     public int EventTypeID;
+     public String Title;
+     public String Description;
+     public String Picture;
+     public Date DayCreate;
+     public double EventLat;
+     public double EventLng;
+     public int ShareType;
+     public int Like;
+     public int Dislike;
+     public int Status;
 
 	@Override
 	public Object getProperty(int index) {
@@ -53,23 +49,15 @@ public class Events implements KvmSerializable {
 		case 7:
 			return EventLat;
 		case 8:
-			return EventLong;
+			return EventLng;
 		case 9:
-			return ShareID;
+			return ShareType;
 		case 10:
 			return Like;
 		case 11:
 			return Dislike;
 		case 12:
 			return Status;
-		case 13:
-			return LabelImage;
-		case 14:
-			return AccID1;
-		case 15:
-			return Name;
-		case 16:
-			return Avatar;
 		default:
 			return null;
 		}
@@ -79,7 +67,7 @@ public class Events implements KvmSerializable {
 	@Override
 	public int getPropertyCount() {
 		// TODO Auto-generated method stub
-		return 2;
+		return 12;
 	}
 
 	@Override
@@ -118,11 +106,11 @@ public class Events implements KvmSerializable {
 			info.type = MarshalDouble.DOUBLE_CLASS;
 			break;
 		case 8:
-			info.name = "EventLong";
+			info.name = "EventLng";
 			info.type = MarshalDouble.DOUBLE_CLASS;
 			break;
 		case 9:
-			info.name = "ShareID";
+			info.name = "ShareType";
 			info.type = PropertyInfo.INTEGER_CLASS;
 			break;
 		case 10:
@@ -136,22 +124,6 @@ public class Events implements KvmSerializable {
 		case 12:
 			info.name = "Status";
 			info.type = PropertyInfo.BOOLEAN_CLASS;
-			break;
-		case 13:
-			info.name = "LabelImage";
-			info.type = PropertyInfo.STRING_CLASS;
-			break;
-		case 14:
-			info.name = "AccID1";
-			info.type = PropertyInfo.INTEGER_CLASS;
-			break;
-		case 15:
-			info.name = "Name";
-			info.type = PropertyInfo.STRING_CLASS;
-			break;
-		case 16:
-			info.name = "Avatar";
-			info.type = PropertyInfo.STRING_CLASS;
 			break;
 		default:
 
@@ -193,10 +165,10 @@ public class Events implements KvmSerializable {
 			EventLat = Double.parseDouble(value.toString());
 			break;
 		case 8:
-			EventLong = Double.parseDouble(value.toString());
+			EventLng = Double.parseDouble(value.toString());
 			break;
 		case 9:
-			ShareID = Integer.parseInt(value.toString());
+			ShareType = Integer.parseInt(value.toString());
 			break;
 		case 10:
 			Like = Integer.parseInt(value.toString());
@@ -205,19 +177,7 @@ public class Events implements KvmSerializable {
 			Dislike = Integer.parseInt(value.toString());
 			break;
 		case 12:
-			Status = Boolean.parseBoolean(value.toString());
-			break;
-		case 13:
-			LabelImage = value.toString();
-			break;
-		case 14:
-			AccID1 = Integer.parseInt(value.toString());
-			break;
-		case 15:
-			Name = value.toString();
-			break;
-		case 16:
-			Avatar = value.toString();
+			Status = Integer.parseInt(value.toString());
 			break;
 		default:
 			break;
@@ -225,4 +185,9 @@ public class Events implements KvmSerializable {
 
 	}
 
+	public int getLevel(){
+		if(Like>50) return 3;
+		if(Like>25 && Like <=50)return 2;
+		return 1;
+	}
 }

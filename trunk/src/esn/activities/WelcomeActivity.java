@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.CharacterData;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.DialogError;
@@ -16,6 +17,7 @@ import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 import esn.classes.Sessions;
+import esn.models.Users;
 import esn.models.UsersManager;
 
 import android.accounts.AccountManager;
@@ -24,24 +26,18 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.EditText;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends SherlockActivity {
 
-	private final int REQUEST_CODE_CREATE_LOGIN = 1;
-	
-	private final int REQUEST_CODE_CREATE_REGISTER = 3;
 	
 	private final String[] FB_PERMISSIONS = { "email", "user_events","user_birthday" };
 	// Login by fB
 	
 	public static final String APP_ID = "175185989209026";
 	private Facebook mFacebook;
-	private SharedPreferences prefEdit;
 	private AsyncFacebookRunner mAsyncRunner;
 	protected Sessions session;
 	protected Context context;
@@ -49,6 +45,7 @@ public class WelcomeActivity extends Activity {
 	public String password;
 	public String email;
 	public Handler handler;
+	public Users user;
 
 	UsersManager usersManager = new UsersManager();
 	
@@ -59,6 +56,9 @@ public class WelcomeActivity extends Activity {
 		
 		context = this;
 		handler = new Handler();
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayUseLogoEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		
 		// application session
 		session = Sessions.getInstance(context);
@@ -249,7 +249,23 @@ public class WelcomeActivity extends Activity {
 		public void run() {
 			UsersManager usermManager = new UsersManager();
 			if (usermManager.Login(email, password)) {
-
+				try {
+					user = usermManager.RetrieveByEmail(email);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 				handler.post(new loginSuccess());
 				
 			} else {
@@ -274,12 +290,21 @@ public class WelcomeActivity extends Activity {
 	private class loginSuccess implements Runnable {
 		@Override
 		public void run() {
+			
 			session.put("email", email);
 			session.put("password", password);
+			if(user!=null){
+				session.currentUser = user;
+			}else{
+				dialog.dismiss();
+				Util.showAlert(context, "ERROR", "Email not available");
+				return;
+			}
 			dialog.dismiss();
 			Intent intent = new Intent(context, HomeActivity.class);
 			startActivity(intent);
 			finish();
+			
 		}
 	}
 }

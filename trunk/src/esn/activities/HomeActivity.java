@@ -1,12 +1,16 @@
 package esn.activities;
 
+import java.io.IOException;
 import java.util.Hashtable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +20,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.SyncStateContract.Helpers;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnDragListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,13 +39,20 @@ import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.facebook.android.Util;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
+import com.readystatesoftware.maps.OnSingleTapListener;
+import com.readystatesoftware.maps.TapControlledMapView;
 
 import esn.adapters.ViewTypesListAdapter;
 import esn.classes.EsnWebServices;
+import esn.classes.EventOverlayItem;
 import esn.classes.ListNavigationItem;
 import esn.classes.Maps;
+import esn.classes.Sessions;
+import esn.models.AppEnums;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
@@ -50,6 +65,8 @@ public class HomeActivity extends SherlockMapActivity implements
 	public static final int REQUEST_CODE_ADD_NEW_EVENT = 1;
 	private boolean isPotentialLongPress;
 	protected Handler handler;
+	private ProgressDialog progressDialog;
+	private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +78,8 @@ public class HomeActivity extends SherlockMapActivity implements
 		setupActionBar();
 		setupMap();
 		setupListNavigate();
+		LoadEvent();
+
 	}
 
 	private void setupListNavigate() {
@@ -98,12 +117,29 @@ public class HomeActivity extends SherlockMapActivity implements
 	private void setupMap() {
 
 		/** setup map **/
-		MapView mapView = (MapView) findViewById(R.id.gmapView);
+		TapControlledMapView mapView = (TapControlledMapView) findViewById(R.id.gmapView);
 		map = new Maps(this, mapView);
 		// set zoom level to 14
-		map.setZoom(5);
+		map.setZoom(10);
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
-		// map.displayCurrentLocation();
+		mapView.setOnSingleTapListener(new OnSingleTapListener() {
+
+			@Override
+			public boolean onSingleTap(MotionEvent e) {
+				map.hideAllBallon();
+				return true;
+			}
+		});
+	}
+
+	private void LoadEvent() {
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setTitle(res.getString(R.string.esn_home_loadingEvent));
+		progressDialog.setMessage(res.getString(R.string.esn_global_loading));
+		progressDialog.show();
+		LoadEventsThread loadEvent = new LoadEventsThread();
+		loadEvent.start();
+		Log.d("esn", "Load event start");
 	}
 
 	@Override
@@ -140,6 +176,10 @@ public class HomeActivity extends SherlockMapActivity implements
 		menu.add("Settings").setIcon(R.drawable.ic_settings)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		menu.add("Navigate").setIcon(R.drawable.ic_search)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("Zoom in").setIcon(R.drawable.ic_search)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("Zoom out").setIcon(R.drawable.ic_search)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
@@ -185,9 +225,10 @@ public class HomeActivity extends SherlockMapActivity implements
 						int longtitudeE6 = p.getLongitudeE6();
 						Intent addNewEventIntent = new Intent(map.getContext(),
 								SelectEventLabel.class);
-						addNewEventIntent.putExtra("latitudeE6", latitudeE6);
 						addNewEventIntent
-								.putExtra("longtitudeE6", longtitudeE6);
+								.putExtra("latitude", latitudeE6 / 1E6);
+						addNewEventIntent.putExtra("longtitude",
+								longtitudeE6 / 1E6);
 						startActivityForResult(addNewEventIntent,
 								REQUEST_CODE_ADD_NEW_EVENT);
 					}
@@ -226,9 +267,8 @@ public class HomeActivity extends SherlockMapActivity implements
 	protected boolean isLongPressDetected() {
 		isPotentialLongPress = true;
 		try {
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 75; i++) {
 				Thread.sleep(10);
-				System.out.print(i * 10);
 				if (!isPotentialLongPress) {
 					return false;
 				}
@@ -261,9 +301,18 @@ public class HomeActivity extends SherlockMapActivity implements
 			startActivityForResult(intent, REQUEST_CODE_ADD_NEW_EVENT);
 			return true;
 		}
+
 		if (itemTitle.equals("Settings")) {
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
+			return true;
+		}
+		if (itemTitle.equals("Zoom in")) {
+			map.zoomIn();
+			return true;
+		}
+		if (itemTitle.equals("Zoom out")) {
+			map.zoomOut();
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);
@@ -274,15 +323,32 @@ public class HomeActivity extends SherlockMapActivity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_CODE_ADD_NEW_EVENT
 				&& resultCode == RESULT_OK) {
-			int latitude = data.getIntExtra("latitudeE6", 361);
-			int longtitude = data.getIntExtra("longtitudeE6", 361);
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setTitle(res.getString(R.string.esn_global_loading));
+			progressDialog.setMessage(res
+					.getString(R.string.esn_global_pleaseWait));
+			progressDialog.show();
+			double latitude = data.getDoubleExtra("latitude", Double.MIN_VALUE);
+			double longtitude = data.getDoubleExtra("longtitude",
+					Double.MIN_VALUE);
 			String title = data.getStringExtra("eventTitle");
 			String description = data.getStringExtra("eventDescription");
 			int pointerDrawable = data.getIntExtra("labelIcon", 0);
-			if (latitude != 361 && longtitude != 361) {
-				GeoPoint newEventPoint = new GeoPoint(latitude, longtitude);
-				map.setMarker(newEventPoint, title, description,
-						pointerDrawable);
+			int labelId = data.getIntExtra("labelId", 0);
+			if (latitude != Integer.MIN_VALUE
+					&& longtitude != Integer.MIN_VALUE) {
+				Events event = new Events();
+				Sessions session = Sessions.getInstance(this);
+				event.AccID = session.currentUser.AccID;
+				event.EventTypeID = labelId;
+				event.Title = title;
+				event.Description = description;
+				// @todo: nang chup hinh khi tao event
+				event.Picture = "";
+				event.EventLat = latitude;
+				event.EventLng = longtitude;
+				event.ShareType = AppEnums.ShareTypes.Public;
+				new CreateEventsThread(event).start();
 			}
 			return;
 		}
@@ -302,29 +368,121 @@ public class HomeActivity extends SherlockMapActivity implements
 		return false;
 	}
 
-	private class loadEventsThread extends Thread {
+	private class LoadEventsThread extends Thread {
 		@Override
 		public void run() {
+			Log.d("esn", "Load event thread bat dau");
 			Location current = map.getCurrentLocation();
 			if (current != null) {
 				EventsManager manager = new EventsManager();
-				final Events[] events = manager.getAvailableEvents();
+				Events[] events;
+				try {
+					events = manager.getAvailableEvents();
+					Log.d("esn", "Da load xong events");
+					handler.post(new LoadEventSuggess(events));
+
+				} catch (IllegalArgumentException e) {
+					Log.d("esn", e.getMessage());
+					e.printStackTrace();
+				} catch (JSONException e) {
+					Log.d("esn", e.getMessage());
+					e.printStackTrace();
+				} catch (IOException e) {
+					Log.d("esn", e.getMessage());
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					Log.d("esn", e.getMessage());
+					e.printStackTrace();
+				}
+
+			} else {
 				handler.post(new Runnable() {
 
 					@Override
 					public void run() {
-						for (Events event : events) {
-							GeoPoint point = new GeoPoint(
-									(int) (event.EventLat * 1E6),
-									(int) (event.EventLong * 1E6));
-							map.setMarker(point, event.Title,
-									event.Description,
-									EventType.getDrawable(event.EventTypeID));
-						}
+						progressDialog.dismiss();
 					}
 				});
 			}
 		}
 	}
 
+	private class CreateEventsThread extends Thread {
+		private Events event;
+
+		public CreateEventsThread(Events event) {
+			this.event = event;
+		}
+
+		@Override
+		public void run() {
+			EventsManager manager = new EventsManager();
+			try {
+				Events event = manager.setEntity(this.event);
+				if (event.EventID > 0) {
+					handler.post(new AddEventToMapHandler(event));
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private class LoadEventSuggess implements Runnable {
+		private Events[] events;
+
+		public LoadEventSuggess(Events[] events) {
+			this.events = events;
+		}
+
+		@Override
+		public void run() {
+			Log.d("esn", "Success load event!");
+			if (events.length > 0) {
+				for (Events event : events) {
+
+					GeoPoint point = new GeoPoint((int) (event.EventLat * 1E6),
+							(int) (event.EventLng * 1E6));
+					EventOverlayItem item = new EventOverlayItem(point,
+							event.Title, event.Description, event.EventID);
+
+					map.setMarker(
+							item,
+							EventType.getIconId(event.EventTypeID,
+									event.getLevel()));
+					Log.d("homeEvents", event.EventLat + "|" + event.EventLng);
+				}
+				map.getMap().invalidate();
+			}
+			progressDialog.dismiss();
+		}
+
+	}
+
+	private class AddEventToMapHandler implements Runnable {
+		private Events event;
+
+		public AddEventToMapHandler(Events event) {
+			this.event = event;
+		}
+
+		@Override
+		public void run() {
+			GeoPoint point = new GeoPoint((int) (event.EventLat * 1E6),
+					(int) (event.EventLng * 1E6));
+			EventOverlayItem item = new EventOverlayItem(point, event.Title,
+					event.Description, event.EventID);
+
+			map.setMarker(item,
+					EventType.getIconId(event.EventTypeID, event.getLevel()));
+			map.getMap().invalidate();
+			progressDialog.dismiss();
+			Log.d("create event in: ", event.EventLat + "|" + event.EventLng);
+
+		}
+	}
 }

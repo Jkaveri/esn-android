@@ -104,8 +104,11 @@
 	<string name="key.maps.googleAPI">0UKnO3qYoNtyMrP7ZfmZ2u0f6EjryZV-xHwC5QA</string>
 	
 	<!-- Home -->
-	<string name="str.Home.ViewAsMap">View As Map</string>
-	<string name="str.Home.ViewAsList">View As List</string>
+	<string name="str.home.viewAsMap">View As Map</string>
+	<string name="str.home.viewAsList">View As List</string>
+	<string name="esn.home.loadingEvent">Load events</string>
+	<string name="esn.home.noEvent">No events</string>
+	
 	<!-- Friends -->
     <string name="btn.Friends.Events">Events</string>
     <string name="btn.Friends.FdsList">Friends List</string>
@@ -118,7 +121,12 @@
 	<string name="btn.Friends.Lists.Diaglog.Visit">Visit</string>
 	<string name="btn.Friends.Lists.Diaglog.Unfriend">Unfriend</string>
 	<string name="btn.Friends.Lists.Diaglog.Close">Close</string>
+	<!-- Global  -->
 	<string name="esn.global.dateFormat">MM-dd-yyyy</string>
+	<string name="esn.global.loading">Loading</string>
+	<string name="esn.global.pleaseWait">Please wait!</string>
+	
+
 	<string name="esn.global.Error">Error</string>
 	<string name="esn.global.ConnectionError">Connection error !</string>
 	<string name="app_Processing">Processing</string>

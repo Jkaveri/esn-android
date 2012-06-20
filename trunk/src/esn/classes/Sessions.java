@@ -1,5 +1,6 @@
 package esn.classes;
 
+import esn.models.Users;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -7,7 +8,7 @@ public class Sessions {
 	private static Sessions instance;
 	private Context context;
 	private SharedPreferences pref;
-
+	public Users currentUser;
 	public Sessions(Context context) {
 		this.context = context;
 		pref = context.getSharedPreferences("ESN", Context.MODE_PRIVATE);

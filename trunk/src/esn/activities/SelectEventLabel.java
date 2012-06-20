@@ -1,7 +1,12 @@
 package esn.activities;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
 import org.kobjects.isodate.IsoDate;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
@@ -10,10 +15,13 @@ import esn.adapters.EsnListAdapter;
 import esn.classes.EsnListItem;
 import esn.classes.EsnWebServices;
 import esn.models.EventType;
+import esn.models.EventTypeManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -30,79 +38,30 @@ public class SelectEventLabel extends Activity {
 
 	private Handler handler;
 
+	private ListView listLabels;
+
+	private Resources res;
+
+	private ProgressDialog progress;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_labels);
+		res = getResources();
 		handler = new Handler();
-		/*
-		 * dialog = new ProgressDialog(this); dialog.setTitle("Loading...");
-		 * dialog.setMessage("Waiting..."); dialog.show();
-		 */
-		Thread th = new Thread() {
-			@Override
-			public void run() {
+		listLabels = (ListView) findViewById(R.id.event_labels);
 
-				loadLabels();
-				// dialog.hide();
-			}
-		};
-		th.start();
+		progress = new ProgressDialog(this);
+		progress.setTitle(res.getString(R.string.esn_global_loading));
+		progress.setMessage(res.getString(R.string.esn_global_pleaseWait));
+		progress.setCanceledOnTouchOutside(false);
+		progress.show();
+
+		listLabels.setOnItemClickListener(new EventTypeItemClickListener());
 		addEventData = getIntent();
 
-	}
-
-	private void loadLabels() {
-		final ListView listLabels = (ListView) findViewById(R.id.event_labels);
-		adapter = new EsnListAdapter();
-
-		/*EsnWebServices service = new EsnWebServices("http://esn.somee.com",
-				"http://esnservice.somee.com/EventService.asmx");
-		SoapObject response = service.InvokeMethod("LoadEventType");
-		EventLabels[] labels = new EventLabels[response.getPropertyCount()];
-		for (int i = 0; i < labels.length; i++) {
-			SoapObject pii = (SoapObject) response.getProperty(i);
-			EventLabels label = new EventLabels();
-			label.setEventTypeID(Integer
-					.parseInt(pii.getProperty(0).toString()));
-			label.setEventTypeName(pii.getProperty(1).toString());
-			label.setLabelImage(pii.getProperty(2).toString());
-			label.setTime(IsoDate.stringToDate(pii.getProperty(3).toString(),
-					IsoDate.DATE_TIME));
-			label.setStatus(Boolean.parseBoolean(pii.getProperty(1).toString()));
-			labels[i] = label;
-		}*/
-
-		adapter.add(new EsnListItem("titlte", "sub title",
-				R.drawable.ic_launcher));
-		this.handler.post(new Runnable() {
-
-			@Override
-			public void run() {
-				listLabels.setAdapter(adapter);
-				listLabels.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> adapters, View view,
-							int index, long id) {
-						EsnListItem item = (EsnListItem) adapter.getItem(index);
-						Context context = view.getContext();
-						Intent intent = new Intent(context, AddNewEvent.class);
-						intent.putExtra("latitudeE6",
-								addEventData.getIntExtra("latitudeE6", 361));
-						intent.putExtra("longtitudeE6",
-								addEventData.getIntExtra("longtitudeE6", 361));
-						intent.putExtra("labelName", item.getTitle());
-						intent.putExtra("labelDescription", item.getSubtitle());
-						intent.putExtra("labelIcon", item.getIcon());
-						intent.putExtra("labelId", item.getId());
-
-						startActivityForResult(intent,
-								HomeActivity.REQUEST_CODE_ADD_NEW_EVENT);
-
-					}
-				});
-			}
-		});
+		new LoadEventTypeThread().start();
 
 	}
 
@@ -113,6 +72,77 @@ public class SelectEventLabel extends Activity {
 			finish();
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	private class LoadEventTypeThread extends Thread {
+		@Override
+		public void run() {
+
+			try {
+				// tao moi adapter
+				adapter = new EsnListAdapter();
+				// manager
+				EventTypeManager manager = new EventTypeManager();
+				// get list event type
+				List<EventType> list = manager.getList();
+				for (EventType type : list) {
+					// add item vao adapter
+					EsnListItem item = new EsnListItem(type.EventTypeName, "",
+							EventType.getIconId(type.EventTypeID, 3));
+					item.setId(type.EventTypeID);
+					adapter.add(item);
+				}
+				// generate list
+				handler.post(new LoadEventTypeSuccessHandler());
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	private class LoadEventTypeSuccessHandler implements Runnable {
+		@Override
+		public void run() {
+			listLabels.setAdapter(adapter);
+			progress.dismiss();
+		}
+	}
+
+	private class EventTypeItemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> adapters, View view, int index,
+				long id) {
+			EsnListItem item = (EsnListItem) adapter.getItem(index);
+			Context context = view.getContext();
+			Intent intent = new Intent(context, AddNewEvent.class);
+			intent.putExtra("latitude",
+					addEventData.getDoubleExtra("latitude", Double.MIN_VALUE));
+			intent.putExtra("longtitude",
+					addEventData.getDoubleExtra("longtitude", Double.MIN_VALUE));
+			intent.putExtra("labelName", item.getTitle());
+			intent.putExtra("labelDescription", item.getSubtitle());
+			intent.putExtra("labelIcon", item.getIcon());
+			intent.putExtra("labelId", item.getId());
+
+			startActivityForResult(intent,
+					HomeActivity.REQUEST_CODE_ADD_NEW_EVENT);
+
 		}
 	}
 

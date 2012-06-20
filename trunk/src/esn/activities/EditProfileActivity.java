@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.facebook.android.Util;
@@ -280,7 +281,21 @@ public class EditProfileActivity extends Activity {
 				
 				String email = sessions.get("email", null);
 				
-				user = usersManager.RetrieveByEmail(email);
+				try {
+					user = usersManager.RetrieveByEmail(email);
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				if(user!=null)
 				{
