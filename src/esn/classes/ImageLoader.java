@@ -22,8 +22,10 @@ import android.widget.ImageView;
 
 public class ImageLoader {
 
-	MemoryCache memoryCache = new MemoryCache();
-	FileCache fileCache;
+	private MemoryCache memoryCache = new MemoryCache();
+	private FileCache fileCache;
+	private int stub_id = R.drawable.stub;
+	
 	private Map<ImageView, String> imageViews = Collections
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 
@@ -34,8 +36,10 @@ public class ImageLoader {
 
 		fileCache = new FileCache(context);
 	}
-
-	final int stub_id = R.drawable.ic_no_avata;
+	
+	public void setDefaultEmptyImage(int r_drawable_image){
+		this.stub_id = r_drawable_image;
+	}
 
 	public void displayImage(String url, Activity activity, ImageView imageView) {
 		imageViews.put(imageView, url);
@@ -73,12 +77,10 @@ public class ImageLoader {
 
 		// from web
 		try {
-			
 			Bitmap bitmap = null;
-			
 			URL imageUrl = new URL(url);
-			
-			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) imageUrl
+					.openConnection();
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
 			InputStream is = conn.getInputStream();
@@ -214,5 +216,4 @@ public class ImageLoader {
 		memoryCache.clear();
 		fileCache.clear();
 	}
-
 }
