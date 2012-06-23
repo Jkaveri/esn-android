@@ -26,6 +26,7 @@ public class ListViewFriendsAdapter extends BaseAdapter {
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.imageLoader = new ImageLoader(activity.getApplicationContext());
+		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
 	}
 
 	@Override
