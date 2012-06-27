@@ -36,7 +36,6 @@ public class AddNewEvent extends Activity {
 				.getText().toString();
 		if(!title.isEmpty()){
 			if(!description.isEmpty()){
-				Events event = new Events();
 				homeData.putExtra("eventTitle", title);
 				homeData.putExtra("eventDescription", description);
 				setResult(RESULT_OK, homeData);

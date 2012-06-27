@@ -2,8 +2,12 @@ package esn.classes;
 
 import java.util.ArrayList;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.sax.StartElementListener;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -12,6 +16,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 import com.readystatesoftware.mapviewballoons.BalloonItemizedOverlay;
 
+import esn.activities.EventDetail;
 import esn.models.Events;
 
 public class EsnItemizedOverlay<item extends OverlayItem> extends BalloonItemizedOverlay<EventOverlayItem> {
@@ -57,7 +62,17 @@ public class EsnItemizedOverlay<item extends OverlayItem> extends BalloonItemize
 	}
 	@Override
 	protected boolean onBalloonTap(int index, EventOverlayItem item) {
-		Toast.makeText(c, "EventID: "+item.getEventId(), Toast.LENGTH_SHORT).show();
+		int id = item.getEventId();
+		if(id>0){
+			//Long mID = Long.parseLong(item.getSnippet());
+			String action = Intent.ACTION_PICK;
+			
+			
+			Intent intent = new Intent(c, EventDetail.class);
+			intent.putExtra("id", id);
+			intent.setAction(action);
+			c.startActivity(intent);
+		}
 		return true;
 	}
 	
