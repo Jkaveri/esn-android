@@ -1,6 +1,9 @@
 package esn.activities;
 
+import java.io.IOException;
 import java.util.Currency;
+
+import org.json.JSONException;
 
 import com.facebook.android.Util;
 
@@ -108,7 +111,9 @@ public class ChangePassActivity extends Activity {
 		int i=0;
 		
 		EditText txtCurrentPassword = (EditText)findViewById(R.id.esn_changepass_currentpassword);
+		
 		EditText txtNewPassword = (EditText)findViewById(R.id.esn_changepass_newpassword);
+		
 		EditText txtRepeatNewPassword = (EditText)findViewById(R.id.esn_changepass_repeatnewpassword);
 		
 		if(txtCurrentPassword.getText().toString().isEmpty())
@@ -127,7 +132,7 @@ public class ChangePassActivity extends Activity {
 		{
 			i=4;
 		}
-		else if (!txtCurrentPassword.equals(password)) 
+		else if (txtCurrentPassword.equals(password)) 
 		{
 			i=5;
 		}		
@@ -148,7 +153,14 @@ public class ChangePassActivity extends Activity {
 			
 			UsersManager usersManager = new UsersManager();
 			
-			Boolean rs = usersManager.ChangePassword(txtEmail.getText().toString(), txtCurrentPassword.getText().toString(), txtNewPassword.getText().toString());
+			Boolean rs = null;
+			try {
+				rs = usersManager.ChangePassword(txtEmail.getText().toString(), txtCurrentPassword.getText().toString(), txtNewPassword.getText().toString());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			if(rs==true)
 			{

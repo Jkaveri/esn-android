@@ -1,5 +1,6 @@
 package esn.activities;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,6 +8,7 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.facebook.android.Util;
@@ -186,8 +188,8 @@ public class RegisterActivity extends Activity {
 
 	public void CancelClicked(View view) {
 
-		setResult(RESULT_CANCELED, intent);
-
+		intent = new Intent(context, WelcomeActivity.class);
+		startActivity(intent);
 		finish();
 	}
 
@@ -222,34 +224,38 @@ public class RegisterActivity extends Activity {
 			new Thread(){
 				public void run() {
 					
-					if(usersManager.CheckEmailExists(email.getText().toString()))
-					{
-						handler.post(new Runnable() {
-							
-							@Override
-							public void run() {
-								Util.showAlert(context, "Error", "Email is exists !");
-							}
-						});
-						
-					}
-					else
-					{
-						handler.post(new Runnable() {
-							
-							@Override
-							public void run() {
-								dialog = new ProgressDialog(RegisterActivity.this);
-								dialog.setTitle(getResources().getString(R.string.app_Processing));
-								dialog.setMessage("Waiting ....");
-								dialog.show();	
+					try {
+						if(usersManager.CheckEmailExists(email.getText().toString()))
+						{
+							handler.post(new Runnable() {
 								
-								RegistertThread registerThread = new RegistertThread();
-								registerThread.start();							
-							}
-						});
+								@Override
+								public void run() {
+									Util.showAlert(context, "Error", "Email is exists !");
+								}
+							});
+							
+						}
+						else
+						{
+							handler.post(new Runnable() {
+								
+								@Override
+								public void run() {
+									dialog = new ProgressDialog(RegisterActivity.this);
+									dialog.setTitle(getResources().getString(R.string.app_Processing));
+									dialog.setMessage("Waiting ....");
+									dialog.show();	
 									
-						
+									RegistertThread registerThread = new RegistertThread();
+									registerThread.start();							
+								}
+							});
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 					
 				};
@@ -320,7 +326,14 @@ public class RegisterActivity extends Activity {
 				
 				String email = txtEmail.getText().toString();
 				
-				boolean checkEmail = usersManager.CheckEmailExists(email);
+				boolean checkEmail = false;
+				try {
+					checkEmail = usersManager.CheckEmailExists(email);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
 				if(checkEmail==true)
 				{
@@ -370,6 +383,7 @@ public class RegisterActivity extends Activity {
 			}
 				
 			user.Birthday = bd;	
+			
 			EditText phone = (EditText)findViewById(R.id.esn_register_txtPhone);
 				
 			user.Phone = phone.getText().toString();
@@ -388,7 +402,14 @@ public class RegisterActivity extends Activity {
 			}			
 			user.AccessToken="_";
 			
-			int rs = usersManager.Register(user);
+			int rs = 0;
+			try {
+				rs = usersManager.Register(user);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 				
 			if(rs != 0)
 			{

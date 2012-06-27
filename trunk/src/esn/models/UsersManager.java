@@ -43,10 +43,9 @@ public class UsersManager {
 		return false;
 	}
 
-	public int Register(Users user) {
-		int rs = 0;
+	public int Register(Users user) throws JSONException, IOException {
+			int rs = 0;
 
-		try {
 			JSONObject params = new JSONObject();
 
 			params.put("name", user.Name);
@@ -58,18 +57,12 @@ public class UsersManager {
 			params.put("accessToken", user.AccessToken);
 
 			JSONObject jsonObject = helper.invokeWebMethod("Register", params);
-
 			rs = jsonObject.getInt("d");
-		} catch (Exception e) {
-			rs = -2;
-		}
-
-		return rs;
+			return rs;
 	}
 
-	public boolean CheckEmailExists(String email) {
-		try {
-
+	public boolean CheckEmailExists(String email) throws JSONException, IOException {
+		
 			JSONObject params = new JSONObject();
 
 			params.put("email", email);
@@ -80,17 +73,10 @@ public class UsersManager {
 			boolean rs = jsonObject.getBoolean("d");
 
 			return rs;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return false;
 	}
 
-	public Boolean ChangePassword(String email, String currentPass,
-			String newPass) {
-		try {
+	public Boolean ChangePassword(String email, String currentPass,			
+			String newPass) throws JSONException, IOException {		
 
 			JSONObject params = new JSONObject();
 
@@ -105,76 +91,77 @@ public class UsersManager {
 
 			return rs;
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
 	}
 
-	public Boolean UpdateProfile(Users user) {
+	public Boolean UpdateProfile(Users user) throws JSONException, IOException {
 		Boolean rs = false;
 
 		JSONObject params = new JSONObject();
 
-		try {
-			params.put("name", user.Name);
-			params.put("gender", user.Gender);
-			params.put("birthday", user.Birthday);
-			params.put("phone", user.Phone);
-			params.put("address", user.Address);
-			params.put("street", user.Street);
-			params.put("district", user.District);
-			params.put("city", user.City);
-			params.put("country", user.Country);
-			params.put("favorite", user.Favorite);
-			params.put("avatar", user.Avatar);
+		
+		params.put("accID", user.AccID);
+		params.put("name", user.Name);
+		params.put("gender", user.Gender);
+		params.put("birthday", user.Birthday);
+		params.put("phone", user.Phone);
+		params.put("address", user.Address);
+		params.put("street", user.Street);
+		params.put("district", user.District);
+		params.put("city", user.City);
+		params.put("country", user.Country);
+		params.put("favorite", user.Favorite);
+			
+		params.put("avatar", user.Avatar);
 
-			JSONObject jsonObject = helper.invokeWebMethod("ChangePassword",
-					params);
+		JSONObject jsonObject = helper.invokeWebMethod("UpdateProfile",params);
 
-			rs = jsonObject.getBoolean("d");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		rs = jsonObject.getBoolean("d");
+		
 		return rs;
 	}
 
 	public Users RetrieveByEmail(String email) throws JSONException,
 			IOException, IllegalArgumentException, IllegalAccessException {
-		HttpHelper helper = new HttpHelper(URL);
-		JSONObject params = new JSONObject();
-		params.put("email", email);
-		JSONObject response = helper.invokeWebMethod("RetrieveByEmail", params);
-		if (response != null) {
-			Users user = new Users();
-			JSONObject jsonUser = response.getJSONObject("d");
+			HttpHelper helper = new HttpHelper(URL);
+			JSONObject params = new JSONObject();
+			
+			params.put("email", email);
+			
+			JSONObject response = helper.invokeWebMethod("RetrieveByEmail", params);
+			
+			if (response != null) {
+				
+				Users user = new Users();
+				JSONObject jsonUser = response.getJSONObject("d");
 
-			JSONObject p = jsonUser.getJSONObject("Profile");
+				JSONObject p = jsonUser.getJSONObject("Profile");
+				
+				user.AccID = jsonUser.getInt("ID");
 
-			user.Password = jsonUser.getString("Password");
+				user.Password = jsonUser.getString("Password");
 
-			user.Name = p.getString("Name");
+				user.Name = p.getString("Name");
 
-			user.Birthday = p.getString("Birthday");
+				user.Birthday = p.getString("Birthday");
+			
+				user.Gender = p.getBoolean("Gender");
 
-			user.Gender = p.getBoolean("Gender");
+				user.Phone = p.getString("Phone");
 
-			user.Phone = p.getString("Phone");
+				user.Address = p.getString("Address");
 
-			user.Address = p.getString("Address");
+				user.Street = p.getString("Street");
 
-			user.Street = p.getString("Street");
+				user.District = p.getString("District");
 
-			user.District = p.getString("District");
+				user.City = p.getString("City");
 
-			user.City = p.getString("City");
+				user.Country = p.getString("Country");
 
-			user.Country = p.getString("Country");
+				user.Favorite = p.getString("Favorite");
 
-			user.Favorite = p.getString("Favorite");
-
-			user.Avatar = p.getString("Avatar");
-			return user;
+				user.Avatar = p.getString("Avatar");
+				return user;
 		}
 		return null;
 	}

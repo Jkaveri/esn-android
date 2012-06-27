@@ -3,6 +3,7 @@ package esn.activities;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,6 +37,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -46,6 +48,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class EditProfileActivity extends Activity {
 	
@@ -71,8 +74,8 @@ public class EditProfileActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.edit_profile);
 		
 		intent = this.getIntent();
@@ -85,7 +88,12 @@ public class EditProfileActivity extends Activity {
 		sessions = Sessions.getInstance(context);
 		
 		String email = sessions.get("email", null);
-						
+				
+		if(sessions==null)
+		{
+			intent = new Intent(this,WelcomeActivity.class);
+			startActivity(intent);
+		}
 		mDateDisplay = (EditText) findViewById(R.id.esn_changeprofile_birthday);
 
 		mDateDisplay.setOnClickListener(new View.OnClickListener() {
@@ -99,34 +107,8 @@ public class EditProfileActivity extends Activity {
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 		
-		//mDateDisplay.setHint("Birthday");
-		
 		ShowProfileInfo();
-		
-		//String urla = "http://shop.somee.com/images/kis1.png";
-		
-		//sd(urla);
 	}
-	/*
-	public void sd(final String url)
-	{
-		new Thread(){
-			@Override
-			public void run() {
-				
-				
-				final Bitmap bitmap;
-				try {
-					bitmap = Utils.getBitmapFromURL(url);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				handler.post(new 
-			}
-		}.start();
-	}	*/	
 	
 	private void ShowProfileInfo() {
 		
@@ -283,17 +265,14 @@ public class EditProfileActivity extends Activity {
 				
 				try {
 					user = usersManager.RetrieveByEmail(email);
+					
 				} catch (IllegalArgumentException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
@@ -305,6 +284,10 @@ public class EditProfileActivity extends Activity {
 						public void run() {
 							
 							dialog.dismiss();
+							
+							int id = user.AccID;
+							
+							sessions.put("AccId", id);
 							
 							EditText txtName = (EditText)findViewById(R.id.esn_changeprofile_fullname);
 							EditText txtPhone = (EditText)findViewById(R.id.esn_changeprofile_phone);
@@ -337,23 +320,13 @@ public class EditProfileActivity extends Activity {
 								}.start();								
 							}	
 							
-							/*
+							EditText txtBirthday = (EditText)findViewById(R.id.esn_changeprofile_birthday);
+							
 							String birthday = user.Birthday;
 							
-							
-							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-							SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
-							
-							
-							try {
-									
-								birthday = format.format(sFormat.parse(birthday));
+							java.util.Date bd = (java.util.Date)Utils.GetDateFromJSONString(user.Birthday);
 								
-							} catch (ParseException e) {
-								return;
-							}
-							*/					
-							txtName.setText(user.Name);
+							txtBirthday.setText(Utils.DateToStringByLocale(bd,2));
 							
 							Boolean gender = user.Gender;					
 							
@@ -377,6 +350,8 @@ public class EditProfileActivity extends Activity {
 										
 								sp.setSelection(pos);
 							}
+							
+							txtName.setText(user.Name);
 							txtPhone.setText(user.Phone);
 							txtaddress.setText(user.Address);
 							txtStreet.setText(user.Street);
@@ -391,9 +366,9 @@ public class EditProfileActivity extends Activity {
 				{
 					handler.post(new Runnable() {						
 						@Override
-						public void run() {
-							
+						public void run() {							
 							dialog.dismiss();
+							
 							Util.showAlert(context, res.getResourceName(R.string.esn_global_Error), res.getResourceEntryName(R.string.esn_global_ConnectionError));							
 						}
 					});
@@ -415,5 +390,113 @@ public class EditProfileActivity extends Activity {
 			avatar.setImageBitmap(bitmap);
 		}
 		
+	}
+	
+	public void UpdateProfileClicked(View view)
+	{
+		dialog = new ProgressDialog(this);
+		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
+		dialog.setMessage("Waiting ....");
+		dialog.show();
+		
+		UpdateProfileThread updateProfileThread = new UpdateProfileThread();
+		
+		updateProfileThread.start();
+	}
+	
+	public class UpdateProfileThread extends Thread{
+		
+		public UpdateProfileThread() {
+			
+		}						
+		public void run() {
+			
+			Users user = new Users();
+			
+			EditText txtName = (EditText)findViewById(R.id.esn_changeprofile_fullname);
+			EditText txtPhone = (EditText)findViewById(R.id.esn_changeprofile_phone);
+			EditText txtaddress = (EditText)findViewById(R.id.esn_changeprofile_address);
+			EditText txtStreet = (EditText)findViewById(R.id.esn_changeprofile_street);
+			EditText txtDistrict = (EditText)findViewById(R.id.esn_changeprofile_district);
+			EditText txtCity = (EditText)findViewById(R.id.esn_changeprofile_city);
+			EditText txtCountry = (EditText)findViewById(R.id.esn_changeprofile_country);
+			EditText txtFavorite = (EditText)findViewById(R.id.esn_changeprofile_favorite);
+			EditText txtBirthday = (EditText)findViewById(R.id.esn_changeprofile_birthday);
+			
+			
+			user.AccID = sessions.get("AccId", 0);
+			
+			user.Name = txtName.getText().toString();
+			user.Phone = txtPhone.getText().toString();
+			user.Address = txtaddress.getText().toString();
+			user.Street = txtStreet.getText().toString();
+			user.District = txtDistrict.getText().toString();
+			user.City = txtCity.getText().toString();
+			user.Country = txtCountry.getText().toString();
+			user.Favorite = txtFavorite.getText().toString();
+			
+			String bd = txtBirthday.getText().toString();
+			
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {
+					
+				bd = sFormat.format(format.parse(bd));
+				
+			} catch (ParseException e) {
+				return;
+			}	
+			
+			user.Birthday = bd;
+			
+			Spinner ddlGender = (Spinner)findViewById(R.id.esn_changeprofile_gender);			
+			String gender = ddlGender.getSelectedItem().toString();			
+			if(gender.equals("Male"))
+			{
+				user.Gender=true;
+			}
+			else
+			{
+				user.Gender = false;
+			}
+			
+			user.Avatar="http://vnexpress.net/Files/Subject/3b/bd/89/00/20.jpg";
+			
+			try {
+				Boolean rs = usersManager.UpdateProfile(user);
+				
+				if(rs==true)
+				{
+					handler.post(new UpdateProfileSuccesful());
+				}
+				else
+				{
+					handler.post(new UpdateProfileFail());
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}		
+	}
+
+	private class UpdateProfileSuccesful implements Runnable{
+		@Override
+		public void run() {
+			dialog.dismiss();
+			
+			Util.showAlert(context, "Configuration", "Register Succesfull.");			
+		}
+	}
+	
+	private class UpdateProfileFail implements Runnable{
+		@Override
+		public void run() {
+			dialog.dismiss();
+			
+			Util.showAlert(context, "Error", "Update Fail. Try Again.");			
+		}
 	}
 }

@@ -126,7 +126,24 @@ public class Utils {
 		
 		return null;
 	}
-	public static String DateToStringByLocale(Date date){
-		return SimpleDateFormat.getDateInstance().format(date);
+	public static String DateToStringByLocale(Date date,int i){
+		String rs=null;
+		
+		switch (i) {
+		case 1:
+			rs = SimpleDateFormat.getDateInstance().format(date);
+			break;
+			
+		case 2 :
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");			 
+	        StringBuilder nowYYYYMMDD = new StringBuilder( dateformat.format( date ) );	        
+			rs = nowYYYYMMDD.toString();
+			break;
+			
+		default:
+			break;
+		}
+		
+		return rs;
 	}
 }
