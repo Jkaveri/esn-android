@@ -146,6 +146,8 @@
     <string name="app.register.ddlName">Choose a gender</string>
     <string name="app.global.Email">Email</string>
     <string name="app.global.RequireAllField">Enter all fields !</string>
+    <string name="app.global.UpdateUnsuccess">Update failed ! Try again.</string>
+    <string name="app.global.UpdateSuccess">Update success !</string>
     
     <string name="app.changepassword.requirecurrentpassword">Current password is required !</string>
     <string name="app.changepassword.requirepassword">Password is required !</string>

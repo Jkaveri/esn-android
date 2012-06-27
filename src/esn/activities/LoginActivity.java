@@ -63,8 +63,8 @@ public class LoginActivity extends Activity {
 	}
 
 	public void BackClicked(View view) {
-		setResult(RESULT_CANCELED, intent);
-
+		intent = new Intent(context, WelcomeActivity.class);
+		startActivity(intent);
 		finish();
 	}
 
@@ -133,16 +133,12 @@ public class LoginActivity extends Activity {
 					session.currentUser = user;
 				}
 			} catch (IllegalArgumentException e) {
-				Log.e("esn", e.getMessage());
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

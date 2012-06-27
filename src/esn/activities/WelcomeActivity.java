@@ -107,7 +107,12 @@ public class WelcomeActivity extends SherlockActivity {
 								
 								String email = accountInfo.getString("email");
 								
-								Boolean checkEmail = usersManager.CheckEmailExists(email);
+								Boolean checkEmail = null;
+								try {
+									checkEmail = usersManager.CheckEmailExists(email);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
 								
 								if(checkEmail==true)
 								{

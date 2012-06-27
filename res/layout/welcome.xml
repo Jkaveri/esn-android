@@ -37,7 +37,8 @@
             android:onClick="LoginClicked"
             android:text="@string/btLogin"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp"
+            android:background="#FFF"/>
         
         <Button android:id="@+id/btSignUp"
             android:layout_width="fill_parent"
@@ -47,6 +48,7 @@
             android:onClick="RegisterClicked"
             android:text="@string/btSignUp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp"
+            android:background="#FFF"/>
     </LinearLayout>
 </LinearLayout>
