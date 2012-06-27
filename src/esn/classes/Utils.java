@@ -48,7 +48,7 @@ public class Utils {
 		
 		return myBitmap;
 	}
-
+	
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
 		try {

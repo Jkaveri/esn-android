@@ -104,4 +104,58 @@ public class EventsManager {
 		return event;
 
 	}
+
+	public Events retrieve(int eventId) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+		Events event = new  Events();
+		JSONObject params = new JSONObject();
+		params.put("id",eventId);
+		
+		JSONObject response = helper.invokeWebMethod("RetrieveJSON",params);
+		if (response != null) {
+			JSONObject eventJson = response.getJSONObject("d");
+			Utils.JsonToObject(eventJson, event);
+		} else {
+			event = null;
+		}
+		return event;
+	}
+
+	public int like(int eventId, int accID) throws JSONException, IOException {
+		JSONObject params = new JSONObject();
+		params.put("eventId", eventId);
+		params.put("accountId",accID);
+		
+		JSONObject response = helper.invokeWebMethod("Like",params);
+		if(response!=null){
+			int like = response.getInt("d");
+			return like;
+		}
+		return -1;
+	}
+	public boolean isLiked(int eventId, int accID) throws JSONException, IOException{
+		JSONObject params = new JSONObject();
+		params.put("eventId", eventId);
+		params.put("accountId",accID);
+		
+		JSONObject response = helper.invokeWebMethod("IsLiked",params);
+		if(response!=null){
+			
+			return response.getBoolean("d");
+		}
+		return false;
+	}
+
+	public boolean isDisliked(int eventId, int accID) throws JSONException, IOException {
+		JSONObject params = new JSONObject();
+		params.put("eventId", eventId);
+		params.put("accountId",accID);
+		
+		
+		JSONObject response = helper.invokeWebMethod("IsDislike",params);
+		if(response!=null){
+			
+			return response.getBoolean("d");
+		}
+		return false;
+	}
 }
