@@ -20,6 +20,8 @@ import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.maps.GeoPoint;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -29,26 +31,26 @@ public class Utils {
 	private static final String JSON_DATE_TYPE_PATTERN = "^\\/Date\\((\\d+)\\)\\/$";
 
 	public static Bitmap getBitmapFromURL(String src) throws IOException {
-		
+
 		Log.e("src", src);
-		
+
 		URL url = new URL(src);
-		
+
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		
+
 		connection.setDoInput(true);
-		
+
 		connection.connect();
-		
+
 		InputStream input = connection.getInputStream();
-		
+
 		Bitmap myBitmap = BitmapFactory.decodeStream(input);
-		
+
 		Log.d("Bitmap", "returned");
-		
+
 		return myBitmap;
 	}
-	
+
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
 		try {
@@ -98,8 +100,8 @@ public class Utils {
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
 			String fieldName = field.getName();
-			
-			if(!json.isNull(fieldName)){
+
+			if (!json.isNull(fieldName)) {
 				Object value = json.get(fieldName);
 				if (value.getClass() == String.class
 						&& value.toString().matches(JSON_DATE_TYPE_PATTERN)) {
@@ -114,36 +116,61 @@ public class Utils {
 	public static Date GetDateFromJSONString(String jsonDate) {
 		Pattern dateTypePattern = Pattern.compile("\\d+");
 		Matcher matches = dateTypePattern.matcher(jsonDate);
-		while(matches.find()){
+		while (matches.find()) {
 			String timeStampStr = matches.group();
-			
+
 			if (timeStampStr != null && timeStampStr.length() > 0) {
 				long timeStamp = Long.parseLong(timeStampStr);
 				Date date = new Date(timeStamp);
 				return date;
 			}
 		}
-		
+
 		return null;
 	}
-	public static String DateToStringByLocale(Date date,int i){
-		String rs=null;
-		
+
+	public static String DateToStringByLocale(Date date, int i) {
+		String rs = null;
+
 		switch (i) {
 		case 1:
 			rs = SimpleDateFormat.getDateInstance().format(date);
 			break;
-			
-		case 2 :
-			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");			 
-	        StringBuilder nowYYYYMMDD = new StringBuilder( dateformat.format( date ) );	        
+
+		case 2:
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+			StringBuilder nowYYYYMMDD = new StringBuilder(
+					dateformat.format(date));
 			rs = nowYYYYMMDD.toString();
 			break;
-			
+
 		default:
 			break;
 		}
-		
+
 		return rs;
 	}
+
+	private static double toRad(double num) {
+		return num * Math.PI / 180;
+	}
+
+	public static double distanceOfTwoPoint(GeoPoint point1, GeoPoint point2) {
+		double lat1 = point1.getLatitudeE6() / 1E6;
+		double lat2 = point2.getLatitudeE6() / 1E6;
+		double lon1 = point1.getLongitudeE6() / 1E6;
+		double lon2 = point2.getLongitudeE6() / 1E6;
+		final int r = 6371;// km -- ban kinh trai dat
+
+		double dLat = toRad(Math.abs(lat1 - lat1));
+		double dLon = toRad(Math.abs(lon2 - lon1));
+		 lat1 = toRad(lat1);
+		 lat2 = toRad(lat2);
+
+		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1)
+				* Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return r * c;
+	}
+
 }

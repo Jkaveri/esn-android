@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 
 public class WelcomeActivity extends SherlockActivity {
@@ -59,9 +60,8 @@ public class WelcomeActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		initConfig();
 		
-		// application session
-		session = Sessions.getInstance(context);
 		// init facebook
 		mFacebook = new Facebook(APP_ID);
 		// init facebook runner
@@ -83,7 +83,18 @@ public class WelcomeActivity extends SherlockActivity {
 		}
 
 	}
-
+	private void initConfig(){
+		// application session
+				session = Sessions.getInstance(context);
+		//first lauched
+		boolean firstLauch = session.get("firstLauch", true);
+		if(firstLauch){
+			//set radius for load event around
+			session.put("radiusEventAround", 2);
+			session.get("firstLauch", false);
+			
+		}
+	}
 	public void btnLoginfbClicked(View view) {
 		if (!mFacebook.isSessionValid()) {// if access token is expired
 			
@@ -252,6 +263,7 @@ public class WelcomeActivity extends SherlockActivity {
 
 		@Override
 		public void run() {
+			Looper.prepare();
 			UsersManager usermManager = new UsersManager();
 			if (usermManager.Login(email, password)) {
 				try {
