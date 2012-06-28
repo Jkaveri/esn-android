@@ -47,6 +47,7 @@ import com.readystatesoftware.maps.OnSingleTapListener;
 import com.readystatesoftware.maps.TapControlledMapView;
 
 import esn.adapters.ViewTypesListAdapter;
+import esn.classes.EsnMapView;
 import esn.classes.EsnWebServices;
 import esn.classes.EventOverlayItem;
 import esn.classes.ListNavigationItem;
@@ -62,7 +63,6 @@ public class HomeActivity extends SherlockMapActivity implements
 	private ListNavigationItem[] mNavigationItems;
 	private Maps map;
 	private Resources res;
-	public static final int REQUEST_CODE_ADD_NEW_EVENT = 1;
 	private boolean isPotentialLongPress;
 	protected Handler handler;
 	private ProgressDialog progressDialog;
@@ -78,8 +78,6 @@ public class HomeActivity extends SherlockMapActivity implements
 		setupActionBar();
 		setupMap();
 		setupListNavigate();
-		LoadEvent();
-
 	}
 
 	private void setupListNavigate() {
@@ -117,10 +115,11 @@ public class HomeActivity extends SherlockMapActivity implements
 	private void setupMap() {
 
 		/** setup map **/
-		TapControlledMapView mapView = (TapControlledMapView) findViewById(R.id.gmapView);
+		EsnMapView mapView = (EsnMapView) findViewById(R.id.gmapView);
+		mapView.setActivity(this);
 		map = new Maps(this, mapView);
 		// set zoom level to 14
-		map.setZoom(10);
+		map.setZoom(15);
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
 		mapView.setOnSingleTapListener(new OnSingleTapListener() {
 
@@ -130,16 +129,6 @@ public class HomeActivity extends SherlockMapActivity implements
 				return true;
 			}
 		});
-	}
-
-	private void LoadEvent() {
-		progressDialog = new ProgressDialog(this);
-		progressDialog.setTitle(res.getString(R.string.esn_home_loadingEvent));
-		progressDialog.setMessage(res.getString(R.string.esn_global_loading));
-		progressDialog.show();
-		LoadEventsThread loadEvent = new LoadEventsThread();
-		loadEvent.start();
-		Log.d("esn", "Load event start");
 	}
 
 	@Override
@@ -206,82 +195,6 @@ public class HomeActivity extends SherlockMapActivity implements
 	}
 
 	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		longestTouchEvent(ev);
-		return super.dispatchTouchEvent(ev);
-	}
-
-	private void longestTouchEvent(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			// get current point
-			final GeoPoint p = map.getMap().getProjection()
-					.fromPixels((int) event.getX(), (int) event.getY());
-
-			new Thread(new Runnable() {
-				public void run() {
-					Looper.prepare();
-					if (isLongPressDetected()) {
-						int latitudeE6 = p.getLatitudeE6();
-						int longtitudeE6 = p.getLongitudeE6();
-						Intent addNewEventIntent = new Intent(map.getContext(),
-								SelectEventLabel.class);
-						addNewEventIntent
-								.putExtra("latitude", latitudeE6 / 1E6);
-						addNewEventIntent.putExtra("longtitude",
-								longtitudeE6 / 1E6);
-						startActivityForResult(addNewEventIntent,
-								REQUEST_CODE_ADD_NEW_EVENT);
-					}
-				}
-			}).start();
-
-		} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-			/*
-			 * Only MotionEvent.ACTION_MOVE could potentially be regarded as
-			 * part of a longpress, as this event is trigged by the finger
-			 * moving slightly on the device screen. Any other events causes us
-			 * to cancel this events status as a potential longpress.
-			 */
-			if (event.getHistorySize() < 1)
-				return; // First call, no history
-
-			// Get difference in position since previous move event
-			float diffX = event.getX()
-					- event.getHistoricalX(event.getHistorySize() - 1);
-			float diffY = event.getY()
-					- event.getHistoricalY(event.getHistorySize() - 1);
-
-			/*
-			 * If position has moved substatially, this is not a long press but
-			 * probably a drag action
-			 */
-			if (Math.abs(diffX) > 0.5f || Math.abs(diffY) > 0.5f) {
-				isPotentialLongPress = false;
-			}
-		} else {
-			// This motion is something else, and thus not part of a longpress
-			isPotentialLongPress = false;
-		}
-	}
-
-	protected boolean isLongPressDetected() {
-		isPotentialLongPress = true;
-		try {
-			for (int i = 0; i < 75; i++) {
-				Thread.sleep(10);
-				if (!isPotentialLongPress) {
-					return false;
-				}
-			}
-			return true;
-		} catch (InterruptedException e) {
-			return false;
-		} finally {
-			isPotentialLongPress = false;
-		}
-	}
-
-	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		String itemTitle = item.getTitle().toString();
 		if (itemTitle.equals("Search")) {
@@ -298,7 +211,8 @@ public class HomeActivity extends SherlockMapActivity implements
 
 		if (itemTitle.equals("New Event")) {
 			Intent intent = new Intent(this, AddNewEvent.class);
-			startActivityForResult(intent, REQUEST_CODE_ADD_NEW_EVENT);
+			startActivityForResult(intent,
+					EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
 			return true;
 		}
 
@@ -321,7 +235,7 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_CODE_ADD_NEW_EVENT
+		if (requestCode == EsnMapView.REQUEST_CODE_ADD_NEW_EVENT
 				&& resultCode == RESULT_OK) {
 			progressDialog = new ProgressDialog(this);
 			progressDialog.setTitle(res.getString(R.string.esn_global_loading));
@@ -368,45 +282,6 @@ public class HomeActivity extends SherlockMapActivity implements
 		return false;
 	}
 
-	private class LoadEventsThread extends Thread {
-		@Override
-		public void run() {
-			Log.d("esn", "Load event thread bat dau");
-			Location current = map.getCurrentLocation();
-			if (current != null) {
-				EventsManager manager = new EventsManager();
-				Events[] events;
-				try {
-					events = manager.getAvailableEvents();
-					Log.d("esn", "Da load xong events");
-					handler.post(new LoadEventSuggess(events));
-
-				} catch (IllegalArgumentException e) {
-					Log.d("esn", e.getMessage());
-					e.printStackTrace();
-				} catch (JSONException e) {
-					Log.d("esn", e.getMessage());
-					e.printStackTrace();
-				} catch (IOException e) {
-					Log.d("esn", e.getMessage());
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					Log.d("esn", e.getMessage());
-					e.printStackTrace();
-				}
-
-			} else {
-				handler.post(new Runnable() {
-
-					@Override
-					public void run() {
-						progressDialog.dismiss();
-					}
-				});
-			}
-		}
-	}
-
 	private class CreateEventsThread extends Thread {
 		private Events event;
 
@@ -431,38 +306,6 @@ public class HomeActivity extends SherlockMapActivity implements
 			}
 		}
 	}
-
-	private class LoadEventSuggess implements Runnable {
-		private Events[] events;
-
-		public LoadEventSuggess(Events[] events) {
-			this.events = events;
-		}
-
-		@Override
-		public void run() {
-			Log.d("esn", "Success load event!");
-			if (events.length > 0) {
-				for (Events event : events) {
-
-					GeoPoint point = new GeoPoint((int) (event.EventLat * 1E6),
-							(int) (event.EventLng * 1E6));
-					EventOverlayItem item = new EventOverlayItem(point,
-							event.Title, event.Description, event.EventID);
-
-					map.setMarker(
-							item,
-							EventType.getIconId(event.EventTypeID,
-									event.getLevel()));
-					Log.d("homeEvents", event.EventLat + "|" + event.EventLng);
-				}
-				map.getMap().invalidate();
-			}
-			progressDialog.dismiss();
-		}
-
-	}
-
 	private class AddEventToMapHandler implements Runnable {
 		private Events event;
 
@@ -485,4 +328,6 @@ public class HomeActivity extends SherlockMapActivity implements
 
 		}
 	}
+
+	
 }

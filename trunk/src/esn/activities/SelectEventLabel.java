@@ -13,6 +13,7 @@ import org.ksoap2.serialization.SoapObject;
 
 import esn.adapters.EsnListAdapter;
 import esn.classes.EsnListItem;
+import esn.classes.EsnMapView;
 import esn.classes.EsnWebServices;
 import esn.models.EventType;
 import esn.models.EventTypeManager;
@@ -67,7 +68,7 @@ public class SelectEventLabel extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == HomeActivity.REQUEST_CODE_ADD_NEW_EVENT) {
+		if (requestCode == EsnMapView.REQUEST_CODE_ADD_NEW_EVENT) {
 			setResult(resultCode, data);
 			finish();
 		} else {
@@ -141,7 +142,7 @@ public class SelectEventLabel extends Activity {
 			intent.putExtra("labelId", item.getId());
 
 			startActivityForResult(intent,
-					HomeActivity.REQUEST_CODE_ADD_NEW_EVENT);
+					EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
 
 		}
 	}

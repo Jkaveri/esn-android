@@ -11,7 +11,7 @@ public class UsersManager {
 	// String NAMESPACE = "http://esnservice.somee.com/";
 	// String URL = "http://esnservice.somee.com/accountservice.asmx";
 	String NAMESPACE = "http://esn.com.vn/";
-	String URL = "http://10.0.2.2/esn/AccountsWS.asmx";
+	String URL = "http://bangnl.info/ws/AccountsWS.asmx";
 	HttpHelper helper = new HttpHelper(URL);
 
 	public UsersManager() {

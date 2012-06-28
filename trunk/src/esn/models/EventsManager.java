@@ -11,12 +11,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
+import android.util.Log;
+
+import com.google.android.maps.GeoPoint;
+
 import esn.classes.EsnWebServices;
 import esn.classes.HttpHelper;
 import esn.classes.Utils;
 
 public class EventsManager {
-	private static final String URL = "http://10.0.2.2/esn/EventsWS.asmx";
+	private static final String URL = "http://bangnl.info/ws/EventsWS.asmx";
 	private static final String NAMESPACE = "http://esn.com.vn/";
 	HttpHelper helper = new HttpHelper(URL);
 	EsnWebServices service = new EsnWebServices(NAMESPACE,URL);
@@ -47,37 +51,29 @@ public class EventsManager {
 		return events;
 	}
 
-	public List<Events> getEventsAround(double lat, double log, int radius) {
-		List<Events> events = null;
-		Hashtable<String, Object> params = new Hashtable<String, Object>();
-		params.put("lat", 0);
-		params.put("lon", 10);
+	public Events[] getEventsAround(double lat, double log, int radius) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+		Events[] events = null;
+		JSONObject params = new JSONObject();
+		params.put("lat", lat);
+		params.put("lon", log);
 		params.put("radius", radius);
+		
 		// get soap result
-		SoapObject response = service.InvokeMethod("GetListEventsAround",
-				params);
-		if (response != null && response.getPropertyCount() > 0) {
+		JSONObject response = helper.invokeWebMethod("GetListEventsAround", params);
+		Log.d("esn", response.toString());
+		if (response != null) {
 			// get event Array
-			SoapObject eventArray = (SoapObject) response.getProperty(0);
+			JSONArray eventArray = response.getJSONArray("d");
 			// get array count
-			int eventCount = eventArray.getPropertyCount();
+			int eventCount = eventArray.length();
 			// init arrays
-			events = new ArrayList<Events>();
+			events = new Events[eventCount];
 
 			for (int i = 0; i < eventCount; i++) {
-				// get event
-				SoapObject eventSoap = (SoapObject) eventArray.getProperty(i);
-				// initialize event
-				Events event = new Events();
-				// get property count
-				int propCount = eventSoap.getPropertyCount();
-				for (int j = 0; j < propCount; j++) {
-					Object value = eventSoap.getProperty(j);
-					if (value != null) {
-						event.setProperty(j, value);
-					}
-				}
-				events.add(event);
+			    JSONObject eventJSON = eventArray.getJSONObject(i);
+			    Events event = new Events();
+			    Utils.JsonToObject(eventJSON, event);
+				events[i]= event;
 			}
 		}
 		return events;
@@ -157,5 +153,10 @@ public class EventsManager {
 			return response.getBoolean("d");
 		}
 		return false;
+	}
+
+	public Events[] getEventsAround(GeoPoint lastMapCenter) {
+		
+		return null;
 	}
 }
