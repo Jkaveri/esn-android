@@ -103,11 +103,7 @@
 	
 	<string name="key.maps.googleAPI">0UKnO3qYoNtyMrP7ZfmZ2u0f6EjryZV-xHwC5QA</string>
 	
-	<!-- Home -->
-	<string name="str.home.viewAsMap">View As Map</string>
-	<string name="str.home.viewAsList">View As List</string>
-	<string name="esn.home.loadingEvent">Load events</string>
-	<string name="esn.home.noEvent">No events</string>
+	
 	
 	<!-- Friends -->
     <string name="btn.Friends.Events">Events</string>
@@ -178,4 +174,5 @@
     <string name="esn.eventDetail.image">Event Image</string>
     <string name="esn.eventDetail.iconEventType">Event Type</string>
     <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
+    
 </resources>

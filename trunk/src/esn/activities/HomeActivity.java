@@ -1,6 +1,7 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.util.Currency;
 import java.util.Hashtable;
 
 import org.json.JSONException;
@@ -24,6 +25,7 @@ import android.provider.SyncStateContract.Helpers;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +38,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -133,7 +136,12 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add("New Event").setIcon(R.drawable.ic_add)
+		super.onCreateOptionsMenu(menu);
+		
+		com.actionbarsherlock.view.MenuInflater menuInfalte = getSupportMenuInflater();
+		menuInfalte.inflate(R.menu.home_menus, menu);
+		
+		/*menu.add("New Event").setIcon(R.drawable.ic_add)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
 		MenuItem item;
@@ -169,7 +177,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		menu.add("Zoom in").setIcon(R.drawable.ic_search)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add("Zoom out").setIcon(R.drawable.ic_search)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
 		return true;
 	}
 
@@ -197,42 +205,53 @@ public class HomeActivity extends SherlockMapActivity implements
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		String itemTitle = item.getTitle().toString();
-		if (itemTitle.equals("Search")) {
+		int itemId = item.getItemId();
+		if (itemId == R.id.esn_home_menuItem_search) {
 			item.collapseActionView();
 
 			return true;
 		}
 
-		if (itemTitle.equals("Friends")) {
+		if (itemId == R.id.esn_home_menuItem_friends) {
 			Intent intenFdsList = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsList);
 			return true;
 		}
 
-		if (itemTitle.equals("New Event")) {
-			Intent intent = new Intent(this, AddNewEvent.class);
-			startActivityForResult(intent,
-					EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+		if (itemId == R.id.esn_home_menus_addNewEvent) {
+			Location currLocation = map.getCurrentLocation();
+			if (currLocation != null) {
+				double latitude = currLocation.getLatitude();
+				double longtitude= currLocation.getLongitude();
+				Intent addNewEventIntent = new Intent(this,
+						SelectEventLabel.class);
+				addNewEventIntent.putExtra("latitude", latitude);
+				addNewEventIntent.putExtra("longtitude", longtitude);
+				startActivityForResult(addNewEventIntent,
+						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+			}
 			return true;
 		}
 
-		if (itemTitle.equals("Settings")) {
+		if (itemId == R.id.esn_home_menuItem_settings) {
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			return true;
 		}
-		if (itemTitle.equals("Zoom in")) {
+		if (itemId == R.id.esn_home_menuItem_zoomIn) {
 			map.zoomIn();
 			return true;
 		}
-		if (itemTitle.equals("Zoom out")) {
+		if (itemId == R.id.esn_home_menuItem_zoomOut) {
 			map.zoomOut();
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}
-
+	private void labelsClicked(){
+		
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EsnMapView.REQUEST_CODE_ADD_NEW_EVENT
@@ -306,6 +325,7 @@ public class HomeActivity extends SherlockMapActivity implements
 			}
 		}
 	}
+
 	private class AddEventToMapHandler implements Runnable {
 		private Events event;
 
@@ -329,5 +349,4 @@ public class HomeActivity extends SherlockMapActivity implements
 		}
 	}
 
-	
 }
