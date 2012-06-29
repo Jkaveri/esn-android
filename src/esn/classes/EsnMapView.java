@@ -39,7 +39,7 @@ public class EsnMapView extends TapControlledMapView {
 	public Handler handler;
 	public static final int REQUEST_CODE_ADD_NEW_EVENT = 1;
 	private MapActivity activity;
-	public ArrayList<GeoPoint> pointStack = new ArrayList<GeoPoint>();
+	public ArrayList<Events> events = new ArrayList<Events>();
 	public EsnMapView(Context context, AttributeSet attrs) {
         super(context, attrs);
        init(context);
@@ -129,6 +129,7 @@ public class EsnMapView extends TapControlledMapView {
 					int radius = calculateRadius();
 					Log.d("esn_radius",String.valueOf(radius));
 					events = manager.getEventsAround(lat, lon, radius);
+					
 					handler.post(new LoadEventsAroundHandler(events));
 
 				} catch (IllegalArgumentException e) {
@@ -160,7 +161,7 @@ public class EsnMapView extends TapControlledMapView {
 			getOverlays().clear();
 			for (int i = 0; i < events.length; i++) {
 				Events event = events[i];
-
+				EsnMapView.this.events.add(event);
 				GeoPoint point = new GeoPoint((int) (event.EventLat * 1E6),
 						(int) (event.EventLng * 1E6));
 				int icon = EventType.getIconId(event.EventTypeID,
