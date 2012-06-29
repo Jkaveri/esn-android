@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home -->
+	<string name="str_home_viewAsMap">View As Map</string>
+	<string name="str_home_viewAsList">View As List</string>
+	<string name="esn_home_loadingEvent">Load events</string>
+	<string name="esn_home_noEvent">No events</string>
+	<string name="esn_home_menuItem_addNewEvent">Add New Event</string>
+	<string name="esn_home_menuItem_friends">Friends</string>
+	<string name="esn_home_menuItem_settings">Settings</string>
+	<string name="esn_home_menuItem_search">Search</string>
+	<string name="esn_home_menuItem_labels">Labels</string>
+	<string name="esn_home_menuItem_naviagtor">Navigator</string>
+	<string name="esn_home_menuItem_zoomIn">Zoom In</string>
+	<string name="esn_home_menuItem_zoomOut">Zoom Out</string>
+</resources>
