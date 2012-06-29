@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/esn.home.menus.addNewEvent"
+        android:icon="@drawable/ic_add"
+        android:showAsAction="always"
+        android:title="@string/esn_home_menuItem_addNewEvent">
+    </item>
+    <item
+        android:id="@+id/esn_home_menuItem_friends"
+        android:icon="@drawable/ic_friends"
+        android:showAsAction="always"
+        android:title="@string/esn_home_menuItem_friends">
+    </item>
+    <item
+        android:id="@+id/esn_home_menuItem_search"
+        android:actionLayout="@layout/collapsible_edittext"
+        android:icon="@drawable/ic_search"
+        android:showAsAction="always|collapseActionView"
+        android:title="@string/esn_home_menuItem_search">
+    </item>
+    <item
+        android:id="@+id/esn_home_menuItem_labels"
+        android:icon="@drawable/ic_labels"
+        android:showAsAction="always"
+        android:title="@string/esn_home_menuItem_labels">
+    </item>
+    <item
+        android:id="@+id/esn_home_menuItem_settings"
+        android:icon="@drawable/ic_settings"
+        android:showAsAction="always"
+        android:title="@string/esn_home_menuItem_settings">
+    </item>
+    <item
+        android:id="@+id/esn_home_menuItem_navigator"
+        android:showAsAction="ifRoom"
+        android:title="@string/esn_home_menuItem_naviagtor"/>
+    <item
+        android:id="@+id/esn_home_menuItem_zoomIn"
+        android:showAsAction="ifRoom"
+        android:title="@string/esn_home_menuItem_zoomIn"/>
+    <item
+        android:id="@+id/esn_home_menuItem_zoomOut"
+        android:showAsAction="ifRoom"
+        android:title="@string/esn_home_menuItem_zoomOut"/>
+
+</menu>
