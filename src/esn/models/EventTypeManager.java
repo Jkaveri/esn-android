@@ -14,7 +14,7 @@ import esn.classes.Utils;
 
 public class EventTypeManager {
 	final String NAMESPACE = "http://esn.com.vn/";
-	final String URL = "http://10.0.2.2/esn/EventsWS.asmx";
+	final String URL = "http://bangnl.info/ws/EventsWS.asmx";
 	HttpHelper helper = new HttpHelper(URL);
 
 	public EventTypeManager() {
