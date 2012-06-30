@@ -1,53 +1,59 @@
 package esn.models;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import org.ksoap2.serialization.SoapObject;
-import esn.classes.EsnWebServices;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import esn.classes.HttpHelper;
+import esn.classes.Utils;
 
 public class FriendsManager {
-	private static String NAMSPACE = "http://esnservice.somee.com/";
-	private static String URL = "http://esnservice.somee.com/friendservice.asmx";
-	private EsnWebServices service;
+	private static String URL = "http://bangnl.info/ws/AccountsWS.asmx";
+	HttpHelper helper;
 
 	public FriendsManager() {
-		service = new EsnWebServices(NAMSPACE, URL);
+		helper = new HttpHelper(URL);
 	}
 
-	public ArrayList<FriendsListsDTO> getFriendsList(int page, int accID) {
-		ArrayList<FriendsListsDTO> frdList = new ArrayList<FriendsListsDTO>();
-		//Create soap paramater
-		Hashtable<String, Object> params = new Hashtable<String, Object>();
-		params.put("page", page);
-		params.put("accID", accID);
-		// get soap result
-		SoapObject response = service.InvokeMethod("GetFriendList", params);
-		if (response != null) {
-			// get element Array
-			SoapObject userArray = (SoapObject) response.getProperty(0);
-			// get array count
-			int count = userArray.getPropertyCount();
-			// init arrays
-			for (int i = 0; i < count; i++) {
-				// get an item in userArray
-				SoapObject userSoap = (SoapObject) userArray.getProperty(i);
-				// initialize user
-				FriendsListsDTO frd = new FriendsListsDTO();
-				// get property count
-				int propCount = userSoap.getPropertyCount();
-				for (int j = 0; j < propCount; j++) {
-					Object value = userSoap.getProperty(j);
-					if (value != null) {
-						frd.setProperty(j, value);
-					}
+	public ArrayList<FriendsListsDTO> getFriendsList(int pageSize, int pageIndex, int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+		ArrayList<FriendsListsDTO> frds = new ArrayList<FriendsListsDTO>();
+		JSONObject params = new JSONObject();
+		params.put("accountID", accID);
+		params.put("pageNum", pageIndex);
+		params.put("pageSize", pageSize);
+		JSONObject result = helper.invokeWebMethod("GetListFriendsJSON",params);
+		if (result != null) {
+			if (result.has("d")) {
+				JSONArray jsonCall = result.getJSONArray("d");
+				for (int i = 0; i < jsonCall.length(); i++) {
+					JSONObject json = jsonCall.getJSONObject(i);
+					FriendsListsDTO frd = new FriendsListsDTO();
+					Utils.JsonToObject(json, frd);
+					frds.add(frd);
 				}
-				frdList.add(frd);
 			}
 		}
-		return frdList;
+		return frds;
 	}
 
 	public boolean unfriend(int accID, int friendID) {
 		return true;
+	}
+	
+
+	public User RetrieveByAccID(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException{
+		User frd = new User();
+		JSONObject params = new JSONObject();
+		params.put("id", accID);
+		JSONObject result = helper.invokeWebMethod("RetrieveJSON",params);
+		if (result != null) {
+			if (result.has("d")) {
+				JSONObject jsonCall = result.getJSONObject("d");
+				Utils.JsonToObject(jsonCall, frd);
+			}
+		}
+		return frd;
 	}
 }
