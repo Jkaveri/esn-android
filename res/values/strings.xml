@@ -116,6 +116,7 @@
     <string name="str.Friends.Events.ViewAsMap">Friend Events On Map</string>
     <string name="str.Friends.Events.ViewAsList">Friend Events As List</string>
 	<string name="str.Friends.Lists.Title">Friends List</string>
+	<string name="str.Friends.UserPage.Title">Friend Information</string>
 	<string name="btn.Friends.Lists.Diaglog.Visit">Visit</string>
 	<string name="btn.Friends.Lists.Diaglog.Unfriend">Unfriend</string>
 	<string name="btn.Friends.Lists.Diaglog.Close">Close</string>
