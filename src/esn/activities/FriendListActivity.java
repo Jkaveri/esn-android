@@ -32,7 +32,6 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 	private ListViewFriendsAdapter adapter;
 	private FriendListActivity context;
 	private Handler handler;
-	private ArrayList<FriendsListsDTO> itemList;
 	private int lastScroll = 0;
 	private ProgressDialog dialog;
 	private int page = 1;
@@ -125,7 +124,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 
 				FriendsManager frdMng = new FriendsManager();
 				try {
-					itemList = frdMng.getFriendsList(8, page, accounID);
+					final ArrayList<FriendsListsDTO> itemList = frdMng.getFriendsList(8, page, accounID);
 					handler.post(new Runnable() {
 
 						@Override
@@ -152,7 +151,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 
 				FriendsManager frdMng = new FriendsManager();
 				try {
-					itemList = frdMng.getFriendsList(pageSize, pageIndex, accounID);
+					final ArrayList<FriendsListsDTO> itemList = frdMng.getFriendsList(pageSize, pageIndex, accounID);
 					handler.post(new Runnable() {
 
 						@Override
