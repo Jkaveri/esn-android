@@ -7,19 +7,24 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import esn.classes.ImageLoader;
 import esn.models.FriendsManager;
 import esn.models.User;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class UserPageActivity extends SherlockActivity implements OnNavigationListener{
 	private Handler handler;
 	private ProgressDialog dialog;
+	public ImageLoader imageLoader;
+	private Activity activity;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,8 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.userpage);
 		
+		this.imageLoader = new ImageLoader(this.getApplicationContext());
+		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
 		handler = new Handler();
 		
 		setupActionBar();
@@ -72,6 +79,9 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 							
 							TextView favorite = (TextView) findViewById(R.id.txt_esn_userpage_favorite);
 							favorite.setText(user.Favorite);
+							
+							ImageView avatar = (ImageView) findViewById(R.id.img_esn_userpage_avatar);
+							imageLoader.displayImage(user.Avatar, activity, avatar);
 							
 							dialog.dismiss();
 						}

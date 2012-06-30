@@ -26,8 +26,7 @@ public class ImageLoader {
 	private FileCache fileCache;
 	private int stub_id = R.drawable.stub;
 	
-	private Map<ImageView, String> imageViews = Collections
-			.synchronizedMap(new WeakHashMap<ImageView, String>());
+	private Map<ImageView, String> imageViews = Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
 
 	public ImageLoader(Context context) {
 		// Make the background thead low priority. This way it will not affect
@@ -121,6 +120,7 @@ public class ImageLoader {
 			o2.inSampleSize = scale;
 			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

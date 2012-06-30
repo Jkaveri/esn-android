@@ -93,9 +93,9 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 
 	@Override
 	public void onDestroy() {
-		//adapter.imageLoader.stopThread();
-		//adapter.imageLoader.clearCache();
-		//lstFriend.setAdapter(null);
+		adapter.imageLoader.stopThread();
+		adapter.imageLoader.clearCache();
+		lstFriend.setAdapter(null);
 		super.onDestroy();
 	}
 
@@ -181,7 +181,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		TextView fullname = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_FullName);
 		fullname.setText(bean.Name);
 		ImageView image = (ImageView) dialog.findViewById(R.id.img_Friends_Diaglog_Avatar);
-		//adapter.imageLoader.displayImage(image, bean.Avatar);
+		adapter.imageLoader.displayImage(bean.Avatar, this, image);
 		Button btnVisit = (Button) dialog.findViewById(R.id.btn_Friends_Diaglog_Visit);
 		// if button is clicked, close the custom dialog
 		btnVisit.setOnClickListener(new OnClickListener() {
