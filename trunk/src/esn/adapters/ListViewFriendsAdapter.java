@@ -62,7 +62,7 @@ public class ListViewFriendsAdapter extends BaseAdapter {
 		TextView discrip = (TextView) vi.findViewById(R.id.txtViewDescription);
 		title.setText(bean.Name);
 		discrip.setText("Phone: " + bean.Phone);//So ban chung
-		//imageLoader.displayImage(image, bean.Avatar);
+//		imageLoader.displayImage(image, bean.Avatar);
 		return vi;
 	}
 }
