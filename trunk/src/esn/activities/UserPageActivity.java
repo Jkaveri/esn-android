@@ -1,28 +1,63 @@
 package esn.activities;
 
+
+
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
+import esn.models.FriendsManager;
+import esn.models.User;
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UserPageActivity extends SherlockActivity implements OnNavigationListener{
+	private Handler handler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.userpage);
+		
+		handler = new Handler();
+		
 		setupActionBar();
 		setupListNavigate();
 		loadData();
 	}
 
 	private void loadData() {
-		Toast.makeText(this, String.valueOf(this.getIntent().getIntExtra("accountID", 0)), Toast.LENGTH_SHORT).show();
+		final int accID = this.getIntent().getIntExtra("accountID", 0);
+		Toast.makeText(this, String.valueOf(accID), Toast.LENGTH_SHORT).show();
+		
+		Thread thr = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					final User user = new FriendsManager().RetrieveByAccID(accID);
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							TextView fullName = (TextView) findViewById(R.id.txt_esn_userpage_fullname);
+							fullName.setText(user.Name);
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		thr.start();
 	}
 
 	private void setupListNavigate() {

@@ -176,15 +176,12 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.diag_frd_slec);
 		// dialog.setTitle("Title...");
-		TextView dis = (TextView) dialog
-				.findViewById(R.id.txt_Friends_Diaglog_Discript);
+		TextView dis = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_Discript);
 		dis.setText("Discription");
-		TextView fullname = (TextView) dialog
-				.findViewById(R.id.txt_Friends_Diaglog_FullName);
+		TextView fullname = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_FullName);
 		fullname.setText(bean.Name);
-		ImageView image = (ImageView) dialog
-				.findViewById(R.id.img_Friends_Diaglog_Avatar);
-		adapter.imageLoader.displayImage(image, bean.Avatar);
+		ImageView image = (ImageView) dialog.findViewById(R.id.img_Friends_Diaglog_Avatar);
+		//adapter.imageLoader.displayImage(image, bean.Avatar);
 		Button btnVisit = (Button) dialog.findViewById(R.id.btn_Friends_Diaglog_Visit);
 		// if button is clicked, close the custom dialog
 		btnVisit.setOnClickListener(new OnClickListener() {
