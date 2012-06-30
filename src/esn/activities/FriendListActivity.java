@@ -64,8 +64,9 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 
 			@Override
 			public void onItemClick(AdapterView<?> adView, View view, int index, long id) {
+				FriendsListsDTO bean = (FriendsListsDTO) adapter.getItem(index);
 				Intent it = new Intent(context, UserPageActivity.class);
-				it.putExtra("accountID", itemList.get(index).AccID);
+				it.putExtra("accountID", bean.AccID);
 				startActivity(it);
 			}
 		});
