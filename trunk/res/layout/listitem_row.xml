@@ -10,9 +10,10 @@
         android:layout_width="50dip"
         android:layout_height="50dip"
         android:id="@+id/imgViewLogo"
-        android:src="@drawable/android_logo"
+        android:src="@drawable/ic_no_avata"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
+        android:contentDescription="@string/app_name"
         android:scaleType="fitXY">
     </ImageView>
 

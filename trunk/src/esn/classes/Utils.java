@@ -55,7 +55,7 @@ public class Utils {
 		final int buffer_size = 1024;
 		try {
 			byte[] bytes = new byte[buffer_size];
-			while (true) {
+			while(true) {
 				int count = is.read(bytes, 0, buffer_size);
 				if (count == -1)
 					break;
