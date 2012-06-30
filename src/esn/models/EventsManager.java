@@ -24,6 +24,8 @@ public class EventsManager {
 	private static final String NAMESPACE = "http://esn.com.vn/";
 	HttpHelper helper = new HttpHelper(URL);
 	EsnWebServices service = new EsnWebServices(NAMESPACE,URL);
+	
+	UsersManager usersManager = new UsersManager();
 	public EventsManager() {
 
 	}
@@ -110,6 +112,8 @@ public class EventsManager {
 		if (response != null) {
 			JSONObject eventJson = response.getJSONObject("d");
 			Utils.JsonToObject(eventJson, event);
+					
+			event.user  = usersManager.RetrieveById(event.AccID);
 		} else {
 			event = null;
 		}

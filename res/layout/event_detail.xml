@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:padding="16dp">
+    android:padding="10dp">
 
     <LinearLayout android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
@@ -29,50 +29,167 @@
                     android:id="@+id/esn.eventDetail.title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="16dp" 
+                    android:textStyle="bold"
+                    android:textColor="#33b5e5"
+                    />
 
                 <TextView
                     android:id="@+id/esn.eventDetail.dateCreated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <TextView
-                    android:id="@+id/esn.eventDetail.likeAndDislikeCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/esn.eventDetail.likeAndDislikeCount"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="11dp" 
+                    android:textStyle="bold"
+                    android:textColor="#33b5e5"/>
             </LinearLayout>
             <!-- Title -->
 
         </LinearLayout>
-
-        <View
+		<TableLayout
             android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_marginBottom="10dp"
-            android:background="#ACCC" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/esn.eventDetail.description"
+		    <View
+	            android:layout_width="fill_parent"
+	            android:layout_height="2dip"
+	            android:layout_marginBottom="10dp"
+	            android:background="#ACCC" />
+		    
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp" >
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/esn.eventDetail.description"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    />
+                <TextView
+		            android:id="@+id/esn.eventDetail.description"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:paddingRight="2dp"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:textSize="16dp"
+		            android:singleLine="false"
+		            
+		            android:textColor="#33b5e5"/>
+            </TableRow>           
+            
+            <View
+	            android:layout_width="fill_parent"
+	            android:layout_height="2dip"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginTop="10dp"
+	            android:background="#ACCC" />
+	        
+            <TableRow 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+                
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/esn.eventDetail.like"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    />
+                
+                <TextView
+		            android:id="@+id/esn.eventDetail.like"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:textSize="16dp"
+		            android:textColor="#33b5e5"/>
+            </TableRow>
+            <View
+	            android:layout_width="fill_parent"
+	            android:layout_height="2dip"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginTop="10dp"
+	            android:background="#ACCC" />
+	        
+            <TableRow 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >                
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/esn.eventDetail.dislike"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#33b5e5"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    />                
+                <TextView
+		            android:id="@+id/esn.eventDetail.dislike"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:textSize="16dp"
+		            android:textColor="#33b5e5"/>
+            </TableRow>
+            <View
+	            android:layout_width="fill_parent"
+	            android:layout_height="2dip"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginTop="10dp"
+	            android:background="#ACCC" />
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp" >
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/esn.eventDetail.createby"
+                    android:textSize="16dp"
+                    android:textColor="#33b5e5"
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp"
+                    />
+                <TextView
+		            android:id="@+id/esn.eventDetail.name"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:textAppearance="?android:attr/textAppearanceMedium" 
+		            android:textSize="16dp"
+		            android:singleLine="false"
+		            android:textColor="#33b5e5"/>
+            </TableRow>
+             <View
+	            android:layout_width="fill_parent"
+	            android:layout_height="2dip"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginTop="10dp"
+	            android:background="#ACCC" />
+             
+        </TableLayout>
+        <LinearLayout 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        <!-- Description -->
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_marginBottom="10dp"
-            android:background="#ACCC" />
-
-        <ImageView
-            android:id="@+id/esn.eventDetail.image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/esn.eventDetail.image" />
-        <!-- Picture -->
+            >
+            
+            <ImageView
+                android:id="@+id/esn_eventDetail_image" 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
+            
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

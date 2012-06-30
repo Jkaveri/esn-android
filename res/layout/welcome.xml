@@ -27,7 +27,8 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
-            android:onClick="btnLoginfbClicked"/>
+            android:onClick="btnLoginfbClicked"
+            android:background="@drawable/rounded_corner_white"/>
         
         <Button android:id="@+id/btLogin"
             android:layout_width="fill_parent"
@@ -38,7 +39,8 @@
             android:text="@string/btLogin"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="#FFF"/>
+            android:textColor="#327df2"
+            android:background="@drawable/rounded_corner_white"/>
         
         <Button android:id="@+id/btSignUp"
             android:layout_width="fill_parent"
@@ -49,6 +51,7 @@
             android:text="@string/btSignUp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="#FFF"/>
+            android:textColor="#327df2"
+            android:background="@drawable/rounded_corner_white"/>
     </LinearLayout>
 </LinearLayout>

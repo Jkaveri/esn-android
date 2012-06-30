@@ -16,12 +16,14 @@
 	        android:orientation="horizontal"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp">
+	        android:layout_marginTop="5dp"
+	        >
 	        
 	        <ImageView 
 	            android:id="@+id/esn.changeprogile.avatar"
 	            android:layout_width="100dp"
-	            android:layout_height="100dp"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="top"
 	            android:src="@drawable/avatar"
 	            android:onClick="AvatarClicked"	            
 	            />
@@ -42,8 +44,9 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
-		            android:background="#c5eaf8">
+	            	android:textSize="16dp"
+	            	android:background="#c5eaf8"
+	            	>
 		            <requestFocus />
 		        </EditText>
 		        
@@ -53,16 +56,38 @@
 			        android:layout_height="wrap_content"
 			        android:entries="@array/Gender_arrays"
 			        android:prompt="@string/app.register.ddlName"
-			        android:layout_marginBottom="10dp"
 			        android:textStyle="bold"
 		            android:paddingLeft="5dp"
 		            android:paddingRight="5dp"		            
-	            	android:paddingTop="6dp"
-	            	android:paddingBottom="7dp"
-	            	android:textSize="14dp"
-		            android:background="#c5eaf8"/>
+	            	android:paddingTop="8dp"
+	            	android:paddingBottom="8dp"
+	            	android:textSize="16dp"
+		            android:background="#c5eaf8"/>	       		
 	       		
-	       		<EditText
+	        </LinearLayout>
+	    </LinearLayout>
+	    
+	    <TableLayout
+	        android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:stretchColumns="1"
+    		android:layout_marginTop="5dp">
+	        
+	        <TableRow>
+	            <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/tv_edit_Phone"
+		            android:layout_marginBottom="10dp"
+		            android:background="#8ad5f0"
+		            android:paddingLeft="5dp"
+		            android:paddingRight="5dp"
+	            	android:paddingTop="8dp"
+	            	android:paddingBottom="8dp"
+	            	android:textSize="16dp"
+	            	android:textStyle="bold"
+		            />
+	            <EditText
 		    	    android:id="@+id/esn.changeprofile.birthday"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
@@ -73,17 +98,9 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>
-	        </LinearLayout>
-	    </LinearLayout>
-	    
-	    <TableLayout
-	        android:layout_width="match_parent"
-    		android:layout_height="wrap_content"
-    		android:stretchColumns="1"
-    		android:layout_marginTop="15dp">
-	        
+	        </TableRow>
 	        <TableRow >
 	        
 	            <TextView 
@@ -96,7 +113,7 @@
 		            android:paddingRight="5dp"
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 		            />
 	            <EditText 
@@ -109,7 +126,7 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>		   	
 		   	
 	        </TableRow>
@@ -126,7 +143,7 @@
 		            android:paddingRight="5dp"
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
 		    	<EditText
@@ -139,7 +156,7 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>
     		</TableRow>
     		<TableRow>
@@ -154,7 +171,7 @@
 		            android:paddingRight="5dp"
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
 		    	<EditText
@@ -167,7 +184,7 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>
     		</TableRow>
     		<TableRow >        
@@ -181,7 +198,7 @@
 		            android:paddingRight="5dp"
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
 		    	<EditText
@@ -194,7 +211,7 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>
     		</TableRow>
     		<TableRow >        
@@ -208,7 +225,7 @@
 		            android:paddingRight="5dp"
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
 		    	<EditText
@@ -221,7 +238,7 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>
     		</TableRow>
     		<TableRow >        
@@ -235,7 +252,7 @@
 		            android:paddingRight="5dp"
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
 		    	<EditText
@@ -248,7 +265,7 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>
     		</TableRow>  
 	        <TableRow >        
@@ -262,7 +279,7 @@
 		            android:paddingRight="5dp"
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
 		    	<EditText
@@ -275,7 +292,7 @@
 		            android:paddingRight="5dp"		            
 	            	android:paddingTop="8dp"
 	            	android:paddingBottom="8dp"
-	            	android:textSize="14dp"
+	            	android:textSize="16dp"
 		            android:background="#c5eaf8"/>
     		</TableRow>
 		</TableLayout>	
@@ -291,7 +308,7 @@
 	            android:id="@+id/btLogin"
 	            android:layout_width="155dp"
 	            android:layout_height="35dp"
-	            android:textSize="12dp"
+	            android:textSize="16dp"
 	            android:onClick="UpdateProfileClicked"
 	            android:text="@string/btDone"
 	            />
@@ -299,7 +316,7 @@
 	            android:id="@+id/btCancel"
 	            android:layout_width="155dp"
 	            android:layout_height="35dp"
-	            android:textSize="12dp"
+	            android:textSize="16dp"
 	            android:text="@string/btCancel"
 	            android:onClick="CancelClicked"
 	            />
