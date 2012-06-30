@@ -10,6 +10,7 @@ import com.actionbarsherlock.view.MenuItem;
 import esn.models.FriendsManager;
 import esn.models.User;
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 public class UserPageActivity extends SherlockActivity implements OnNavigationListener{
 	private Handler handler;
+	private ProgressDialog dialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,11 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 
 	private void loadData() {
 		final int accID = this.getIntent().getIntExtra("accountID", 0);
-		Toast.makeText(this, String.valueOf(accID), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, String.valueOf(accID), Toast.LENGTH_SHORT).show();
+		dialog = new ProgressDialog(this);
+		dialog.setTitle(getString(R.string.app_Processing));
+		dialog.setMessage(getString(R.string.message_diaglog_process_wait));
+		dialog.show();
 		
 		Thread thr = new Thread(new Runnable() {
 			
@@ -48,6 +54,26 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 						public void run() {
 							TextView fullName = (TextView) findViewById(R.id.txt_esn_userpage_fullname);
 							fullName.setText(user.Name);
+							
+							TextView status = (TextView) findViewById(R.id.txt_esn_userpage_status);
+							status.setText((user.IsOnline)? getString(R.string.txt_esn_userpage_online): getString(R.string.txt_esn_userpage_offline));
+							
+							TextView adress = (TextView) findViewById(R.id.txt_esn_userpage_adress);
+							adress.setText(user.City);
+							
+							TextView country = (TextView) findViewById(R.id.txt_esn_userpage_country);
+							country.setText(user.Country);
+							
+							TextView birthday = (TextView) findViewById(R.id.txt_esn_userpage_birthday);
+							birthday.setText(user.Birthday.toString());
+							
+							TextView gender = (TextView) findViewById(R.id.txt_esn_userpage_gender);
+							gender.setText((user.Gender)? getString(R.string.txt_esn_userpage_male): getString(R.string.txt_esn_userpage_female));
+							
+							TextView favorite = (TextView) findViewById(R.id.txt_esn_userpage_favorite);
+							favorite.setText(user.Favorite);
+							
+							dialog.dismiss();
 						}
 					});
 				} catch (Exception e) {

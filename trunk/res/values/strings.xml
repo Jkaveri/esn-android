@@ -103,23 +103,9 @@
 	<string name="help">In this introductory Google Apps webinar</string>
 	<string name="term">In this introductory term</string>
 	
-	<string name="key.maps.googleAPI">0UKnO3qYoNtyMrP7ZfmZ2u0f6EjryZV-xHwC5QA</string>
+	<string name="key.maps.googleAPI">0UKnO3qYoNtzBqxa5TKOwDznon8S4fAufhA1xGg</string>
+	<string name="message.diaglog.process.wait">Waiting&#8230;</string>
 	
-	
-	
-	<!-- Friends -->
-    <string name="btn.Friends.Events">Events</string>
-    <string name="btn.Friends.FdsList">Friends List</string>
-    <string name="btn.Friends.EvsList">List</string>
-    <string name="btn.Friends.Maps">Maps</string>
-    <string name="txt.Friends.Search">Search Friends</string>
-    <string name="str.Friends.Events.ViewAsMap">Friend Events On Map</string>
-    <string name="str.Friends.Events.ViewAsList">Friend Events As List</string>
-	<string name="str.Friends.Lists.Title">Friends List</string>
-	<string name="str.Friends.UserPage.Title">Friend Information</string>
-	<string name="btn.Friends.Lists.Diaglog.Visit">Visit</string>
-	<string name="btn.Friends.Lists.Diaglog.Unfriend">Unfriend</string>
-	<string name="btn.Friends.Lists.Diaglog.Close">Close</string>
 	<!-- Global  -->
 	<string name="esn.global.dateFormat">MM-dd-yyyy</string>
 	<string name="esn.global.loading">Loading</string>

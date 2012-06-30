@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str.Friends.UserPage.Title">Friend Information</string>
+    <string name="txt.esn.userpage.fullname">Full Name:</string>
+    <string name="txt.esn.userpage.status">Status:</string>
+    <string name="txt.esn.userpage.adress">Address:</string>
+    <string name="txt.esn.userpage.country">Country:</string>
+    <string name="txt.esn.userpage.birthday">Birthday:</string>
+    <string name="txt.esn.userpage.gender">Gender:</string>
+    <string name="txt.esn.userpage.favorite">Favorite:</string>
+    <string name="txt.esn.userpage.male">Male</string>
+    <string name="txt.esn.userpage.female">Female</string>
+    <string name="txt.esn.userpage.online">Online</string>
+    <string name="txt.esn.userpage.offline">Offline</string>
+</resources>
