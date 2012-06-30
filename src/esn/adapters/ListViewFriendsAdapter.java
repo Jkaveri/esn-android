@@ -3,7 +3,7 @@ package esn.adapters;
 import java.util.ArrayList;
 
 import esn.activities.R;
-import esn.classes.ImageLoader;
+import esn.classes.MyImageLoader;
 import esn.models.FriendsListsDTO;
 import android.app.Activity;
 import android.content.Context;
@@ -18,15 +18,21 @@ public class ListViewFriendsAdapter extends BaseAdapter {
 	private Activity activity;
 	private ArrayList<FriendsListsDTO> data;
 	private static LayoutInflater inflater = null;
-	public ImageLoader imageLoader;
+	public MyImageLoader imageLoader;
 
 	public ListViewFriendsAdapter(Activity a, ArrayList<FriendsListsDTO> listFrd) {
 		this.activity = a;
 		this.data = listFrd;
-		inflater = (LayoutInflater) activity
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.imageLoader = new ImageLoader(activity.getApplicationContext());
-		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
+		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		this.imageLoader = new ImageLoader(activity.getApplicationContext());
+//		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
+		imageLoader = new MyImageLoader(R.drawable.ic_no_avata);
+	}
+	
+	public void add(ArrayList<FriendsListsDTO> listFrd){
+		for (FriendsListsDTO frd : listFrd) {
+			data.add(frd);
+		}
 	}
 
 	@Override
@@ -35,27 +41,28 @@ public class ListViewFriendsAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
-		return data.get(position);
+	public Object getItem(int index) {
+		return data.get(index);
 	}
 
 	@Override
-	public long getItemId(int position) {
-		return position;
+	public long getItemId(int index) {
+		return index;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(int index, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null)
 			vi = inflater.inflate(R.layout.listitem_row, null);
 
+		FriendsListsDTO bean = data.get(index);
 		TextView title = (TextView) vi.findViewById(R.id.txtViewTitle);
 		ImageView image = (ImageView) vi.findViewById(R.id.imgViewLogo);
 		TextView discrip = (TextView) vi.findViewById(R.id.txtViewDescription);
-		title.setText(data.get(position).name);
-		discrip.setText("Descript " + data.get(position).accID);//So ban chung
-		imageLoader.displayImage(data.get(position).avatarURL, activity, image);
+		title.setText(bean.Name);
+		discrip.setText("Phone: " + bean.Phone);//So ban chung
+		//imageLoader.displayImage(image, bean.Avatar);
 		return vi;
 	}
 }
