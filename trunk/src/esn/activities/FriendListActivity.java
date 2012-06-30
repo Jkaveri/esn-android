@@ -177,7 +177,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		dialog.setContentView(R.layout.diag_frd_slec);
 		// dialog.setTitle("Title...");
 		TextView dis = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_Discript);
-		dis.setText("Discription");
+		dis.setText("Phone: " + bean.Phone);
 		TextView fullname = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_FullName);
 		fullname.setText(bean.Name);
 		ImageView image = (ImageView) dialog.findViewById(R.id.img_Friends_Diaglog_Avatar);
