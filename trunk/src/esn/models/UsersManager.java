@@ -165,4 +165,25 @@ public class UsersManager {
 		}
 		return null;
 	}
+	
+	public Users RetrieveById(int id) throws JSONException,
+		IOException, IllegalArgumentException, IllegalAccessException {
+		HttpHelper helper = new HttpHelper(URL);
+		JSONObject params = new JSONObject();
+		
+		params.put("id", id);
+		
+		JSONObject response = helper.invokeWebMethod("RetrieveJSON", params);
+		
+		if (response != null) {
+			
+			Users user = new Users();
+			JSONObject jsonUser = response.getJSONObject("d");
+	        
+			//Utils.JsonToObject(jsonUser, user);
+			user.Name = jsonUser.getString("Name");
+			return user;
+	}
+	return null;
+}
 }

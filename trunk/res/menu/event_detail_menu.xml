@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item 
+        android:id="@+id/esn_detail_event_like" 
+        android:title="@string/esn.eventDetail.like"
+       	android:icon="@drawable/ic_event_like"
+        android:showAsAction="ifRoom|withText" >     
+    </item>    
+    
+    <item 
+        android:id="@+id/esn_detail_event_notice" 
+        android:title="@string/esn.addNewEvent.cancel"
+        android:icon="@drawable/ic_event_noticebad"
+        android:showAsAction="ifRoom|withText">       
+    </item>
+    
+    <item 
+        android:id="@+id/esn_detail_event_dislike" 
+        android:title="@string/esn.addNewEvent.capture"
+        android:icon="@drawable/ic_event_dislike"
+        android:showAsAction="ifRoom|withText">       
+    </item>
+    
+</menu>

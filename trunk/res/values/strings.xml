@@ -76,11 +76,13 @@
 	<string name="esn.selectLabel.activityTitle">Select label</string>
 	<string name="esn.labels.accidents">Accidents</string>
 	<string name="esn.labels.polices">Polices</string>
-	<string name="esn.addNewEvent.title">Title</string>
-	<string name="esn.addNewEvent.description">Description</string>
+	<string name="esn.addNewEvent.title">Title :</string>
+	<string name="esn.addNewEvent.description">Description:</string>
 	<string name="esn.addNewEvent.add">Add</string>
+	<string name="esn.addNewEvent.capture">Capture</string>
 	<string name="esn.addNewEvent.cancel">Cancel</string>
-	<string name="esn.addNewEvent.coordinate">Coordinate</string>
+	<string name="esn.addNewEvent.coordinate">Coordinate :</string>
+	<string name="esn.addNewEvent.imageeventstatus">No image for this event.</string>
 	<string name="esn.register.date"></string>
 	
 	<!-- Settings page -->
@@ -174,5 +176,7 @@
     <string name="esn.eventDetail.image">Event Image</string>
     <string name="esn.eventDetail.iconEventType">Event Type</string>
     <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
-    
+    <string name="esn.eventDetail.description">Description</string>
+	<string name="esn.eventDetail.createby">Create By</string>    
 </resources>
+

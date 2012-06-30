@@ -28,6 +28,7 @@ public class Events implements KvmSerializable {
      public int Like;
      public int Dislike;
      public int Status;
+     public Users user;
 
 	@Override
 	public Object getProperty(int index) {
@@ -58,6 +59,8 @@ public class Events implements KvmSerializable {
 			return Dislike;
 		case 12:
 			return Status;
+		case 13 :
+			return user;
 		default:
 			return null;
 		}

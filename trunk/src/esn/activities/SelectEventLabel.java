@@ -52,7 +52,7 @@ public class SelectEventLabel extends Activity {
 		res = getResources();
 		handler = new Handler();
 		listLabels = (ListView) findViewById(R.id.event_labels);
-
+		
 		progress = new ProgressDialog(this);
 		progress.setTitle(res.getString(R.string.esn_global_loading));
 		progress.setMessage(res.getString(R.string.esn_global_pleaseWait));
@@ -91,7 +91,7 @@ public class SelectEventLabel extends Activity {
 					// add item vao adapter
 					EsnListItem item = new EsnListItem(type.EventTypeName, "",
 							EventType.getIconId(type.EventTypeID, 3));
-					item.setId(type.EventTypeID);
+					item.setId(type.EventTypeID);					
 					adapter.add(item);
 				}
 				// generate list

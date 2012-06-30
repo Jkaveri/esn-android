@@ -29,11 +29,12 @@ public class EventTypeManager {
 		JSONObject response = helper.invokeWebMethod("GetListEventTypes");
 		if (response != null) {
 			JSONArray eventTypeArr = response.getJSONArray("d");
+
 			for (int i = 0; i < eventTypeArr.length(); i++) {
 				JSONObject jsonEventType = eventTypeArr.getJSONObject(i);
 				EventType eventType = new EventType();
 				Utils.JsonToObject(jsonEventType, eventType);
-				list.add(eventType);
+				list.add(eventType);				
 			}
 		}
 		return list;

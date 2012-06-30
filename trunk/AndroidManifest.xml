@@ -52,10 +52,12 @@
             android:name=".ProfileActivity">
         </activity>     
           <activity
-            android:name=".AddNewEvent">
+            android:name=".AddNewEvent"
+            android:uiOptions="splitActionBarWhenNarrow">
         </activity>
           <activity
-            android:name=".SelectEventLabel">
+            android:name=".SelectEventLabel"
+            >
         </activity>
         <activity
             android:name=".FriendEventsActivity"

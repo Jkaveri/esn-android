@@ -25,6 +25,5 @@
 
     <style name="esn.theme.light.actionbar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#ffffff</item>
-    </style>
-
+    </style>    
 </resources>
