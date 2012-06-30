@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="5dip"
+    android:layout_marginBottom="50dip" 
+    android:layout_marginTop="50dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <ImageView
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:id="@+id/imgAvatar"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_no_avata"/>
+        
+         <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_marginLeft="5dip" >
+
+             <TextView
+                 android:id="@+id/txt.esn.userpage.fullname"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Full Name"
+                 android:textAppearance="?android:attr/textAppearanceLarge" />
+
+             <TextView
+                 android:id="@+id/txt.esn.userpage.status"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Status"
+                 android:textAppearance="?android:attr/textAppearanceSmall" />
+	        
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dip" >
+
+        <TextView
+            android:id="@+id/txt.esn.userpage.adress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txt.esn.userpage.birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Birthday"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txt.esn.userpage.gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txt.esn.userpage.phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txt.esn.userpage.favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Favorite"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+    </LinearLayout>
+</LinearLayout>
