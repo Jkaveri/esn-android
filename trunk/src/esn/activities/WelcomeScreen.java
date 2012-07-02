@@ -27,7 +27,7 @@ public class WelcomeScreen extends Activity {
 	private Sessions session;
 	private String password;
 	private String email;
-	private LoadEventTypeThread loadEventType;
+	private LoadModelsThread loadModelThread;
 	private LoginThread loginThread;
 	private Resources res;
 	@Override
@@ -39,11 +39,8 @@ public class WelcomeScreen extends Activity {
 		res = getResources();
 		if(Utils.isNetworkAvailable(this)){
 			initConfig();
-			loadEventType = new LoadEventTypeThread();
-			loadEventType.start();
-			if (session.logined()) {
-				executeLogin();
-			}
+			loadModelThread = new LoadModelsThread();
+			loadModelThread.start();
 		}else{
 			ProgressBar progress = (ProgressBar) findViewById(R.id.esn_welcomeScreen_progressBar);
 			progress.setVisibility(View.INVISIBLE);
@@ -92,20 +89,22 @@ public class WelcomeScreen extends Activity {
 		loginThread.setFailIntent(failIntent);
 		
 	}
-	private class LoadEventTypeThread extends Thread {
+	private class LoadModelsThread extends Thread {
 		@Override
 		public void run() {
 
 			try {
-				// tao moi adapter
-				// manager
+				//load event types
 				EventTypeManager manager = new EventTypeManager();
 				// get list event type
 				ArrayList<EventType> list = manager.getList();
 				session.eventTypes = list;
 				if(session.logined()){
-					//start login thread
-					loginThread.start();	
+					executeLogin();	
+				}else{
+					Intent loginIntent = new Intent(WelcomeScreen.this,WelcomeActivity.class);
+					startActivity(loginIntent);
+					finish();
 				}
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block

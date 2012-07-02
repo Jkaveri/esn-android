@@ -60,7 +60,7 @@ public class WelcomeActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		
-		
+		session = Sessions.getInstance(this);
 		// init facebook
 		mFacebook = new Facebook(APP_ID);
 		// init facebook runner
