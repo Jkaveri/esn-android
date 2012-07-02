@@ -103,8 +103,10 @@ public class WelcomeScreen extends Activity {
 				// get list event type
 				ArrayList<EventType> list = manager.getList();
 				session.eventTypes = list;
-				//start login thread
-				loginThread.start();	
+				if(session.logined()){
+					//start login thread
+					loginThread.start();	
+				}
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
