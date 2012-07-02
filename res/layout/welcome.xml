@@ -18,16 +18,17 @@
             android:src="@drawable/main_logo" />
 
         
-        <ImageButton
-	        android:id="@+id/btloginfb"
-	        android:src="@drawable/loginfb"
-	        android:layout_width="fill_parent"	        
+        
+        <Button android:id="@+id/btloginfb"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"                
+            android:onClick="btnLoginfbClicked"
+            android:text="@string/btLoginFB"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:onClick="btnLoginfbClicked"
+            android:textColor="#327df2"
             android:background="@drawable/rounded_corner_white"/>
         
         <Button android:id="@+id/btLogin"

@@ -50,7 +50,8 @@
 	            android:paddingRight="5dp"
 	            android:layout_marginLeft="3dp"
 	   	    	android:layout_marginRight="3dp"
-	            android:singleLine="true"/>
+	            android:singleLine="true"
+	            android:textColor="@color/text_color"/>
 	        <EditText
 	            android:id="@+id/esn.register.Password"
 	            android:layout_width="fill_parent"
@@ -67,7 +68,8 @@
 	            android:singleLine="true"
 	            android:layout_marginLeft="3dp"
 	   	    	android:layout_marginRight="3dp"
-	            android:hint="@string/tvPassword"/>    
+	            android:hint="@string/tvPassword"
+	            android:textColor="@color/text_color"/>    
 	        
            	<TextView
                 android:layout_width="wrap_content"
@@ -93,7 +95,8 @@
 	            android:singleLine="true"
 	            android:layout_marginLeft="3dp"
 	   	    	android:layout_marginRight="3dp"
-                android:hint="@string/app.register.Name" />
+                android:hint="@string/app.register.Name"
+                android:textColor="@color/text_color"/>
                         
              <Spinner
 			        android:id="@+id/esn.register.ddlGender"
@@ -123,7 +126,8 @@
 	   	    	android:layout_marginRight="3dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:hint="@string/esn.register.date" />
+                android:hint="@string/esn.register.date"
+                android:textColor="@color/text_color"/>
             
             <EditText
                 android:id="@+id/esn.register.txtPhone"
@@ -141,25 +145,41 @@
 	   	    	android:layout_marginRight="3dp"
 	            android:paddingRight="5dp"
                 android:hint="@string/tvPhone"
-                android:inputType="number"/>   
+                android:inputType="number"
+                android:textColor="@color/text_color"/>   
         
-           <Button android:id="@+id/btnRegister"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"                
+          <Button android:id="@+id/btnRegister"                           
                 android:onClick="RegisterClicked"
                 android:text="@string/app_register"
-                android:textColor="#FFFFFF"
-                android:textStyle="normal"/>
+               	android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:textColor="@color/text_color"
+	            android:background="@drawable/rounded_corner_white"
+	            android:layout_marginBottom="4dp"
+	            android:layout_marginTop="4dp"
+	            android:paddingTop="8dp"
+	            android:textSize="16dp"
+	            android:paddingBottom="8dp"
+	            android:layout_marginLeft="3dp"
+	            android:layout_marginRight="3dp"
+                />
            
-           <Button android:id="@+id/btnCancel"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"                
-                android:onClick="CancelClicked"
-                android:text="@string/btBack"
-                android:textColor="#FFFFFF"
-                android:textStyle="normal"/>
+           <Button 
+               	android:id="@+id/btnCancel"                               
+               	android:onClick="CancelClicked"
+               	android:text="@string/btBack"
+               	android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:textColor="@color/text_color"
+	            android:background="@drawable/rounded_corner_white"
+	            android:layout_marginBottom="4dp"
+	            android:layout_marginTop="4dp"
+	            android:paddingTop="8dp"
+	            android:textSize="16dp"
+	            android:paddingBottom="8dp"
+	            android:layout_marginLeft="3dp"
+	            android:layout_marginRight="3dp"
+               />
         
            <LinearLayout 
         	    android:layout_width="fill_parent"
