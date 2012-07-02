@@ -3,7 +3,7 @@
     <item 
         android:id="@+id/new_event_add" 
         android:title="@string/esn.addNewEvent.add"
-        android:icon="@drawable/ic_add_event_add"
+        android:icon="@drawable/ic_accept"
         android:showAsAction="ifRoom|withText">       
     </item>
     <item 

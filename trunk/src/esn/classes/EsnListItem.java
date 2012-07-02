@@ -1,7 +1,7 @@
 package esn.classes;
 
 public class EsnListItem {
-	private String title;
+	private CharSequence title;
 	private String subtitle;
 	private int icon;
 	private int id;
@@ -16,11 +16,11 @@ public class EsnListItem {
 		this.subtitle = subtitle;
 		this.icon = icon;
 	}
-	public String getTitle() {
+	public CharSequence getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitle(CharSequence t) {
+		this.title = t;
 	}
 	public String getSubtitle() {
 		return subtitle;

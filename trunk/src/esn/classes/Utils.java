@@ -1,19 +1,16 @@
 package esn.classes;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,8 +19,14 @@ import org.json.JSONObject;
 
 import com.google.android.maps.GeoPoint;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Base64;
 import android.util.Log;
 
 public class Utils {
@@ -55,7 +58,7 @@ public class Utils {
 		final int buffer_size = 1024;
 		try {
 			byte[] bytes = new byte[buffer_size];
-			while(true) {
+			while (true) {
 				int count = is.read(bytes, 0, buffer_size);
 				if (count == -1)
 					break;
@@ -164,13 +167,28 @@ public class Utils {
 
 		double dLat = toRad(Math.abs(lat1 - lat1));
 		double dLon = toRad(Math.abs(lon2 - lon1));
-		 lat1 = toRad(lat1);
-		 lat2 = toRad(lat2);
+		lat1 = toRad(lat1);
+		lat2 = toRad(lat2);
 
 		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1)
 				* Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		return r * c;
+	}
+
+	public static boolean isNetworkAvailable(Activity act) {
+		ConnectivityManager connectivityManager = (ConnectivityManager) act
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null;
+	}
+
+	public static String bitmapToBase64(Bitmap img) {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		img.compress(Bitmap.CompressFormat.PNG, 100, bos);
+		byte[] byteArr = bos.toByteArray();
+		return android.util.Base64.encodeToString(byteArr, Base64.DEFAULT);
 	}
 
 }

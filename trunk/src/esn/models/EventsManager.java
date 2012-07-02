@@ -48,8 +48,6 @@ public class EventsManager {
 				}
 			}
 		}
-		
-
 		return events;
 	}
 
@@ -126,6 +124,18 @@ public class EventsManager {
 		params.put("accountId",accID);
 		
 		JSONObject response = helper.invokeWebMethod("Like",params);
+		if(response!=null){
+			int like = response.getInt("d");
+			return like;
+		}
+		return -1;
+	}
+	public int dislike(int eventId, int accID) throws JSONException, IOException {
+		JSONObject params = new JSONObject();
+		params.put("eventId", eventId);
+		params.put("accountId",accID);
+		
+		JSONObject response = helper.invokeWebMethod("Dislike",params);
 		if(response!=null){
 			int like = response.getInt("d");
 			return like;

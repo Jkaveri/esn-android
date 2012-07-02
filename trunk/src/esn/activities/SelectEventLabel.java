@@ -15,6 +15,7 @@ import esn.adapters.EsnListAdapter;
 import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
 import esn.classes.EsnWebServices;
+import esn.classes.Sessions;
 import esn.models.EventType;
 import esn.models.EventTypeManager;
 import android.app.Activity;
@@ -35,10 +36,6 @@ public class SelectEventLabel extends Activity {
 
 	private EsnListAdapter adapter;
 
-	private ProgressDialog dialog;
-
-	private Handler handler;
-
 	private ListView listLabels;
 
 	private Resources res;
@@ -50,20 +47,23 @@ public class SelectEventLabel extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_labels);
 		res = getResources();
-		handler = new Handler();
+		Sessions session = Sessions.getInstance(this);
 		listLabels = (ListView) findViewById(R.id.event_labels);
+		if(session.eventTypes!=null){
+			adapter = new EsnListAdapter();
+			//add item to adapter
+			for (EventType type : session.eventTypes) {
+				// add item vao adapter
+				EsnListItem item = new EsnListItem(type.EventTypeName,"",
+						EventType.getIconId(type.EventTypeID, 3));
+				item.setId(type.EventTypeID);
+				adapter.add(item);
+			}
+			listLabels.setOnItemClickListener(new EventTypeItemClickListener());
+			listLabels.setAdapter(adapter);
+			addEventData = getIntent();
+		}
 		
-		progress = new ProgressDialog(this);
-		progress.setTitle(res.getString(R.string.esn_global_loading));
-		progress.setMessage(res.getString(R.string.esn_global_pleaseWait));
-		progress.setCanceledOnTouchOutside(false);
-		progress.show();
-
-		listLabels.setOnItemClickListener(new EventTypeItemClickListener());
-		addEventData = getIntent();
-
-		new LoadEventTypeThread().start();
-
 	}
 
 	@Override
@@ -73,54 +73,6 @@ public class SelectEventLabel extends Activity {
 			finish();
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
-		}
-	}
-
-	private class LoadEventTypeThread extends Thread {
-		@Override
-		public void run() {
-
-			try {
-				// tao moi adapter
-				adapter = new EsnListAdapter();
-				// manager
-				EventTypeManager manager = new EventTypeManager();
-				// get list event type
-				List<EventType> list = manager.getList();
-				for (EventType type : list) {
-					// add item vao adapter
-					EsnListItem item = new EsnListItem(type.EventTypeName, "",
-							EventType.getIconId(type.EventTypeID, 3));
-					item.setId(type.EventTypeID);					
-					adapter.add(item);
-				}
-				// generate list
-				handler.post(new LoadEventTypeSuccessHandler());
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-	}
-
-	private class LoadEventTypeSuccessHandler implements Runnable {
-		@Override
-		public void run() {
-			listLabels.setAdapter(adapter);
-			progress.dismiss();
 		}
 	}
 

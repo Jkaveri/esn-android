@@ -43,8 +43,7 @@ public class WelcomeActivity extends SherlockActivity {
 	protected Sessions session;
 	protected Context context;
 	private ProgressDialog dialog;
-	public String password;
-	public String email;
+	
 	public Handler handler;
 	public Users user;
 
@@ -60,7 +59,7 @@ public class WelcomeActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		initConfig();
+		
 		
 		// init facebook
 		mFacebook = new Facebook(APP_ID);
@@ -77,24 +76,10 @@ public class WelcomeActivity extends SherlockActivity {
 		if (fbAccessExpires != 0) {
 			mFacebook.setAccessExpires(fbAccessExpires);
 		}
-		if (session.logined()) {
-			
-			executeLogin();				
-		}
+		
 
 	}
-	private void initConfig(){
-		// application session
-				session = Sessions.getInstance(context);
-		//first lauched
-		boolean firstLauch = session.get("firstLauch", true);
-		if(firstLauch){
-			//set radius for load event around
-			session.put("radiusEventAround", 2);
-			session.get("firstLauch", false);
-			
-		}
-	}
+	
 	public void btnLoginfbClicked(View view) {
 		if (!mFacebook.isSessionValid()) {// if access token is expired
 			
@@ -235,21 +220,7 @@ public class WelcomeActivity extends SherlockActivity {
 		
 	}
 
-	private void executeLogin() {
-		
-		dialog = new ProgressDialog(this);
-		
-		dialog.setTitle(this.getResources().getString(R.string.app_login));
-		dialog.setMessage("Waiting ....");
-		dialog.show();
-		email = session.get("email", null);
-		password = session.get("password", null);
-		
-		LoginThread loginThread = new LoginThread();
-		
-		loginThread.start();
-		
-	}
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -257,71 +228,5 @@ public class WelcomeActivity extends SherlockActivity {
 		mFacebook.authorizeCallback(requestCode, resultCode, data);
 	}
 
-	public class LoginThread extends Thread {
-		public LoginThread() {
-		}
-
-		@Override
-		public void run() {
-			Looper.prepare();
-			UsersManager usermManager = new UsersManager();
-			if (usermManager.Login(email, password)) {
-				try {
-					user = usermManager.RetrieveByEmail(email);
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
-				handler.post(new loginSuccess());
-				
-			} else {
-
-				handler.post(new loginFail());
-			}
-		}
-
-	}
-
-	private class loginFail implements Runnable {
-		@Override
-		public void run() {
-			dialog.dismiss();
-			AlertDialog.Builder alert = new AlertDialog.Builder(context);
-			alert.setTitle("Login failed!");
-			alert.setMessage("Username or password is wrong, please reLogin!");
-			alert.show();
-		}
-	}
-
-	private class loginSuccess implements Runnable {
-		@Override
-		public void run() {
-			
-			session.put("email", email);
-			session.put("password", password);
-			if(user!=null){
-				session.currentUser = user;
-			}else{
-				dialog.dismiss();
-				Util.showAlert(context, "ERROR", "Email not available");
-				return;
-			}
-			dialog.dismiss();
-			Intent intent = new Intent(context, HomeActivity.class);
-			startActivity(intent);
-			finish();
-			
-		}
-	}
+	
 }

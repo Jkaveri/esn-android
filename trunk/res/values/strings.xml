@@ -19,7 +19,6 @@
 	<string name="txtBirthday">01/01/1990</string>
 	<string name="txtGender">Male</string>
 	
-	<string name="btJoin">Join</string>
 	<string name="btCancel">Cancel</string>
 	
 	<string name="tvEmail">Email</string>
@@ -82,6 +81,7 @@
 	<string name="esn.addNewEvent.capture">Capture</string>
 	<string name="esn.addNewEvent.cancel">Cancel</string>
 	<string name="esn.addNewEvent.coordinate">Coordinate :</string>
+	<string name="esn.addNewEvent.addresss">Address :</string>
 	<string name="esn.addNewEvent.imageeventstatus">No image for this event.</string>
 	<string name="esn.register.date"></string>
 	
@@ -108,7 +108,7 @@
 	
 	<!-- Global  -->
 	<string name="esn.global.dateFormat">MM-dd-yyyy</string>
-	<string name="esn.global.loading">Loading</string>
+	<string name="esn.global.loading">Loading…</string>
 	<string name="esn.global.pleaseWait">Please wait!</string>
 	
 
