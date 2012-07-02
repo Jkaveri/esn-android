@@ -1,5 +1,8 @@
 package esn.classes;
 
+import java.util.ArrayList;
+
+import esn.models.EventType;
 import esn.models.Users;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +12,7 @@ public class Sessions {
 	private Context context;
 	private SharedPreferences pref;
 	public Users currentUser;
+	public ArrayList<EventType> eventTypes;
 	public Sessions(Context context) {
 		this.context = context;
 		pref = context.getSharedPreferences("ESN", Context.MODE_PRIVATE);

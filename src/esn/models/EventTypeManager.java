@@ -21,10 +21,10 @@ public class EventTypeManager {
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<EventType> getList() throws ClientProtocolException,
+	public ArrayList<EventType> getList() throws ClientProtocolException,
 			IOException, JSONException, IllegalArgumentException,
 			IllegalAccessException {
-		List<EventType> list = new ArrayList<EventType>();
+		ArrayList<EventType> list = new ArrayList<EventType>();
 
 		JSONObject response = helper.invokeWebMethod("GetListEventTypes");
 		if (response != null) {

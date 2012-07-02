@@ -78,7 +78,7 @@ public class LoginButton extends ImageButton {
         public void onClick(View arg0) {
             if (mFb.isSessionValid()) {
                 SessionEvents.onLogoutBegin();
-                AsyncFacebookRunner asyncRunner = new AsyncFacebookRunner(mFb);
+                new AsyncFacebookRunner(mFb);
             } else {
    mFb.authorize(mActivity, mPermissions,
                               new LoginDialogListener());

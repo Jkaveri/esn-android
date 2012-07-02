@@ -11,6 +11,7 @@ import org.ksoap2.serialization.SoapObject;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,10 +50,12 @@ import com.google.android.maps.OverlayItem;
 import com.readystatesoftware.maps.OnSingleTapListener;
 import com.readystatesoftware.maps.TapControlledMapView;
 
-import esn.adapters.ViewTypesListAdapter;
+import esn.adapters.EsnListAdapterNoSub;
+import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
 import esn.classes.EsnWebServices;
 import esn.classes.EventOverlayItem;
+import esn.classes.FilterLabelsDialog;
 import esn.classes.ListNavigationItem;
 import esn.classes.Maps;
 import esn.classes.Sessions;
@@ -63,7 +66,7 @@ import esn.models.EventsManager;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
-	private ListNavigationItem[] mNavigationItems;
+	private EsnListItem[] mNavigationItems;
 	private Maps map;
 	private Resources res;
 	private boolean isPotentialLongPress;
@@ -84,17 +87,17 @@ public class HomeActivity extends SherlockMapActivity implements
 	}
 
 	private void setupListNavigate() {
-		mNavigationItems = new ListNavigationItem[2];
-		mNavigationItems[0] = new ListNavigationItem();
-		mNavigationItems[0].setText("View as Map");
+		mNavigationItems = new EsnListItem[2];
+		mNavigationItems[0] = new EsnListItem(1);
+		mNavigationItems[0].setTitle("View as Map");
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
 
-		mNavigationItems[1] = new ListNavigationItem();
-		mNavigationItems[1].setText("View as List");
+		mNavigationItems[1] = new EsnListItem(2);
+		mNavigationItems[1].setTitle("View as List");
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();
-		ViewTypesListAdapter list = new ViewTypesListAdapter(context,
+		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,
 				R.layout.sherlock_spinner_item, mNavigationItems);
 		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
@@ -113,6 +116,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		// // setup for split items
 		// getSupportActionBar().setSplitBackgroundDrawable(
 		// getResources().getDrawable(R.drawable.black_transparent));
+
 	}
 
 	private void setupMap() {
@@ -137,25 +141,11 @@ public class HomeActivity extends SherlockMapActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		
+
 		com.actionbarsherlock.view.MenuInflater menuInfalte = getSupportMenuInflater();
 		menuInfalte.inflate(R.menu.home_menus, menu);
-		
-		/*menu.add("New Event").setIcon(R.drawable.ic_add)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-		MenuItem item;
-		item = menu.add("Friends");
-		item.setIcon(R.drawable.ic_friends).setShowAsAction(
-				MenuItem.SHOW_AS_ACTION_ALWAYS);
-		// search
-		item = menu.add("Search").setIcon(R.drawable.ic_search);
-		item.setActionView(R.layout.collapsible_edittext);// set collapsible
-															// action view
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS
-				| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);// set how to
-																// show action
-		View collapsed = item.getActionView();
+		MenuItem searchItem = menu.findItem(R.id.esn_home_menuItem_search);
+		View collapsed = searchItem.getActionView();
 		ImageButton btnSearchGo = (ImageButton) collapsed
 				.findViewById(R.id.btnSearchGo);
 		// set onclic listener
@@ -166,18 +156,7 @@ public class HomeActivity extends SherlockMapActivity implements
 				btnSearchGoClicked(v);
 			}
 		});
-		// labels
-		menu.add("Labels").setIcon(R.drawable.ic_labels)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		// settings
-		menu.add("Settings").setIcon(R.drawable.ic_settings)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		menu.add("Navigate").setIcon(R.drawable.ic_search)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add("Zoom in").setIcon(R.drawable.ic_search)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add("Zoom out").setIcon(R.drawable.ic_search)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
+
 		return true;
 	}
 
@@ -206,23 +185,64 @@ public class HomeActivity extends SherlockMapActivity implements
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		String itemTitle = item.getTitle().toString();
 		int itemId = item.getItemId();
-		if (itemId == R.id.esn_home_menuItem_search) {
+		switch (itemId) {
+		case R.id.esn_home_menuItem_search:
 			item.collapseActionView();
 
-			return true;
-		}
-
-		if (itemId == R.id.esn_home_menuItem_friends) {
+			break;
+		case R.id.esn_home_menuItem_friends:
 			Intent intenFdsList = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsList);
-			return true;
-		}
+			break;
+		case R.id.esn_home_menuItem_navigator:
 
-		if (itemId == R.id.esn_home_menus_addNewEvent) {
+			break;
+		case R.id.esn_home_menuItem_settings:
+			Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.esn_home_menuItem_labels:
+			FilterLabelsDialog builder = new FilterLabelsDialog(this);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 1);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 2);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 3);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
+			builder.setOnClickListener(new FilterLabelsDialog.ItemMenuOnClickListener() {
+
+				@Override
+				public void onClick(int menuId) {
+					switch (menuId) {
+					case 1:
+						Toast.makeText(HomeActivity.this, "Ket xe",
+								Toast.LENGTH_LONG).show();
+						break;
+
+					default:
+						break;
+					}
+				}
+			});
+			Dialog filterLabelDialog = builder.createMenu("Labels");
+			filterLabelDialog.show();
+			break;
+		case R.id.esn_home_menuItem_zoomIn:
+			map.zoomIn();
+			break;
+		case R.id.esn_home_menuItem_zoomOut:
+			map.zoomOut();
+			break;
+		case R.id.esn_home_menus_addNewEvent:
 			Location currLocation = map.getCurrentLocation();
 			if (currLocation != null) {
 				double latitude = currLocation.getLatitude();
-				double longtitude= currLocation.getLongitude();
+				double longtitude = currLocation.getLongitude();
 				Intent addNewEventIntent = new Intent(this,
 						SelectEventLabel.class);
 				addNewEventIntent.putExtra("latitude", latitude);
@@ -230,28 +250,17 @@ public class HomeActivity extends SherlockMapActivity implements
 				startActivityForResult(addNewEventIntent,
 						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
 			}
-			return true;
+			break;
+		default:
+			break;
 		}
+		return true;
+	}
 
-		if (itemId == R.id.esn_home_menuItem_settings) {
-			Intent intent = new Intent(this, SettingsActivity.class);
-			startActivity(intent);
-			return true;
-		}
-		if (itemId == R.id.esn_home_menuItem_zoomIn) {
-			map.zoomIn();
-			return true;
-		}
-		if (itemId == R.id.esn_home_menuItem_zoomOut) {
-			map.zoomOut();
-			return true;
-		} else {
-			return super.onMenuItemSelected(featureId, item);
-		}
+	private void labelsClicked() {
+
 	}
-	private void labelsClicked(){
-		
-	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EsnMapView.REQUEST_CODE_ADD_NEW_EVENT
@@ -266,6 +275,7 @@ public class HomeActivity extends SherlockMapActivity implements
 					Double.MIN_VALUE);
 			String title = data.getStringExtra("eventTitle");
 			String description = data.getStringExtra("eventDescription");
+			String picture = data.getStringExtra("picture");
 			int pointerDrawable = data.getIntExtra("labelIcon", 0);
 			int labelId = data.getIntExtra("labelId", 0);
 			if (latitude != Integer.MIN_VALUE
@@ -277,7 +287,7 @@ public class HomeActivity extends SherlockMapActivity implements
 				event.Title = title;
 				event.Description = description;
 				// @todo: nang chup hinh khi tao event
-				event.Picture = "";
+				event.Picture = (picture == null) ? "" : picture;
 				event.EventLat = latitude;
 				event.EventLng = longtitude;
 				event.ShareType = AppEnums.ShareTypes.Public;
@@ -290,7 +300,7 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		Toast.makeText(this, mNavigationItems[itemPosition].getText(),
+		Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
 				Toast.LENGTH_SHORT).show();
 		return true;
 	}

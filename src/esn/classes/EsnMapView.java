@@ -127,8 +127,8 @@ public class EsnMapView extends TapControlledMapView {
 					Log.d("esn_centerPoint", lat+"|"+lon);
 					Sessions session = Sessions.getInstance(context);
 					int radius = calculateRadius();
-					Log.d("esn_radius",String.valueOf(radius));
-					events = manager.getEventsAround(lat, lon, radius);
+					Log.d("esn_radius",String.valueOf(radius/2));
+					events = manager.getEventsAround(lat, lon, radius/2);
 					
 					handler.post(new LoadEventsAroundHandler(events));
 

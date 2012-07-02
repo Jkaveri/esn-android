@@ -21,7 +21,7 @@ public class EsnWebServices {
 	
 	public SoapSerializationEnvelope envelope;
 	
-	private ArrayList<SoapMaping> mapings = new ArrayList<SoapMaping>();
+	//private ArrayList<SoapMaping> mapings = new ArrayList<SoapMaping>();
 	
 	public EsnWebServices(String NAMESPACE, String URL) {
 		
@@ -30,16 +30,16 @@ public class EsnWebServices {
 		this.dotNet = true;
 		this.soapEnvelopeVer = SoapEnvelope.VER11;
 	}
-	public void addMaping(String name,Class<?> type){
+	/*public void addMaping(String name,Class<?> type){
 		mapings.add(new SoapMaping(this.namespace, name, type));
-	}
-	private void addMaping(){
+	}*/
+	/*private void addMaping(){
 		if(mapings.size()>0 && this.envelope!=null){
 			for(SoapMaping maping:mapings){
 				this.envelope.addMapping(maping.getNamespace(), maping.getName(), maping.getClazz());
 			}
 		}
-	}
+	}*/
 	/**
 	 * Invoke a Web Service Method
 	 * 
@@ -195,7 +195,7 @@ public class EsnWebServices {
 				this.soapEnvelopeVer);
 		envelope.setOutputSoapObject(soap);
 		envelope.dotNet = dotNet;
-		addMaping();
+		//addMaping();
 		return envelope;
 	}
 

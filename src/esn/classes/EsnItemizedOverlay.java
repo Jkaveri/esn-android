@@ -72,6 +72,7 @@ public class EsnItemizedOverlay<item extends OverlayItem> extends BalloonItemize
 			intent.putExtra("id", id);
 			intent.setAction(action);
 			c.startActivity(intent);
+			hideAllBalloons();
 		}
 		return true;
 	}

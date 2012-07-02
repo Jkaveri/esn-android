@@ -1,40 +1,46 @@
 package esn.adapters;
 
+import java.util.ArrayList;
+
 import esn.activities.R;
-import esn.classes.ListNavigationItem;
+import esn.classes.EsnListItem;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-public class ViewTypesListAdapter extends ArrayAdapter<ListNavigationItem> {
+public class EsnListAdapterNoSub extends ArrayAdapter<EsnListItem> {
 
-	private ListNavigationItem[] items;
+	private ArrayList<EsnListItem> items = new ArrayList<EsnListItem>();
 	private Context context;
 
-	public ViewTypesListAdapter(Context context, int textViewResourceId,
-			ListNavigationItem[] items) {
+	public EsnListAdapterNoSub(Context context, int textViewResourceId,
+			EsnListItem[] items) {
+		super(context, textViewResourceId, items);
+		this.context = context;
+		for (int i = 0; i < items.length; i++) {
+			this.items.add(items[i]);
+		}
+	}
+	public EsnListAdapterNoSub(Context context, int textViewResourceId, ArrayList<EsnListItem> items){
 		super(context, textViewResourceId, items);
 		this.context = context;
 		this.items = items;
 	}
 
 	@Override
-	public ListNavigationItem getItem(int position) {
+	public EsnListItem getItem(int index) {
 		// TODO Auto-generated method stub
-		return items[position];
+		return items.get(index);
 	}
 
 	@Override
-	public int getPosition(ListNavigationItem item) {
+	public int getPosition(EsnListItem item) {
 		int i = 0;
-		for (ListNavigationItem it : items) {
+		for (EsnListItem it : items) {
 			if (it.equals(item)) {
 				return i;
 			}
@@ -46,17 +52,17 @@ public class ViewTypesListAdapter extends ArrayAdapter<ListNavigationItem> {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return items.length;
+		return items.size();
 	}
 
 	@Override
-	public View getDropDownView(int position, View convertView, ViewGroup parent) {
+	public View getDropDownView(int index, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (view == null) {
 			LayoutInflater li = LayoutInflater.from(parent.getContext());
 			view = li.inflate(R.layout.sherlock_spinner_dropdown_item, null);
 		}
-		ListNavigationItem item = items[position];
+		EsnListItem item = items.get(index);
 
 		if (item != null) {
 			TextView tv;
@@ -65,7 +71,7 @@ public class ViewTypesListAdapter extends ArrayAdapter<ListNavigationItem> {
 			} else {
 				tv = (TextView) view.findViewById(android.R.id.text1);
 			}
-			tv.setText(item.getText());
+			tv.setText(item.getTitle());
 
 			Drawable icon = context.getResources().getDrawable(item.getIcon());
 			
@@ -83,7 +89,7 @@ public class ViewTypesListAdapter extends ArrayAdapter<ListNavigationItem> {
 			LayoutInflater li = LayoutInflater.from(parent.getContext());
 			view = li.inflate(R.layout.sherlock_spinner_item, null);
 		}
-		ListNavigationItem item = items[position];
+		EsnListItem item = items.get(position);
 
 		if (item != null) {
 			TextView tv;
@@ -92,7 +98,7 @@ public class ViewTypesListAdapter extends ArrayAdapter<ListNavigationItem> {
 			} else {
 				tv = (TextView) view.findViewById(android.R.id.text1);
 			}
-			tv.setText(item.getText());
+			tv.setText(item.getTitle());
 			Drawable icon = context.getResources().getDrawable(item.getIcon());
 			
 			tv.setCompoundDrawablePadding(5);

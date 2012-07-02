@@ -8,7 +8,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.MapView;
 import esn.adapters.ListViewFriendsAdapter;
-import esn.adapters.ViewTypesListAdapter;
+import esn.adapters.EsnListAdapterNoSub;
+import esn.classes.EsnListItem;
 import esn.classes.ListNavigationItem;
 import esn.classes.Maps;
 import android.app.ActionBar;
@@ -26,7 +27,7 @@ import android.widget.Toast;
 
 public class FriendEventsActivity extends SherlockMapActivity implements
 		OnNavigationListener, OnItemClickListener {
-	private ListNavigationItem[] mNavigationItems;
+	private EsnListItem[] mNavigationItems;
 	private Maps map;
 	private ActionMode mMode;
 	private Resources res;
@@ -75,20 +76,20 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	}
 
 	private void setupListNavigate() {
-		mNavigationItems = new ListNavigationItem[2];
-		mNavigationItems[0] = new ListNavigationItem();
+		mNavigationItems = new EsnListItem[2];
+		mNavigationItems[0] = new EsnListItem();
 		mNavigationItems[0]
-				.setText(getString(R.string.str_Friends_Events_ViewAsMap));
+				.setTitle(getString(R.string.str_Friends_Events_ViewAsMap));
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
 
-		mNavigationItems[1] = new ListNavigationItem();
+		mNavigationItems[1] = new EsnListItem();
 		mNavigationItems[1]
-				.setText(getString(R.string.str_Friends_Events_ViewAsList));
+				.setTitle(getString(R.string.str_Friends_Events_ViewAsList));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();
 
-		ViewTypesListAdapter list = new ViewTypesListAdapter(context,
+		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,
 				R.layout.sherlock_spinner_item, mNavigationItems);
 		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 
@@ -164,7 +165,7 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		String postTitle = mNavigationItems[itemPosition].getText().toString();
+		String postTitle = mNavigationItems[itemPosition].getTitle().toString();
 		Toast.makeText(this, postTitle, Toast.LENGTH_SHORT).show();
 
 		if (postTitle.equals(getString(R.string.str_Friends_Events_ViewAsMap))) {
