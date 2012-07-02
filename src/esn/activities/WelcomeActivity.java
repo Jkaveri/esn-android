@@ -76,8 +76,6 @@ public class WelcomeActivity extends SherlockActivity {
 		if (fbAccessExpires != 0) {
 			mFacebook.setAccessExpires(fbAccessExpires);
 		}
-		
-
 	}
 	
 	
@@ -113,13 +111,13 @@ public class WelcomeActivity extends SherlockActivity {
 								
 								if(checkEmail==true)
 								{
-									Intent intent = new Intent(getBaseContext(),HomeActivity.class);
+									Intent intent = new Intent(WelcomeActivity.this,HomeActivity.class);
 									startActivity(intent);
 									finish();
 								}
 								else
 								{
-									Intent intent = new Intent(getBaseContext(),RegisterActivity.class);
+									Intent intent = new Intent(WelcomeActivity.this,RegisterActivity.class);
 									
 									intent.putExtra("facebookSignup", true);
 									intent.putExtra("fb_id",
