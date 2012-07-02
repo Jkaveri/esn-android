@@ -110,6 +110,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		
 		// setup background for top action bar
 		// getSupportActionBar().setBackgroundDrawable(
 		// getResources().getDrawable(R.drawable.main_transparent));
@@ -134,6 +135,14 @@ public class HomeActivity extends SherlockMapActivity implements
 			public boolean onSingleTap(MotionEvent e) {
 				map.hideAllBallon();
 				return true;
+			}
+			
+		});
+		mapView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				map.hideAllBallon();
 			}
 		});
 	}
