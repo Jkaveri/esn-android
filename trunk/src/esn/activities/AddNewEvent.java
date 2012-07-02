@@ -280,7 +280,7 @@ public class AddNewEvent extends Activity {
 				Bitmap img = params[0];
 				String base64Img = Utils.bitmapToBase64(img);
 				HttpHelper helper = new HttpHelper(
-						"http://10.0.2.2/esn/ApplicationsWS.asmx");
+						"http://bangnl.info/ws/ApplicationsWS.asmx");
 				JSONObject p = new JSONObject();
 				p.put("base64Image", base64Img);
 				p.put("fileType", "jpg");

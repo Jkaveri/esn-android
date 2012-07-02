@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -92,12 +93,12 @@ public class WelcomeScreen extends SherlockActivity {
 		Intent failIntent = new Intent(this, LoginActivity.class);
 		loginThread.setSuccessIntent(successIntent);
 		loginThread.setFailIntent(failIntent);
-		
+		loginThread.start();
 	}
 	private class LoadModelsThread extends Thread {
 		@Override
 		public void run() {
-
+			Looper.prepare();
 			try {
 				//load event types
 				EventTypeManager manager = new EventTypeManager();
