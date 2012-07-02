@@ -59,7 +59,7 @@ public class WelcomeActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		
+		getSupportActionBar().hide();
 		session = Sessions.getInstance(this);
 		// init facebook
 		mFacebook = new Facebook(APP_ID);
@@ -79,6 +79,7 @@ public class WelcomeActivity extends SherlockActivity {
 		
 
 	}
+	
 	
 	public void btnLoginfbClicked(View view) {
 		if (!mFacebook.isSessionValid()) {// if access token is expired

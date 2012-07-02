@@ -43,14 +43,12 @@
 <!--             </intent-filter> -->
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:name=".LoginActivity">
             
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/app_register"
-            android:theme="@android:style/Theme.Black.NoTitleBar">
+            android:label="@string/app_register">
         </activity>
         
         <activity
