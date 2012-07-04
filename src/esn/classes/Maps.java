@@ -302,7 +302,7 @@ public class Maps implements LocationListener {
 					context.getString(R.string.map_current_location_title),
 					context.getString(R.string.map_current_location_subtitle),
 					currMarkerIcon);
-			mapController.animateTo(currPoint);
+			//mapController.animateTo(currPoint);
 
 		}
 	}
