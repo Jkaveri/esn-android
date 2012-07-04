@@ -48,7 +48,6 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 
 	private void loadData() {
 		final int accID = this.getIntent().getIntExtra("accountID", 0);
-//		Toast.makeText(this, String.valueOf(accID), Toast.LENGTH_SHORT).show();
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(getString(R.string.app_Processing));
 		dialog.setMessage(getString(R.string.message_diaglog_process_wait));
@@ -84,6 +83,9 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 							
 							TextView favorite = (TextView) findViewById(R.id.txt_esn_userpage_favorite);
 							favorite.setText(user.Favorite);
+							
+							TextView phone = (TextView) findViewById(R.id.txt_esn_userpage_phone);
+							phone.setText(user.Phone);
 							
 							ImageView avatar = (ImageView) findViewById(R.id.img_esn_userpage_avatar);
 							imageLoader.displayImage(user.Avatar, activity, avatar);
