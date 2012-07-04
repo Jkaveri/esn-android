@@ -9,6 +9,7 @@ import com.actionbarsherlock.view.MenuItem;
 import esn.classes.ImageLoader;
 import esn.classes.Sessions;
 import esn.classes.Utils;
+import esn.models.CommentsManager;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
@@ -27,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,10 +37,13 @@ public class EventDetail extends Activity {
 	private Intent data;
 	private ProgressDialog dialog;
 	private int eventId;
+	private int accId;
+	
 	public Handler handler;
 	private ImageLoader loader;
 	
 	EventsManager manager = new EventsManager();
+	CommentsManager commentsManager = new CommentsManager();
 	Sessions session;
 	Context context;
 	
@@ -193,8 +198,12 @@ public class EventDetail extends Activity {
 			
 			
 			int like = -2;
+			
 			try {
-				like = manager.like(eventId, session.currentUser.AccID);
+				
+				like = manager.like(eventId, session.currentUser.AccID);			
+				
+				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -215,16 +224,19 @@ public class EventDetail extends Activity {
 		private int like;
 
 		public LikeSuccess(int like) {
-			this.like = like;
+			
+			this.like = like;			
 		}
 
 		@Override
 		public void run() {
-			/*
-			 * TextView tvLike = (TextView)
-			 * findViewById(R.id.esn_eventDetail_tvLikeCount);
-			 * tvLike.setText(like);
-			 */
+			
+			TextView tvLike = (TextView)findViewById(R.id.esn_eventDetail_like);
+			
+			String k = String.valueOf(like);
+			
+			tvLike.setText(k);
+			 
 		}
 	}
 
@@ -343,6 +355,8 @@ public class EventDetail extends Activity {
 				
 				tvUsername.setText(event.user.Name);
 				
+				accId = event.AccID;
+				
 				icEventType.setImageResource(EventType.getIconId(event.EventTypeID, event.getLevel()));
 								
 				DisplayMetrics dm = new DisplayMetrics();
@@ -376,6 +390,92 @@ public class EventDetail extends Activity {
 			}
 		}
 	}
+
+
+	public void Comment(View view)
+	{
+		
+		EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
+		
+		String content = txtComment.getText().toString();
+		
+		new CommentThread(content, accId, eventId).start();
+	}
+
+	private class CommentThread extends Thread {
+		
+		private String content;
+		private int accId;
+		private int eventId;
+		
+		public CommentThread(String ct,int acc, int event)
+		{
+			this.content = ct;
+			this.accId = acc;
+			this.eventId = event;
+		}
+		
+		@Override
+		public void run() {
+			
+			try {
+				int rs = commentsManager.CreateComment(eventId, accId, content);
+				
+				if(rs>0)
+				{
+					handler.post(new CommentSuccess());
+				}
+				else
+				{
+					handler.post(new CommentFail());
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
 	
+	private class CommentSuccess implements Runnable{
+
+		@Override
+		public void run() {
+			
+		}
+		
+	}
 	
+	private class CommentFail implements Runnable{
+
+		@Override
+		public void run() {
+			
+		}
+		
+	}
+
+	public void GetListComment()
+	{
+		
+	}
+	
+	private class GetListComment extends Thread
+	{
+		int eventId;
+		
+		public GetListComment(int id)
+		{
+			this.eventId = id;
+		}		
+		
+		@Override
+		public void run() {
+			
+						
+		}
+	}
 }

@@ -223,14 +223,14 @@ public class AddNewEvent extends Activity {
 
 		ImageView image = (ImageView) findViewById(R.id.esn_addnewEvent_imgEvent);
 
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		
 		if (requestCode == CAMERA_PIC_REQUEST) {
 			if (resultCode == RESULT_OK) {
 				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
 				new UploadImageTask().execute(thumbnail);
 				image.setImageBitmap(thumbnail);
-
-				DisplayMetrics dm = new DisplayMetrics();
-				getWindowManager().getDefaultDisplay().getMetrics(dm);
 
 				image.setMaxWidth(dm.widthPixels);
 				image.setMaxHeight(dm.widthPixels);
@@ -240,9 +240,20 @@ public class AddNewEvent extends Activity {
 			}
 		} else if (requestCode == SELECT_PICTURE) {
 			if (resultCode == RESULT_OK) {
+				
 				Uri selectedImageUri = data.getData();
 				selectedImagePath = getPath(selectedImageUri);
 				image.setImageURI(selectedImageUri);
+				
+				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+				new UploadImageTask().execute(thumbnail);
+				image.setImageBitmap(thumbnail);
+
+				image.setMaxWidth(dm.widthPixels);
+				image.setMaxHeight(dm.widthPixels);
+
+				TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
+				tvImageEventStatus.setText("");
 			}
 		}
 	}

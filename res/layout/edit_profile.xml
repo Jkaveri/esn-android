@@ -21,10 +21,11 @@
 	        
 	        <ImageView 
 	            android:id="@+id/esn.changeprogile.avatar"
-	            android:layout_width="100dp"
-	            android:layout_height="wrap_content"
+	            android:layout_width="48dp"
+	            android:layout_height="48dp"
 	            android:layout_gravity="top"
 	            android:src="@drawable/avatar"
+	            
 	            android:onClick="AvatarClicked"	            
 	            />
 	        

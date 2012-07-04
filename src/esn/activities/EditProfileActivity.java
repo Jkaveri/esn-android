@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import com.facebook.android.Util;
 
+import esn.activities.AddNewEvent.UploadImageTask;
 import esn.activities.ChangePassActivity.ChangePasswordThread;
 import esn.classes.Base64;
 import esn.classes.Base64.InputStream;
@@ -35,11 +36,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -83,6 +86,8 @@ public class EditProfileActivity extends Activity {
 		handler = new Handler();		
 		res = getResources();
 				
+		Users user = new Users();
+		
 		imgl = new ImageLoader(this.getApplicationContext());
 		
 		sessions = Sessions.getInstance(context);
@@ -191,8 +196,14 @@ public class EditProfileActivity extends Activity {
 		if (requestCode == CAMERA_PIC_REQUEST) {
 			if (resultCode == RESULT_OK) {
 				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-
+				new UploadImageTask().execute(thumbnail);
 				image.setImageBitmap(thumbnail);
+
+				DisplayMetrics dm = new DisplayMetrics();
+				getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+				image.setMaxWidth(dm.widthPixels);
+				image.setMaxHeight(dm.widthPixels);
 			}
 		} else if (requestCode == SELECT_PICTURE) {
 			if (resultCode == RESULT_OK) {
@@ -218,6 +229,8 @@ public class EditProfileActivity extends Activity {
 	private Bitmap img;
 
 	public void OpenPhotoGallery() {
+		dialog.dismiss();
+		
 		Intent intent = new Intent();
 
 		intent.setType("image/*");
@@ -411,74 +424,74 @@ public class EditProfileActivity extends Activity {
 		}						
 		public void run() {
 			
-			Users user = new Users();
-			
-			EditText txtName = (EditText)findViewById(R.id.esn_changeprofile_fullname);
-			EditText txtPhone = (EditText)findViewById(R.id.esn_changeprofile_phone);
-			EditText txtaddress = (EditText)findViewById(R.id.esn_changeprofile_address);
-			EditText txtStreet = (EditText)findViewById(R.id.esn_changeprofile_street);
-			EditText txtDistrict = (EditText)findViewById(R.id.esn_changeprofile_district);
-			EditText txtCity = (EditText)findViewById(R.id.esn_changeprofile_city);
-			EditText txtCountry = (EditText)findViewById(R.id.esn_changeprofile_country);
-			EditText txtFavorite = (EditText)findViewById(R.id.esn_changeprofile_favorite);
-			EditText txtBirthday = (EditText)findViewById(R.id.esn_changeprofile_birthday);
-			
-			
-			user.AccID = sessions.get("AccId", 0);
-			
-			user.Name = txtName.getText().toString();
-			user.Phone = txtPhone.getText().toString();
-			user.Address = txtaddress.getText().toString();
-			user.Street = txtStreet.getText().toString();
-			user.District = txtDistrict.getText().toString();
-			user.City = txtCity.getText().toString();
-			user.Country = txtCountry.getText().toString();
-			user.Favorite = txtFavorite.getText().toString();
-			
-			String bd = txtBirthday.getText().toString();
-			
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
-			
-			try {
+				synchronized (user) {
 					
-				bd = sFormat.format(format.parse(bd));
-				
-			} catch (ParseException e) {
-				return;
-			}	
-			
-			user.Birthday = bd;
-			
-			Spinner ddlGender = (Spinner)findViewById(R.id.esn_changeprofile_gender);			
-			String gender = ddlGender.getSelectedItem().toString();			
-			if(gender.equals("Male"))
-			{
-				user.Gender=true;
-			}
-			else
-			{
-				user.Gender = false;
-			}
-			
-			user.Avatar="http://vnexpress.net/Files/Subject/3b/bd/89/00/20.jpg";
-			
-			try {
-				Boolean rs = usersManager.UpdateProfile(user);
-				
-				if(rs==true)
-				{
-					handler.post(new UpdateProfileSuccesful());
-				}
-				else
-				{
-					handler.post(new UpdateProfileFail());
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+					EditText txtName = (EditText)findViewById(R.id.esn_changeprofile_fullname);
+					EditText txtPhone = (EditText)findViewById(R.id.esn_changeprofile_phone);
+					EditText txtaddress = (EditText)findViewById(R.id.esn_changeprofile_address);
+					EditText txtStreet = (EditText)findViewById(R.id.esn_changeprofile_street);
+					EditText txtDistrict = (EditText)findViewById(R.id.esn_changeprofile_district);
+					EditText txtCity = (EditText)findViewById(R.id.esn_changeprofile_city);
+					EditText txtCountry = (EditText)findViewById(R.id.esn_changeprofile_country);
+					EditText txtFavorite = (EditText)findViewById(R.id.esn_changeprofile_favorite);
+					EditText txtBirthday = (EditText)findViewById(R.id.esn_changeprofile_birthday);
+					
+					
+					user.AccID = sessions.get("AccId", 0);
+					
+					user.Name = txtName.getText().toString();
+					user.Phone = txtPhone.getText().toString();
+					user.Address = txtaddress.getText().toString();
+					user.Street = txtStreet.getText().toString();
+					user.District = txtDistrict.getText().toString();
+					user.City = txtCity.getText().toString();
+					user.Country = txtCountry.getText().toString();
+					user.Favorite = txtFavorite.getText().toString();
+					
+					String bd = txtBirthday.getText().toString();
+					
+					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+					
+					try {
+							
+						bd = sFormat.format(format.parse(bd));
+						
+					} catch (ParseException e) {
+						return;
+					}	
+					
+					user.Birthday = bd;
+					
+					Spinner ddlGender = (Spinner)findViewById(R.id.esn_changeprofile_gender);			
+					String gender = ddlGender.getSelectedItem().toString();			
+					if(gender.equals("Male"))
+					{
+						user.Gender=true;
+					}
+					else
+					{
+						user.Gender = false;
+					}
+					
+									
+					try {
+						Boolean rs = usersManager.UpdateProfile(user);
+						
+						if(rs==true)
+						{
+							handler.post(new UpdateProfileSuccesful());
+						}
+						else
+						{
+							handler.post(new UpdateProfileFail());
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}					
+				}			
 		}		
 	}
 
@@ -487,7 +500,7 @@ public class EditProfileActivity extends Activity {
 		public void run() {
 			dialog.dismiss();
 			
-			Util.showAlert(context, "Configuration", "Register Succesfull.");			
+			Util.showAlert(context, "Configuration", "Update successfully !");			
 		}
 	}
 	
@@ -498,5 +511,54 @@ public class EditProfileActivity extends Activity {
 			
 			Util.showAlert(context, "Error", "Update Fail. Try Again.");			
 		}
+	}
+	
+	public class UploadImageTask extends AsyncTask<Bitmap, Integer, String> {
+
+		@Override
+		protected String doInBackground(Bitmap... params) {
+
+			try {
+				Bitmap img = params[0];
+				String base64Img = Utils.bitmapToBase64(img);
+				HttpHelper helper = new HttpHelper(
+						"http://bangnl.info/ws/ApplicationsWS.asmx");
+				JSONObject p = new JSONObject();
+				p.put("base64Image", base64Img);
+				p.put("fileType", "jpg");
+				JSONObject response = helper.invokeWebMethod("UploadImage", p);
+				if(response!=null && response.has("d")){
+					String url = response.getString("d");
+					return url;
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			// TODO Auto-generated method stub
+			super.onProgressUpdate(values);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if(result!=null){
+				synchronized (user) {
+					user.Avatar = result;
+				}
+				
+				Log.d("esn_uploadImage", result);
+			}else{
+				Log.d("esn_uploadImage","failed");
+			}
+		}
+
 	}
 }

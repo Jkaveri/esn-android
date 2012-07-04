@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="esn.setting.app.enableEventNotification">Event Notification</string>
+    <string name="esn.setting.app.enableEventNotification.small">Event Notification</string>
+    <string name="esn.setting.app.enableFriendNotification">Friend Notification</string>
+    <string name="esn.setting.app.enableFriendNotification.small">Friend Notification</string>
+    <string name="esn.setting.app.enableConnectFacebook">Connect To Facebook</string>
+    <string name="esn.setting.app.enableConnectFacebook.small">Connect To Facebook</string>
+    
+    <string name="esn.setting.app.event.enable">Enable</string>
+    <string name="esn.setting.app.event.radius">Radius</string>
+    <string name="esn.setting.app.event.ok">OK</string>
+    
+    <string name="esn.setting.app.friend.friendactivity">Friend Activity</string>
+    <string name="esn.setting.app.friend.commentlike">Comment and Like</string>
+    
+    <string name="esn.setting.app.friend.friendcreateevent">When my friends create new event</string>
+    <string name="esn.setting.app.friend.friendrequest">When I receive a friend request or friend confirmation</string>
+    <string name="esn.setting.app.friend.friendfacebookjoin">When a new friend from Facebook joins ESN</string>
+    
+    <string name="esn.setting.app.friend.friendcomment">When someone comment my event</string>
+    <string name="esn.setting.app.friend.friendlike">When someone vote true or false my event</string>
+    <string name="esn.setting.app.friend.friendshareplace">When my friends share a event, place with me</string>
+    
+    <string name="esn.setting.app.facebook.email">Email</string>
+    <string name="esn.setting.app.facebook.pass">Password</string>
+    <string name="esn.setting.app.informationsaved">Saved</string>
+    <string name="esn.setting.app.informationenablebefore">Enable Facebook Before!</string>
+</resources>

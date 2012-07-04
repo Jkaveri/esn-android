@@ -139,6 +139,17 @@
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow">
         </activity>
+        
+        <activity 
+            android:name=".SettingAppEventActivity"
+            ></activity>
+        <activity 
+            android:name=".SettingAppFriendActivity"
+            ></activity>
+        
+        <activity 
+            android:name=".SettingAppFacebookActivity"
+            ></activity>
     </application>
 
 </manifest>

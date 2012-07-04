@@ -18,6 +18,7 @@ public class FriendsManager {
 	}
 
 	public ArrayList<FriendsListsDTO> getFriendsList(int pageSize, int pageIndex, int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+		
 		ArrayList<FriendsListsDTO> frds = new ArrayList<FriendsListsDTO>();
 		JSONObject params = new JSONObject();
 		params.put("accountID", accID);
