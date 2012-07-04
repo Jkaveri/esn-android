@@ -174,6 +174,7 @@ public class EventsManager {
 		
 		return null;
 	}
+	
 	public String getFilterString(Sessions session){
 		String filter = "";
 		String type = session.get("eventTypeFilter","");

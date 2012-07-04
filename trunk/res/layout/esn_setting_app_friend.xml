@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="15dp"
+	    android:paddingTop="10dp"
+	    android:paddingBottom="10dp"
+	    >	    
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/esn.setting.app.friend.friendactivity"
+	        android:textColor="@color/text_color"
+	        />
+	    
+	    <TableLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        >
+	        <TableRow
+	            android:layout_marginBottom="10dp"
+	            android:layout_gravity="top"
+	            >
+	            <ImageView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/ic_setting_phone"
+	                />
+	            <ImageView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/ic_setting_email"
+	                />
+	            <TextView />            
+	        </TableRow>
+	        <TableRow>
+	            
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.phone.friendcreateevent"
+	                />
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.email.friendcreateevent"
+	                />
+	            <TextView 
+	                android:layout_width="215dp"
+	                android:layout_height="match_parent"
+	                android:text="@string/esn.setting.app.friend.friendcreateevent"
+	                android:singleLine="false"
+	                android:paddingRight="10dp"
+	                android:textSize="13dp"
+	                android:textColor="@color/text_color"
+	                />
+	        </TableRow>
+	        <View
+		            android:layout_width="fill_parent"
+		            android:layout_height="1dip"
+		            android:layout_marginBottom="10dp"
+		            android:layout_marginTop="10dp"
+		            android:background="#ACCC" />
+	        <TableRow>
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.phone.friendrequest"
+	                />
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.email.friendrequest"
+	                />
+	            
+	            <TextView 
+	                android:layout_width="215dp"
+	                android:layout_height="match_parent"
+	                android:text="@string/esn.setting.app.friend.friendrequest"
+	                android:singleLine="false"
+	                android:paddingRight="10dp"
+	                android:textSize="13dp"
+	                android:textColor="@color/text_color"
+	                />
+	        </TableRow>
+	        <View
+		            android:layout_width="fill_parent"
+		            android:layout_height="1dip"
+		            android:layout_marginBottom="10dp"
+		            android:layout_marginTop="10dp"
+		            android:background="#ACCC" />
+	        <TableRow>            
+	            
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.phone.friendfacebookjoin"
+	                />
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.email.friendfacebookjoin"
+	                />
+	            
+	            <TextView 
+	                android:layout_width="215dp"
+	                android:layout_height="match_parent"
+	                android:text="@string/esn.setting.app.friend.friendfacebookjoin"
+	                android:layout_marginRight="20dp"
+	                android:textSize="13dp"
+	                android:textColor="@color/text_color"
+	                />
+	        </TableRow>
+	        <View
+		            android:layout_width="fill_parent"
+		            android:layout_height="1dip"
+		            android:layout_marginBottom="10dp"
+		            android:background="#ACCC" />
+	    </TableLayout>
+	    
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/esn.setting.app.friend.commentlike"
+	        android:textColor="@color/text_color"
+	        
+	        />
+	    
+	    <TableLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        >
+	        <TableRow >
+	            <ImageView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/ic_setting_phone"
+	                />
+	            <ImageView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/ic_setting_email" 
+	                />
+	            <TextView />            
+	        </TableRow>
+	        <TableRow>
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.phone.friendcomment"
+	                />
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.email.friendcomment"
+	                />
+	            
+	            <TextView 
+	                android:layout_width="215dp"
+	                android:layout_height="match_parent"
+	                android:text="@string/esn.setting.app.friend.friendcomment"
+	                android:textColor="@color/text_color"
+	                />
+	        </TableRow>
+	        <View
+		            android:layout_width="fill_parent"
+		            android:layout_height="1dip"
+		            android:layout_marginBottom="10dp"
+		            android:background="#ACCC" />
+	        <TableRow>
+	            
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.phone.friendtruefalse"
+	                />
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.email.friendtruefalse"
+	                />
+	            
+	            <TextView 
+	                android:layout_width="215dp"
+	                android:layout_height="match_parent"
+	                android:text="@string/esn.setting.app.friend.friendlike"
+	                android:textColor="@color/text_color"
+	                />
+	        </TableRow>
+	        <View
+		            android:layout_width="fill_parent"
+		            android:layout_height="1dip"
+		            android:layout_marginBottom="10dp"
+		            android:background="#ACCC" />
+	        <TableRow>            
+	            
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.phone.friendshareplace"
+	                />
+	            
+	            <CheckBox 
+	                android:id="@+id/esn.setting.app.friend.chb.email.friendshareplace"
+	                />
+	            
+	            <TextView 
+	                android:layout_width="215dp"
+	                android:layout_height="match_parent"
+	                android:text="@string/esn.setting.app.friend.friendshareplace"
+	                android:textColor="@color/text_color"
+	                />
+	        </TableRow>
+	        <View
+		            android:layout_width="fill_parent"
+		            android:layout_height="1dip"
+		            android:layout_marginBottom="10dp"
+		            android:background="#ACCC" />
+	    </TableLayout>
+	    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        >
+	    <Button 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/rounded_corners"
+	        android:text="@string/esn.setting.app.event.ok"
+	        android:onClick="FriendSettingSaved"
+	        android:textColor="#FFF"
+	        />	    
+	</LinearLayout>	    
+	</LinearLayout>
+</ScrollView>

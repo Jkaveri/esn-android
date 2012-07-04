@@ -7,18 +7,18 @@
     <string name="app_register">Register</string>
     <string name="app_profile">Profile</string>
     <string name="app_login">Login</string>
-    <string name="btLoginFB">Login With Facebook</string>
     <!-- Login -->
 	<string name="btLogin">Login</string>
 	<string name="btSignUp">Signup</string>
 	<string name="txtEmail">Email</string>
 	<string name="txtPassword">Password</string>
-	<string name="btBack">Back</string>	<string name="tvFist">Fist Name</string>
+	<string name="btBack">Back</string>		
+	<string name="tvFist">Fist Name</string>
 	<string name="txtLastName">Last Name</string>
 	<string name="txtPhone">0908 123 456</string>
 	<string name="txtBirthday">01/01/1990</string>
 	<string name="txtGender">Male</string>
-	
+	<string name="btLoginFB">Login With Facebook</string>
 	<string name="btCancel">Cancel</string>
 	
 	<string name="tvEmail">Email</string>
@@ -158,8 +158,8 @@
     <string name="app_Setting">Setting</string>
     <!-- EventDetail -->
     <string name="esn.eventDetail">Event detail</string>
-    <string name="esn.eventDetail.like">Like</string>
-    <string name="esn.eventDetail.dislike">Dislike</string>
+    <string name="esn.eventDetail.like">True</string>
+    <string name="esn.eventDetail.dislike">False</string>
     <string name="esn.eventDetail.image">Event Image</string>
     <string name="esn.eventDetail.iconEventType">Event Type</string>
     <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
