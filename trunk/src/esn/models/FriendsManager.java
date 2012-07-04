@@ -43,8 +43,8 @@ public class FriendsManager {
 	}
 	
 
-	public User RetrieveByAccID(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException{
-		User frd = new User();
+	public Users RetrieveByAccID(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException{
+		Users frd = new Users();
 		JSONObject params = new JSONObject();
 		params.put("id", accID);
 		JSONObject result = helper.invokeWebMethod("RetrieveJSON",params);

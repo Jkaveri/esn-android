@@ -12,7 +12,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import esn.classes.ImageLoader;
 import esn.models.FriendsManager;
-import esn.models.User;
+import esn.models.Users;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -58,7 +58,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 			@Override
 			public void run() {
 				try {
-					final User user = new FriendsManager().RetrieveByAccID(accID);
+					final Users user = new FriendsManager().RetrieveByAccID(accID);
 					handler.post(new Runnable() {
 						
 						@Override
