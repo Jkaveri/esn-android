@@ -17,6 +17,7 @@ import com.google.android.maps.GeoPoint;
 
 import esn.classes.EsnWebServices;
 import esn.classes.HttpHelper;
+import esn.classes.Sessions;
 import esn.classes.Utils;
 
 public class EventsManager {
@@ -51,13 +52,13 @@ public class EventsManager {
 		return events;
 	}
 
-	public Events[] getEventsAround(double lat, double log, int radius) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+	public Events[] getEventsAround(double lat, double log, double radius, String filter) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
 		Events[] events = null;
 		JSONObject params = new JSONObject();
 		params.put("lat", lat);
 		params.put("lon", log);
 		params.put("radius", radius);
-		
+		params.put("filter",filter);
 		// get soap result
 		JSONObject response = helper.invokeWebMethod("GetListEventsAround", params);
 		Log.d("esn", response.toString());
@@ -172,5 +173,8 @@ public class EventsManager {
 	public Events[] getEventsAround(GeoPoint lastMapCenter) {
 		
 		return null;
+	}
+	public String getFilterString(Sessions session){
+		return "";
 	}
 }
