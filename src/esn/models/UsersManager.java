@@ -18,7 +18,7 @@ public class UsersManager {
 
 	}
 
-	public boolean Login(String email, String password) {
+	public int Login(String email, String password) {
 		try {
 
 			JSONObject params = new JSONObject();
@@ -28,7 +28,7 @@ public class UsersManager {
 
 			JSONObject jsonObject = helper.invokeWebMethod("Login", params);
 
-			boolean rs = jsonObject.getBoolean("d");
+			int rs = jsonObject.getInt("d");
 
 			return rs;
 
@@ -40,7 +40,7 @@ public class UsersManager {
 			e.printStackTrace();
 		}
 
-		return false;
+		return 0;
 	}
 
 	public int Register(Users user) throws JSONException, IOException {

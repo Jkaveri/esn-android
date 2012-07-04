@@ -1,6 +1,7 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Hashtable;
 
@@ -211,33 +212,16 @@ public class HomeActivity extends SherlockMapActivity implements
 			startActivity(intent);
 			break;
 		case R.id.esn_home_menuItem_labels:
+			Sessions session = Sessions.getInstance(this);
 			FilterLabelsDialog builder = new FilterLabelsDialog(this);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 1);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 2);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 3);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.addItem(res, "Ket xe", R.drawable.ic_event_label_1, 4);
-			builder.setOnClickListener(new FilterLabelsDialog.ItemMenuOnClickListener() {
-
-				@Override
-				public void onClick(int menuId) {
-					switch (menuId) {
-					case 1:
-						Toast.makeText(HomeActivity.this, "Ket xe",
-								Toast.LENGTH_LONG).show();
-						break;
-
-					default:
-						break;
-					}
-				}
-			});
+			ArrayList<EventType> eventTypes = session.eventTypes;
+			for (int i = 0; i< eventTypes.size();i++) {
+				EventType type = eventTypes.get(i);
+				EsnListItem listItem = new  EsnListItem();
+				item.setTitle(type.EventTypeName);
+				item.setIcon(EventType.getIconId(type.EventTypeID, 3));
+				builder.addItem(type.EventTypeName, EventType.getIconId(type.EventTypeID, 3), type.EventTypeID);
+			}
 			Dialog filterLabelDialog = builder.createMenu("Labels");
 			filterLabelDialog.show();
 			break;

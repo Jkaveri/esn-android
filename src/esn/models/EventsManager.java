@@ -175,6 +175,16 @@ public class EventsManager {
 		return null;
 	}
 	public String getFilterString(Sessions session){
-		return "";
+		String filter = "";
+		String type = session.get("eventTypeFilter","");
+		boolean friendFilter = session.get("friendFilter", false);
+		if(type.equals("")){
+			filter+="type:"+type;
+		}
+		if(friendFilter){
+			if(filter.equals("")) filter+="|";
+			filter+="friend:"+session.currentUser.AccID;
+		}
+		return filter;
 	}
 }

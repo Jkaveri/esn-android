@@ -101,7 +101,8 @@ public class LoginActivity extends Activity {
 		public void run() {
 			Looper.prepare();
 			UsersManager usermManager = new UsersManager();
-			if (usermManager.Login(email, password)) {
+			int id = usermManager.Login(email, password);
+			if (id>0) {
 				activity.runOnUiThread(new loginSuccess(this.activity,email,password,dialog,successIntent));
 			} else {
 				activity.runOnUiThread(new loginFail(this.activity,dialog,failIntent));
