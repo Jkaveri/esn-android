@@ -18,21 +18,25 @@
     </ImageView>
 
     <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18dp"
+        android:textColor="#33b5e5"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/txtViewTitle"
         android:layout_toRightOf="@+id/imgViewLogo"
-        android:layout_marginLeft="2dip">
+        android:layout_marginLeft="5dip">
     </TextView>
 
     <TextView
+        android:textSize="14dp"
+        android:textColor="#33b5e5"
+        android:textStyle="italic"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/txtViewDescription"
         android:layout_toRightOf="@+id/imgViewLogo"
         android:layout_below="@+id/txtViewTitle"
-        android:layout_marginLeft="2dip">
+        android:layout_marginLeft="5dip">
     </TextView>
 
 </RelativeLayout>
