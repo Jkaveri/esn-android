@@ -12,4 +12,5 @@
     <string name="txt.esn.userpage.female">Female</string>
     <string name="txt.esn.userpage.online">Online</string>
     <string name="txt.esn.userpage.offline">Offline</string>
+    <string name="txt.esn.userpage.phone">Phone:</string>
 </resources>
