@@ -16,6 +16,7 @@
         <ImageView
             android:id="@+id/img.Friends.Diaglog.Avatar"
             android:layout_width="50dip"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/ic_no_avata"
             android:layout_height="50dip" />
 
@@ -30,13 +31,17 @@
 	            android:id="@+id/txt.Friends.Diaglog.FullName"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="Full name"
-	            android:textAppearance="?android:attr/textAppearanceLarge" />
+	            android:text="@string/txt.esn.userpage.fullname"
+	            android:textSize="18dp"
+        		android:textColor="#33b5e5" />
 	        <TextView
 	            android:id="@+id/txt.Friends.Diaglog.Discript"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="Discript" />
+	            android:text="@string/txt.esn.userpage.phone"
+	            android:textStyle="italic"
+	            android:textSize="14dp"
+        		android:textColor="#33b5e5" />
         </LinearLayout>
 
     </LinearLayout>
