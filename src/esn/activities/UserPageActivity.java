@@ -2,6 +2,9 @@ package esn.activities;
 
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -25,6 +28,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 	private ProgressDialog dialog;
 	public ImageLoader imageLoader;
 	private Activity activity;
+	private DateFormat formatter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 		this.imageLoader = new ImageLoader(this.getApplicationContext());
 		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
 		handler = new Handler();
+		formatter = new SimpleDateFormat("dd/MM/yyyy");
 		
 		setupActionBar();
 		setupListNavigate();
@@ -72,7 +77,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 							country.setText(user.Country);
 							
 							TextView birthday = (TextView) findViewById(R.id.txt_esn_userpage_birthday);
-							birthday.setText(user.Birthday.toString());
+							birthday.setText(formatter.format(user.Birthday));
 							
 							TextView gender = (TextView) findViewById(R.id.txt_esn_userpage_gender);
 							gender.setText((user.Gender)? getString(R.string.txt_esn_userpage_male): getString(R.string.txt_esn_userpage_female));
