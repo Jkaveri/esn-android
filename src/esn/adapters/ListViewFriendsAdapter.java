@@ -29,6 +29,7 @@ public class ListViewFriendsAdapter extends BaseAdapter {
 	public ListViewFriendsAdapter(Activity a, ArrayList<FriendsListsDTO> listFrd) {
 		this.activity = a;
 		this.data = listFrd;
+		listFrd = null;
 		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.imageLoader = new ImageLoader(activity.getApplicationContext());
 		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
@@ -38,6 +39,7 @@ public class ListViewFriendsAdapter extends BaseAdapter {
 		for (FriendsListsDTO frd : listFrd) {
 			data.add(frd);
 		}
+		listFrd = null;
 	}
 
 	@Override
