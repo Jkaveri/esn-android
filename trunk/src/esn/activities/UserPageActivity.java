@@ -45,6 +45,13 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 		setupListNavigate();
 		loadData();
 	}
+	
+	@Override
+	public void onDestroy() {
+		imageLoader.stopThread();
+		imageLoader.clearCache();
+		super.onDestroy();
+	}
 
 	private void loadData() {
 		final int accID = this.getIntent().getIntExtra("accountID", 0);
