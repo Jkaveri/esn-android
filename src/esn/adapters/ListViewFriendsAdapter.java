@@ -20,12 +20,11 @@ public class ListViewFriendsAdapter extends CustomListAdapter<FriendsListsDTO> {
 	}
 
 	@Override
-	protected void customRowView(Object rowBean, Object rowHolder) {
+	protected void customRowView(FriendsListsDTO rowBean, Object rowHolder) {
 		ViewHolder holder = (ViewHolder) rowHolder;
-		FriendsListsDTO bean = (FriendsListsDTO) rowBean;
-		holder.title.setText(bean.Name);
-		holder.disc.setText("Phone: " + bean.Phone);//So ban chung
-		displayImage(bean.Avatar, holder.image);
+		holder.title.setText(rowBean.Name);
+		holder.disc.setText("Phone: " + rowBean.Phone);//So ban chung
+		displayImage(rowBean.Avatar, holder.image);
 	}
 
 	@Override
