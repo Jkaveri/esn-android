@@ -71,7 +71,7 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 	@Override
 	public View getView(int index, View convertView, ViewGroup parent) {
 		View vi = convertView;
-		Object bean = data.get(index);
+		T bean = data.get(index);
 		final Object holder;
 		if (convertView == null){
 			vi = inflater.inflate(layoutRow, null);
@@ -92,7 +92,7 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 		this.imageLoader.setDefaultEmptyImage(this.idIcon);
 	}
 	
-	protected abstract void customRowView(Object rowBean, Object rowHolder);
+	protected abstract void customRowView(T rowBean, Object rowHolder);
 
 	protected abstract Object createHolder(View convertView);
 	
