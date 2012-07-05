@@ -12,6 +12,7 @@
 	    android:orientation="vertical"
 	    android:paddingLeft="16dp"
 	    android:paddingRight="16dp"
+	    android:layout_marginBottom="10dp"
 	    >
 	    
 	    <ImageView 
@@ -77,24 +78,8 @@
             android:paddingBottom="8dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            />	        
-	   <Button 
-            android:id="@+id/btBack"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btBack"
-            android:onClick="BackClicked"
-            android:focusable="true"
-            android:textColor="@color/text_color"
-            android:background="@drawable/rounded_corner_white"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
-            android:paddingTop="8dp"
-            android:textSize="16dp"
-            android:paddingBottom="8dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            />	   
+            />        
+	  
 	    <TextView 
 	        android:id="@+id/tvForgotPassgord"
 	        android:layout_width="wrap_content"

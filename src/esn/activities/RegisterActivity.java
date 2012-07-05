@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Util;
 
 import esn.activities.LoginActivity.LoginThread;
@@ -56,7 +57,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends SherlockActivity {
 
 	Intent intent;
 
@@ -89,6 +90,9 @@ public class RegisterActivity extends Activity {
 
 		setContentView(R.layout.register);
 
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().hide();
+		
 		intent = this.getIntent();
 		context = this;
 		handler = new Handler();
