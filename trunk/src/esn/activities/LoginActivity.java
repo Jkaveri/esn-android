@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.json.JSONException;
 
+import com.actionbarsherlock.app.SherlockActivity;
+
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
@@ -14,6 +16,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,12 +26,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends SherlockActivity{
 
 	Intent intent;
 
-
+	Resources res;
 
 	private Context context;
 
@@ -45,10 +49,15 @@ public class LoginActivity extends Activity {
 
 		setContentView(R.layout.login);
 		
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().hide();
+		
 		session = Sessions.getInstance(context);
 
 		intent = this.getIntent();
 		context = this;
+		
+		res = getResources();
 		TextView tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassgord);
 
 		tvForgotPassword
@@ -66,14 +75,30 @@ public class LoginActivity extends Activity {
 
 	public void LoginClicked(View view) {
 
+		EditText txtEmail = (EditText) findViewById(R.id.esn_login_Email);
+		
+		EditText txtPass = (EditText) findViewById(R.id.esn_login_pass);
+		String email = txtEmail.getText().toString();
+		
+		if(email.isEmpty())
+		{
+			Toast.makeText(context, res.getString(R.string.esn_login_enteremail), 100).show();
+			return;
+		}
+		String password = txtPass.getText().toString();
+		
+		if(password.isEmpty())
+		{
+			Toast.makeText(context, res.getString(R.string.esn_login_enterpassword), 100).show();
+			return;
+		}
+		
 		ProgressDialog dialog = new ProgressDialog(this);
 		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
 		dialog.setMessage("Waiting ....");
 		dialog.show();
-		EditText txtEmail = (EditText) findViewById(R.id.esn_login_Email);
-		EditText txtPass = (EditText) findViewById(R.id.esn_login_pass);
-		String email = txtEmail.getText().toString();
-		String password = txtPass.getText().toString();
+		
+		
 		LoginThread loginThread = new LoginThread(this, email,password,dialog);
 		Intent successIntent = new Intent(this, HomeActivity.class);
 		loginThread.setSuccessIntent(successIntent);
@@ -144,7 +169,9 @@ public class LoginActivity extends Activity {
 				dialog.dismiss();
 			}
 			if(failIntent!=null){
+				
 				activity.startActivity(failIntent);
+				
 			}else{
 				AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
 				alert.setTitle("Failed!");

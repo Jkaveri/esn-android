@@ -61,6 +61,12 @@ public class SettingAppFriendActivity extends Activity {
 		Boolean chb4 = session.get("app.setting.friend.email.truefalse",false);
 		Boolean chb5 = session.get("app.setting.friend.email.request",false);
 		Boolean chb6 = session.get("app.setting.friend.email.shareplace",false);
+		Boolean chb7 = session.get("app.setting.friend.phone.comment",false);
+		Boolean chb8 = session.get("app.setting.friend.phone.createevent",false);
+		Boolean chb9 = session.get("app.setting.friend.phone.friendfbjoin",false);
+		Boolean chb10 = session.get("app.setting.friend.phone.truefalse",false);
+		Boolean chb11 = session.get("app.setting.friend.phone.request",false);
+		Boolean chb12 = session.get("app.setting.friend.phone.shareplace",false);
 		
 		if(chb1==true)
 		{
@@ -90,14 +96,7 @@ public class SettingAppFriendActivity extends Activity {
 		if(chb6==true)
 		{
 			chbEmailSharePlace.setChecked(true);
-		}		
-		
-		Boolean chb7 = session.get("app.setting.friend.phone.comment",false);
-		Boolean chb8 = session.get("app.setting.friend.phone.createevent",false);
-		Boolean chb9 = session.get("app.setting.friend.phone.friendfbjoin",false);
-		Boolean chb10 = session.get("app.setting.friend.phone.truefalse",false);
-		Boolean chb11= session.get("app.setting.friend.phone.request",false);
-		Boolean chb12 = session.get("app.setting.friend.phone.shareplace",false);
+		}
 		
 		if(chb7==true)
 		{
@@ -133,18 +132,18 @@ public class SettingAppFriendActivity extends Activity {
 	
 	public void FriendSettingSaved(View view)
 	{
-		CheckBox chbEmailComment = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendcomment);
 		CheckBox chbEmailCreateEvent = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendcreateevent);
-		CheckBox chbEmailFriendFbJoin = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendfacebookjoin);
-		CheckBox chbEmailTrueFalse = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendtruefalse);
 		CheckBox chbEmailFriendRequest = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendrequest);
+		CheckBox chbEmailFriendFbJoin = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendfacebookjoin);
+		CheckBox chbEmailComment = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendcomment);
+		CheckBox chbEmailTrueFalse = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendtruefalse);
 		CheckBox chbEmailSharePlace = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_email_friendshareplace);
 		
-		CheckBox chbPhoneComment = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendcomment);
 		CheckBox chbPhoneCreateEvent = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendcreateevent);
 		CheckBox chbPhoneFriendFbJoin = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendfacebookjoin);
-		CheckBox chbPhoneTrueFalse = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendtruefalse);
 		CheckBox chbPhoneFriendRequest = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendrequest);
+		CheckBox chbPhoneComment = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendcomment);
+		CheckBox chbPhoneTrueFalse = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendtruefalse);
 		CheckBox chbPhoneSharePlace = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendshareplace);
 		
 		if(chbEmailComment.isChecked())
@@ -201,51 +200,51 @@ public class SettingAppFriendActivity extends Activity {
 		
 		if(chbPhoneComment.isChecked())
 		{
-			session.put("app.setting.friend.Phone.comment", true);
+			session.put("app.setting.friend.phone.comment", true);
 		}
 		else
 		{
-			session.put("app.setting.friend.Phone.comment", false);
+			session.put("app.setting.friend.phone.comment", false);
 		}
 		if(chbPhoneCreateEvent.isChecked())
 		{
-			session.put("app.setting.friend.Phone.createevent", true);
+			session.put("app.setting.friend.phone.createevent", true);
 		}
 		else
 		{
-			session.put("app.setting.friend.Phone.createevent", false);
+			session.put("app.setting.friend.phone.createevent", false);
 		}
 		if(chbPhoneFriendFbJoin.isChecked())
 		{
-			session.put("app.setting.friend.Phone.friendfbjoin", true);
+			session.put("app.setting.friend.phone.friendfbjoin", true);
 		}
 		else
 		{
-			session.put("app.setting.friend.Phone.friendfbjoin", false);
+			session.put("app.setting.friend.phone.friendfbjoin", false);
 		}
 		if(chbPhoneTrueFalse.isChecked())
 		{
-			session.put("app.setting.friend.Phone.truefalse", true);
+			session.put("app.setting.friend.phone.truefalse", true);
 		}
 		else
 		{
-			session.put("app.setting.friend.Phone.truefalse", false);
+			session.put("app.setting.friend.phone.truefalse", false);
 		}
 		if(chbPhoneFriendRequest.isChecked())
 		{
-			session.put("app.setting.friend.Phone.request", true);
+			session.put("app.setting.friend.phone.request", true);
 		}
 		else
 		{
-			session.put("app.setting.friend.Phone.request", false);
+			session.put("app.setting.friend.phone.request", false);
 		}
 		if(chbPhoneSharePlace.isChecked())
 		{
-			session.put("app.setting.friend.Phone.shareplace", true);
+			session.put("app.setting.friend.phone.shareplace", true);
 		}
 		else
 		{
-			session.put("app.setting.friend.Phone.shareplace", false);
+			session.put("app.setting.friend.phone.shareplace", false);
 		}
 		
 		Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved), 100).show();
