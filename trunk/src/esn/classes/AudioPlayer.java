@@ -51,7 +51,7 @@ public class AudioPlayer {
 						}
 						else{
 							try {
-								Thread.sleep(200);
+								Thread.sleep(300);
 							} catch (InterruptedException e) {
 								Log.i("AudioPlayer", "Thread on destroy");
 							}
