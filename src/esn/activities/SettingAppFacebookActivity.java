@@ -83,12 +83,13 @@ public class SettingAppFacebookActivity extends Activity {
 			session.put("app.setting.facebook.email", email.getText().toString());
 			session.put("app.setting.facebook.password", password.getText().toString());
 			
-			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),100);
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),100).show();
 		}
 		else
 		{
 			session.put("app.setting.facebook.enable",false);
-			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),100);
+			
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationenablebefore),10).show();
 			return;
 		}
 	}	

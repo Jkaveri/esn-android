@@ -133,7 +133,7 @@
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
-            android:name=".EventDetail"
+            android:name=".EventDetailActivity"
             android:icon="@drawable/logo"
             android:label="@string/esn.eventDetail"
             android:theme="@style/esn.theme.light"
@@ -149,6 +149,13 @@
         
         <activity 
             android:name=".SettingAppFacebookActivity"
+            ></activity>
+        
+        <activity 
+            android:name=".EventDetailCommentActivity"
+            ></activity>
+        <activity 
+            android:name=".FeedbackActivity"
             ></activity>
     </application>
 

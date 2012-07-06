@@ -12,11 +12,14 @@ public class Comments {
 	
 	public String Content;
 	
-	public Date DayCreate;
+	//public Date DayCreate;
 	
-	public int Status;
+	//public String Status;
 	
-	public String Name;
+	public String ProfileAvatar;
+	
+	public String ProfileName;
+	
 	public Comments()
 	{
 		

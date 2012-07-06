@@ -2,6 +2,7 @@ package esn.models;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -104,7 +105,9 @@ public class EventsManager {
 
 	public Events retrieve(int eventId) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
 		Events event = new  Events();
+		
 		JSONObject params = new JSONObject();
+		
 		params.put("id",eventId);
 		
 		JSONObject response = helper.invokeWebMethod("RetrieveJSON",params);
@@ -113,6 +116,7 @@ public class EventsManager {
 			Utils.JsonToObject(eventJson, event);
 					
 			event.user  = usersManager.RetrieveById(event.AccID);
+			
 		} else {
 			event = null;
 		}
@@ -144,6 +148,7 @@ public class EventsManager {
 		return -1;
 	}
 	public boolean isLiked(int eventId, int accID) throws JSONException, IOException{
+		
 		JSONObject params = new JSONObject();
 		params.put("eventId", eventId);
 		params.put("accountId",accID);
@@ -157,12 +162,12 @@ public class EventsManager {
 	}
 
 	public boolean isDisliked(int eventId, int accID) throws JSONException, IOException {
+		
 		JSONObject params = new JSONObject();
 		params.put("eventId", eventId);
 		params.put("accountId",accID);
-		
-		
 		JSONObject response = helper.invokeWebMethod("IsDislike",params);
+		
 		if(response!=null){
 			
 			return response.getBoolean("d");
@@ -187,5 +192,21 @@ public class EventsManager {
 			filter+="friend:"+session.currentUser.AccID;
 		}
 		return filter;
+	}
+	
+	public Boolean NewFeedback (int eventId,int accId,String title, String content) throws JSONException, IOException
+	{
+		JSONObject params = new JSONObject();
+		params.put("eventId", eventId);
+		params.put("accountId",accId);
+		params.put("title", title);
+		params.put("content", content);
+		
+		JSONObject response = helper.invokeWebMethod("NewFeedback",params);
+		if(response!=null){
+			
+			return response.getBoolean("d");
+		}
+		return true;
 	}
 }

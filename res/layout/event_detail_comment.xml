@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    >
+    
+    <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            >                       
+            <EditText
+                    android:id="@+id/esn.eventDetail.txtComment"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_corners"
+                    android:inputType="text"
+                    android:textColorHint="#FFF"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="8dp"
+                    android:textColor="#ffffff"
+                    android:hint="@string/esn.eventDetail.comment"
+                    android:textSize="16dp"/>
+            <Button 
+                android:layout_width="50dp"
+                android:layout_height="38dp"
+                android:text="@string/esn.eventDetail.send"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginLeft="3dp"
+                android:onClick="CommentClicked"
+                android:textSize="16dp"
+                android:textColor="@drawable/white"
+                />
+        </LinearLayout>
+     <ListView
+		    android:id="@+id/esn.eventDetails.listComments"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="10dp"
+		    android:layout_marginBottom="10dp">
+     </ListView> 
+
+</LinearLayout>

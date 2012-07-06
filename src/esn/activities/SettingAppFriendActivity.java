@@ -247,6 +247,6 @@ public class SettingAppFriendActivity extends Activity {
 			session.put("app.setting.friend.phone.shareplace", false);
 		}
 		
-		Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved), 100).show();
+		Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved), 10).show();
 	}
 }

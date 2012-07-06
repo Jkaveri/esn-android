@@ -16,7 +16,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 import com.readystatesoftware.mapviewballoons.BalloonItemizedOverlay;
 
-import esn.activities.EventDetail;
+import esn.activities.EventDetailActivity;
 import esn.models.Events;
 
 public class EsnItemizedOverlay<item extends OverlayItem> extends BalloonItemizedOverlay<EventOverlayItem> {
@@ -68,7 +68,7 @@ public class EsnItemizedOverlay<item extends OverlayItem> extends BalloonItemize
 			String action = Intent.ACTION_PICK;
 			
 			
-			Intent intent = new Intent(c, EventDetail.class);
+			Intent intent = new Intent(c, EventDetailActivity.class);
 			intent.putExtra("id", id);
 			intent.setAction(action);
 			c.startActivity(intent);

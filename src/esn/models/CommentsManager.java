@@ -32,6 +32,7 @@ public class CommentsManager {
 		
 		int rs = response.getInt("d");
 		
+		
 		return rs;
 	}
 	
@@ -48,13 +49,16 @@ public class CommentsManager {
 		JSONObject result = helper.invokeWebMethod("GetListComments", params);
 		
 		if (result != null) {
+			
 			if (result.has("d")) {
+				
 				JSONArray jsonCall = result.getJSONArray("d");
+				
 				for (int i = 0; i < jsonCall.length(); i++) {
 					JSONObject json = jsonCall.getJSONObject(i);
 					Comments comments = new Comments();
 					Utils.JsonToObject(json, comments);
-					listComment.add(comments);
+					listComment.add(comments);					
 				}
 			}
 		}
