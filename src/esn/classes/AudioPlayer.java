@@ -66,18 +66,15 @@ public class AudioPlayer {
 	}
 
 	public void loadBufferPCM(byte[] bufferPCM) {
-		if(status != IS_STOP)
-			stop();
+		stop();
 		bs = new ByteArrayInputStream(bufferPCM);
 		is = new DataInputStream(bs);
 	}
 	
 	public void loadBufferStream(InputStream ips) {
-		if(status != IS_STOP){
-			stop();
-			if(bs != null)
-				bs = null;
-		}
+		stop();
+		if(bs != null)
+			bs = null;
 		is = new DataInputStream(ips);
 	}
 
@@ -99,21 +96,23 @@ public class AudioPlayer {
 	}
 
 	public void stop() {
-		status = IS_STOP;
-		if (th != null) {
-			th.interrupt();
-			th = null;
+		if(status != IS_STOP){
+			status = IS_STOP;
+			if (th != null) {
+				th.interrupt();
+				th = null;
+			}
+			
+			try{
+				if(bs != null)
+					bs.close();
+				is.close();
+			} catch (IOException e) {
+				Log.e("AudioPlayer", "IOException read buffer");
+			}
+			
+			track.stop();
 		}
-		
-		try{
-			if(bs != null)
-				bs.close();
-			is.close();
-		} catch (IOException e) {
-			Log.e("AudioPlayer", "IOException read buffer");
-		}
-		
-		track.stop();
 	}
 
 	public int getStatus() {
