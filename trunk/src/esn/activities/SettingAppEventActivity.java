@@ -73,13 +73,13 @@ public class SettingAppEventActivity extends Activity {
 			session.put("app.setting.event.enable",true);
 			session.put("app.setting.event.radius", radius.getText().toString());
 			
-			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),1000).show();
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),10).show();
 		}
 		else
 		{
 			session.put("app.setting.event.enable",false);
 			
-			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),1000).show();
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),10).show();
 			
 			return;
 		}

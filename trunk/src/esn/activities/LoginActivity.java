@@ -51,7 +51,7 @@ public class LoginActivity extends SherlockActivity{
 		
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().hide();
-		
+		 
 		session = Sessions.getInstance(context);
 
 		intent = this.getIntent();

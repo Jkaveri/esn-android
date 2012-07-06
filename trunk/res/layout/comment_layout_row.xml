@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    >
+    
+    <ImageView
+        android:id="@+id/esn.comment.listAvatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="4dp"
+        android:contentDescription="@string/app_name"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/esn.comment.listComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:textColor="#33b5e5" 
+            android:padding="4dp"/>
+        
+        <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:orientation="horizontal" >
+        	<TextView
+	            android:id="@+id/esn.comment.listName"
+	            android:layout_width="fill_parent"
+	            android:layout_height="match_parent"
+	            android:textColor="#33b5e5" 
+	            android:padding="4dp"
+	            android:textSize="12dp"
+	            />
+	
+	        <TextView
+	            android:id="@+id/esn.comment.listDate"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12dp"
+	            android:paddingLeft="4dp"
+	            android:paddingRight="4dp"/>
+        </LinearLayout>        
+    </LinearLayout>
+</LinearLayout>

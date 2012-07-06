@@ -1,74 +1,126 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import com.actionbarsherlock.view.MenuItem;
-
-import esn.classes.ImageLoader;
-import esn.classes.Sessions;
-import esn.classes.Utils;
-import esn.models.CommentsManager;
-import esn.models.EventType;
-import esn.models.Events;
-import esn.models.EventsManager;
-import esn.models.Users;
-import esn.models.UsersManager;
-import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EventDetail extends Activity {
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+import esn.adapters.ListViewCommentsAdapter;
+import esn.classes.Sessions;
+import esn.classes.Utils;
+import esn.models.Comments;
+import esn.models.CommentsManager;
+import esn.models.EventType;
+import esn.models.EventsManager;
+import esn.models.UsersManager;
+
+public class EventDetailActivity extends SherlockActivity implements OnNavigationListener {
+
 	private Intent data;
 	private ProgressDialog dialog;
 	private int eventId;
 	private int accId;
 	
 	public Handler handler;
-	private ImageLoader loader;
-	
 	EventsManager manager = new EventsManager();
-	CommentsManager commentsManager = new CommentsManager();
-	Sessions session;
-	Context context;
 	
+	CommentsManager commentsManager = new CommentsManager();
+	
+	Sessions session;
+	
+	EventDetailActivity context;
+		
 	UsersManager usersManager = new UsersManager();
+		
+	private ListView lstCm;
+	private ListViewCommentsAdapter adapter;
+	private int lastScroll = 0;
+	private int page = 1;
+	
+	Resources res;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.event_detail);
-		loader = new ImageLoader(this.getApplicationContext());
+		setContentView(R.layout.event_detail);				
 		data = getIntent();
 		
 		context = this;
-		session = Sessions.getInstance(EventDetail.this);
+		session = Sessions.getInstance(context);
 		
 		handler = new Handler();
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(getResources().getString(R.string.esn_global_loading));
-		dialog.setMessage(getResources().getString(
-				R.string.esn_global_pleaseWait));
-		dialog.show();		
+		dialog.setMessage(getResources().getString(R.string.esn_global_pleaseWait));
+			
+		res = getResources();
+		
 		eventId = data.getIntExtra("id", 0);
+		
+		dialog.show();
+		
 		new GetEventDetailThread(eventId).start();
 		
-	}
+		GetListComment();
+		
+		lstCm = (ListView)findViewById(R.id.esn_eventDetails_listComments);
+				
+		lstCm.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> adView, View view, int index, long id) {
+				//Comments bean = (Comments) adapter.getItem(index);
+				//Intent it = new Intent(context, UserPageActivity.class);
+				//it.putExtra("accountID", bean.AccID);
+				//startActivity(it);
+			}
+		});	
+		
+		int i = lstCm.getChildCount();
+		
+		
+	}
+	
+	@Override
+	public void onDestroy() {
+		adapter.stopThread();
+		adapter.clearCache();
+		lstCm.setAdapter(null);
+		super.onDestroy();
+	}	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
@@ -80,7 +132,7 @@ public class EventDetail extends Activity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(android.view.MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if(item.getItemId()== R.id.esn_detail_event_like)
 		{
@@ -89,6 +141,10 @@ public class EventDetail extends Activity {
 		}
 		else if(item.getItemId() == R.id.esn_detail_event_notice)
 		{			
+			data = new Intent(context,FeedbackActivity.class);
+			data.putExtra("EventId", eventId);
+			data.putExtra("AccId", accId);			
+			startActivity(data);
 			return true;
 		}
 		else if(item.getItemId() == R.id.esn_detail_event_dislike)
@@ -112,6 +168,7 @@ public class EventDetail extends Activity {
 		@Override
 		public void run() {
 			try {
+				
 				Boolean rs = manager.isLiked(eventId, session.currentUser.AccID);
 				
 				if(rs==true)
@@ -120,6 +177,7 @@ public class EventDetail extends Activity {
 						
 						@Override
 						public void run() {
+							Toast.makeText(context, res.getString(R.string.esn_eventDetail_islike), 10);
 							return;
 						}
 					});
@@ -129,8 +187,7 @@ public class EventDetail extends Activity {
 					handler.post(new Runnable() {
 						
 						@Override
-						public void run() {
-								
+						public void run() {								
 							btnLikeCLicked();
 						}
 					});
@@ -163,7 +220,7 @@ public class EventDetail extends Activity {
 						
 						@Override
 						public void run() {
-							return;
+							Toast.makeText(context, res.getString(R.string.esn_eventDetail_isdislike), 10);
 						}
 					});
 				}
@@ -195,8 +252,7 @@ public class EventDetail extends Activity {
 	private class LikeEventThread extends Thread {
 		@Override
 		public void run() {
-			
-			
+						
 			int like = -2;
 			
 			try {
@@ -211,10 +267,15 @@ public class EventDetail extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			if (like > 0) {
+				
 				handler.post(new LikeSuccess(like));
+				
 			} else {
+				
 				handler.post(new LikeFail(like));
+				
 			}
 		}
 	}
@@ -236,7 +297,11 @@ public class EventDetail extends Activity {
 			String k = String.valueOf(like);
 			
 			tvLike.setText(k);
-			 
+			
+			GetListComment();
+			
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likesuccess), 10);
+			
 		}
 	}
 
@@ -254,13 +319,79 @@ public class EventDetail extends Activity {
 			 * findViewById(R.id.esn_eventDetail_tvDislikeCount);
 			 * tvDislike.setText(like);
 			 */
+			
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likefail), 10);
 		}
 	}
 
 	public void btnDislikeCLicked() {
 		
+		new DisLikeEventThread().start();
+		
 	}
 	
+	private class DisLikeEventThread extends Thread {
+		@Override
+		public void run() {
+						
+			int dislike = -2;
+			
+			try {
+				
+				dislike = manager.dislike(eventId, session.currentUser.AccID);			
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if (dislike > 0) {
+				
+				handler.post(new DisLikeSuccess(dislike));
+				
+			} else {
+				
+				handler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						Toast.makeText(context, res.getString(R.string.esn_eventDetail_likefail), 10);						
+					}
+				});
+				
+			}
+		}
+	}
+	
+	private class DisLikeSuccess implements Runnable {
+		
+		private int disLike;
+
+		public DisLikeSuccess(int disLike) {
+			
+			this.disLike = disLike;			
+		}
+
+		@Override
+		public void run() {
+			
+			TextView tvLike = (TextView)findViewById(R.id.esn_eventDetail_dislike);
+			
+			String k = String.valueOf(disLike);
+			
+			tvLike.setText(k);
+			
+			GetListComment();
+			
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likesuccess), 10);
+			
+		}
+	}
+
 	private class GetEventDetailThread extends Thread {
 		private int eventId;
 
@@ -272,14 +403,18 @@ public class EventDetail extends Activity {
 		public void run() {
 			if (eventId > 0) {
 				EventsManager manager = new EventsManager();
-				Events event = null;
+				
+				esn.models.Events event = null;
+				
 				try {
+					
 					event = manager.retrieve(eventId);
+					
 					if (manager
 							.isLiked(
 									eventId,
-									Sessions.getInstance(EventDetail.this).currentUser.AccID)) {
-						EventDetail.this.runOnUiThread(new Runnable() {
+									Sessions.getInstance(EventDetailActivity.this).currentUser.AccID)) {
+						EventDetailActivity.this.runOnUiThread(new Runnable() {
 
 							@Override
 							public void run() {
@@ -293,8 +428,8 @@ public class EventDetail extends Activity {
 					} else if (manager
 							.isDisliked(
 									eventId,
-									Sessions.getInstance(EventDetail.this).currentUser.AccID)) {
-						EventDetail.this.runOnUiThread(new Runnable() {
+									Sessions.getInstance(EventDetailActivity.this).currentUser.AccID)) {
+						EventDetailActivity.this.runOnUiThread(new Runnable() {
 
 							@Override
 							public void run() {
@@ -319,20 +454,22 @@ public class EventDetail extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				EventDetail.this.runOnUiThread(new GetDetailSuccess(event));
+				EventDetailActivity.this.runOnUiThread(new GetDetailSuccess(event));
 			}
 		}
 	}
 
 	private class GetDetailSuccess implements Runnable {
-		private Events event;
+		
+		private esn.models.Events event;
 
-		public GetDetailSuccess(Events event) {
+		public GetDetailSuccess(esn.models.Events event) {
 			this.event = event;
 		}
 
 		@Override
 		public void run() {
+			
 			if (event != null) {
 				TextView tvTitle = (TextView) findViewById(R.id.esn_eventDetail_title);
 				TextView tvDescription = (TextView) findViewById(R.id.esn_eventDetail_description);
@@ -386,15 +523,13 @@ public class EventDetail extends Activity {
 						};
 					}.start();
 				}
-				dialog.dismiss();
+				//dialog.dismiss();
 			}
 		}
 	}
 
-
-	public void Comment(View view)
+	public void CommentClicked(View view)
 	{
-		
 		EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
 		
 		String content = txtComment.getText().toString();
@@ -444,7 +579,9 @@ public class EventDetail extends Activity {
 
 		@Override
 		public void run() {
-			
+			//Toast.makeText(context, res.getString(R.string.esn_eventDetail_commensuccess) , 10).show();
+			dialog.show();
+			GetListComment();
 		}
 		
 	}
@@ -453,29 +590,104 @@ public class EventDetail extends Activity {
 
 		@Override
 		public void run() {
-			
-		}
-		
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_commenfail), 10).show();
+		}		
 	}
 
 	public void GetListComment()
 	{
+		Thread thr = new Thread(new Runnable() {
+			
+			Handler hd = new Handler();
+			@Override
+			public void run() {
+
+				CommentsManager commentsManager = new CommentsManager();
+				try {
+					
+					final ArrayList<Comments> itemList = commentsManager.GetListComment(eventId,page,3);
+					
+					hd.post(new Runnable() {
+
+						@Override
+						public void run() {
+							adapter = new ListViewCommentsAdapter(EventDetailActivity.this,itemList);
+							
+							lstCm.setAdapter(adapter);
+							
+							int k = lstCm.getCount();
+							
+							ListView lv = (ListView)findViewById(R.id.esn_eventDetails_listComments);
+							
+							if(k==1)
+							{
+								lv.setLayoutParams(new LinearLayout.LayoutParams(
+								          LinearLayout.LayoutParams.FILL_PARENT,58
+								      ));
+							}
+							else if(k==2)
+							{
+								lv.setLayoutParams(new LinearLayout.LayoutParams(
+								          LinearLayout.LayoutParams.FILL_PARENT,127
+								      ));
+							}
+							else
+							{
+								lv.setLayoutParams(new LinearLayout.LayoutParams(
+								          LinearLayout.LayoutParams.FILL_PARENT,184
+								      ));
+							}
+							
+							dialog.dismiss();
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		thr.start();
+	}
 		
+	private void loadCommentList(final int pageSize, final int pageIndex) {
+		Thread thr = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+
+				CommentsManager commentsManager = new CommentsManager();
+				try {
+					final ArrayList<Comments> itemList = commentsManager.GetListComment(eventId,pageIndex,pageSize);
+					handler.post(new Runnable() {
+
+						@Override
+						public void run() {
+							adapter.add(itemList);
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		thr.start();
+	}	
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
-	private class GetListComment extends Thread
+	public void ShowAllCommentClicked(View view)
 	{
-		int eventId;
+		data = new Intent(context,EventDetailCommentActivity.class);
 		
-		public GetListComment(int id)
-		{
-			this.eventId = id;
-		}		
-		
-		@Override
-		public void run() {
-			
-						
-		}
+		data.putExtra("EventId", eventId);
+		data.putExtra("AccId", accId);
+		startActivity(data);
 	}
+	
 }

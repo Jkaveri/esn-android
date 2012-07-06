@@ -137,7 +137,7 @@ public class UsersManager {
 				JSONObject p = jsonUser.getJSONObject("Profile");
 				
 				user.AccID = jsonUser.getInt("ID");
-			user.AccID = jsonUser.getInt("AccID");
+				user.AccID = jsonUser.getInt("AccID");
 				user.Password = jsonUser.getString("Password");
 
 				user.Name = p.getString("Name");
@@ -180,8 +180,8 @@ public class UsersManager {
 			Users user = new Users();
 			JSONObject jsonUser = response.getJSONObject("d");
 	        
-			//Utils.JsonToObject(jsonUser, user);
 			user.Name = jsonUser.getString("Name");
+			
 			return user;
 	}
 	return null;

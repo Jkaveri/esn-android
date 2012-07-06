@@ -12,77 +12,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListViewCommentsAdapter extends BaseAdapter{
+public class ListViewCommentsAdapter extends CustomListAdapter<Comments>{
 
-	private Activity activity;
-	
-	private ArrayList<Comments> data;
-	
-	private static LayoutInflater inflater = null;
-		
 	private class ViewHolder {
-		public TextView nameUser;
+		
+		public TextView name;
 		public TextView comment;
 		public TextView date;
+		public ImageView image;
 	}
 	
-	public ListViewCommentsAdapter(Activity a, ArrayList<Comments> listComment) {
-		this.activity = a;
-		this.data = listComment;
-		listComment = null;
-		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);		
+	public ListViewCommentsAdapter(Activity activity, ArrayList<Comments> listCm) {
+		
+		super(activity, listCm, R.layout.comment_layout_row, R.drawable.ic_no_avata);
+		
 	}	
 	
-	public void add(ArrayList<Comments> listComment){
-		for (Comments frd : listComment) {
-			data.add(frd);
-		}
-		listComment = null;
-	}
-	
 	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return data.size();
+	protected void customRowView(Comments rowBean, Object rowHolder) {
+		
+		ViewHolder holder = (ViewHolder) rowHolder;
+		holder.name.setText(rowBean.ProfileName);
+		holder.comment.setText(rowBean.Content);
+		//holder.date.setText(rowBean.DayCreate.toString());
+		displayImage(rowBean.ProfileAvatar, holder.image);
 	}
 
 	@Override
-	public Object getItem(int index) {
-		// TODO Auto-generated method stub
-		return data.get(index);
-	}
-
-	@Override
-	public long getItemId(int index) {
-		// TODO Auto-generated method stub
-		return index;
-	}
-
-	@Override
-	public View getView(int index, View convertView, ViewGroup parent) {
-		
-		View vi = convertView;
-		
-		final ViewHolder holder;
-		
-		if (convertView == null){
-			vi = inflater.inflate(R.layout.listitem_row, null);
-			holder = new ViewHolder();
-			holder.nameUser = (TextView) vi.findViewById(R.id.txtViewTitle);
-			holder.comment = (TextView) vi.findViewById(R.id.txtViewDescription);
-			holder.date = (TextView) vi.findViewById(R.id.imgViewLogo);
-			vi.setTag(holder);
-		}else{
-			holder = (ViewHolder) vi.getTag();
-		}
-
-		Comments bean = data.get(index);
-		holder.nameUser.setText(bean.Name);
-		holder.comment.setText(bean.Content);
-		holder.date.setText(bean.DayCreate.toString());
-		
-		return vi;
+	protected Object createHolder(View convertView) {
+		ViewHolder holder = new ViewHolder();
+		holder.name = (TextView) convertView.findViewById(R.id.esn_comment_listName);
+		holder.comment = (TextView) convertView.findViewById(R.id.esn_comment_listComment);
+		//holder.date = (TextView) convertView.findViewById(R.id.esn_comment_listDate);
+		holder.image = (ImageView) convertView.findViewById(R.id.esn_comment_listAvatar);
+		return holder;
 	}
 }

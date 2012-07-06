@@ -17,6 +17,7 @@ import com.facebook.android.Util;
 import esn.activities.LoginActivity.LoginThread;
 import esn.classes.Base64;
 import esn.classes.HttpHelper;
+import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
 import android.R.bool;
@@ -73,6 +74,8 @@ public class RegisterActivity extends SherlockActivity {
 	
 	private Handler handler;
 	
+	Sessions sessions;
+	
 	private ProgressDialog dialog;
 
 	public SharedPreferences pref;
@@ -82,6 +85,7 @@ public class RegisterActivity extends SherlockActivity {
 	private Resources res;
 	
 	private static boolean checkEmail=false;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,8 @@ public class RegisterActivity extends SherlockActivity {
 		context = this;
 		handler = new Handler();
 
+		sessions = Sessions.getInstance(context);
+		
 		res = getResources();
 		
 		boolean isFbSignup = intent.getBooleanExtra("facebookSignup", false);

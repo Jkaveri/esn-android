@@ -45,6 +45,15 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 		
 		session = Sessions.getInstance(context);
 		
+		String email = session.get("email",null);
+		
+		if(email.isEmpty())
+		{
+			Intent intent = new Intent(context,WelcomeActivity.class);
+			
+			startActivity(intent);
+		}
+		
 		ListView settingList = (ListView) findViewById(R.id.setting_list);
 		
 		adapter = new EsnListAdapter();

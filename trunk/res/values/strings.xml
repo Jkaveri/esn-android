@@ -54,6 +54,7 @@
     <string name="btCancel">Cancel</string>
     
     <!-- Change password -->
+    
     <string name="lbChange_Pass">Change Password</string>
     <string name="lblPosition">Position</string>
 	<string name="rdbShow">Show Position</string>

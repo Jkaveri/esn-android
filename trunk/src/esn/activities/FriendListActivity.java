@@ -47,6 +47,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		setContentView(R.layout.friends_list);
 		setupActionBar();
 		setupListNavigate();
+		
 		setupFriendList();
 
 		lstFriend = (ListView) findViewById(R.id.lisvFriends);
