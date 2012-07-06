@@ -177,7 +177,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 						
 						@Override
 						public void run() {
-							Toast.makeText(context, res.getString(R.string.esn_eventDetail_islike), 10);
+							Toast.makeText(context, res.getString(R.string.esn_eventDetail_islike), 10).show();
 							return;
 						}
 					});
@@ -220,7 +220,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 						
 						@Override
 						public void run() {
-							Toast.makeText(context, res.getString(R.string.esn_eventDetail_isdislike), 10);
+							Toast.makeText(context, res.getString(R.string.esn_eventDetail_isdislike), 10).show();
 						}
 					});
 				}
@@ -300,7 +300,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 			
 			GetListComment();
 			
-			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likesuccess), 10);
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likesuccess), 10).show();
 			
 		}
 	}
@@ -320,7 +320,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 			 * tvDislike.setText(like);
 			 */
 			
-			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likefail), 10);
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likefail), 10).show();
 		}
 	}
 
@@ -359,7 +359,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 					
 					@Override
 					public void run() {
-						Toast.makeText(context, res.getString(R.string.esn_eventDetail_likefail), 10);						
+						Toast.makeText(context, res.getString(R.string.esn_eventDetail_likefail), 10).show();						
 					}
 				});
 				
@@ -387,7 +387,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 			
 			GetListComment();
 			
-			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likesuccess), 10);
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likesuccess), 10).show();
 			
 		}
 	}
