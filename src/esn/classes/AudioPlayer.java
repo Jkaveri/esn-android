@@ -75,7 +75,8 @@ public class AudioPlayer {
 	public void loadBufferStream(InputStream ips) {
 		if(status != IS_STOP){
 			stop();
-			bs = null;
+			if(bs != null)
+				bs = null;
 		}
 		is = new DataInputStream(ips);
 	}
