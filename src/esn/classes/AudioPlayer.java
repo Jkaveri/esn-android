@@ -108,7 +108,7 @@ public class AudioPlayer {
 					bs.close();
 				is.close();
 			} catch (IOException e) {
-				Log.e("AudioPlayer", "IOException read buffer");
+				Log.e("AudioPlayer", "IOException close input stream");
 			}
 			
 			track.stop();
