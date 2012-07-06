@@ -67,7 +67,7 @@ This code won't read ALL wav files.  This does not use to full specification.  I
 a trimmed down version that most wav files adhere to.
 */
 
-package esn.activities;
+package esn.classes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

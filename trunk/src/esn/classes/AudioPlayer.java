@@ -1,4 +1,4 @@
-package esn.activities;
+package esn.classes;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

@@ -3,7 +3,7 @@
  */
 
 
-package esn.activities;
+package esn.classes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
