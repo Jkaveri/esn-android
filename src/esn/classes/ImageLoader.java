@@ -22,17 +22,18 @@ import android.widget.ImageView;
 
 public class ImageLoader {
 
-	private MemoryCache memoryCache = new MemoryCache();
+	private MemoryCache<Bitmap> memoryCache;
 	private FileCache fileCache;
-	private int stub_id = R.drawable.stub;
+	private int stub_id;
 	
 	private Map<ImageView, String> imageViews = Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
 
 	public ImageLoader(Context context) {
 		// Make the background thead low priority. This way it will not affect
 		// the UI performance
+		stub_id = R.drawable.stub;
 		photoLoaderThread.setPriority(Thread.NORM_PRIORITY - 1);
-
+		memoryCache = new MemoryCache<Bitmap>();
 		fileCache = new FileCache(context);
 	}
 	
@@ -78,8 +79,7 @@ public class ImageLoader {
 		try {
 			Bitmap bitmap = null;
 			URL imageUrl = new URL(url);
-			HttpURLConnection conn = (HttpURLConnection) imageUrl
-					.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
 			InputStream is = conn.getInputStream();
