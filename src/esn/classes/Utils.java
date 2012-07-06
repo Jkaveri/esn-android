@@ -22,7 +22,6 @@ import com.google.android.maps.GeoPoint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -190,5 +189,4 @@ public class Utils {
 		byte[] byteArr = bos.toByteArray();
 		return android.util.Base64.encodeToString(byteArr, Base64.DEFAULT);
 	}
-
 }

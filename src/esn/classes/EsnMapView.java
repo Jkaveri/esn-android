@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -26,6 +27,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.readystatesoftware.maps.TapControlledMapView;
 
+import esn.activities.R;
 import esn.activities.SelectEventLabel;
 import esn.models.EventType;
 import esn.models.Events;
@@ -92,9 +94,13 @@ public class EsnMapView extends TapControlledMapView {
 	public boolean onTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
 			isTouchEnded = false;
+			Drawable drawable = context.getResources().getDrawable(R.drawable.ic_event_type_0_1);
+			EsnItemizedOverlay marker = new EsnItemizedOverlay(drawable, this);
+			marker.hideAllBalloons();
 		} else if (ev.getAction() == MotionEvent.ACTION_UP) {
 			isTouchEnded = true;
-			Log.d("esn", "touch ended");
+			
+		//	Log.d("esn", "touch ended");
 		} else if (ev.getAction() == MotionEvent.ACTION_MOVE) {
 			isFirstComputeScroll = true;
 		}
@@ -132,6 +138,7 @@ public class EsnMapView extends TapControlledMapView {
 				try {
 					double lat = lastMapCenter.getLatitudeE6() / 1E6;
 					double lon = lastMapCenter.getLongitudeE6() / 1E6;
+					Log.d("radius",String.valueOf(radius));
 					String filter = manager.getFilterString(Sessions.getInstance(context));
 					events = manager.getEventsAround(lat, lon, this.radius,filter);
 					
@@ -174,7 +181,7 @@ public class EsnMapView extends TapControlledMapView {
 				setMarker(point, event.Title, event.Description, event.EventID,
 						icon);
 			}
-			
+			invalidate();
 			Log.d("esn","end load events around!");
 		}
 	}
@@ -192,9 +199,9 @@ public class EsnMapView extends TapControlledMapView {
 		marker.addOverlay(item);
 		// set marker
 		getOverlays().add(marker);
-		invalidate();
+		//invalidate();
 	}
-	private double calculateRadius(){
+	public double calculateRadius(){
 		WindowManager mn = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		Display display = mn.getDefaultDisplay();
 		Point size = new Point();
@@ -204,7 +211,7 @@ public class EsnMapView extends TapControlledMapView {
 		
 		final GeoPoint p2 = this.getProjection().fromPixels(size.x, size.y/2);
 		Log.d("esn", p.toString()+"|"+p2.toString());
-		return Utils.distanceOfTwoPoint(p, p2);
+		return Math.floor(Utils.distanceOfTwoPoint(p, p2));
 	}
 	public MapActivity getActivity() {
 		return activity;

@@ -74,6 +74,8 @@ public class HomeActivity extends SherlockMapActivity implements
 	protected Handler handler;
 	private ProgressDialog progressDialog;
 	private ProgressDialog dialog;
+	private EsnMapView mapView;
+	public final static  int CODE_REQUEST_SET_FILTER = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +113,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
-		
+
 		// setup background for top action bar
 		// getSupportActionBar().setBackgroundDrawable(
 		// getResources().getDrawable(R.drawable.main_transparent));
@@ -124,7 +126,9 @@ public class HomeActivity extends SherlockMapActivity implements
 	private void setupMap() {
 
 		/** setup map **/
-		EsnMapView mapView = (EsnMapView) findViewById(R.id.gmapView);
+		mapView = (EsnMapView) findViewById(R.id.gmapView);
+		
+		
 		mapView.setActivity(this);
 		map = new Maps(this, mapView);
 		// set zoom level to 14
@@ -137,10 +141,10 @@ public class HomeActivity extends SherlockMapActivity implements
 				map.hideAllBallon();
 				return true;
 			}
-			
+
 		});
 		mapView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				map.hideAllBallon();
@@ -212,18 +216,8 @@ public class HomeActivity extends SherlockMapActivity implements
 			startActivity(intent);
 			break;
 		case R.id.esn_home_menuItem_labels:
-			Sessions session = Sessions.getInstance(this);
-			FilterLabelsDialog builder = new FilterLabelsDialog(this);
-			ArrayList<EventType> eventTypes = session.eventTypes;
-			for (int i = 0; i< eventTypes.size();i++) {
-				EventType type = eventTypes.get(i);
-				EsnListItem listItem = new  EsnListItem();
-				item.setTitle(type.EventTypeName);
-				item.setIcon(EventType.getIconId(type.EventTypeID, 3));
-				builder.addItem(type.EventTypeName, EventType.getIconId(type.EventTypeID, 3), type.EventTypeID);
-			}
-			Dialog filterLabelDialog = builder.createMenu("Labels");
-			filterLabelDialog.show();
+			Intent setFilterIntent = new Intent(this, SetFilterActivity.class);
+			startActivityForResult(setFilterIntent,CODE_REQUEST_SET_FILTER);
 			break;
 		case R.id.esn_home_menuItem_zoomIn:
 			map.zoomIn();
@@ -256,37 +250,46 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == EsnMapView.REQUEST_CODE_ADD_NEW_EVENT
-				&& resultCode == RESULT_OK) {
-			progressDialog = new ProgressDialog(this);
-			progressDialog.setTitle(res.getString(R.string.esn_global_loading));
-			progressDialog.setMessage(res
-					.getString(R.string.esn_global_pleaseWait));
-			progressDialog.show();
-			double latitude = data.getDoubleExtra("latitude", Double.MIN_VALUE);
-			double longtitude = data.getDoubleExtra("longtitude",
-					Double.MIN_VALUE);
-			String title = data.getStringExtra("eventTitle");
-			String description = data.getStringExtra("eventDescription");
-			String picture = data.getStringExtra("picture");
-			int pointerDrawable = data.getIntExtra("labelIcon", 0);
-			int labelId = data.getIntExtra("labelId", 0);
-			if (latitude != Integer.MIN_VALUE
-					&& longtitude != Integer.MIN_VALUE) {
-				Events event = new Events();
-				Sessions session = Sessions.getInstance(this);
-				event.AccID = session.currentUser.AccID;
-				event.EventTypeID = labelId;
-				event.Title = title;
-				event.Description = description;
-				// @todo: nang chup hinh khi tao event
-				event.Picture = (picture == null) ? "" : picture;
-				event.EventLat = latitude;
-				event.EventLng = longtitude;
-				event.ShareType = AppEnums.ShareTypes.Public;
-				new CreateEventsThread(event).start();
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+			case EsnMapView.REQUEST_CODE_ADD_NEW_EVENT:
+				progressDialog = new ProgressDialog(this);
+				progressDialog.setTitle(res
+						.getString(R.string.esn_global_loading));
+				progressDialog.setMessage(res
+						.getString(R.string.esn_global_pleaseWait));
+				progressDialog.show();
+				double latitude = data.getDoubleExtra("latitude",
+						Double.MIN_VALUE);
+				double longtitude = data.getDoubleExtra("longtitude",
+						Double.MIN_VALUE);
+				String title = data.getStringExtra("eventTitle");
+				String description = data.getStringExtra("eventDescription");
+				String picture = data.getStringExtra("picture");
+				int pointerDrawable = data.getIntExtra("labelIcon", 0);
+				int labelId = data.getIntExtra("labelId", 0);
+				if (latitude != Integer.MIN_VALUE
+						&& longtitude != Integer.MIN_VALUE) {
+					Events event = new Events();
+					Sessions session = Sessions.getInstance(this);
+					event.AccID = session.currentUser.AccID;
+					event.EventTypeID = labelId;
+					event.Title = title;
+					event.Description = description;
+					// @todo: nang chup hinh khi tao event
+					event.Picture = (picture == null) ? "" : picture;
+					event.EventLat = latitude;
+					event.EventLng = longtitude;
+					event.ShareType = AppEnums.ShareTypes.Public;
+					new CreateEventsThread(event).start();
+				}
+				break;
+			case CODE_REQUEST_SET_FILTER:
+				mapView.new LoadEventsAroundThread(mapView.calculateRadius()).start();
+				break;
+			default:
+				break;
 			}
-			return;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}

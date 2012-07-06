@@ -165,6 +165,8 @@
     <string name="esn.eventDetail.iconEventType">Event Type</string>
     <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
     <string name="esn.eventDetail.description">Description</string>
-	<string name="esn.eventDetail.createby">Create By</string>    
+	<string name="esn.eventDetail.createby">Create By</string>
+	<string name="esn_global_ok">OK</string>
+	<string name="esn_global_cancel">Cancel</string>    
 </resources>
 

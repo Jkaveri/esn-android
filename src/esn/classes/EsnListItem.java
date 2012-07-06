@@ -6,6 +6,7 @@ public class EsnListItem {
 	private int icon;
 	private int id;
 	private boolean checked;
+	private String tagName;
 	public EsnListItem(int id){
 		this.id = id;
 	}
@@ -47,6 +48,12 @@ public class EsnListItem {
 	}
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+	public String getTagName() {
+		return tagName;
+	}
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
 	}
 	
 	

@@ -39,7 +39,7 @@ public class WelcomeScreen extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome_screen);
 		
-		getActionBar().setDisplayShowTitleEnabled(false);
+		//getActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().hide();
 		
 		res = getResources();
