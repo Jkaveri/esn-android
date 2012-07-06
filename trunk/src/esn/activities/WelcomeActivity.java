@@ -34,10 +34,10 @@ import android.view.View;
 public class WelcomeActivity extends SherlockActivity {
 
 	
-	private final String[] FB_PERMISSIONS = { "email", "user_events","user_birthday" };
+	private final String[] FB_PERMISSIONS = { "email","read_friendlists","publish_actions"," publish_stream","user_birthday" };
 	// Login by fB
 	
-	public static final String APP_ID = "175185989209026";
+	public static final String APP_ID = "257584821008998";
 	private Facebook mFacebook;
 	private AsyncFacebookRunner mAsyncRunner;
 	protected Sessions session;
@@ -60,7 +60,7 @@ public class WelcomeActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayUseLogoEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().hide();
-		session = Sessions.getInstance(this);
+		session = Sessions.getInstance(this); 
 		// init facebook
 		mFacebook = new Facebook(APP_ID);
 		// init facebook runner
