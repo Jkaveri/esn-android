@@ -23,7 +23,6 @@ public class AudioRecoder {
 	private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
 	private static final int AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 	private static int REC_BUFFER_SIZE;
-	private static final int CALLBACK_PERIOD = 50;
 	
 	private int status = 0;
 	private AudioRecord audioRecord;
@@ -48,18 +47,13 @@ public class AudioRecoder {
 				
 				while (status == IS_STARTING) {
 					int count = audioRecord.read(buffer, 0, REC_BUFFER_SIZE);
-					Log.i("AudioRecoder", "Writing new data to buffer");
+					//Log.i("AudioRecoder", "Writing new data to buffer");
 					for(int i = 0; i < count; i++){
 						try {
 							dos.writeShort(buffer[i]);
 						} catch (IOException e) {
 							Log.e("AudioRecoder", "IOException writeShort() at output stream");
 						}
-					}
-					try {
-						Thread.sleep(CALLBACK_PERIOD);
-					} catch (InterruptedException e) {
-						Log.i("AudioRecoder", "Thread on destroy");
 					}
 				}
 			}
@@ -83,7 +77,7 @@ public class AudioRecoder {
 			try {
 				dos.flush();
 			} catch (IOException e) {
-				Log.e("AudioRecoder", "IOException writeShort() at output stream");
+				Log.e("AudioRecoder", "IOException flush stream data");
 			}
 			audioRecord.stop();
 			th.interrupt();
