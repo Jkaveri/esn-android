@@ -42,15 +42,14 @@ public class AudioRecoder {
 
 			@Override
 			public void run() {
-				short[] buffer = new short[REC_BUFFER_SIZE]; 
+				byte[] buffer = new byte[REC_BUFFER_SIZE]; 
 				audioRecord.startRecording();				
 				
 				while (status == IS_STARTING) {
 					int count = audioRecord.read(buffer, 0, REC_BUFFER_SIZE);
-					//Log.i("AudioRecoder", "Writing new data to buffer");
-					for(int i = 0; i < count; i++){
+					if(count > 0){
 						try {
-							dos.writeShort(buffer[i]);
+							dos.write(buffer, 0, count);
 						} catch (IOException e) {
 							Log.e("AudioRecoder", "IOException writeShort() at output stream");
 						}
