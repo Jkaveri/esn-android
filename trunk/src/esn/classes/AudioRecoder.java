@@ -43,7 +43,7 @@ public class AudioRecoder {
 			@Override
 			public void run() {
 				byte[] buffer = new byte[REC_BUFFER_SIZE]; 
-				audioRecord.startRecording();				
+				audioRecord.startRecording();		
 				
 				while (status == IS_STARTING) {
 					int count = audioRecord.read(buffer, 0, REC_BUFFER_SIZE);
