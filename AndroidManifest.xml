@@ -25,7 +25,7 @@
             <intent-filter> 
                 <action android:name="android.intent.action.MAIN" />
                <category android:name="android.intent.category.LAUNCHER" /> 
-            </intent-filter> -->
+            </intent-filter>
         </activity> 
         	
       
@@ -40,12 +40,20 @@
             android:label="@string/app_name"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow">
-                        
- <!--            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
         </activity>
+        
+        <activity
+            android:name=".VoiceModeActivity"
+            android:icon="@drawable/logo"
+            android:label="@string/app_name"
+            android:theme="@style/esn.theme.light"
+            android:uiOptions="splitActionBarWhenNarrow">
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
+<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
+<!--             </intent-filter> -->
+        </activity>
+        
         <activity
             android:name=".LoginActivity">
             

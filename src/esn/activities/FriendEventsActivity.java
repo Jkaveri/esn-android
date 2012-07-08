@@ -72,7 +72,7 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	}
 
 	private void setupFdEvent() {
-
+				
 	}
 
 	private void setupListNavigate() {
@@ -142,7 +142,7 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		String itemTitle = item.getTitle().toString();
 		if (itemTitle.equals("Search")) {
 			item.collapseActionView();
