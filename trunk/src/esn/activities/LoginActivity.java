@@ -10,8 +10,10 @@ import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +44,7 @@ public class LoginActivity extends SherlockActivity{
 	private Sessions session;
 
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -73,6 +76,7 @@ public class LoginActivity extends SherlockActivity{
 		finish();
 	}
 
+	@SuppressLint({ "NewApi", "NewApi" })
 	public void LoginClicked(View view) {
 
 		EditText txtEmail = (EditText) findViewById(R.id.esn_login_Email);
@@ -82,25 +86,26 @@ public class LoginActivity extends SherlockActivity{
 		
 		if(email.isEmpty())
 		{
-			Toast.makeText(context, res.getString(R.string.esn_login_enteremail), 100).show();
+			Toast.makeText(context, res.getString(R.string.esn_login_enteremail), 10).show();
 			return;
 		}
 		String password = txtPass.getText().toString();
 		
 		if(password.isEmpty())
 		{
-			Toast.makeText(context, res.getString(R.string.esn_login_enterpassword), 100).show();
+			Toast.makeText(context, res.getString(R.string.esn_login_enterpassword), 10).show();
 			return;
 		}
 		
-		ProgressDialog dialog = new ProgressDialog(this);
+	/*	ProgressDialog dialog = new ProgressDialog(this);
 		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
 		dialog.setMessage("Waiting ....");
-		dialog.show();
+		dialog.show();*/
 		
 		
-		LoginThread loginThread = new LoginThread(this, email,password,dialog);
+		LoginThread loginThread = new LoginThread(this, email,password,null);
 		Intent successIntent = new Intent(this, HomeActivity.class);
+	
 		loginThread.setSuccessIntent(successIntent);
 		loginThread.start();
 	}
@@ -115,6 +120,7 @@ public class LoginActivity extends SherlockActivity{
 		private ProgressDialog dialog;
 		private Intent successIntent;
 		private Intent failIntent;
+		
 		public LoginThread(Activity activity, String _email, String _password,ProgressDialog dialog) {
 			this.activity = activity;
 			email = _email;
@@ -126,7 +132,16 @@ public class LoginActivity extends SherlockActivity{
 		public void run() {
 			Looper.prepare();
 			UsersManager usermManager = new UsersManager();
-			int id = usermManager.Login(email, password);
+			int id = 0;
+			try {
+				id = usermManager.Login(email, password);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (id>0) {
 				activity.runOnUiThread(new loginSuccess(this.activity,email,password,dialog,successIntent));
 			} else {
@@ -166,17 +181,16 @@ public class LoginActivity extends SherlockActivity{
 		@Override
 		public void run() {
 			if(dialog!=null){
-				dialog.dismiss();
+				dialog.cancel();
+				dialog.dismiss();				
 			}
 			if(failIntent!=null){
 				
 				activity.startActivity(failIntent);
 				
 			}else{
-				AlertDialog.Builder alert = new AlertDialog.Builder(this.context);
-				alert.setTitle("Failed!");
-				alert.setMessage("Username or password is wrong!");
-				alert.show();
+				
+				Toast.makeText(context, "Login fail", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

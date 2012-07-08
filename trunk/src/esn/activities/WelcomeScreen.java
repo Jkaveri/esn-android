@@ -3,6 +3,7 @@ package esn.activities;
 
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
@@ -33,20 +34,30 @@ public class WelcomeScreen extends SherlockActivity {
 	private LoadModelsThread loadModelThread;
 	private LoginThread loginThread;
 	private Resources res;
+	
+	WelcomeScreen context;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.welcome_screen);
 		
 		//getActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().hide();
 		
+		context = this;
+		
+		session = Sessions.getInstance(context);
 		res = getResources();
+		
+		
 		if(Utils.isNetworkAvailable(this)){
-			initConfig();
+			
+			initConfig();			
 			loadModelThread = new LoadModelsThread();
 			loadModelThread.start();
+			
 		}else{
 			ProgressBar progress = (ProgressBar) findViewById(R.id.esn_welcomeScreen_progressBar);
 			progress.setVisibility(View.INVISIBLE);
@@ -72,7 +83,6 @@ public class WelcomeScreen extends SherlockActivity {
 		// application session
 		session = Sessions.getInstance(this);
 	
-		// first lauched
 		boolean firstLauch = session.get("firstLauch", true);
 		
 		if (firstLauch) {
@@ -84,6 +94,7 @@ public class WelcomeScreen extends SherlockActivity {
 	}
 
 	private void executeLogin() {
+		
 		email = session.get("email", null);
 		password = session.get("password", null);
 		
@@ -103,8 +114,17 @@ public class WelcomeScreen extends SherlockActivity {
 				//load event types
 				EventTypeManager manager = new EventTypeManager();
 				// get list event type
-				ArrayList<EventType> list = manager.getList();
+				ArrayList<EventType> list = null;
+				try {
+					list = manager.getList();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 				session.eventTypes = list;
+				
 				if(session.logined()){
 					executeLogin();	
 				}else{

@@ -89,8 +89,5 @@ public class Sessions {
 	public boolean logined() {
 		String email = pref.getString("email", null);
 		return email!=null;
-	}
-	
-	
-	
+	}	
 }

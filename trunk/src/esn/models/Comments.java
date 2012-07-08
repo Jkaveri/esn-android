@@ -1,6 +1,7 @@
 package esn.models;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 public class Comments {
 
@@ -12,7 +13,7 @@ public class Comments {
 	
 	public String Content;
 	
-	//public Date DayCreate;
+	public Date DayCreate;
 	
 	//public String Status;
 	

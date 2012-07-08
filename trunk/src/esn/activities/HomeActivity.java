@@ -76,7 +76,7 @@ public class HomeActivity extends SherlockMapActivity implements
 	private ProgressDialog dialog;
 	private EsnMapView mapView;
 	public final static  int CODE_REQUEST_SET_FILTER = 2;
-
+	HomeActivity context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -87,6 +87,8 @@ public class HomeActivity extends SherlockMapActivity implements
 		setupActionBar();
 		setupMap();
 		setupListNavigate();
+		
+		context = this;
 	}
 
 	private void setupListNavigate() {
@@ -296,8 +298,23 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
-				Toast.LENGTH_SHORT).show();
+		
+		if(itemPosition==0)
+		{
+			Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
+					Toast.LENGTH_SHORT).show();
+		}
+		else if(itemPosition==1)
+		{
+			Intent intent = new Intent(context,HomeEventListActivity.class);
+			
+			startActivity(intent);
+		}
+		else
+		{
+			Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
+					Toast.LENGTH_SHORT).show();
+		}
 		return true;
 	}
 

@@ -1,6 +1,7 @@
 package esn.models;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -32,7 +33,7 @@ public class EventsManager {
 
 	}
 
-	public Events[] getAvailableEvents() throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+	public Events[] getAvailableEvents() throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException {
 		Events[] events = null;
 		JSONObject params = new JSONObject();
 		params.put("pageNum", 1);
@@ -52,8 +53,34 @@ public class EventsManager {
 		}
 		return events;
 	}
+	
+	public ArrayList<Events> getAvailableEventsList(int pageIndex,int pageSize) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException {
+		ArrayList<Events> listEvent = new ArrayList<Events>();
+		
+		JSONObject params = new JSONObject();
+		
+		params.put("pageNum", pageIndex);
+		params.put("pageSize", pageSize);
+		
+		JSONObject result = helper.invokeWebMethod("GetAvailableEvents",params);
+		
+		if (result != null) {
+			if (result.has("d")) {
+				JSONArray jsonCall = result.getJSONArray("d");
+				
+				for (int i = 0; i < jsonCall.length(); i++) {
+					JSONObject jsonEvent = jsonCall.getJSONObject(i);
+					Events event = new Events();
+					Utils.JsonToObject(jsonEvent, event);
+					listEvent.add(event);
+				}
+			}
+		}
+		
+		return listEvent;
+	}
 
-	public Events[] getEventsAround(double lat, double log, double radius, String filter) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+	public Events[] getEventsAround(double lat, double log, double radius, String filter) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException {
 		Events[] events = null;
 		JSONObject params = new JSONObject();
 		params.put("lat", lat);
@@ -103,7 +130,7 @@ public class EventsManager {
 
 	}
 
-	public Events retrieve(int eventId) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+	public Events retrieve(int eventId) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException {
 		Events event = new  Events();
 		
 		JSONObject params = new JSONObject();

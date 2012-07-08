@@ -5,9 +5,9 @@
     <string name="esn.eventDetail.commentall">Show all</string>
     <string name="esn.eventDetail.commensuccess">Successfully</string>
     <string name="esn.eventDetail.commenfail">Fail. Try again.</string>
-    <string name="esn.eventDetail.islike">Bạn đã xác nhận đúng rồi.</string>
-    <string name="esn.eventDetail.isdislike">Bạn đã xác nhận sai rồi.</string>
-    <string name="esn.eventDetail.likesuccess">Bạn đã xác nhận đúng.</string>
-    <string name="esn.eventDetail.dislikesuccess">Bạn đã xác nhận sai.</string>
+    <string name="esn.eventDetail.islike">You have already choose true.</string>
+    <string name="esn.eventDetail.isdislike">You have already choose false.</string>
+    <string name="esn.eventDetail.likesuccess">You have confirm true.</string>
+    <string name="esn.eventDetail.dislikesuccess">You have confirm false..</string>
     <string name="esn.eventDetail.likefail">Error. Try again.</string>
 </resources>

@@ -1,6 +1,7 @@
 package esn.classes;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -155,6 +156,9 @@ public class EsnMapView extends TapControlledMapView {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
 					Log.d("esn", e.getMessage());
+					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

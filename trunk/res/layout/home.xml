@@ -8,7 +8,7 @@
         android:id="@+id/gmapView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="@string/key.maps.googleAPI"
+        android:apiKey="0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg"
         android:clickable="true" />
 
     <ImageButton
@@ -24,5 +24,4 @@
         android:background="@drawable/bg_access_current_location"
         android:src="@drawable/ic_access_location"
         android:onClick="btnDetectMyLocation" />
-
 </RelativeLayout>

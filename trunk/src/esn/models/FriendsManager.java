@@ -1,6 +1,7 @@
 package esn.models;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -17,7 +18,7 @@ public class FriendsManager {
 		helper = new HttpHelper(URL);
 	}
 
-	public ArrayList<FriendsListsDTO> getFriendsList(int pageSize, int pageIndex, int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+	public ArrayList<FriendsListsDTO> getFriendsList(int pageSize, int pageIndex, int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException {
 		
 		ArrayList<FriendsListsDTO> frds = new ArrayList<FriendsListsDTO>();
 		JSONObject params = new JSONObject();
@@ -44,7 +45,7 @@ public class FriendsManager {
 	}
 	
 
-	public Users RetrieveByAccID(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException{
+	public Users RetrieveByAccID(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException{
 		Users frd = new Users();
 		JSONObject params = new JSONObject();
 		params.put("id", accID);

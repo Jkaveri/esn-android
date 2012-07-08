@@ -18,9 +18,8 @@ public class UsersManager {
 
 	}
 
-	public int Login(String email, String password) {
-		try {
-
+	public int Login(String email, String password) throws JSONException, IOException {
+		
 			JSONObject params = new JSONObject();
 
 			params.put("email", email);
@@ -31,16 +30,6 @@ public class UsersManager {
 			int rs = jsonObject.getInt("d");
 
 			return rs;
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return 0;
 	}
 
 	public int Register(Users user) throws JSONException, IOException {
