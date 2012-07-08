@@ -1,6 +1,7 @@
 package esn.models;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -36,7 +37,7 @@ public class CommentsManager {
 		return rs;
 	}
 	
-	public ArrayList<Comments> GetListComment(int eventId,int pageNum,int pageSize) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException
+	public ArrayList<Comments> GetListComment(int eventId,int pageNum,int pageSize) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException
 	{
 		ArrayList<Comments> listComment = new ArrayList<Comments>();
 		

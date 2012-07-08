@@ -186,7 +186,7 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 		
 		String content = txtComment.getText().toString();
 		
-		new CommentThread(content, accId, eventId).start();
+		new CommentThread(content, session.currentUser.AccID, eventId).start();
 	}
 
 	private class CommentThread extends Thread {

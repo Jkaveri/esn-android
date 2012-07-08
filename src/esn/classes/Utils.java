@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import com.google.android.maps.GeoPoint;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -108,9 +109,11 @@ public class Utils {
 				Object value = json.get(fieldName);
 				if (value.getClass() == String.class
 						&& value.toString().matches(JSON_DATE_TYPE_PATTERN)) {
-					value = GetDateFromJSONString(value.toString());
+					Object dateValue = GetDateFromJSONString(value.toString());
+					field.set(obj, dateValue);
+				} else {
+					field.set(obj, value);
 				}
-				field.set(obj, value);
 			}
 		}
 
@@ -184,6 +187,7 @@ public class Utils {
 		return activeNetworkInfo != null;
 	}
 
+	@SuppressLint("NewApi")
 	public static String bitmapToBase64(Bitmap img) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		img.compress(Bitmap.CompressFormat.PNG, 100, bos);

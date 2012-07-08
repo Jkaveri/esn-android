@@ -1,6 +1,7 @@
 package esn.models;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class EventTypeManager {
 
 	public ArrayList<EventType> getList() throws ClientProtocolException,
 			IOException, JSONException, IllegalArgumentException,
-			IllegalAccessException {
+			IllegalAccessException, ParseException {
 		ArrayList<EventType> list = new ArrayList<EventType>();
 
 		JSONObject response = helper.invokeWebMethod("GetListEventTypes");

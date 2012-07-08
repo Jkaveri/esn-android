@@ -1,6 +1,7 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -169,16 +170,30 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		public void run() {
 			try {
 				
-				Boolean rs = manager.isLiked(eventId, session.currentUser.AccID);
+				Boolean checkLike = manager.isLiked(eventId, session.currentUser.AccID);
+				boolean checkDislike = manager.isDisliked(eventId,session.currentUser.AccID);
 				
-				if(rs==true)
+				if(checkLike==true)
 				{
 					handler.post(new Runnable() {
 						
 						@Override
 						public void run() {
+							
 							Toast.makeText(context, res.getString(R.string.esn_eventDetail_islike), 10).show();
-							return;
+							
+						}
+					});
+				}
+				else if(checkDislike == true)
+				{
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							
+							Toast.makeText(context, res.getString(R.string.esn_eventDetail_isdislike), 10).show();
+							
 						}
 					});
 				}
@@ -212,15 +227,31 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		@Override
 			public void run() {
 			try {
-				Boolean rs = manager.isDisliked(eventId, session.currentUser.AccID);
 				
-				if(rs==true)
+				Boolean checkLike = manager.isLiked(eventId, session.currentUser.AccID);
+				boolean checkDislike = manager.isDisliked(eventId,session.currentUser.AccID);
+				
+				if(checkLike==true)
 				{
 					handler.post(new Runnable() {
 						
 						@Override
 						public void run() {
+							
+							Toast.makeText(context, res.getString(R.string.esn_eventDetail_islike), 10).show();
+							
+						}
+					});
+				}
+				else if(checkDislike == true)
+				{
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							
 							Toast.makeText(context, res.getString(R.string.esn_eventDetail_isdislike), 10).show();
+							
 						}
 					});
 				}
@@ -387,7 +418,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 			
 			GetListComment();
 			
-			Toast.makeText(context, res.getString(R.string.esn_eventDetail_likesuccess), 10).show();
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_dislikesuccess), 10).show();
 			
 		}
 	}
@@ -408,12 +439,15 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 				
 				try {
 					
-					event = manager.retrieve(eventId);
+					try {
+						event = manager.retrieve(eventId);
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
-					if (manager
-							.isLiked(
-									eventId,
-									Sessions.getInstance(EventDetailActivity.this).currentUser.AccID)) {
+					if (manager.isLiked(eventId,Sessions.getInstance(EventDetailActivity.this).currentUser.AccID)) {
+						
 						EventDetailActivity.this.runOnUiThread(new Runnable() {
 
 							@Override
@@ -534,7 +568,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		
 		String content = txtComment.getText().toString();
 		
-		new CommentThread(content, accId, eventId).start();
+		new CommentThread(content, session.currentUser.AccID, eventId).start();
 	}
 
 	private class CommentThread extends Thread {
@@ -619,7 +653,17 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 							
 							ListView lv = (ListView)findViewById(R.id.esn_eventDetails_listComments);
 							
-							if(k==1)
+							//Button bt = (Button)findViewById(R.id.esn_eventDetails_btShowCommentAll);
+							
+							if(k==0)
+							{
+								lv.setLayoutParams(new LinearLayout.LayoutParams(
+								          LinearLayout.LayoutParams.FILL_PARENT,10
+								      ));
+															
+								//bt.setVisibility(0);
+							}
+							else if(k==1)
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
 								          LinearLayout.LayoutParams.FILL_PARENT,58
