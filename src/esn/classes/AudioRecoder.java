@@ -1,4 +1,5 @@
 /*
+ * By lnbienit@gmail.com
  * <uses-permission android:name="android.permission.RECORD_AUDIO" />
  */
 
@@ -15,16 +16,16 @@ import android.media.MediaRecorder.AudioSource;
 import android.util.Log;
 
 public class AudioRecoder {
-	public static final int IS_STARTING = 1;
-	public static final int IS_PAUSED = 2;
-	public static final int IS_STOP = 0;
+	public static final int RECORDSTATE_RECORDING = AudioRecord.RECORDSTATE_RECORDING;
+	public static final int RECORDSTATE_PAUSED = 192168;
+	public static final int RECORDSTATE_STOPPED = AudioRecord.RECORDSTATE_STOPPED;
 
-	private static final int FREQUENCY = 8000;
-	private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
-	private static final int AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-	private static int REC_BUFFER_SIZE;
+	public int SAMPLE_RATE = 8000;
+	public int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
+	public int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+	public int REC_BUFFER_SIZE;
 	
-	private int status = 0;
+	private int RECORDSTATE = 0;
 	private AudioRecord audioRecord;
 	private Thread th;
 	private ByteArrayOutputStream bufferStream;
@@ -32,8 +33,8 @@ public class AudioRecoder {
 	private Runnable run;
 
 	public AudioRecoder() {
-		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(FREQUENCY, CHANNEL_CONFIG, AUDIO_ENCODING);
-		audioRecord = new AudioRecord(AudioSource.MIC, FREQUENCY, CHANNEL_CONFIG, AUDIO_ENCODING, REC_BUFFER_SIZE);
+		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
+		audioRecord = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
 		
 		bufferStream = new ByteArrayOutputStream();
 		dos = new DataOutputStream(bufferStream);
@@ -43,9 +44,9 @@ public class AudioRecoder {
 			@Override
 			public void run() {
 				byte[] buffer = new byte[REC_BUFFER_SIZE]; 
-				audioRecord.startRecording();		
+				audioRecord.startRecording();				
 				
-				while (status == IS_STARTING) {
+				while (RECORDSTATE == RECORDSTATE_RECORDING) {
 					int count = audioRecord.read(buffer, 0, REC_BUFFER_SIZE);
 					if(count > 0){
 						try {
@@ -60,19 +61,19 @@ public class AudioRecoder {
 	}
 
 	public void startRecording() {
-		if (status != IS_STARTING) {
-			if (status == IS_STOP) {
+		if (RECORDSTATE != RECORDSTATE_RECORDING) {
+			if (RECORDSTATE == RECORDSTATE_STOPPED) {
 				bufferStream.reset();
 			}
-			status = IS_STARTING;
+			RECORDSTATE = RECORDSTATE_RECORDING;
 			th = new Thread(run);
 			th.start();
 		}
 	}
 	
 	public void pauseRecording() {
-		if(status == IS_STARTING){
-			status = IS_PAUSED;
+		if(RECORDSTATE == RECORDSTATE_RECORDING){
+			RECORDSTATE = RECORDSTATE_PAUSED;
 			try {
 				dos.flush();
 			} catch (IOException e) {
@@ -85,8 +86,8 @@ public class AudioRecoder {
 	}
 
 	public void stopRecording() {
-		if (status != IS_STOP) {
-			status = IS_STOP;
+		if (RECORDSTATE != RECORDSTATE_STOPPED) {
+			RECORDSTATE = RECORDSTATE_STOPPED;
 			try {
 				dos.flush();
 				dos.close();
@@ -105,7 +106,7 @@ public class AudioRecoder {
 		return bufferStream.toByteArray();
 	}
 
-	public int getStatus() {
-		return status;
+	public int getRecordState() {
+		return RECORDSTATE;
 	}
 }
