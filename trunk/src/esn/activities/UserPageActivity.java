@@ -39,7 +39,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 		this.imageLoader = new ImageLoader(this.getApplicationContext());
 		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
 		handler = new Handler();
-		formatter = new SimpleDateFormat("dd/MM/yyyy");
+		formatter = new SimpleDateFormat(getString(R.string.esn_global_dateFormat));
 		
 		setupActionBar();
 		setupListNavigate();
