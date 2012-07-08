@@ -145,6 +145,10 @@ public class WAVFormatConver {
 	public void setFormat(int format) {
 		this.format = format;
 	}
+	
+	public void setSampleRate(long sampleRate) {
+		this.sampleRate = sampleRate;
+	}
 
 	public long getChannels() {
 		return channels;
