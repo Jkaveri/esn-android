@@ -11,8 +11,8 @@ import esn.classes.HttpHelper;
 import esn.classes.Utils;
 
 public class FriendsManager {
-	private static String URL = "http://bangnl.info/ws/AccountsWS.asmx";
-	HttpHelper helper;
+	public static String URL = "http://bangnl.info/ws/AccountsWS.asmx";
+	private HttpHelper helper;
 
 	public FriendsManager() {
 		helper = new HttpHelper(URL);
