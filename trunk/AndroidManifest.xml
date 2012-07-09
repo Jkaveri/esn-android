@@ -72,7 +72,7 @@
         </activity>
           <activity
             android:name=".SelectEventLabel"
-            >
+            android:label="@string/esn_actName_selectLabel">
         </activity>
         <activity
             android:name=".FriendEventsActivity"

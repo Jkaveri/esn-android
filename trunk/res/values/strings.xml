@@ -4,152 +4,45 @@
     <!-- app name -->
     <string name="app_name">ESN</string>
     <!-- welcome -->
-    <string name="app_register">Register</string>
-    <string name="app_profile">Profile</string>
-    <string name="app_login">Login</string>
+    <string name="esn_actName_register">Register</string>
+    <string name="esn_actName_profile">Profile</string>
+    <string name="esn_actName_login">Login</string>
+    <string name="esn_actName_selectLabel">Select label</string>
     <!-- Login -->
-	<string name="btLogin">Login</string>
-	<string name="btSignUp">Signup</string>
-	<string name="txtEmail">Email</string>
-	<string name="txtPassword">Password</string>
-	<string name="btBack">Back</string>		
-	<string name="tvFist">Fist Name</string>
-	<string name="txtLastName">Last Name</string>
-	<string name="txtPhone">0908 123 456</string>
-	<string name="txtBirthday">01/01/1990</string>
-	<string name="txtGender">Male</string>
-	<string name="btLoginFB">Login With Facebook</string>
-	<string name="btCancel">Cancel</string>
-	
-	<string name="tvEmail">Email</string>
-	<string name="tvPassword">Password</string>	
-	
-	<string name="tvPhone">Phone</string>
-	<string name="tvBirthday">Birthday</string>
-	<string name="tvGender">Gender</string>
-	
-	<string name="hlService">Term of Service</string>
-	<string name="hlPolicy">Privacy and Policy</string>
-	<string name="rdbMale">Male</string>
-	<string name="rdbFemale">Female</string>
-    <string name="map_current_location_title">Current</string>
-    <string name="map_current_location_subtitle">You are here!</string>
- 	<string name='item'>Item</string>
-    <string name="finding_current_location">Finding current location</string>
-	<string name="lbAccount">Account Info</string>
-    <string name="search">Search</string>
     
-    <!-- Edit Profile -->
-	<string name="lbPerson">Personal Info</string>
-    <string name="lbEdit_Profile">Edit Profile</string>
-	<string name="enter">Log in to Facebook</string>
-	<string name="request">Request!</string>
-    <string name="hello">Hello World!</string>
-    <string name="tv_edit_Name">Full Name</string>
-    <string name="tv_edit_DayOfBirth">Date Of Birth</string>
-    <string name="tv_edit_Phone">Phone</string>
-    <string name="upload">Upload Photo</string><string name="post">Wall Post!</string>
-    <string name="btDone">Done</string>
-    <string name="delete">Delete Post</string>
-    <string name="btCancel">Cancel</string>
-    
-    <!-- Change password -->
-    
-    <string name="lbChange_Pass">Change Password</string>
-    <string name="lblPosition">Position</string>
-	<string name="rdbShow">Show Position</string>
-	<string name="rdbHide">Hide Position</string>
-	<string name="lblProfile">Edit Profile</string>
-    <string name="tv_current_pass">Current Pass</string>
-    <string name="tv_new_pass">New Pass</string>
-    <string name="tv_confirm_pass">Confirm Pass</string>
-	<string name="lblPic">Edit Profile Picture</string>
-	<string name="lblChangePass">Change Password</string>
-	<string name="lblHelp">Help</string>
-	<string name="lblAbout">About</string>
-	<string name="lblTerms">Terms</string>
-	<string name="btnLogOut">Log Out</string>
-	<string name="btDone">Done</string>
-	<string name="btLogout">Logout</string>
-	<string name="esn.location.must_enable_gps">You must enable gps</string>
-	<string name="esn.location.your_location_not_found">Your Location Not Found</string>
-	<string name="esn.selectLabel.activityTitle">Select label</string>
-	<string name="esn.labels.accidents">Accidents</string>
-	<string name="esn.labels.polices">Polices</string>
-	<string name="esn.addNewEvent.title">Title :</string>
-	<string name="esn.addNewEvent.description">Description:</string>
-	<string name="esn.addNewEvent.add">Add</string>
-	<string name="esn.addNewEvent.capture">Capture</string>
-	<string name="esn.addNewEvent.cancel">Cancel</string>
-	<string name="esn.addNewEvent.coordinate">Coordinate :</string>
-	<string name="esn.addNewEvent.addresss">Address :</string>
-	<string name="esn.addNewEvent.imageeventstatus">No image for this event.</string>
-	<string name="esn.register.date"></string>
-	
-	<!-- Settings page -->
-	<string name="esn.settings.app_settings">Application Settings</string>
-	<string name="esn.settings.subscript.app_settings">Setting in your app</string>
-	<string name="esn.settings.account">Accounts</string>
-	<string name="esn.settings.subscript.account">Setting account</string>
-	<string name="esn.settings.provition">Term</string>
-	<string name="esn.settings.subscript.provition">Read provition</string>
-	<string name="esn.settings.help">Help</string>
-	<string name="esn.settings.subscript.help">How to use app</string>
-	<string name="esn.settings.logout">Logout</string>
-	<string name="esn.settings.subscript.logout">Logout your app</string>
-	<string name="esn.settings.account.changepass">Change Password</string>
-	<string name="esn.settings.account.sub.changepass">Change Password</string>
-	<string name="esn.settings.account.editprofile">Edit Profile</string>
-	<string name="esn.settings.account.sub.editprofile">Edit Profile</string>
-	<string name="help">In this introductory Google Apps webinar</string>
-	<string name="term">In this introductory term</string>
-	
-	<string name="key.maps.googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
-	<string name="message.diaglog.process.wait">Waiting&#8230;</string>
-	
-	<!-- Global  -->
-	<string name="esn.global.dateFormat">MM-dd-yyyy</string>
-	<string name="esn.global.loading">Loading…</string>
-	<string name="esn.global.pleaseWait">Please wait!</string>
-	
 
-	<string name="esn.global.Error">Error</string>
-	<string name="esn.global.ConnectionError">Connection error !</string>
-	<string name="app_Processing">Processing</string>
-	
-	<string name="app.register.RequireFistName">Full Name not blank !</string>
-	<string name="app.register.RequireLastName">Last Name not blank !</string>
-	<string name="app.register.RequirePassword">Password not blank !</string>
-	<string name="app.register.ValidateEmail">Invalid Email Addresss !</string>
-	<string name="app.register.EmailExists">Email Exists!</string>
-	<string name="app.register.Name">Full Name!</string>
-	
-	<string-array name="Gender_arrays">
-        <item>Male</item>
-        <item>Female</item>        
-    </string-array>
-    
-    <string name="app.register.ddlName">Choose a gender</string>
+    <string name="esn.global.must_enable_gps">You must enable gps</string>
+    <string name="esn.global.your_location_not_found">Your Location Not Found</string>
+    <string name="key.maps.googleAPI">0UKnO3qYoNtzBqxa5TKOwDznon8S4fAufhA1xGg</string>
+    <string name="help">In this introductory Google Apps webinar</string>
+    <string name="term">In this introductory term</string>
+
+    <!-- Global -->
+    <string name="esn.global.dateFormat">MM-dd-yyyy</string>
+    <string name="esn.global.loading">Loading…</string>
+    <string name="esn.global.pleaseWait">Please wait!</string>
+    <string name="esn_global_ok">OK</string>
+    <string name="esn.global.Error">Error</string>
+    <string name="esn.global.ConnectionError">Connection error !</string>
     <string name="app.global.Email">Email</string>
     <string name="app.global.RequireAllField">Enter all fields !</string>
     <string name="app.global.UpdateUnsuccess">Update failed ! Try again.</string>
     <string name="app.global.UpdateSuccess">Update success !</string>
-    
-    <string name="app.changepassword.requirecurrentpassword">Current password is required !</string>
-    <string name="app.changepassword.requirepassword">Password is required !</string>
-    <string name="app.changepassword.requirerepeatpassword">Repeat password is required !</string>
-    <string name="app.changepassword.passwordnotmatch">Password not match !</string>
-    <string name="app.changepassword.currentpasswordinccorect">Current password inccorect !</string>
-    
-    <string name="tv_Edit_Profile_ChangeAddress">Edit Address</string>
-    <string name="tv_Edit_Profile_Address">Address</string>
-    <string name="tv_Edit_Profile_Street">Street</string>
-    <string name="tv_Edit_Profile_District">District</string>
-    <string name="tv_Edit_Profile_City">City</string>
-    <string name="tv_Edit_Profile_Country">Country</string>
-    <string name="tv_Edit_Profile_Other">Edit Other</string>
-    <string name="tv_Edit_Profile_Favorite">Favorite</string>
-    
+      <!-- Settings page -->
+    <string name="esn.settings.app_settings">Application Settings</string>
+    <string name="esn.settings.subscript.app_settings">Setting in your app</string>
+    <string name="esn.settings.account">Accounts</string>
+    <string name="esn.settings.subscript.account">Setting account</string>
+    <string name="esn.settings.provition">Term</string>
+    <string name="esn.settings.subscript.provition">Read provition</string>
+    <string name="esn.settings.help">Help</string>
+    <string name="esn.settings.subscript.help">How to use app</string>
+    <string name="esn.settings.logout">Logout</string>
+    <string name="esn.settings.subscript.logout">Logout your app</string>
+    <string name="esn.settings.account.changepass">Change Password</string>
+    <string name="esn.settings.account.sub.changepass">Change Password</string>
+    <string name="esn.settings.account.editprofile">Edit Profile</string>
+    <string name="esn.settings.account.sub.editprofile">Edit Profile</string>
     <string name="app_Setting_Account_ChangePassword">Change Password</string>
     <string name="app_Setting_Account_ChangeProfile">Edit Profile</string>
     <string name="app_Setting_ApplicationSetting">Application</string>
@@ -157,16 +50,8 @@
     <string name="app_Setting_Help">Help</string>
     <string name="app_Setting_Account">Account</string>
     <string name="app_Setting">Setting</string>
-    <!-- EventDetail -->
-    <string name="esn.eventDetail">Event detail</string>
-    <string name="esn.eventDetail.like">True</string>
-    <string name="esn.eventDetail.dislike">False</string>
-    <string name="esn.eventDetail.image">Event Image</string>
-    <string name="esn.eventDetail.iconEventType">Event Type</string>
-    <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
-    <string name="esn.eventDetail.description">Description</string>
-	<string name="esn.eventDetail.createby">Create By</string>
-	<string name="esn_global_ok">OK</string>
-	<string name="esn_global_cancel">Cancel</string>    
+	<!-- Welcome -->
+	<string name="esn_welcome_login">Login</string>
+	<string name="esn_welcome_loginWithFacebook">Login with facebook</string>
+	<string name="esn_welcome_signup">Sign Up</string>
 </resources>
-

@@ -48,19 +48,19 @@
 		        </EditText>
     		</TableRow>
     		<TableRow>       
-        		<TextView         		    
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tv_current_pass"
-		            android:layout_marginBottom="10dp"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:background="@drawable/rounded_corners_left"
-	            	android:textSize="16dp"
-	            	android:textColor="#fff"
-	            	/>
+
+        		<TextView
+        		    android:layout_width="wrap_content"
+        		    android:layout_height="wrap_content"
+        		    android:layout_marginBottom="10dp"
+        		    android:background="@drawable/rounded_corners_left"
+        		    android:paddingBottom="8dp"
+        		    android:paddingLeft="5dp"
+        		    android:paddingRight="5dp"
+        		    android:paddingTop="8dp"
+        		    android:text="@string/esn.changepassword.tv_current_pass"
+        		    android:textColor="#fff"
+        		    android:textSize="16dp" />
 
 		        <EditText
 		            android:id="@+id/esn.changepass.currentpassword"
@@ -78,19 +78,19 @@
 		        </EditText>
     		</TableRow>
     		<TableRow >
-        
-        		<TextView 
-	            	android:layout_width="wrap_content"
-	            	android:layout_height="wrap_content"
-	            	android:text="@string/tv_new_pass"
-	            	android:layout_marginBottom="10dp"
-		            android:paddingLeft="5dp"
-		            android:background="@drawable/rounded_corners_left"
-		            android:paddingRight="5dp"
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:textColor="#fff"/>
+        
+        		<TextView
+        		    android:layout_width="wrap_content"
+        		    android:layout_height="wrap_content"
+        		    android:layout_marginBottom="10dp"
+        		    android:background="@drawable/rounded_corners_left"
+        		    android:paddingBottom="8dp"
+        		    android:paddingLeft="5dp"
+        		    android:paddingRight="5dp"
+        		    android:paddingTop="8dp"
+        		    android:text="@string/esn.changepassword.tv_new_pass"
+        		    android:textColor="#fff"
+        		    android:textSize="16dp" />
         		
 		    	<EditText 
 		    	    android:id="@+id/esn.changepass.newpassword"
@@ -109,19 +109,20 @@
     		</TableRow>
     		
 	        <TableRow >
-	        
-	            <TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tv_confirm_pass"
-		            android:layout_marginBottom="10dp"
-		            android:background="@drawable/rounded_corners_left"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:textColor="#fff"/>
+	        
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="10dp"
+	                android:background="@drawable/rounded_corners_left"
+	                android:paddingBottom="8dp"
+	                android:paddingLeft="5dp"
+	                android:paddingRight="5dp"
+	                android:paddingTop="8dp"
+	                android:text="@string/esn.changepassword.tv_confirm_pass"
+	                android:textColor="#fff"
+	                android:textSize="16dp" />
+
 	            <EditText 
 	                android:id="@+id/esn.changepass.repeatnewpassword"
 			   	    android:layout_width="wrap_content"
@@ -145,13 +146,14 @@
 	        android:layout_height="match_parent"
 	        android:gravity="center"
 	        >
-	        <Button 
+
+	        <Button
 	            android:id="@+id/btLogin"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:text="@string/btDone"
 	            android:onClick="ChangePasswordClicked"
-	            />	      
+	            android:text="@string/esn.changepassword.btDone" />
+	      
 	    </LinearLayout>
 	    
 	</LinearLayout>

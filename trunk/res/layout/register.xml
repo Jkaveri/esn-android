@@ -34,44 +34,46 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="3dp"
 	   	    	android:layout_marginRight="3dp"/>            
-            
+            
         	<EditText
-	        	android:id="@+id/esn.register.txtEmail"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="10dp"
-	            android:layout_marginBottom="5dp"
-	            android:hint="@string/tvEmail"
-	            android:background="@drawable/rounded_corner_white"
-	            android:paddingLeft="5dp"
-	            android:height="40dp"
-	            android:paddingTop="7dp"
-	            android:paddingBottom="7dp"
-	            android:paddingRight="5dp"
-	            android:layout_marginLeft="3dp"
-	   	    	android:layout_marginRight="3dp"
-	            android:singleLine="true"
-	            android:textColor="@color/text_color"
-	            android:textColorHint="@color/text_color"/>
+        	    android:id="@+id/esn.register.txtEmail"
+        	    android:layout_width="fill_parent"
+        	    android:layout_height="wrap_content"
+        	    android:layout_marginBottom="5dp"
+        	    android:layout_marginLeft="3dp"
+        	    android:layout_marginRight="3dp"
+        	    android:layout_marginTop="10dp"
+        	    android:background="@drawable/rounded_corner_white"
+        	    android:height="40dp"
+        	    android:hint="@string/esn.register.tvEmail"
+        	    android:paddingBottom="7dp"
+        	    android:paddingLeft="5dp"
+        	    android:paddingRight="5dp"
+        	    android:paddingTop="7dp"
+        	    android:singleLine="true"
+        	    android:textColor="@color/text_color"
+        	    android:textColorHint="@color/text_color" />
+
 	        <EditText
 	            android:id="@+id/esn.register.Password"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="5dp"
 	            android:layout_marginBottom="10dp"
+	            android:layout_marginLeft="3dp"
+	            android:layout_marginRight="3dp"
+	            android:layout_marginTop="5dp"
 	            android:background="@drawable/rounded_corner_white"
 	            android:height="40dp"
-	            android:password="true"
-                android:paddingLeft="5dp"
-                android:paddingTop="7dp"
+	            android:hint="@string/esn.register.tvPassword"
+	            android:inputType="textPassword"
 	            android:paddingBottom="7dp"
+	            android:paddingLeft="5dp"
 	            android:paddingRight="5dp"
+	            android:paddingTop="7dp"
+	            android:password="true"
 	            android:singleLine="true"
-	            android:layout_marginLeft="3dp"
-	   	    	android:layout_marginRight="3dp"
-	            android:hint="@string/tvPassword"
 	            android:textColor="@color/text_color"
-	            android:textColorHint="@color/text_color"/>    
+	            android:textColorHint="@color/text_color" />
 	        
            	<TextView
                 android:layout_width="wrap_content"
@@ -81,32 +83,32 @@
                 android:layout_marginLeft="3dp"
 	   	    	android:layout_marginRight="3dp"
                 android:textColor="#FFFFFF"/> 
-                
+                
             <EditText
-           		android:id="@+id/esn.register.txtFullName"
+                android:id="@+id/esn.register.txtFullName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_corner_white"
                 android:height="40dp"
+                android:hint="@string/esn.register.Name"
+                android:paddingBottom="7dp"
                 android:paddingLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"                
+                android:paddingRight="5dp"
                 android:paddingTop="7dp"
-	            android:paddingBottom="7dp"
-	            android:paddingRight="5dp"
-	            android:singleLine="true"
-	            android:layout_marginLeft="3dp"
-	   	    	android:layout_marginRight="3dp"
-                android:hint="@string/app.register.Name"
+                android:singleLine="true"
                 android:textColor="@color/text_color"
-                android:textColorHint="@color/text_color"/>
+                android:textColorHint="@color/text_color" />
                         
              <Spinner
 			        android:id="@+id/esn.register.ddlGender"
 			        android:layout_width="110dp"
 			        android:layout_height="40dp"
 			        android:entries="@array/Gender_arrays"
-			        android:prompt="@string/app.register.ddlName"
+			        android:prompt="@string/esn.register.ddlName"
 			        android:height="40dp"
 			        android:background="@drawable/rounded_corner_white"
 			        android:layout_marginTop="5dp"
@@ -115,59 +117,59 @@
 			        android:spinnerMode="dialog"
 			        android:layout_marginLeft="3dp"	   	    	
 			        android:popupBackground="#33b5e5"/>
-            
+            
             <EditText
                 android:id="@+id/esn.register.txtBirthday"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="DatePickerDialogShow"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_corner_white"
                 android:editable="false"
                 android:height="40dp"
-                android:background="@drawable/rounded_corner_white"            
-                android:paddingLeft="5dp"
-                android:layout_marginLeft="3dp"
-	   	    	android:layout_marginRight="3dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:hint="@string/esn.register.date"
+                android:onClick="DatePickerDialogShow"
+                android:paddingLeft="5dp"
                 android:textColor="@color/text_color"
-                android:textColorHint="@color/text_color"/>
-            
+                android:textColorHint="@color/text_color" />
+            
             <EditText
                 android:id="@+id/esn.register.txtPhone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:height="40dp"
-                android:paddingLeft="5dp"
-                android:background="@drawable/rounded_corner_white"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:singleLine="true"
-                android:paddingTop="7dp"
-	            android:paddingBottom="7dp"
-	            android:layout_marginLeft="3dp"
-	   	    	android:layout_marginRight="3dp"
-	            android:paddingRight="5dp"
-                android:hint="@string/tvPhone"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_corner_white"
+                android:height="40dp"
+                android:hint="@string/esn.register.tvPhone"
                 android:inputType="number"
+                android:paddingBottom="7dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="7dp"
+                android:singleLine="true"
                 android:textColor="@color/text_color"
-                android:textColorHint="@color/text_color"/>   
-        
-          <Button android:id="@+id/btnRegister"                           
-                android:onClick="RegisterClicked"
-                android:text="@string/app_register"
-               	android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:textColor="@color/text_color"
-	            android:background="@drawable/rounded_corner_white"
-	            android:layout_marginBottom="4dp"
-	            android:layout_marginTop="4dp"
-	            android:paddingTop="8dp"
-	            android:textSize="16dp"
-	            android:paddingBottom="8dp"
-	            android:layout_marginLeft="3dp"
-	            android:layout_marginRight="3dp"
-                />           
+                android:textColorHint="@color/text_color" />
+        
+          <Button
+              android:id="@+id/btnRegister"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="4dp"
+              android:layout_marginLeft="3dp"
+              android:layout_marginRight="3dp"
+              android:layout_marginTop="4dp"
+              android:background="@drawable/rounded_corner_white"
+              android:onClick="RegisterClicked"
+              android:paddingBottom="8dp"
+              android:paddingTop="8dp"
+              android:text="@string/esn.register.btSignUp"
+              android:textColor="@color/text_color"
+              android:textSize="16dp" />
          
            <LinearLayout 
         	    android:layout_width="fill_parent"
@@ -175,22 +177,24 @@
         	    android:gravity="center"
         	    android:orientation="horizontal"
         	    android:layout_marginBottom="10dp">
-        	    <TextView
-                android:id="@+id/lkService"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:text="@string/hlService"
-                android:textColor="#FFFFFF"
-                android:textSize="12dp"/>
 
+        	    <TextView
+        	        android:id="@+id/lkService"
+        	        android:layout_width="wrap_content"
+        	        android:layout_height="wrap_content"
+        	        android:layout_marginRight="30dp"
+        	        android:text="@string/esn.register.hlService"
+        	        android:textColor="#FFFFFF"
+        	        android:textSize="12dp" />
+
            <TextView
-                android:id="@+id/lkPolicy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hlPolicy"
-                android:textColor="#FFFFFF"                
-                android:textSize="12dp" />
+               android:id="@+id/lkPolicy"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/esn.register.hlPolicy"
+               android:textColor="#FFFFFF"
+               android:textSize="12dp" />
+
         	</LinearLayout>              
     </LinearLayout>    
 

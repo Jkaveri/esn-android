@@ -118,7 +118,7 @@ public class EditProfileActivity extends Activity {
 	private void ShowProfileInfo() {
 		
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
+		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage("Waiting ....");
 		dialog.show();
 		
@@ -408,8 +408,9 @@ public class EditProfileActivity extends Activity {
 	public void UpdateProfileClicked(View view)
 	{
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
-		dialog.setMessage("Waiting ....");
+		dialog.setTitle(res.getString(R.string.esn_global_loading));
+		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
+		
 		dialog.show();
 		
 		UpdateProfileThread updateProfileThread = new UpdateProfileThread();

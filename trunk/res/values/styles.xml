@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="esn.theme.light" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/esn.theme.light.actionbar</item>
@@ -25,5 +25,5 @@
 
     <style name="esn.theme.light.actionbar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#ffffff</item>
-    </style>    
+    </style>  
 </resources>

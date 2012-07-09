@@ -114,7 +114,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 
 	private void setupFriendList() {
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
+		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage("Waiting ....");
 		dialog.show();
 		
