@@ -57,7 +57,7 @@ public class AudioManager {
 				Log.i("AudioManager", "Data record length: " + buf.length);
 				Log.i("AudioManager", "Result: " + result);
 				
-				boolean ok = loadPlayerBuffer("cos lor ddaast owr", "hafng xanh");
+				boolean ok = loadPlayerBuffer("cos kejt xe owr", "hafng xanh");
 				if(ok){
 					player.play();
 				}else{
