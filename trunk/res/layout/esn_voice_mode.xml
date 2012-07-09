@@ -1,49 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent" >
+
     <com.google.android.maps.MapView
         android:id="@+id/esn.google.maps.state"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:apiKey="@string/key.maps.googleAPI"
         android:clickable="true" />
-    <TextView 
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:background="#FF0000"
-        android:gravity="center|center_vertical"
-        android:text="Xin chao !"
-        android:textColor="#FFF"
-        
-        />
-    <LinearLayout 
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center|bottom"
-        >        
-        <TextView 
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:background="#FF0000"
-        android:gravity="center|center_vertical"/>
-        
+        android:gravity="bottom"
+        android:background="@null"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:background="@null" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@null" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="32dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bogoc_big" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/bgbar" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" >
+
+                    <ImageButton
+                        android:contentDescription="@string/app_name"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_mic_record_xhdmi" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center|bottom"
-        android:paddingBottom="5dp"
-        >        
-        <ImageButton
-        android:src="@drawable/ic_microphone2"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@null"   
-        />
-        
+        android:background="@drawable/bg"
+        android:orientation="vertical"
+        android:padding="6dp" >
+
+        <TextView
+            android:id="@+id/esn.voicemode.txt.state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:scrollHorizontally="true"
+            android:text="@string/esn.voicemode.state"
+            android:textColor="@color/BgWhite"
+            android:textSize="16dp"
+            android:textStyle="italic" />
     </LinearLayout>
-    
+
 </RelativeLayout>
