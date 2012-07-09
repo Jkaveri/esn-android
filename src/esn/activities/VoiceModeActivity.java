@@ -24,11 +24,17 @@ public class VoiceModeActivity extends SherlockMapActivity implements OnNavigati
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.esn_voice_mode);
 		
-		voidModeHeplper = new VoiceModeHelper();
+		voidModeHeplper = new VoiceModeHelper(this);
 		
 		setupActionBar();
 		setupMap();
 		setupListNavigate();
+	}
+	
+	@Override
+	public void onDestroy() {
+		voidModeHeplper.destroy();
+		super.onDestroy();
 	}
 
 	private void setupListNavigate() {
