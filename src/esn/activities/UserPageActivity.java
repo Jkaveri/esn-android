@@ -56,8 +56,8 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 	private void loadData() {
 		final int accID = this.getIntent().getIntExtra("accountID", 0);
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(getString(R.string.app_Processing));
-		dialog.setMessage(getString(R.string.message_diaglog_process_wait));
+		dialog.setTitle(getString(R.string.esn_global_loading));
+		dialog.setMessage(getString(R.string.esn_global_pleaseWait));
 		dialog.show();
 		
 		Thread thr = new Thread(new Runnable() {

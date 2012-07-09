@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="esn.addNewEvent.title">Title :</string>
+    <string name="esn.addNewEvent.description">Description:</string>
+    <string name="esn.addNewEvent.add">Add</string>
+    <string name="esn.addNewEvent.capture">Capture</string>
+    <string name="esn.addNewEvent.cancel">Cancel</string>
+    <string name="esn.addNewEvent.coordinate">Coordinate :</string>
+    <string name="esn.addNewEvent.addresss">Address :</string>
+    <string name="esn.addNewEvent.imageeventstatus">No image for this event.</string>
+    <string name="esn_addNewEvent_canNotUpload">Can\'t upload image</string>
+    <string name="esn_addNewEvent_wantToContinue">Would you want to countinue?</string>
+    <!-- EventDetail -->
+    <string name="esn.eventDetail">Event detail</string>
+    <string name="esn.eventDetail.like">True</string>
+    <string name="esn.eventDetail.dislike">False</string>
+    <string name="esn.eventDetail.image">Event Image</string>
+    <string name="esn.eventDetail.iconEventType">Event Type</string>
+    <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
+    <string name="esn.eventDetail.description">Description</string>
+    <string name="esn.eventDetail.createby">Create By</string>
+    <string name="esn_global_ok">OK</string>
+    <string name="esn_global_cancel">Cancel</string>
+	<string name="esn.eventDetail.send">Send</string>
+    <string name="esn.eventDetail.comment">Comment</string>
+    <string name="esn.eventDetail.commentall">Show all</string>
+    <string name="esn.eventDetail.commensuccess">Successfully</string>
+    <string name="esn.eventDetail.commenfail">Fail. Try again.</string>
+    <string name="esn.eventDetail.islike">Bạn đã xác nhận đúng rồi.</string>
+    <string name="esn.eventDetail.isdislike">Bạn đã xác nhận sai rồi.</string>
+    <string name="esn.eventDetail.likesuccess">Bạn đã xác nhận đúng.</string>
+    <string name="esn.eventDetail.dislikesuccess">Bạn đã xác nhận sai.</string>
+    <string name="esn.eventDetail.likefail">Error. Try again.</string>
+</resources>

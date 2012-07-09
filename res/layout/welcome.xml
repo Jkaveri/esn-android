@@ -3,56 +3,52 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#CC0033"
+    android:gravity="center"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/main_logo" />
+
+    <Button
+        android:id="@+id/btloginfb"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_corner_white"
+        android:onClick="btnLoginfbClicked"
+        android:text="@string/esn_welcome_loginWithFacebook"
+        android:textColor="#327df2" />
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/main_logo" />
+    <Button
+        android:id="@+id/btLogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_corner_white"
+        android:onClick="LoginClicked"
+        android:text="@string/esn_welcome_login"
+        android:textColor="#327df2" />
 
-        
-        
-        <Button android:id="@+id/btloginfb"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"                
-            android:onClick="btnLoginfbClicked"
-            android:text="@string/btLoginFB"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textColor="#327df2"
-            android:background="@drawable/rounded_corner_white"/>
-        
-        <Button android:id="@+id/btLogin"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"                
-            android:onClick="LoginClicked"
-            android:text="@string/btLogin"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textColor="#327df2"
-            android:background="@drawable/rounded_corner_white"/>
-        
-        <Button android:id="@+id/btSignUp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"               
-            android:onClick="RegisterClicked"
-            android:text="@string/btSignUp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textColor="#327df2"
-            android:background="@drawable/rounded_corner_white"/>
-    </LinearLayout>
+    <Button
+        android:id="@+id/btSignUp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_corner_white"
+        android:onClick="RegisterClicked"
+        android:text="@string/esn_welcome_signup"
+        android:textColor="#327df2" />
+
 </LinearLayout>

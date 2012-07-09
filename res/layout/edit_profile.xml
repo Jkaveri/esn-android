@@ -18,16 +18,15 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginTop="5dp"
 	        >
-	        
-	        <ImageView 
+	        
+	        <ImageView
 	            android:id="@+id/esn.changeprogile.avatar"
 	            android:layout_width="48dp"
 	            android:layout_height="48dp"
 	            android:layout_gravity="top"
-	            android:src="@drawable/avatar"
-	            
-	            android:onClick="AvatarClicked"	            
-	            />
+	            android:contentDescription="@string/esn_register_avatar"
+	            android:onClick="AvatarClicked"
+	            android:src="@drawable/avatar" />
 	        
 	        <LinearLayout 
 	            android:orientation="vertical"
@@ -35,35 +34,37 @@
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="10dp"
 	            >
+
 	       		<EditText
-		            android:id="@+id/esn.changeprofile.fullname"
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:background="#c5eaf8"
-	            	>
+	       		    android:id="@+id/esn.changeprofile.fullname"
+	       		    android:layout_width="fill_parent"
+	       		    android:layout_height="wrap_content"
+	       		    android:layout_marginBottom="10dp"
+	       		    android:background="#c5eaf8"
+	       		    android:hint="@string/esn.register.Name"
+	       		    android:paddingBottom="8dp"
+	       		    android:paddingLeft="5dp"
+	       		    android:paddingRight="5dp"
+	       		    android:paddingTop="8dp"
+	       		    android:textSize="16dp"
+	       		    android:textStyle="bold" >
+
 		            <requestFocus />
 		        </EditText>
-		        
+		        
 	       		<Spinner
-	                android:id="@+id/esn.changeprofile.gender"
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:entries="@array/Gender_arrays"
-			        android:prompt="@string/app.register.ddlName"
-			        android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>	       		
+	       		    android:id="@+id/esn.changeprofile.gender"
+	       		    android:layout_width="fill_parent"
+	       		    android:layout_height="wrap_content"
+	       		    android:background="#c5eaf8"
+	       		    android:entries="@array/Gender_arrays"
+	       		    android:paddingBottom="8dp"
+	       		    android:paddingLeft="5dp"
+	       		    android:paddingRight="5dp"
+	       		    android:paddingTop="8dp"
+	       		    android:prompt="@string/esn.register.ddlName"
+	       		    android:textSize="16dp"
+	       		    android:textStyle="bold" />
 	       		
 	        </LinearLayout>
 	    </LinearLayout>
@@ -75,60 +76,64 @@
     		android:layout_marginTop="5dp">
 	        
 	        <TableRow>
-	            <TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tv_edit_Phone"
-		            android:layout_marginBottom="10dp"
-		            android:background="#8ad5f0"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:textStyle="bold"
-		            />
+
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="10dp"
+	                android:background="#8ad5f0"
+	                android:paddingBottom="8dp"
+	                android:paddingLeft="5dp"
+	                android:paddingRight="5dp"
+	                android:paddingTop="8dp"
+	                android:text="@string/esn.register.tvBirthday"
+	                android:textSize="16dp"
+	                android:textStyle="bold" />
+
 	            <EditText
-		    	    android:id="@+id/esn.changeprofile.birthday"
+	                android:id="@+id/esn.changeprofile.birthday"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
-	                android:onClick="DatePickerDialogShow"
+	                android:background="#c5eaf8"
 	                android:editable="false"
-	                android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>
+	                android:inputType="date"
+	                android:onClick="DatePickerDialogShow"
+	                android:paddingBottom="8dp"
+	                android:paddingLeft="5dp"
+	                android:paddingRight="5dp"
+	                android:paddingTop="8dp"
+	                android:textSize="16dp"
+	                android:textStyle="bold" />
+
 	        </TableRow>
 	        <TableRow >
-	        
-	            <TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/tv_edit_Phone"
-		            android:layout_marginBottom="10dp"
-		            android:background="#8ad5f0"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:textStyle="bold"
-		            />
-	            <EditText 
+	        
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="10dp"
+	                android:background="#8ad5f0"
+	                android:paddingBottom="8dp"
+	                android:paddingLeft="5dp"
+	                android:paddingRight="5dp"
+	                android:paddingTop="8dp"
+	                android:text="@string/esn.register.tvPhone"
+	                android:textSize="16dp"
+	                android:textStyle="bold" />
+
+	            <EditText
 	                android:id="@+id/esn.changeprofile.phone"
-			   	    android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>		   	
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="10dp"
+	                android:background="#c5eaf8"
+	                android:inputType="text"
+	                android:paddingBottom="8dp"
+	                android:paddingLeft="5dp"
+	                android:paddingRight="5dp"
+	                android:paddingTop="8dp"
+	                android:textSize="16dp"
+	                android:textStyle="bold" />
 		   	
 	        </TableRow>
 	        
@@ -147,18 +152,21 @@
 	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
+
 		    	<EditText
-	                android:id="@+id/esn.changeprofile.address"
-	                android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>
+		    	    android:id="@+id/esn.changeprofile.address"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_marginBottom="10dp"
+		    	    android:background="#c5eaf8"
+		    	    android:inputType="text"
+		    	    android:paddingBottom="8dp"
+		    	    android:paddingLeft="5dp"
+		    	    android:paddingRight="5dp"
+		    	    android:paddingTop="8dp"
+		    	    android:textSize="16dp"
+		    	    android:textStyle="bold" />
+
     		</TableRow>
     		<TableRow>
         
@@ -175,18 +183,21 @@
 	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
+
 		    	<EditText
-	                android:id="@+id/esn.changeprofile.street"
-	                android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>
+		    	    android:id="@+id/esn.changeprofile.street"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_marginBottom="10dp"
+		    	    android:background="#c5eaf8"
+		    	    android:inputType="text"
+		    	    android:paddingBottom="8dp"
+		    	    android:paddingLeft="5dp"
+		    	    android:paddingRight="5dp"
+		    	    android:paddingTop="8dp"
+		    	    android:textSize="16dp"
+		    	    android:textStyle="bold" />
+
     		</TableRow>
     		<TableRow >        
         		<TextView 
@@ -202,18 +213,21 @@
 	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
+
 		    	<EditText
-	                android:id="@+id/esn.changeprofile.district"
-	                android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>
+		    	    android:id="@+id/esn.changeprofile.district"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_marginBottom="10dp"
+		    	    android:background="#c5eaf8"
+		    	    android:inputType="text"
+		    	    android:paddingBottom="8dp"
+		    	    android:paddingLeft="5dp"
+		    	    android:paddingRight="5dp"
+		    	    android:paddingTop="8dp"
+		    	    android:textSize="16dp"
+		    	    android:textStyle="bold" />
+
     		</TableRow>
     		<TableRow >        
         		<TextView 
@@ -229,18 +243,21 @@
 	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
+
 		    	<EditText
-	                android:id="@+id/esn.changeprofile.city"
-	                android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>
+		    	    android:id="@+id/esn.changeprofile.city"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_marginBottom="10dp"
+		    	    android:background="#c5eaf8"
+		    	    android:inputType="text"
+		    	    android:paddingBottom="8dp"
+		    	    android:paddingLeft="5dp"
+		    	    android:paddingRight="5dp"
+		    	    android:paddingTop="8dp"
+		    	    android:textSize="16dp"
+		    	    android:textStyle="bold" />
+
     		</TableRow>
     		<TableRow >        
         		<TextView 
@@ -256,18 +273,21 @@
 	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
+
 		    	<EditText
-	                android:id="@+id/esn.changeprofile.country"
-	                android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>
+		    	    android:id="@+id/esn.changeprofile.country"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_marginBottom="10dp"
+		    	    android:background="#c5eaf8"
+		    	    android:inputType="text"
+		    	    android:paddingBottom="8dp"
+		    	    android:paddingLeft="5dp"
+		    	    android:paddingRight="5dp"
+		    	    android:paddingTop="8dp"
+		    	    android:textSize="16dp"
+		    	    android:textStyle="bold" />
+
     		</TableRow>  
 	        <TableRow >        
         		<TextView 
@@ -283,18 +303,21 @@
 	            	android:textSize="16dp"
 	            	android:textStyle="bold"
 	            />
+
 		    	<EditText
-	                android:id="@+id/esn.changeprofile.favorite"
-	                android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:textStyle="bold"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"/>
+		    	    android:id="@+id/esn.changeprofile.favorite"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_marginBottom="10dp"
+		    	    android:background="#c5eaf8"
+		    	    android:inputType="text"
+		    	    android:paddingBottom="8dp"
+		    	    android:paddingLeft="5dp"
+		    	    android:paddingRight="5dp"
+		    	    android:paddingTop="8dp"
+		    	    android:textSize="16dp"
+		    	    android:textStyle="bold" />
+
     		</TableRow>
 		</TableLayout>	
 		

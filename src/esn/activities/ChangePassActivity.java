@@ -68,37 +68,37 @@ public class ChangePassActivity extends Activity {
 		if(chk == 1)
 		{
 			EditText txtCurrentPassword = (EditText)findViewById(R.id.esn_changepass_currentpassword);
-			txtCurrentPassword.setError(res.getString(R.string.app_changepassword_requirecurrentpassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));			
+			txtCurrentPassword.setError(res.getString(R.string.esn_changepassword_requirecurrentpassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));			
 			
 		}
 		else if(chk==2)
 		{
 			EditText txtNewPassword = (EditText)findViewById(R.id.esn_changepass_newpassword);
-			txtNewPassword.setError(res.getString(R.string.app_changepassword_requirepassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));			
+			txtNewPassword.setError(res.getString(R.string.esn_changepassword_requirepassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));			
 			
-			Toast.makeText(this,R.string.app_changepassword_passwordnotmatch, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this,R.string.esn_changepassword_passwordnotmatch, Toast.LENGTH_SHORT).show();
 			
 		}
 		else if(chk==3)
 		{
 			EditText txtRepeatNewPassword = (EditText)findViewById(R.id.esn_changepass_repeatnewpassword);
-			txtRepeatNewPassword.setError(res.getString(R.string.app_changepassword_requirerepeatpassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			txtRepeatNewPassword.setError(res.getString(R.string.esn_changepassword_requirerepeatpassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));
 			return;
 		}
 		else if(chk==4)
 		{
 			EditText txtRepeatNewPassword = (EditText)findViewById(R.id.esn_changepass_repeatnewpassword);
-			txtRepeatNewPassword.setError(res.getString(R.string.app_changepassword_passwordnotmatch), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			txtRepeatNewPassword.setError(res.getString(R.string.esn_changepassword_passwordnotmatch), res.getDrawable(R.drawable.ic_alerts_and_states_error));
 			return;
 		}
 		else if(chk==5)
 		{
-			Util.showAlert(context, res.getResourceName(R.string.esn_global_Error), res.getResourceName(R.string.app_changepassword_currentpasswordinccorect));
+			Util.showAlert(context, res.getResourceName(R.string.esn_global_Error), res.getResourceName(R.string.esn_changepassword_currentpasswordinccorect));
 		}
 		else
 		{
 			dialog = new ProgressDialog(this);
-			dialog.setTitle(this.getResources().getString(R.string.app_Processing));
+			dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 			dialog.setMessage("Waiting ....");
 			dialog.show();
 			ChangePasswordThread changePassword = new ChangePasswordThread();

@@ -115,7 +115,7 @@ public class EventsManager {
 		params.put("eventTypeID", event.EventTypeID);
 		params.put("title", event.Title);
 		params.put("description", event.Description);
-		params.put("picture", event.Picture);
+		params.put("picture", (event.Picture==null)?"":event.Picture);
 		params.put("latitude", event.EventLat);
 		params.put("longitude", event.EventLng);
 		params.put("shareType", event.ShareType);

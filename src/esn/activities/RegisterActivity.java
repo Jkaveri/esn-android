@@ -214,19 +214,19 @@ public class RegisterActivity extends SherlockActivity {
 		if(valid==false)
 		{
 						
-			email.setError(res.getString(R.string.app_register_ValidateEmail), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			email.setError(res.getString(R.string.esn_register_ValidateEmail), res.getDrawable(R.drawable.ic_alerts_and_states_error));
 			return;
 		}
 		else if(require==1)
 		{
 			EditText name = (EditText)findViewById(R.id.esn_register_txtFullName);
-			name.setError(res.getString(R.string.app_register_RequireFistName), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			name.setError(res.getString(R.string.esn_register_RequireFistName), res.getDrawable(R.drawable.ic_alerts_and_states_error));
 			return;
 		}
 		else if(require == 2)
 		{
 			EditText pass = (EditText)findViewById(R.id.esn_register_Password);
-			pass.setError(res.getString(R.string.app_register_RequirePassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			pass.setError(res.getString(R.string.esn_register_RequirePassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));
 			return;
 		}
 		else
@@ -253,7 +253,7 @@ public class RegisterActivity extends SherlockActivity {
 								@Override
 								public void run() {
 									dialog = new ProgressDialog(RegisterActivity.this);
-									dialog.setTitle(getResources().getString(R.string.app_Processing));
+									dialog.setTitle(getResources().getString(R.string.esn_global_loading));
 									dialog.setMessage("Waiting ....");
 									dialog.show();	
 									

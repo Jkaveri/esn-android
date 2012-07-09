@@ -255,35 +255,25 @@ public class HomeActivity extends SherlockMapActivity implements
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case EsnMapView.REQUEST_CODE_ADD_NEW_EVENT:
-				progressDialog = new ProgressDialog(this);
-				progressDialog.setTitle(res
-						.getString(R.string.esn_global_loading));
-				progressDialog.setMessage(res
-						.getString(R.string.esn_global_pleaseWait));
-				progressDialog.show();
+			
 				double latitude = data.getDoubleExtra("latitude",
 						Double.MIN_VALUE);
 				double longtitude = data.getDoubleExtra("longtitude",
 						Double.MIN_VALUE);
 				String title = data.getStringExtra("eventTitle");
 				String description = data.getStringExtra("eventDescription");
-				String picture = data.getStringExtra("picture");
-				int pointerDrawable = data.getIntExtra("labelIcon", 0);
+				int eventId = data.getIntExtra("eventId",0);
+				
 				int labelId = data.getIntExtra("labelId", 0);
 				if (latitude != Integer.MIN_VALUE
 						&& longtitude != Integer.MIN_VALUE) {
-					Events event = new Events();
-					Sessions session = Sessions.getInstance(this);
-					event.AccID = session.currentUser.AccID;
-					event.EventTypeID = labelId;
-					event.Title = title;
-					event.Description = description;
-					// @todo: nang chup hinh khi tao event
-					event.Picture = (picture == null) ? "" : picture;
-					event.EventLat = latitude;
-					event.EventLng = longtitude;
-					event.ShareType = AppEnums.ShareTypes.Public;
-					new CreateEventsThread(event).start();
+					GeoPoint point = new GeoPoint((int) (latitude * 1E6),
+							(int) (longtitude * 1E6));
+					EventOverlayItem item = new EventOverlayItem(point, title,
+							description, eventId);
+						
+					map.setMarker(item,EventType.getIconId(labelId, 1));
+					mapView.getController().animateTo(point);
 				}
 				break;
 			case CODE_REQUEST_SET_FILTER:

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- EDIT PROFILE -->
+    <string name="tv_Edit_Profile_ChangeAddress">Edit Address</string>
+    <string name="tv_Edit_Profile_Address">Address</string>
+    <string name="tv_Edit_Profile_Street">Street</string>
+    <string name="tv_Edit_Profile_District">District</string>
+    <string name="tv_Edit_Profile_City">City</string>
+    <string name="tv_Edit_Profile_Country">Country</string>
+    <string name="tv_Edit_Profile_Other">Edit Other</string>
+    <string name="tv_Edit_Profile_Favorite">Favorite</string>
+    <!-- change Password -->
+
+    <string name="esn.changepassword.requirecurrentpassword">Current password is required !</string>
+    <string name="esn.changepassword.requirepassword">Password is required !</string>
+    <string name="esn.changepassword.requirerepeatpassword">Repeat password is required !</string>
+    <string name="esn.changepassword.passwordnotmatch">Password not match !</string>
+    <string name="esn.changepassword.currentpasswordinccorect">Current password inccorect !</string>
+    <string name="esn.changepassword.lbChange_Pass">Change Password</string>
+    <string name="esn.changepassword.lblPosition">Position</string>
+    <string name="esn.changepassword.rdbShow">Show Position</string>
+    <string name="esn.changepassword.rdbHide">Hide Position</string>
+    <string name="esn.changepassword.lblProfile">Edit Profile</string>
+    <string name="esn.changepassword.tv_current_pass">Current Pass</string>
+    <string name="esn.changepassword.tv_new_pass">New Pass</string>
+    <string name="esn.changepassword.tv_confirm_pass">Confirm Pass</string>
+    <string name="esn.changepassword.lblPic">Edit Profile Picture</string>
+    <string name="esn.changepassword.lblChangePass">Change Password</string>
+    <string name="esn.changepassword.lblHelp">Help</string>
+    <string name="esn.changepassword.lblAbout">About</string>
+    <string name="esn.changepassword.lblTerms">Terms</string>
+    <string name="esn.changepassword.btnLogOut">Log Out</string>
+    <string name="esn.changepassword.btDone">Done</string>
+    <string name="esn.changepassword.btLogout">Logout</string>
+    <!-- Register -->
+    <string name="esn.register.date"></string>
+    <string name="esn.register.ddlName">Choose a gender</string>
+    <string name="esn.register.RequireFistName">Full Name not blank !</string>
+    <string name="esn.register.RequireLastName">Last Name not blank !</string>
+    <string name="esn.register.RequirePassword">Password not blank !</string>
+    <string name="esn.register.ValidateEmail">Invalid Email Addresss !</string>
+    <string name="esn.register.EmailExists">Email Exists!</string>
+    <string name="esn.register.Name">Full Name!</string>
+    <string name="esn.register.btLogin">Login</string>
+    <string name="esn.register.btSignUp">Signup</string>
+    <string name="esn.register.txtEmail">Email</string>
+    <string name="esn.register.txtPassword">Password</string>
+    <string name="esn.register.btBack">Back</string>
+    <string name="esn.register.tvFist">Fist Name</string>
+    <string name="esn.register.txtLastName">Last Name</string>
+    <string name="esn.register.txtPhone">0908 123 456</string>
+    <string name="esn.register.txtBirthday">01/01/1990</string>
+    <string name="esn.register.txtGender">Male</string>
+    <string name="esn.register.btLoginFB">Login With Facebook</string>
+    <string name="esn.register.btCancel">Cancel</string>
+    <string name="esn.register.tvEmail">Email</string>
+    <string name="esn.register.tvPassword">Password</string>
+    <string name="esn.register.tvPhone">Phone</string>
+    <string name="esn.register.tvBirthday">Birthday</string>
+    <string name="esn.register.tvGender">Gender</string>
+    <string name="esn.register.hlService">Term of Service</string>
+    <string name="esn.register.hlPolicy">Privacy and Policy</string>
+    <string name="esn.register.rdbMale">Male</string>
+    <string name="esn.register.rdbFemale">Female</string>
+    <string name="esn.register.btDone">Done</string>
+    <string name="esn.register.delete">Delete Post</string>
+    <string name="esn.register.btCancel">Cancel</string>
+    <string name="map_current_location_title">Current</string>
+    <string name="map_current_location_subtitle">You are here!</string>
+    <string name="item">Item</string>
+    <string name="finding_current_location">Finding current location</string>
+    <string name="lbAccount">Account Info</string>
+    <string name="search">Search</string>
+    <string name="esn_register_avatar">Avatar</string>
+    <string name="esn_login_forgotPass">Forgot your password?</string>
+	
+
+</resources>

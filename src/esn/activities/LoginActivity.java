@@ -98,7 +98,7 @@ public class LoginActivity extends SherlockActivity{
 		}
 		
 	/*	ProgressDialog dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.app_Processing));
+		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage("Waiting ....");
 		dialog.show();*/
 		
