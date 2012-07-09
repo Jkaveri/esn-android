@@ -5,6 +5,8 @@
 package esn.classes;
 
 import java.io.InputStream;
+
+import esn.models.S2TResult;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.media.AudioFormat;
@@ -51,13 +53,13 @@ public class AudioManager {
 				byte[] buf = wavConver.getWAVData();
 				wavConver.clearBuffer();//giai phong bo nho
 				
-				String result = auWs.send(buf);
+				S2TResult result = auWs.send(buf);
 				//buf = null; (giai phong bo nho) KHONG DUOC LAM HANH DONG NAY VI KHI SEND SERVICE PHAI CHO` KO SE VANG LOI NULL EX
 				
 				Log.i("AudioManager", "Data record length: " + buf.length);
-				Log.i("AudioManager", "Result: " + result);
+				Log.i("AudioManager", "Result: [" + result.getType() + "][" + result.getAddress() + "]");
 				
-				boolean ok = loadPlayerBuffer("cos kejt xe owr", "hafng xanh");
+				boolean ok = loadPlayerBuffer(result.getType(), result.getAddress());
 				if(ok){
 					player.play();
 				}else{

@@ -15,7 +15,7 @@ public class AudioLibManager {
 	////////////////////////////////////
 	
 	private static final String[] TYPE = {
-		"cos lor ddaast owr",
+		"cos lowr ddaast owr",
 		"cos chasy noor owr",
 		"cos kejt xe owr"
 	};	
@@ -36,7 +36,7 @@ public class AudioLibManager {
 	private static final String[] ADDRESS = {
 		"gof vaasp",
 		"hafng xanh",
-		"thur ddusc"
+		"thur dduwsc"
 	};
 	private static final int[] AUDIO_ADDRESS = {
 		R.raw.a_go_vap,

@@ -16,18 +16,24 @@ public class AudioWebService {
 		service = new EsnWebServices(NAMSPACE, URL);
 	}
 	
-	public String send(byte[] byteWavData){
+	public S2TResult send(byte[] byteWavData){
 		S2TResult s2tResult = new S2TResult();		
 		String byteString = Base64.encodeToString(byteWavData, Base64.DEFAULT);
+		byteWavData = null;//giai phong bo nho
 		Hashtable<String, Object> params = new Hashtable<String, Object>();
 		params.put("ByteArrWav", byteString);
 		
 		SoapObject response = service.InvokeMethod("WriteWAVFile", params);
 		if (response != null) {
-			Object value = response.getProperty(0);
-			s2tResult.setProperty(0, value);
+			SoapObject result = (SoapObject)response.getProperty(0);
+			int propCount = result.getPropertyCount();
+			for (int j = 0; j < propCount; j++) {
+				Object value = result.getProperty(j);
+				if (value != null) {
+					s2tResult.setProperty(j, value);
+				}
+			}
 		}
-		byteWavData = null;//giai phong bo nho
-		return s2tResult.getResult();
+		return s2tResult;
 	}
 }

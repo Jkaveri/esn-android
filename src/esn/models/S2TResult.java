@@ -6,13 +6,16 @@ import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
 public class S2TResult implements KvmSerializable{
-	private String result;
+	private String type;
+	private String address;
 
 	@Override
 	public Object getProperty(int index) {
 		switch (index) {
 		case 0:			
-			return result;
+			return type;
+		case 1:			
+			return address;
 		default:
 			return null;
 		}
@@ -20,7 +23,7 @@ public class S2TResult implements KvmSerializable{
 
 	@Override
 	public int getPropertyCount() {
-		return 1;
+		return 2;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -29,7 +32,11 @@ public class S2TResult implements KvmSerializable{
 		switch (index) {
 		case 0:
 			proInf.type = PropertyInfo.STRING_CLASS;
-			proInf.name = "WriteWAVFileResult";
+			proInf.name = "Type";
+			break;
+		case 1:
+			proInf.type = PropertyInfo.STRING_CLASS;
+			proInf.name = "Address";
 			break;
 		}
 	}
@@ -38,12 +45,19 @@ public class S2TResult implements KvmSerializable{
 	public void setProperty(int index, Object value) {
 		switch (index) {
 		case 0:
-			result = value.toString();
+			type = value.toString();
+			break;
+		case 1:
+			address = value.toString();
 			break;
 		}
 	}
 
-	public String getResult() {
-		return result;
+	public String getAddress() {
+		return address;
+	}
+	
+	public String getType() {
+		return type;
 	}
 }
