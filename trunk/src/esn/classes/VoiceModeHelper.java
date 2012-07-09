@@ -1,5 +1,6 @@
 package esn.classes;
 
+import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 import com.actionbarsherlock.view.MenuItem;
@@ -16,8 +17,8 @@ public class VoiceModeHelper {
 	private Runnable runPost_Red;
 	private AudioManager audioMng;
 	
-	public VoiceModeHelper(){
-		audioMng = new AudioManager();
+	public VoiceModeHelper(Activity activity){
+		audioMng = new AudioManager(activity);
 		handler = new Handler();
 		
 		runPost_Lig = new Runnable() {
@@ -81,5 +82,9 @@ public class VoiceModeHelper {
 		audioMng.recorder.startRecording();
 		thDynamicIcon = new Thread(run);
 		thDynamicIcon.start();
+	}
+	
+	public void destroy(){
+		audioMng.destroy();
 	}
 }

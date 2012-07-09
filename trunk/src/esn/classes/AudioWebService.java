@@ -27,6 +27,7 @@ public class AudioWebService {
 			Object value = response.getProperty(0);
 			s2tResult.setProperty(0, value);
 		}
+		byteWavData = null;//giai phong bo nho
 		return s2tResult.getResult();
 	}
 }

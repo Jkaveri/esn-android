@@ -111,6 +111,36 @@ public class AudioPlayer {
 			track.stop();
 		}
 	}
+	
+	public void clearBuffer(){
+		if(track != null){
+			if(track.getPlayState() != PLAYSTATE_STOPPED){
+				track.stop();
+			}
+			track.release();
+			track = null;
+		}
+		
+		if (th != null) {
+			th.interrupt();
+			th = null;
+		}
+		
+		try{
+			if(bs != null){
+				bs.close();
+			}
+			
+			if(is != null){
+				is.close();
+			}
+			
+			bs	= null;
+			is = null;
+		} catch (IOException e) {
+			Log.e("AudioPlayer", "IOException read buffer");
+		}
+	}
 
 	public int getPlayState() {
 		return track.getPlayState();
