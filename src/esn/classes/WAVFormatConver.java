@@ -213,8 +213,10 @@ public class WAVFormatConver {
 			returnBol = false;
 		}
 		
+		dataPCM = null;
 		if(bufferStream != null){
 			wavData = bufferStream.toByteArray();
+			bufferStream = null;
 		}else{
 			wavData = null;
 		}
@@ -225,5 +227,9 @@ public class WAVFormatConver {
 	
     public byte[] getWAVData(){
     	return wavData;
+    }
+    
+    public void clearBuffer(){
+    	wavData = null;
     }
 }

@@ -89,6 +89,10 @@ public class WAVFormatReader {
 		is = new DataInputStream(ips);
 	}
 	
+	public void clearBuffer(){
+		data = null;
+	}
+	
 	public boolean read()
 	{
 		byte[] tmpLong = new byte[4];
@@ -145,6 +149,14 @@ public class WAVFormatReader {
 		}
 		catch(IOException e)
 		{
+			if(is != null){
+				try {
+					is.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			return false;
 		}
 

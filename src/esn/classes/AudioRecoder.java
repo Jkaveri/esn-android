@@ -105,6 +105,11 @@ public class AudioRecoder {
 	public byte[] getBufferRecod() {
 		return bufferStream.toByteArray();
 	}
+	
+	public void resetBufferRecod(){
+		if(bufferStream != null)
+			bufferStream.reset();
+	}
 
 	public int getRecordState() {
 		return RECORDSTATE;
