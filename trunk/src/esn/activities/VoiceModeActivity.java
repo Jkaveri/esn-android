@@ -40,6 +40,18 @@ public class VoiceModeActivity extends MapActivity{
 		helper.destroy();
 		super.onDestroy();
 	}
+	
+	
+
+	public void setStates(final String text) {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				txtStates.setText(text);
+			}
+		});
+	}
 
 	@Override
 	protected boolean isRouteDisplayed() {
