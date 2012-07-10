@@ -3,7 +3,7 @@ package esn.classes;
 import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
-import com.actionbarsherlock.view.MenuItem;
+import android.widget.ImageButton;
 
 import esn.activities.R;
 
@@ -11,7 +11,7 @@ public class VoiceModeHelper {
 	private Thread thDynamicIcon;
 	private boolean iconChange;
 	private Runnable run;
-	private MenuItem menuRecord;
+	private ImageButton btnRecord;
 	private Handler handler;
 	private Runnable runPost_Lig;
 	private Runnable runPost_Red;
@@ -25,7 +25,7 @@ public class VoiceModeHelper {
 			
 			@Override
 			public void run() {
-				menuRecord.setIcon(R.drawable.ic_mic_stop);
+				btnRecord.setImageResource(R.drawable.ic_mic_stop_lig);
 			}
 		};
 		
@@ -33,7 +33,7 @@ public class VoiceModeHelper {
 			
 			@Override
 			public void run() {
-				menuRecord.setIcon(R.drawable.ic_mic_stop_red);
+				btnRecord.setImageResource(R.drawable.ic_mic_stop_red);
 			}
 		};
 		
@@ -68,13 +68,13 @@ public class VoiceModeHelper {
 		if (thDynamicIcon != null) {
 			thDynamicIcon.interrupt();
 			thDynamicIcon = null;
-			menuRecord.setIcon(R.drawable.ic_mic_start);
+			btnRecord.setImageResource(R.drawable.ic_mic_record);
 		}
 		audioMng.sendDataToServer();
 	}
 
-	public void setMenuItemRecord(MenuItem startRecord) {
-		menuRecord = startRecord;
+	public void setBtnRecord(ImageButton btnRecord) {
+		this.btnRecord = btnRecord;
 	}
 	
 	
