@@ -25,7 +25,14 @@ public class VoiceManager {
 	private IVoiceCallBack callBack;
 	
 	public VoiceManager(Resources resource) {
-		recorder = new AudioRecorder();
+		recorder = new AudioRecorder(new IRecordCallBack() {
+			
+			@Override
+			public void autoStopRecording() {
+				callBack.autoStopRecording();
+			}
+		});
+		
 		player = new AudioPlayer();
 		wavConver = new WAVFormatConver();
 		wavReader = new WAVFormatReader();
@@ -52,7 +59,7 @@ public class VoiceManager {
 		
 	}
 	
-	public void setSendDataBack(IVoiceCallBack callBack){
+	public void setPostBack(IVoiceCallBack callBack){
 		this.callBack = callBack;
 	}
 	
@@ -60,7 +67,6 @@ public class VoiceManager {
 		byte[] recordBuf = recorder.getBufferRecord();
 		recorder.clearBuffer();//giai phong bo nho
 		Log.i("AudioManager", "Data record length: " + recordBuf.length);
-		//SilenceDetection.isSilence(recordBuf);
 		
 		wavConver.setBuffer(recordBuf);
 		recordBuf = null;//giai phong bo nho
@@ -70,10 +76,9 @@ public class VoiceManager {
 		byte[] buf = wavConver.getWAVData();
 		wavConver.clearBuffer();//giai phong bo nho
 		
-//		
-//		S2TResult result = auWs.send(buf);
-//		Log.i("AudioManager", "Result: " + result.getType());
-//		callBack.returnCall(result);
+		S2TResult result = auWs.send(buf);
+		Log.i("AudioManager", "Result: " + result.getType());
+		callBack.s2tHviteCall(result);
 //		boolean ok = loadPlayerBuffer("cos lowr ddaast owr", "hafng xanh");
 //		if(ok){
 //			player.play();
