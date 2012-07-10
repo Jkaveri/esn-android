@@ -40,7 +40,7 @@ public class VoiceModeHelper{
 			}
 		};
 		
-		audioMng.setCallBack(new IVoiceCallBack() {
+		audioMng.setSendDataBack(new IVoiceCallBack() {
 			
 			@Override
 			public void returnCall(final S2TResult result) {

@@ -50,7 +50,7 @@ public class VoiceManager {
 		
 	}
 	
-	public void setCallBack(IVoiceCallBack callBack){
+	public void setSendDataBack(IVoiceCallBack callBack){
 		this.callBack = callBack;
 	}
 	
