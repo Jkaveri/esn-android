@@ -1,13 +1,14 @@
 package esn.classes;
 
+import android.content.res.Resources;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import esn.activities.R;
-import esn.activities.VoiceModeActivity;
 
-public class VoiceModeHelper {
+public class VoiceModeHelper{
 	private Thread thDynamicIcon;
 	private boolean iconChange;
 	private Runnable run;
@@ -17,8 +18,9 @@ public class VoiceModeHelper {
 	private Runnable runPost_Red;
 	private VoiceManager audioMng;
 	
-	public VoiceModeHelper(VoiceModeActivity activity){
-		audioMng = new VoiceManager(activity);
+	public VoiceModeHelper(Resources resources, ImageButton record, final TextView states){
+		this.btnRecord = record;
+		audioMng = new VoiceManager(resources);
 		handler = new Handler();
 		
 		runPost_Lig = new Runnable() {
@@ -36,6 +38,20 @@ public class VoiceModeHelper {
 				btnRecord.setImageResource(R.drawable.ic_mic_stop_red);
 			}
 		};
+		
+		audioMng.setCallBack(new IVoiceCallBack() {
+			
+			@Override
+			public void returnCall(final String state) {
+				handler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						states.setText(state);
+					}
+				});
+			}
+		});
 		
 		run = new Runnable() {
 
@@ -64,7 +80,7 @@ public class VoiceModeHelper {
 
 	public void stopRecording() {
 		iconChange = false;
-		audioMng.recorder.stopRecording();
+		audioMng.stopRecording();
 		if (thDynamicIcon != null) {
 			thDynamicIcon.interrupt();
 			thDynamicIcon = null;
@@ -73,13 +89,8 @@ public class VoiceModeHelper {
 		audioMng.sendDataToServer();
 	}
 
-	public void setBtnRecord(ImageButton btnRecord) {
-		this.btnRecord = btnRecord;
-	}
-	
-	
 	public void startRecording(){
-		audioMng.recorder.startRecording();
+		audioMng.startRecording();
 		thDynamicIcon = new Thread(run);
 		thDynamicIcon.start();
 	}

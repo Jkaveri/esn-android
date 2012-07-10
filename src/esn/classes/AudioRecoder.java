@@ -16,17 +16,16 @@ import android.media.MediaRecorder.AudioSource;
 import android.util.Log;
 
 public class AudioRecoder {
-	public static final int RECORDSTATE_RECORDING = AudioRecord.RECORDSTATE_RECORDING;
-	public static final int RECORDSTATE_PAUSED = 192168;
-	public static final int RECORDSTATE_STOPPED = AudioRecord.RECORDSTATE_STOPPED;
+	public static final int RECORDSTATE_STOPPED = 0;
+	public static final int RECORDSTATE_RECORDING = 1;
+	public static final int RECORDSTATE_PAUSED = 2;
 
-	public int SAMPLE_RATE = 8000;
+	public int SAMPLE_RATE = 16000;
 	public int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
 	public int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
 	public int REC_BUFFER_SIZE;
 	
-	private int RECORDSTATE = 0;
-	private AudioRecord audioRecord;
+	private int RECORDSTATE = RECORDSTATE_STOPPED;
 	private Thread th;
 	private ByteArrayOutputStream bufferStream;
 	private DataOutputStream dos;
@@ -34,33 +33,35 @@ public class AudioRecoder {
 
 	public AudioRecoder() {
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-		audioRecord = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
-		
-		bufferStream = new ByteArrayOutputStream();
-		dos = new DataOutputStream(bufferStream);
-		
+		try {
+			clearBuffer();
+		} catch (IOException e) {
+			Log.e("AudioRecoder", "IOException clearBuffer() at output stream");
+		}
 		run = new Runnable() {
 
 			@Override
 			public void run() {
-				byte[] buffer = new byte[REC_BUFFER_SIZE]; 
+				byte[] buffer = new byte[REC_BUFFER_SIZE];
+				AudioRecord audioRecord = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
 				audioRecord.startRecording();				
-				
 				while (RECORDSTATE == RECORDSTATE_RECORDING) {
 					int count = audioRecord.read(buffer, 0, REC_BUFFER_SIZE);
 					if(count > 0){
 						try {
 							dos.write(buffer, 0, count);
 						} catch (IOException e) {
-							Log.e("AudioRecoder", "IOException writeShort() at output stream");
+							Log.e("AudioRecoder", "IOException write() at output stream");
 						}
 					}
-				}
+				}				
+				audioRecord.stop();
+				audioRecord.release();
 			}
 		};
 	}
 
-	public void startRecording() {
+	public void startRecording() throws IOException {
 		if (RECORDSTATE != RECORDSTATE_RECORDING) {
 			if (RECORDSTATE == RECORDSTATE_STOPPED) {
 				bufferStream.reset();
@@ -71,30 +72,10 @@ public class AudioRecoder {
 		}
 	}
 	
-	public void pauseRecording() {
+	public void pauseRecording() throws IOException {
 		if(RECORDSTATE == RECORDSTATE_RECORDING){
 			RECORDSTATE = RECORDSTATE_PAUSED;
-			try {
-				dos.flush();
-			} catch (IOException e) {
-				Log.e("AudioRecoder", "IOException flush stream data");
-			}
-			audioRecord.stop();
-			th.interrupt();
-			th = null;
-		}
-	}
-
-	public void stopRecording() {
-		if (RECORDSTATE != RECORDSTATE_STOPPED) {
-			RECORDSTATE = RECORDSTATE_STOPPED;
-			try {
-				dos.flush();
-				dos.close();
-			} catch (IOException e) {
-				Log.e("AudioRecorder", "IOException close output stream");
-			}
-			audioRecord.stop();
+			dos.flush();
 			if(th != null){
 				th.interrupt();
 				th = null;
@@ -102,13 +83,30 @@ public class AudioRecoder {
 		}
 	}
 
-	public byte[] getBufferRecod() {
+	public void stopRecording() throws IOException {
+		if (RECORDSTATE != RECORDSTATE_STOPPED) {
+			RECORDSTATE = RECORDSTATE_STOPPED;
+			dos.flush();
+			dos.close();
+			if(th != null){
+				th.interrupt();
+				th = null;
+			}
+		}
+	}
+
+	public byte[] getBufferRecod() throws IOException {
+		bufferStream.flush();
 		return bufferStream.toByteArray();
 	}
 	
-	public void resetBufferRecod(){
-		if(bufferStream != null)
-			bufferStream.reset();
+	public void clearBuffer() throws IOException{
+		if(bufferStream != null){
+			bufferStream.close();
+			dos.close();
+		}
+		bufferStream = new ByteArrayOutputStream();
+		dos = new DataOutputStream(bufferStream);
 	}
 
 	public int getRecordState() {

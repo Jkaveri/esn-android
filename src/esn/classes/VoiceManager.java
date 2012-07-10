@@ -4,75 +4,102 @@
 
 package esn.classes;
 
+import java.io.IOException;
 import java.io.InputStream;
 
-import esn.activities.VoiceModeActivity;
 import esn.models.S2TResult;
 import android.content.res.Resources;
 import android.media.AudioFormat;
 import android.util.Log;
 
 public class VoiceManager {
-	public AudioRecoder recorder;
-	public AudioPlayer player;
-	public WAVFormatConver wavConver;
-	public WAVFormatReader wavReader;
+	private AudioRecoder recorder;
+	private AudioPlayer player;
+	private WAVFormatConver wavConver;
+	private WAVFormatReader wavReader;
 
 	private Thread thSendWs;
 	private AudioWebService auWs;
 	private Resources resource;
-	private VoiceModeActivity activity;
-
-	public VoiceManager(VoiceModeActivity activity) {
-		this.activity = activity;
+	private Runnable runSendWs;
+	private IVoiceCallBack callBack;
+	
+	public VoiceManager(Resources resource) {
 		recorder = new AudioRecoder();
 		player = new AudioPlayer();
 		wavConver = new WAVFormatConver();
 		wavReader = new WAVFormatReader();
 		auWs = new AudioWebService();
-		resource = activity.getResources();
 		
 		wavConver.setBitsPerSample(16); //16 => 16BIT, 8 => 8BIT
 		wavConver.setSubchunkSize(16); //16 => PCM
 		wavConver.setFormat(1); // 1 FOR PCM
 		wavConver.setChannels(1); //1 => MONO, 2 => STEREO
 		wavConver.setSampleRate(recorder.SAMPLE_RATE);
+		runSendWs = new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					runSendWS();
+				} catch (IOException e) {
+					Log.e("AudioManager", "IOException, call runSendWS()", e);
+				}
+			}
+		};
+		
+	}
+	
+	public void setCallBack(IVoiceCallBack callBack){
+		this.callBack = callBack;
+	}
+	
+	private void runSendWS() throws IOException{
+		byte[] recordBuf = recorder.getBufferRecod();
+		recorder.clearBuffer();//giai phong bo nho
+		Log.i("AudioManager", "Data record length: " + recordBuf.length);
+		
+		wavConver.setBuffer(recordBuf);
+		recordBuf = null;//giai phong bo nho
+		wavConver.prepare();
+		wavConver.conver();
+		
+		byte[] buf = wavConver.getWAVData();
+		wavConver.clearBuffer();//giai phong bo nho
+		S2TResult result = auWs.send(buf);//khi send tu giai phong bo nho
+		Log.i("AudioManager", "Result: " + result.getType());
+		callBack.returnCall(result.getType());
+//		boolean ok = loadPlayerBuffer(result.getType(), result.getAddress());
+//		if(ok){
+//			player.play();
+//		}else{
+//			Log.e("AudioManager", "Voice phan hoi khong thanh cong");
+//		}
+	}
+	
+	public void stopRecording(){
+		try {
+			recorder.stopRecording();
+		} catch (IOException e) {
+			Log.e("AudioManager", "IOException. Loi stop recorder", e);
+		}
+	}
+	
+	public void startRecording(){
+		try {
+			recorder.startRecording();
+		} catch (IOException e) {
+			Log.e("AudioManager", "IOException. Loi start recorder", e);
+		}
 	}
 	
 	public void sendDataToServer(){// Gui du lieu ghi am xuong server
 		destroy();
-		thSendWs = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				byte[] recordBuf = recorder.getBufferRecod();
-				recorder.resetBufferRecod();//giai phong bo nho
-				wavConver.setBuffer(recordBuf);
-				recordBuf = null;//giai phong bo nho
-				wavConver.prepare();
-				wavConver.conver();
-				
-				byte[] buf = wavConver.getWAVData();
-				wavConver.clearBuffer();//giai phong bo nho
-				
-				S2TResult result = auWs.send(buf);
-				//buf = null; (giai phong bo nho) KHONG DUOC LAM HANH DONG NAY VI KHI SEND SERVICE PHAI CHO` KO SE VANG LOI NULL EX
-				
-				Log.i("AudioManager", "Data record length: " + buf.length);
-				Log.i("AudioManager", "Result: " + result.getType());
-				activity.setStates(result.getType());
-//				boolean ok = loadPlayerBuffer(result.getType(), result.getAddress());
-//				if(ok){
-//					player.play();
-//				}else{
-//					Log.e("AudioManager", "Voice phan hoi khong thanh cong");
-//				}
-			}
-		});
-		
+		thSendWs = new Thread(runSendWs);
 		thSendWs.start();
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean loadPlayerBuffer(String type, String address){//Load du lieu vao buffer player theo the loai va dia chi
 		player.clearBuffer();//giai phong bo nho
 		int auTypeId = AudioLibManager.getAudioType(type);

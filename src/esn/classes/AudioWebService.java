@@ -23,7 +23,7 @@ public class AudioWebService {
 		Hashtable<String, Object> params = new Hashtable<String, Object>();
 		params.put("arrBytes", byteString);
 		
-		SoapObject response = service.InvokeMethod("ESNSpeechRecognition", params);
+		SoapObject response = service.InvokeMethod("ESNSpeechRecognition_android", params);
 		if (response != null) {
 			Object result = response.getProperty(0);
 			s2tResult.setProperty(0, result);
