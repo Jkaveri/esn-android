@@ -15,6 +15,7 @@ import esn.models.AppEnums;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -148,6 +149,7 @@ public class AddNewEvent extends Activity {
 		return true;
 	}
 
+	@SuppressLint("NewApi")
 	public void btnAddClicked() {
 		// show dialog
 		dialog = new ProgressDialog(context);
@@ -157,8 +159,18 @@ public class AddNewEvent extends Activity {
 
 		EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
 		String title = txtTitle.getText().toString();
-		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
+		
+		if(title.isEmpty())
+		{
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_entereventtitle), Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);	
 		String description = txtDescription.getText().toString();
+		
+		
+		
 		if ((title != null) && title.length() > 0) {
 			if (description != null && description.length() > 0) {
 				// put into result

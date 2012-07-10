@@ -568,6 +568,12 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		
 		String content = txtComment.getText().toString();
 		
+		if(content.isEmpty())
+		{
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_entercontent), Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
 		new CommentThread(content, session.currentUser.AccID, eventId).start();
 	}
 
@@ -666,19 +672,19 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 							else if(k==1)
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-								          LinearLayout.LayoutParams.FILL_PARENT,58
+								          LinearLayout.LayoutParams.FILL_PARENT,78
 								      ));
 							}
 							else if(k==2)
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-								          LinearLayout.LayoutParams.FILL_PARENT,127
+								          LinearLayout.LayoutParams.FILL_PARENT,147
 								      ));
 							}
 							else
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-								          LinearLayout.LayoutParams.FILL_PARENT,184
+								          LinearLayout.LayoutParams.FILL_PARENT,204
 								      ));
 							}
 							

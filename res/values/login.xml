@@ -2,4 +2,6 @@
 <resources>
     <string name="esn.login.enteremail">Enter email !</string>
     <string name="esn.login.enterpassword">Enter password !</string>
+    <string name="esn.login.email">Email</string>
+    <string name="esn.login.password">Password</string>
 </resources>

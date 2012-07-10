@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -180,11 +181,18 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 		thr.start();
 	}
 	
+	@SuppressLint("NewApi")
 	public void CommentClicked(View view)
 	{
 		EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
 		
 		String content = txtComment.getText().toString();
+		
+		if(content.isEmpty())
+		{
+			Toast.makeText(context, res.getString(R.string.esn_eventDetail_entercontent), Toast.LENGTH_SHORT).show();
+			return;
+		}
 		
 		new CommentThread(content, session.currentUser.AccID, eventId).start();
 	}

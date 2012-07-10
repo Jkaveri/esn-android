@@ -149,10 +149,13 @@
 
 	        <Button
 	            android:id="@+id/btLogin"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
 	            android:onClick="ChangePasswordClicked"
-	            android:text="@string/esn.changepassword.btDone" />
+	            android:text="@string/esn.changepassword.btDone" 
+	            android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/rounded_corners"
+		        android:textColor="#FFF"
+	            />
 	      
 	    </LinearLayout>
 	    

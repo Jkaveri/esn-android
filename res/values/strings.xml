@@ -3,14 +3,17 @@
 
     <!-- app name -->
     <string name="app_name">ESN</string>
+    <!-- welcome -->
     <string name="esn_actName_register">Register</string>
     <string name="esn_actName_profile">Profile</string>
     <string name="esn_actName_login">Login</string>
     <string name="esn_actName_selectLabel">Select label</string>
+    <!-- Login -->
+    
 
     <string name="esn.global.must_enable_gps">You must enable gps</string>
     <string name="esn.global.your_location_not_found">Your Location Not Found</string>
-    <string name="key.maps.googleAPI">0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg</string>
+    <string name="key.maps.googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
     <string name="help">In this introductory Google Apps webinar</string>
     <string name="term">In this introductory term</string>
 
@@ -25,7 +28,6 @@
     <string name="app.global.RequireAllField">Enter all fields !</string>
     <string name="app.global.UpdateUnsuccess">Update failed ! Try again.</string>
     <string name="app.global.UpdateSuccess">Update success !</string>
-    <string name="esn_global_find">Find</string>
       <!-- Settings page -->
     <string name="esn.settings.app_settings">Application Settings</string>
     <string name="esn.settings.subscript.app_settings">Setting in your app</string>
@@ -52,4 +54,6 @@
 	<string name="esn_welcome_login">Login</string>
 	<string name="esn_welcome_loginWithFacebook">Login with facebook</string>
 	<string name="esn_welcome_signup">Sign Up</string>
+	
+	
 </resources>
