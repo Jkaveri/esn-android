@@ -18,7 +18,6 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginTop="5dp"
 	        >
-	        
 	        <ImageView
 	            android:id="@+id/esn.changeprogile.avatar"
 	            android:layout_width="48dp"
@@ -47,7 +46,10 @@
 	       		    android:paddingRight="5dp"
 	       		    android:paddingTop="8dp"
 	       		    android:textSize="16dp"
-	       		    android:textStyle="bold" >
+	       		    android:textStyle="bold" 
+	       		    android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+	       		    >
 
 		            <requestFocus />
 		        </EditText>
@@ -103,7 +105,10 @@
 	                android:paddingRight="5dp"
 	                android:paddingTop="8dp"
 	                android:textSize="16dp"
-	                android:textStyle="bold" />
+	                android:textStyle="bold"
+	                android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+	                />
 
 	        </TableRow>
 	        <TableRow >
@@ -133,7 +138,10 @@
 	                android:paddingRight="5dp"
 	                android:paddingTop="8dp"
 	                android:textSize="16dp"
-	                android:textStyle="bold" />
+	                android:textStyle="bold"
+	                android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+	                />
 		   	
 	        </TableRow>
 	        
@@ -165,7 +173,10 @@
 		    	    android:paddingRight="5dp"
 		    	    android:paddingTop="8dp"
 		    	    android:textSize="16dp"
-		    	    android:textStyle="bold" />
+		    	    android:textStyle="bold" 
+		    	    android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+		    	    />
 
     		</TableRow>
     		<TableRow>
@@ -196,7 +207,10 @@
 		    	    android:paddingRight="5dp"
 		    	    android:paddingTop="8dp"
 		    	    android:textSize="16dp"
-		    	    android:textStyle="bold" />
+		    	    android:textStyle="bold"
+		    	    android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+		    	    />
 
     		</TableRow>
     		<TableRow >        
@@ -226,7 +240,10 @@
 		    	    android:paddingRight="5dp"
 		    	    android:paddingTop="8dp"
 		    	    android:textSize="16dp"
-		    	    android:textStyle="bold" />
+		    	    android:textStyle="bold"
+		    	    android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+		    	    />
 
     		</TableRow>
     		<TableRow >        
@@ -256,7 +273,10 @@
 		    	    android:paddingRight="5dp"
 		    	    android:paddingTop="8dp"
 		    	    android:textSize="16dp"
-		    	    android:textStyle="bold" />
+		    	    android:textStyle="bold"
+		    	    android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+		    	    />
 
     		</TableRow>
     		<TableRow >        
@@ -286,7 +306,10 @@
 		    	    android:paddingRight="5dp"
 		    	    android:paddingTop="8dp"
 		    	    android:textSize="16dp"
-		    	    android:textStyle="bold" />
+		    	    android:textStyle="bold" 
+		    	    android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+		    	    />
 
     		</TableRow>  
 	        <TableRow >        
@@ -316,13 +339,16 @@
 		    	    android:paddingRight="5dp"
 		    	    android:paddingTop="8dp"
 		    	    android:textSize="16dp"
-		    	    android:textStyle="bold" />
+		    	    android:textStyle="bold"
+		    	    android:textColor="@color/text_color"
+	       		    android:textColorHint="@color/text_color"
+		    	    />
 
     		</TableRow>
 		</TableLayout>	
 		
 		<LinearLayout 
-	        android:orientation="horizontal"
+	        android:orientation="vertical"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:gravity="center"
@@ -330,20 +356,14 @@
 	        >
 	        <Button 
 	            android:id="@+id/btLogin"
-	            android:layout_width="155dp"
-	            android:layout_height="35dp"
-	            android:textSize="16dp"
-	            android:onClick="UpdateProfileClicked"
-	            android:text="@string/btDone"
+	            android:onClick="UpdateProfileClicked"	            
+	            android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/rounded_corners"
+		        android:text="@string/esn.setting.app.event.ok"
+		        android:textColor="#FFF"
 	            />
-	        <Button 
-	            android:id="@+id/btCancel"
-	            android:layout_width="155dp"
-	            android:layout_height="35dp"
-	            android:textSize="16dp"
-	            android:text="@string/btCancel"
-	            android:onClick="CancelClicked"
-	            />
+	        
 	    </LinearLayout>	    
 	</LinearLayout>
 </ScrollView>

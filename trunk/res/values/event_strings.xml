@@ -32,4 +32,6 @@
     <string name="esn.eventDetail.likesuccess">Bạn đã xác nhận đúng.</string>
     <string name="esn.eventDetail.dislikesuccess">Bạn đã xác nhận sai.</string>
     <string name="esn.eventDetail.likefail">Error. Try again.</string>
+    <string name="esn.eventDetail.entercontent">Enter message !</string>
+    <string name="esn.eventDetail.entereventtitle">Enter event title !</string>
 </resources>

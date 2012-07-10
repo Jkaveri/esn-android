@@ -76,12 +76,28 @@ public class SettingAppFacebookActivity extends Activity {
 		
 		if(sw.isChecked())
 		{
-			EditText email = (EditText)findViewById(R.id.esn_setting_app_facebook_email);
-			EditText password = (EditText)findViewById(R.id.esn_setting_app_facebook_password);
+			EditText txtemail = (EditText)findViewById(R.id.esn_setting_app_facebook_email);
+			EditText txtpassword = (EditText)findViewById(R.id.esn_setting_app_facebook_password);
+			
+			String email = txtemail.getText().toString();
+			
+			if(email.isEmpty())
+			{
+				Toast.makeText(context, res.getString(R.string.esn_setting_app_enterfacebookemail), Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			String password = txtpassword.getText().toString();
+			
+			if(password.isEmpty())
+			{
+				Toast.makeText(context, res.getString(R.string.esn_setting_app_enterfacebookpassword), Toast.LENGTH_SHORT).show();
+				return;
+			}
 			
 			session.put("app.setting.facebook.enable",true);
-			session.put("app.setting.facebook.email", email.getText().toString());
-			session.put("app.setting.facebook.password", password.getText().toString());
+			session.put("app.setting.facebook.email", email);
+			session.put("app.setting.facebook.password", password);
 			
 			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),100).show();
 		}

@@ -1,6 +1,7 @@
 package esn.activities;
 
 import esn.classes.Sessions;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -40,6 +41,7 @@ public class SettingAppEventActivity extends Activity {
 		ShowInfo();
 	}
 	
+	@SuppressLint({ "NewApi", "NewApi" })
 	public void ShowInfo()
 	{
 		Boolean check = session.get("app.setting.event.enable",false);
@@ -62,6 +64,7 @@ public class SettingAppEventActivity extends Activity {
 		}
 	}
 	
+	@SuppressLint({ "NewApi", "NewApi" })
 	public void EventSettingSaved(View view)
 	{
 		Switch sw = (Switch)findViewById(R.id.esn_setting_app_event_enable);
@@ -70,6 +73,10 @@ public class SettingAppEventActivity extends Activity {
 		{
 			EditText radius = (EditText)findViewById(R.id.esn_setting_app_event_radius);	
 			
+			if((radius.getText().toString()).isEmpty())
+			{
+				Toast.makeText(context, res.getString(R.string.esn_setting_app_event_enterradius),10).show();
+			}
 			session.put("app.setting.event.enable",true);
 			session.put("app.setting.event.radius", radius.getText().toString());
 			
@@ -79,7 +86,7 @@ public class SettingAppEventActivity extends Activity {
 		{
 			session.put("app.setting.event.enable",false);
 			
-			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),10).show();
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_eventnotifyenablebefore),10).show();
 			
 			return;
 		}

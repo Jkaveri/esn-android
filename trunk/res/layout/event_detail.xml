@@ -11,6 +11,7 @@
        android:layout_marginBottom="10dp"
        android:focusable="true"
        android:focusableInTouchMode="true"
+       android:paddingTop="10dp"
        >
 
         <LinearLayout
@@ -185,14 +186,12 @@
         <LinearLayout 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            >
-            
+            >            
             <ImageView
                 android:id="@+id/esn_eventDetail_image" 
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                />
-            
+                android:layout_width="300dp"
+                android:layout_height="150dp"
+                />            
         </LinearLayout>
         <LinearLayout 
             android:layout_width="fill_parent"

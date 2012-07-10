@@ -122,6 +122,8 @@ public class HomeEventListActivity extends SherlockActivity implements OnNavigat
 			public void onItemClick(AdapterView<?> adView, View view, int index, long id) {
 				Events bean = (Events) adapter.getItem(index);
 				Intent it = new Intent(context, EventDetailActivity.class);
+				
+				int ids = bean.EventID;
 				it.putExtra("id", bean.EventID);
 				startActivity(it);
 			}

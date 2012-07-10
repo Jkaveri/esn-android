@@ -10,6 +10,9 @@
     <string name="esn.setting.app.event.enable">Enable</string>
     <string name="esn.setting.app.event.radius">Radius</string>
     <string name="esn.setting.app.event.ok">OK</string>
+    <string name="esn.setting.app.event.enterradius">Enter Radius !</string>
+    <string name="esn.setting.app.eventnotifyenablebefore">Enable event notification Before !</string>
+    
     
     <string name="esn.setting.app.friend.friendactivity">Friend Activity</string>
     <string name="esn.setting.app.friend.commentlike">Comment and Like</string>
@@ -26,4 +29,6 @@
     <string name="esn.setting.app.facebook.pass">Password</string>
     <string name="esn.setting.app.informationsaved">Saved</string>
     <string name="esn.setting.app.informationenablebefore">Enable Facebook Before!</string>
+    <string name="esn.setting.app.enterfacebookemail">Enter facebook email !</string>
+    <string name="esn.setting.app.enterfacebookpassword">Enter facebook password !</string>
 </resources>

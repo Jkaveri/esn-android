@@ -113,7 +113,6 @@ public class WelcomeActivity extends SherlockActivity {
 								{
 									Intent intent = new Intent(WelcomeActivity.this,HomeActivity.class);
 									startActivity(intent);
-									finish();
 								}
 								else
 								{
