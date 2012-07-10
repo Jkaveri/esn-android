@@ -15,8 +15,8 @@ import android.media.AudioTrack;
 import android.util.Log;
 
 public class AudioPlayer {
-	public static final int PLAYSTATE_PLAYING = AudioTrack.PLAYSTATE_PLAYING;
-	public static final int PLAYSTATE_STOPPED = AudioTrack.PLAYSTATE_STOPPED;
+	public static final int PLAYSTATE_PLAYING = 0;
+	public static final int PLAYSTATE_STOPPED = 1;
 	
 	public int SAMPLE_RATE;
 	public int CHANNEL_CONFIG;
@@ -25,47 +25,60 @@ public class AudioPlayer {
 	private int MODE = AudioTrack.MODE_STREAM;
 	private int STREAM_TYPE = AudioManager.STREAM_MUSIC;
 	private static int TR_BUFFER_SIZE;
+	private  int PLAYSTATE = PLAYSTATE_STOPPED;
 	
-	private AudioTrack track;
 	private Runnable run;
 	private Thread th;
-	private DataInputStream is;
-	private ByteArrayInputStream bs;
+	private InputStream ips;
+	private ByteArrayInputStream bis;
 
 	public AudioPlayer() {
 		run = new Runnable() {
 
 			@Override
 			public void run() {
+				AudioTrack track = new AudioTrack(STREAM_TYPE, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, TR_BUFFER_SIZE, MODE);
 				byte[] buffer = new byte[TR_BUFFER_SIZE];
+				DataInputStream is;
+				
+				if(bis != null)
+					is = new DataInputStream(bis);
+				else
+					is = new DataInputStream(ips);
+				
+				track.play();				
 				try {
-					while (track.getPlayState() != PLAYSTATE_STOPPED) {
+					while (PLAYSTATE != PLAYSTATE_STOPPED) {
 						int count = is.read(buffer, 0, TR_BUFFER_SIZE);
 						track.write(buffer, 0, count);
 						if(count == -1){
-							stop();
 							break;
 						}
 					}
 				} catch (IOException e) {
 					Log.e("AudioPlayer", "IOException read buffer");
+				} finally{
+					try {
+						is.close();
+					} catch (IOException e) {
+						Log.e("AudioPlayer", "IOException close input tream");
+					}
 				}
+				track.stop();
+				track.release();
+				stop();
 			}
 		};
-		th = null;
 	}
 
 	public void loadBufferPCM(byte[] bufferPCM) {
-		stop();
-		bs = new ByteArrayInputStream(bufferPCM);
-		is = new DataInputStream(bs);
+		release();
+		bis = new ByteArrayInputStream(bufferPCM);
 	}
 	
 	public void loadBufferStream(InputStream ips) {
-		stop();
-		if(bs != null)
-			bs = null;
-		is = new DataInputStream(ips);
+		release();
+		this.ips = ips;
 	}
 	
 	public void setDefaultConfig(){
@@ -75,74 +88,54 @@ public class AudioPlayer {
 	}
 	
 	public void prepare(){
-		if(track != null){
-			track.release();
-			track = null;
-		}
 		TR_BUFFER_SIZE = AudioTrack.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-		track = new AudioTrack(STREAM_TYPE, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, TR_BUFFER_SIZE, MODE);
 	}
 
 	public void play() {
-		if(track.getPlayState() != PLAYSTATE_PLAYING){
-			track.play();
-			if(th == null){
-				th = new Thread(run);
-				th.start();
-			}
-		}
-	}
-
-	public void stop() {
-		if(track.getPlayState() != PLAYSTATE_STOPPED){
+		if(PLAYSTATE != PLAYSTATE_PLAYING){
+			PLAYSTATE = PLAYSTATE_PLAYING;
 			if (th != null) {
 				th.interrupt();
 				th = null;
 			}
-			
-			try{
-				if(bs != null)
-					bs.close();
-				is.close();
-			} catch (IOException e) {
-				Log.e("AudioPlayer", "IOException read buffer");
-			}
-			
-			track.stop();
+			th = new Thread(run);
+			th.start();
+		}
+	}
+
+	public void stop() {
+		if(PLAYSTATE != PLAYSTATE_STOPPED){
+			PLAYSTATE = PLAYSTATE_STOPPED;
 		}
 	}
 	
-	public void clearBuffer(){
-		if(track != null){
-			if(track.getPlayState() != PLAYSTATE_STOPPED){
-				track.stop();
+	
+	/*
+	 * Close all stream and destroy thread
+	 */
+	public void release(){
+		PLAYSTATE = PLAYSTATE_STOPPED;
+		try{
+			if(bis != null){
+				bis.close();
+				bis	= null;
 			}
-			track.release();
-			track = null;
+			
+			if(ips != null){
+				ips.close();
+				ips = null;
+			}
+			
+		} catch (IOException e) {
+			Log.e("AudioPlayer", "IOException read buffer");
 		}
-		
 		if (th != null) {
 			th.interrupt();
 			th = null;
 		}
-		
-		try{
-			if(bs != null){
-				bs.close();
-			}
-			
-			if(is != null){
-				is.close();
-			}
-			
-			bs	= null;
-			is = null;
-		} catch (IOException e) {
-			Log.e("AudioPlayer", "IOException read buffer");
-		}
 	}
 
 	public int getPlayState() {
-		return track.getPlayState();
+		return PLAYSTATE;
 	}
 }

@@ -15,7 +15,7 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder.AudioSource;
 import android.util.Log;
 
-public class AudioRecoder {
+public class AudioRecorder {
 	public static final int RECORDSTATE_STOPPED = 0;
 	public static final int RECORDSTATE_RECORDING = 1;
 	public static final int RECORDSTATE_PAUSED = 2;
@@ -28,43 +28,51 @@ public class AudioRecoder {
 	private int RECORDSTATE = RECORDSTATE_STOPPED;
 	private Thread th;
 	private ByteArrayOutputStream bufferStream;
-	private DataOutputStream dos;
 	private Runnable run;
 
-	public AudioRecoder() {
+	public AudioRecorder() {
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-		try {
-			clearBuffer();
-		} catch (IOException e) {
-			Log.e("AudioRecoder", "IOException clearBuffer() at output stream");
-		}
+		bufferStream = new ByteArrayOutputStream();
+		
 		run = new Runnable() {
 
 			@Override
 			public void run() {
 				byte[] buffer = new byte[REC_BUFFER_SIZE];
-				AudioRecord audioRecord = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
-				audioRecord.startRecording();				
-				while (RECORDSTATE == RECORDSTATE_RECORDING) {
-					int count = audioRecord.read(buffer, 0, REC_BUFFER_SIZE);
-					if(count > 0){
-						try {
+				DataOutputStream dos = new DataOutputStream(bufferStream);
+				AudioRecord record = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
+				record.startRecording();
+				try {
+					while (RECORDSTATE == RECORDSTATE_RECORDING) {
+						int count = record.read(buffer, 0, REC_BUFFER_SIZE);
+						if(count > 0){
 							dos.write(buffer, 0, count);
-						} catch (IOException e) {
-							Log.e("AudioRecoder", "IOException write() at output stream");
 						}
 					}
-				}				
-				audioRecord.stop();
-				audioRecord.release();
+				} catch (IOException e) {
+					Log.e("Audiorecorder", "IOException write() at output stream");
+				}finally{
+					try {
+						dos.flush();
+						dos.close();
+					} catch (IOException e){
+						Log.e("Audiorecorder", "IOException close at output stream");
+					}
+				}
+				record.stop();
+				record.release();
 			}
 		};
 	}
 
-	public void startRecording() throws IOException {
+	public void startRecording(){
 		if (RECORDSTATE != RECORDSTATE_RECORDING) {
 			if (RECORDSTATE == RECORDSTATE_STOPPED) {
 				bufferStream.reset();
+			}
+			if(th != null){
+				th.interrupt();
+				th = null;
 			}
 			RECORDSTATE = RECORDSTATE_RECORDING;
 			th = new Thread(run);
@@ -72,41 +80,52 @@ public class AudioRecoder {
 		}
 	}
 	
-	public void pauseRecording() throws IOException {
+	public void pauseRecording(){
 		if(RECORDSTATE == RECORDSTATE_RECORDING){
 			RECORDSTATE = RECORDSTATE_PAUSED;
-			dos.flush();
-			if(th != null){
-				th.interrupt();
-				th = null;
-			}
 		}
 	}
 
-	public void stopRecording() throws IOException {
+	public void stopRecording(){
 		if (RECORDSTATE != RECORDSTATE_STOPPED) {
 			RECORDSTATE = RECORDSTATE_STOPPED;
-			dos.flush();
-			dos.close();
-			if(th != null){
-				th.interrupt();
-				th = null;
-			}
 		}
 	}
 
-	public byte[] getBufferRecod() throws IOException {
-		bufferStream.flush();
+	public byte[] getBufferRecord(){
+		try {
+			bufferStream.flush();
+		} catch (IOException e) {
+			return null;
+		}
 		return bufferStream.toByteArray();
 	}
 	
-	public void clearBuffer() throws IOException{
+	public void clearBuffer(){
 		if(bufferStream != null){
-			bufferStream.close();
-			dos.close();
+			try {
+				bufferStream.close();
+			} catch (IOException e) {
+				Log.e("Audiorecorder", "IOException close at buffer stream");
+			}
 		}
 		bufferStream = new ByteArrayOutputStream();
-		dos = new DataOutputStream(bufferStream);
+	}
+	
+	public void release(){
+		RECORDSTATE = RECORDSTATE_STOPPED;
+		if(bufferStream != null){
+			try {
+				bufferStream.close();
+			} catch (IOException e) {
+				Log.e("Audiorecorder", "IOException close at buffer stream");
+			}
+		}
+		
+		if(th != null){
+			th.interrupt();
+			th = null;
+		}
 	}
 
 	public int getRecordState() {
