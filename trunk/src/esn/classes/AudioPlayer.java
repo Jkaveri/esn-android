@@ -52,7 +52,7 @@ public class AudioPlayer {
 						int count = is.read(buffer, 0, TR_BUFFER_SIZE);
 						track.write(buffer, 0, count);
 						if(count == -1){
-							break;
+							PLAYSTATE = PLAYSTATE_STOPPED;//Stop
 						}
 					}
 				} catch (IOException e) {
@@ -66,7 +66,6 @@ public class AudioPlayer {
 				}
 				track.stop();
 				track.release();
-				stop();
 			}
 		};
 	}

@@ -120,6 +120,7 @@ public class AudioRecorder {
 			} catch (IOException e) {
 				Log.e("Audiorecorder", "IOException close at buffer stream");
 			}
+			bufferStream = null;
 		}
 		
 		if(th != null){
