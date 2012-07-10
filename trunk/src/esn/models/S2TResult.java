@@ -32,7 +32,7 @@ public class S2TResult implements KvmSerializable{
 		switch (index) {
 		case 0:
 			proInf.type = PropertyInfo.STRING_CLASS;
-			proInf.name = "ESNSpeechRecognitionResult";
+			proInf.name = "ESNSpeechRecognition_androidResult";
 			break;
 //		case 1:
 //			proInf.type = PropertyInfo.STRING_CLASS;

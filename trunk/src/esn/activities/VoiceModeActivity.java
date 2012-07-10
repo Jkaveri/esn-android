@@ -11,7 +11,6 @@ import esn.classes.VoiceModeHelper;
 
 public class VoiceModeActivity extends MapActivity{
 	private VoiceModeHelper helper;
-	private TextView txtStates;
 	private boolean recording = false;
 
 	@Override
@@ -19,10 +18,12 @@ public class VoiceModeActivity extends MapActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.esn_voice_mode);
 		this.setTitle(getString(R.string.esn_voicemode_title));
-		txtStates = (TextView) this.findViewById(R.id.esn_voicemode_txt_state);  
+		
+		TextView txtStates = (TextView) this.findViewById(R.id.esn_voicemode_txt_state);  
 		txtStates.setSelected(true);
-        helper = new VoiceModeHelper(this);
-        helper.setBtnRecord((ImageButton) findViewById(R.id.esn_voicemode_btn_record));
+		
+        ImageButton btnRecord = (ImageButton) findViewById(R.id.esn_voicemode_btn_record);
+		helper = new VoiceModeHelper(this.getResources(), btnRecord, txtStates);
 	}
 	
 	public void btnRecordClick(View view) {
@@ -41,18 +42,6 @@ public class VoiceModeActivity extends MapActivity{
 		super.onDestroy();
 	}
 	
-	
-
-	public void setStates(final String text) {
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				txtStates.setText(text);
-			}
-		});
-	}
-
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
