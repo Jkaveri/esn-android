@@ -74,8 +74,7 @@ public class WAVFormatReader {
 				e.printStackTrace();
 			}
 		}
-		ByteArrayInputStream byteIS = new ByteArrayInputStream(byteArrWAV);
-		is = new DataInputStream(byteIS);
+		is = new DataInputStream(new ByteArrayInputStream(byteArrWAV));
 	}
 	
 	public void setBuffer(InputStream ips){
@@ -149,18 +148,13 @@ public class WAVFormatReader {
 		}
 		catch(IOException e)
 		{
-			if(is != null){
-				try {
-					is.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			try {
+				is.close();
+			} catch (IOException x) {
 			}
+			is = null;
 			return false;
 		}
-
-		is = null;
 		return true; // this should probably be something more descriptive
 	}
 }

@@ -13,7 +13,7 @@ import android.media.AudioFormat;
 import android.util.Log;
 
 public class VoiceManager {
-	private AudioRecoder recorder;
+	private AudioRecorder recorder;
 	private AudioPlayer player;
 	private WAVFormatConver wavConver;
 	private WAVFormatReader wavReader;
@@ -25,11 +25,13 @@ public class VoiceManager {
 	private IVoiceCallBack callBack;
 	
 	public VoiceManager(Resources resource) {
-		recorder = new AudioRecoder();
+		recorder = new AudioRecorder();
 		player = new AudioPlayer();
 		wavConver = new WAVFormatConver();
 		wavReader = new WAVFormatReader();
 		auWs = new AudioWebService();
+		
+		this.resource = resource;
 		
 		wavConver.setBitsPerSample(16); //16 => 16BIT, 8 => 8BIT
 		wavConver.setSubchunkSize(16); //16 => PCM
@@ -55,7 +57,7 @@ public class VoiceManager {
 	}
 	
 	private void runSendWS() throws IOException{
-		byte[] recordBuf = recorder.getBufferRecod();
+		byte[] recordBuf = recorder.getBufferRecord();
 		recorder.clearBuffer();//giai phong bo nho
 		Log.i("AudioManager", "Data record length: " + recordBuf.length);
 		
@@ -66,31 +68,23 @@ public class VoiceManager {
 		
 		byte[] buf = wavConver.getWAVData();
 		wavConver.clearBuffer();//giai phong bo nho
-		S2TResult result = auWs.send(buf);//khi send tu giai phong bo nho
-		Log.i("AudioManager", "Result: " + result.getType());
-		callBack.returnCall(result);
-//		boolean ok = loadPlayerBuffer(result.getType(), result.getAddress());
-//		if(ok){
-//			player.play();
-//		}else{
-//			Log.e("AudioManager", "Voice phan hoi khong thanh cong");
-//		}
+		//S2TResult result = auWs.send(buf);//khi send tu giai phong bo nho
+		//Log.i("AudioManager", "Result: " + result.getType());
+		//callBack.returnCall(result);
+		boolean ok = loadPlayerBuffer("cos lowr ddaast owr", "hafng xanh");
+		if(ok){
+			player.play();
+		}else{
+			Log.e("AudioManager", "Voice phan hoi khong thanh cong");
+		}
 	}
 	
 	public void stopRecording(){
-		try {
-			recorder.stopRecording();
-		} catch (IOException e) {
-			Log.e("AudioManager", "IOException. Loi stop recorder", e);
-		}
+		recorder.stopRecording();
 	}
 	
 	public void startRecording(){
-		try {
-			recorder.startRecording();
-		} catch (IOException e) {
-			Log.e("AudioManager", "IOException. Loi start recorder", e);
-		}
+		recorder.startRecording();
 	}
 	
 	public void sendDataToServer(){// Gui du lieu ghi am xuong server
@@ -99,9 +93,8 @@ public class VoiceManager {
 		thSendWs.start();
 	}
 	
-	@SuppressWarnings("unused")
 	private boolean loadPlayerBuffer(String type, String address){//Load du lieu vao buffer player theo the loai va dia chi
-		player.clearBuffer();//giai phong bo nho
+		player.release();//giai phong bo nho
 		int auTypeId = AudioLibManager.getAudioType(type);
 		if(auTypeId == AudioLibManager.TYPE_NOT_FOUND){//khong ton tai file
 			Log.e("AudioManager", "Khong tim thay file kieu: \"" + type + "\"");
@@ -185,6 +178,8 @@ public class VoiceManager {
 	}
 	
 	public void destroy(){
+		player.release();
+		recorder.release();
 		if(thSendWs != null){
 			thSendWs.interrupt();
 			thSendWs = null;

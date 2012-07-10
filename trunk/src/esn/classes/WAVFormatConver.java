@@ -209,8 +209,11 @@ public class WAVFormatConver {
 			dos.flush();
 			dos.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 			returnBol = false;
+		} finally{
+			try {
+				dos.close();
+			} catch (IOException e) {}
 		}
 		
 		dataPCM = null;
