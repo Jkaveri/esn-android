@@ -8,8 +8,8 @@ import esn.models.S2TResult;
 import android.util.Base64;
 
 public class AudioWebService {
-	public static final String NAMSPACE = "http://localhost/S2TWebService.asmx";
-	public static final String URL = "http://10.0.2.2:49609/S2TWebService/S2TWebService.asmx";
+	public static final String NAMSPACE = "http://www.aprotrain.com/";
+	public static final String URL = "http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";
 	private EsnWebServices service;
 	
 	public AudioWebService() {
@@ -21,18 +21,19 @@ public class AudioWebService {
 		String byteString = Base64.encodeToString(byteWavData, Base64.DEFAULT);
 		byteWavData = null;//giai phong bo nho
 		Hashtable<String, Object> params = new Hashtable<String, Object>();
-		params.put("ByteArrWav", byteString);
+		params.put("arrBytes", byteString);
 		
-		SoapObject response = service.InvokeMethod("WriteWAVFile", params);
+		SoapObject response = service.InvokeMethod("ESNSpeechRecognition", params);
 		if (response != null) {
-			SoapObject result = (SoapObject)response.getProperty(0);
-			int propCount = result.getPropertyCount();
-			for (int j = 0; j < propCount; j++) {
-				Object value = result.getProperty(j);
-				if (value != null) {
-					s2tResult.setProperty(j, value);
-				}
-			}
+			Object result = response.getProperty(0);
+			s2tResult.setProperty(0, result);
+//			int propCount = result.getPropertyCount();
+//			for (int j = 0; j < propCount; j++) {
+//				Object value = result.getProperty(j);
+//				if (value != null) {
+//					s2tResult.setProperty(j, value);
+//				}
+//			}
 		}
 		return s2tResult;
 	}

@@ -1,11 +1,11 @@
 package esn.classes;
 
-import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageButton;
 
 import esn.activities.R;
+import esn.activities.VoiceModeActivity;
 
 public class VoiceModeHelper {
 	private Thread thDynamicIcon;
@@ -15,10 +15,10 @@ public class VoiceModeHelper {
 	private Handler handler;
 	private Runnable runPost_Lig;
 	private Runnable runPost_Red;
-	private AudioManager audioMng;
+	private VoiceManager audioMng;
 	
-	public VoiceModeHelper(Activity activity){
-		audioMng = new AudioManager(activity);
+	public VoiceModeHelper(VoiceModeActivity activity){
+		audioMng = new VoiceManager(activity);
 		handler = new Handler();
 		
 		runPost_Lig = new Runnable() {

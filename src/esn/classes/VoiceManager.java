@@ -6,13 +6,13 @@ package esn.classes;
 
 import java.io.InputStream;
 
+import esn.activities.VoiceModeActivity;
 import esn.models.S2TResult;
-import android.app.Activity;
 import android.content.res.Resources;
 import android.media.AudioFormat;
 import android.util.Log;
 
-public class AudioManager {
+public class VoiceManager {
 	public AudioRecoder recorder;
 	public AudioPlayer player;
 	public WAVFormatConver wavConver;
@@ -21,8 +21,10 @@ public class AudioManager {
 	private Thread thSendWs;
 	private AudioWebService auWs;
 	private Resources resource;
+	private VoiceModeActivity activity;
 
-	public AudioManager(Activity activity) {
+	public VoiceManager(VoiceModeActivity activity) {
+		this.activity = activity;
 		recorder = new AudioRecoder();
 		player = new AudioPlayer();
 		wavConver = new WAVFormatConver();
@@ -57,14 +59,14 @@ public class AudioManager {
 				//buf = null; (giai phong bo nho) KHONG DUOC LAM HANH DONG NAY VI KHI SEND SERVICE PHAI CHO` KO SE VANG LOI NULL EX
 				
 				Log.i("AudioManager", "Data record length: " + buf.length);
-				Log.i("AudioManager", "Result: [" + result.getType() + "][" + result.getAddress() + "]");
-				
-				boolean ok = loadPlayerBuffer(result.getType(), result.getAddress());
-				if(ok){
-					player.play();
-				}else{
-					Log.e("AudioManager", "Voice phan hoi khong thanh cong");
-				}
+				Log.i("AudioManager", "Result: " + result.getType());
+				activity.setStates(result.getType());
+//				boolean ok = loadPlayerBuffer(result.getType(), result.getAddress());
+//				if(ok){
+//					player.play();
+//				}else{
+//					Log.e("AudioManager", "Voice phan hoi khong thanh cong");
+//				}
 			}
 		});
 		
