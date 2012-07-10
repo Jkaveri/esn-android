@@ -70,13 +70,12 @@ public class HomeActivity extends SherlockMapActivity implements
 	private EsnListItem[] mNavigationItems;
 	private Maps map;
 	private Resources res;
-	private boolean isPotentialLongPress;
 	protected Handler handler;
 	private ProgressDialog progressDialog;
-	private ProgressDialog dialog;
 	private EsnMapView mapView;
-	public final static  int CODE_REQUEST_SET_FILTER = 2;
+	public final static int CODE_REQUEST_SET_FILTER = 2;
 	HomeActivity context;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -87,7 +86,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		setupActionBar();
 		setupMap();
 		setupListNavigate();
-		
+
 		context = this;
 	}
 
@@ -129,12 +128,11 @@ public class HomeActivity extends SherlockMapActivity implements
 
 		/** setup map **/
 		mapView = (EsnMapView) findViewById(R.id.gmapView);
-		
-		
+
 		mapView.setActivity(this);
 		map = new Maps(this, mapView);
 		// set zoom level to 14
-		map.setZoom(15);
+		map.setZoom(4);
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
 		mapView.setOnSingleTapListener(new OnSingleTapListener() {
 
@@ -199,7 +197,7 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
-		String itemTitle = item.getTitle().toString();
+		item.getTitle().toString();
 		int itemId = item.getItemId();
 		switch (itemId) {
 		case R.id.esn_home_menuItem_search:
@@ -219,7 +217,7 @@ public class HomeActivity extends SherlockMapActivity implements
 			break;
 		case R.id.esn_home_menuItem_labels:
 			Intent setFilterIntent = new Intent(this, SetFilterActivity.class);
-			startActivityForResult(setFilterIntent,CODE_REQUEST_SET_FILTER);
+			startActivityForResult(setFilterIntent, CODE_REQUEST_SET_FILTER);
 			break;
 		case R.id.esn_home_menuItem_zoomIn:
 			map.zoomIn();
@@ -245,25 +243,20 @@ public class HomeActivity extends SherlockMapActivity implements
 		}
 		return true;
 	}
-
-	private void labelsClicked() {
-
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case EsnMapView.REQUEST_CODE_ADD_NEW_EVENT:
-			
+
 				double latitude = data.getDoubleExtra("latitude",
 						Double.MIN_VALUE);
 				double longtitude = data.getDoubleExtra("longtitude",
 						Double.MIN_VALUE);
 				String title = data.getStringExtra("eventTitle");
 				String description = data.getStringExtra("eventDescription");
-				int eventId = data.getIntExtra("eventId",0);
-				
+				int eventId = data.getIntExtra("eventId", 0);
+
 				int labelId = data.getIntExtra("labelId", 0);
 				if (latitude != Integer.MIN_VALUE
 						&& longtitude != Integer.MIN_VALUE) {
@@ -271,13 +264,14 @@ public class HomeActivity extends SherlockMapActivity implements
 							(int) (longtitude * 1E6));
 					EventOverlayItem item = new EventOverlayItem(point, title,
 							description, eventId);
-						
-					map.setMarker(item,EventType.getIconId(labelId, 1));
+
+					map.setMarker(item, EventType.getIconId(labelId, 1));
 					mapView.getController().animateTo(point);
 				}
 				break;
 			case CODE_REQUEST_SET_FILTER:
-				mapView.new LoadEventsAroundThread(mapView.calculateRadius()).start();
+				mapView.new LoadEventsAroundThread(mapView.calculateRadius())
+						.start();
 				break;
 			default:
 				break;
@@ -288,20 +282,15 @@ public class HomeActivity extends SherlockMapActivity implements
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		
-		if(itemPosition==0)
-		{
+
+		if (itemPosition == 0) {
 			Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
 					Toast.LENGTH_SHORT).show();
-		}
-		else if(itemPosition==1)
-		{
-			Intent intent = new Intent(context,HomeEventListActivity.class);
-			
+		} else if (itemPosition == 1) {
+			Intent intent = new Intent(context, HomeEventListActivity.class);
+
 			startActivity(intent);
-		}
-		else
-		{
+		} else {
 			Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
 					Toast.LENGTH_SHORT).show();
 		}
@@ -314,52 +303,6 @@ public class HomeActivity extends SherlockMapActivity implements
 		return false;
 	}
 
-	private class CreateEventsThread extends Thread {
-		private Events event;
 
-		public CreateEventsThread(Events event) {
-			this.event = event;
-		}
-
-		@Override
-		public void run() {
-			EventsManager manager = new EventsManager();
-			try {
-				Events event = manager.setEntity(this.event);
-				if (event.EventID > 0) {
-					handler.post(new AddEventToMapHandler(event));
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private class AddEventToMapHandler implements Runnable {
-		private Events event;
-
-		public AddEventToMapHandler(Events event) {
-			this.event = event;
-		}
-
-		@Override
-		public void run() {
-			GeoPoint point = new GeoPoint((int) (event.EventLat * 1E6),
-					(int) (event.EventLng * 1E6));
-			EventOverlayItem item = new EventOverlayItem(point, event.Title,
-					event.Description, event.EventID);
-
-			map.setMarker(item,
-					EventType.getIconId(event.EventTypeID, event.getLevel()));
-			map.getMap().invalidate();
-			progressDialog.dismiss();
-			Log.d("create event in: ", event.EventLat + "|" + event.EventLng);
-
-		}
-	}
 
 }

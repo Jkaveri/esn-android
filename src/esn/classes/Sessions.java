@@ -2,6 +2,8 @@ package esn.classes;
 
 import java.util.ArrayList;
 
+import com.facebook.android.Facebook;
+
 import esn.models.EventType;
 import esn.models.Users;
 import android.content.Context;
@@ -90,4 +92,9 @@ public class Sessions {
 		String email = pref.getString("email", null);
 		return email!=null;
 	}	
+	public boolean restoreFaceBook(Facebook fb){
+		fb.setAccessToken(get("fb_access_token",""));
+		fb.setAccessExpires(get("fb_access_token_expires",Long.MIN_VALUE));
+		return fb.isSessionValid();
+	}
 }

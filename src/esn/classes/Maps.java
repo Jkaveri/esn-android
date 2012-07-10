@@ -275,7 +275,7 @@ public class Maps implements LocationListener {
 								dialog.hide();
 								Toast.makeText(
 										context,
-										res.getString(R.string.esn_location_your_location_not_found),
+										res.getString(R.string.esn_global_your_location_not_found),
 										Toast.LENGTH_SHORT).show();
 							}
 
