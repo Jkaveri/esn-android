@@ -68,15 +68,17 @@ public class VoiceManager {
 		
 		byte[] buf = wavConver.getWAVData();
 		wavConver.clearBuffer();//giai phong bo nho
-		//S2TResult result = auWs.send(buf);//khi send tu giai phong bo nho
-		//Log.i("AudioManager", "Result: " + result.getType());
-		//callBack.returnCall(result);
-		boolean ok = loadPlayerBuffer("cos lowr ddaast owr", "hafng xanh");
-		if(ok){
-			player.play();
-		}else{
-			Log.e("AudioManager", "Voice phan hoi khong thanh cong");
-		}
+		
+		
+		S2TResult result = auWs.send(buf);
+		Log.i("AudioManager", "Result: " + result.getType());
+		callBack.returnCall(result);
+//		boolean ok = loadPlayerBuffer("cos lowr ddaast owr", "hafng xanh");
+//		if(ok){
+//			player.play();
+//		}else{
+//			Log.e("AudioManager", "Voice phan hoi khong thanh cong");
+//		}
 	}
 	
 	public void stopRecording(){
