@@ -60,6 +60,7 @@ public class VoiceManager {
 		byte[] recordBuf = recorder.getBufferRecord();
 		recorder.clearBuffer();//giai phong bo nho
 		Log.i("AudioManager", "Data record length: " + recordBuf.length);
+		//SilenceDetection.isSilence(recordBuf);
 		
 		wavConver.setBuffer(recordBuf);
 		recordBuf = null;//giai phong bo nho
@@ -69,10 +70,10 @@ public class VoiceManager {
 		byte[] buf = wavConver.getWAVData();
 		wavConver.clearBuffer();//giai phong bo nho
 		
-		
-		S2TResult result = auWs.send(buf);
-		Log.i("AudioManager", "Result: " + result.getType());
-		callBack.returnCall(result);
+//		
+//		S2TResult result = auWs.send(buf);
+//		Log.i("AudioManager", "Result: " + result.getType());
+//		callBack.returnCall(result);
 //		boolean ok = loadPlayerBuffer("cos lowr ddaast owr", "hafng xanh");
 //		if(ok){
 //			player.play();
@@ -90,7 +91,10 @@ public class VoiceManager {
 	}
 	
 	public void sendDataToServer(){// Gui du lieu ghi am xuong server
-		destroy();
+		if(thSendWs != null){
+			thSendWs.interrupt();
+			thSendWs = null;
+		}
 		thSendWs = new Thread(runSendWs);
 		thSendWs.start();
 	}
