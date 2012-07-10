@@ -9,6 +9,25 @@
         android:layout_height="fill_parent"
         android:apiKey="@string/key.maps.googleAPI"
         android:clickable="true" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bgstate"
+        android:orientation="vertical"
+        android:padding="6dp" >
+
+        <TextView
+            android:id="@+id/esn.voicemode.txt.state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:text="@string/esn.voicemode.state"
+            android:textColor="@color/BgWhite"
+            android:textSize="16dp"
+            android:textStyle="italic" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -67,29 +86,4 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bgstate"
-        android:orientation="vertical"
-        android:padding="6dp" >
-
-        <TextView
-            android:id="@+id/esn.voicemode.txt.state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:lines="1"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:paddingLeft="14dp"
-            android:paddingRight="14dp"
-            android:scrollHorizontally="true"
-            android:text="@string/esn.voicemode.state"
-            android:textColor="@color/BgWhite"
-            android:textSize="16dp"
-            android:textStyle="italic" />
-    </LinearLayout>
-
 </RelativeLayout>
