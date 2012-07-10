@@ -9,7 +9,6 @@ package esn.classes;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder.AudioSource;
@@ -18,7 +17,6 @@ import android.util.Log;
 public class AudioRecorder {
 	public static final int RECORDSTATE_STOPPED = 0;
 	public static final int RECORDSTATE_RECORDING = 1;
-	public static final int RECORDSTATE_PAUSED = 2;
 
 	public int SAMPLE_RATE = 16000;
 	public int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
@@ -27,12 +25,52 @@ public class AudioRecorder {
 	
 	private int RECORDSTATE = RECORDSTATE_STOPPED;
 	private Thread th;
-	private ByteArrayOutputStream bufferStream;
 	private Runnable run;
+	private ByteArrayOutputStream bufferStream;
+	
+	private Thread thAutoStop;
+	private Runnable runDetect;
+	private int timeOut = 0;
+	private boolean isSilence = false;
+	private IRecordCallBack callBack;
+	
+	private void silenceCall(){		
+		isSilence = true;
+	}
+	
+	private void speakingCall(){
+		isSilence = false;
+		timeOut = 0;
+	}
 
-	public AudioRecorder() {
+	public AudioRecorder(IRecordCallBack autoStop) {
+		this.callBack = autoStop;
+		
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
 		bufferStream = new ByteArrayOutputStream();
+		
+		runDetect = new Runnable() {
+			
+			@Override
+			public void run() {
+				while(RECORDSTATE == RECORDSTATE_RECORDING){
+					if(isSilence){
+						timeOut++;
+						if(timeOut == 25){
+							Log.i("AudioRecorder", "Auto stop recording");
+							stopRecording();
+							callBack.autoStopRecording();
+						}else{
+							try {
+								Thread.sleep(50);
+							} catch (InterruptedException e) {
+								Log.i("AudioRecorder", "Thread Detect on destroy");
+							}
+						}
+					}
+				}
+			}
+		};
 		
 		run = new Runnable() {
 
@@ -42,12 +80,63 @@ public class AudioRecorder {
 				DataOutputStream dos = new DataOutputStream(bufferStream);
 				AudioRecord record = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
 				record.startRecording();
+				
+				boolean recording = false;
+				float tempFloatBuffer[] = new float[3];
+				int tempIndex = 0;
+				int totalReadBytes = 0;
+				byte totalByteBuffer[] = new byte[60 * 44100 * 2];
+				
 				try {
 					while (RECORDSTATE == RECORDSTATE_RECORDING) {
+						float totalAbsValue = 0.0f;
+						short sample = 0;
+						
 						int count = record.read(buffer, 0, REC_BUFFER_SIZE);
 						if(count > 0){
 							dos.write(buffer, 0, count);
 						}
+						
+						
+						
+						///////////////////////PHAN TICH DANG XEM DANG NOI HAY NGUNG//////////////////
+						// Analyze Sound.
+						for (int i = 0; i < REC_BUFFER_SIZE; i += 2) {
+							sample = (short) ((buffer[i]) | buffer[i + 1] << 8);
+							totalAbsValue += Math.abs(sample) / (count / 2);
+						}
+
+						// Analyze temp buffer.
+						tempFloatBuffer[tempIndex % 3] = totalAbsValue;
+						float temp = 0.0f;
+						for (int i = 0; i < 3; ++i)
+							temp += tempFloatBuffer[i];
+
+						if ((temp >= 0 && temp <= 350) && recording == false) {
+							//Log.i("TAG", "1");//Chua noi
+							tempIndex++;
+						}
+
+						if (temp > 350 && recording == false) {
+							//Log.i("TAG", "2");//Bat dau noi
+							recording = true;
+						}
+
+						if ((temp >= 0 && temp <= 350) && recording == true) {
+							silenceCall();//Dang ngung noi
+						}else{
+							speakingCall();//Dang noi
+						}
+
+						// -> Recording sound here.
+						for (int i = 0; i < count; i++){
+							totalByteBuffer[totalReadBytes + i] = buffer[i];
+						}
+						
+						totalReadBytes += count;
+						tempIndex++;
+						//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//
+						
 					}
 				} catch (IOException e) {
 					Log.e("Audiorecorder", "IOException write() at output stream");
@@ -61,6 +150,10 @@ public class AudioRecorder {
 				}
 				record.stop();
 				record.release();
+				
+				//Reset nhan dang co dang noi hay khong
+				timeOut = 0;//Reset nhan dang co dang noi hay khong
+				isSilence = false;
 			}
 		};
 	}
@@ -73,16 +166,14 @@ public class AudioRecorder {
 			if(th != null){
 				th.interrupt();
 				th = null;
+				thAutoStop.interrupt();
+				thAutoStop = null;
 			}
 			RECORDSTATE = RECORDSTATE_RECORDING;
 			th = new Thread(run);
 			th.start();
-		}
-	}
-	
-	public void pauseRecording(){
-		if(RECORDSTATE == RECORDSTATE_RECORDING){
-			RECORDSTATE = RECORDSTATE_PAUSED;
+			thAutoStop = new Thread(runDetect);
+			thAutoStop.start();
 		}
 	}
 
@@ -126,6 +217,8 @@ public class AudioRecorder {
 		if(th != null){
 			th.interrupt();
 			th = null;
+			thAutoStop.interrupt();
+			thAutoStop = null;
 		}
 	}
 

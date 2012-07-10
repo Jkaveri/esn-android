@@ -11,7 +11,6 @@ import esn.classes.VoiceModeHelper;
 
 public class VoiceModeActivity extends MapActivity{
 	private VoiceModeHelper helper;
-	private boolean recording = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +26,10 @@ public class VoiceModeActivity extends MapActivity{
 	}
 	
 	public void btnRecordClick(View view) {
-		if(recording){
+		if(helper.isRecording()){
 			helper.stopRecording();
-			recording = false;
 		}else{
 			helper.startRecording();
-			recording = true;
 		}
 	}
 	
