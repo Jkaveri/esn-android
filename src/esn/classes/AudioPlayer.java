@@ -69,7 +69,7 @@ public class AudioPlayer {
 	}
 	
 	public void setDefaultConfig(){
-		SAMPLE_RATE = 8000;
+		SAMPLE_RATE = 16000;
 		CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_MONO;
 		AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
 	}
