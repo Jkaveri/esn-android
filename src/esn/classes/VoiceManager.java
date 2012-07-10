@@ -68,7 +68,7 @@ public class VoiceManager {
 		wavConver.clearBuffer();//giai phong bo nho
 		S2TResult result = auWs.send(buf);//khi send tu giai phong bo nho
 		Log.i("AudioManager", "Result: " + result.getType());
-		callBack.returnCall(result.getType());
+		callBack.returnCall(result);
 //		boolean ok = loadPlayerBuffer(result.getType(), result.getAddress());
 //		if(ok){
 //			player.play();
