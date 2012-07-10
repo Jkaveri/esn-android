@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import esn.activities.R;
+import esn.models.S2TResult;
 
 public class VoiceModeHelper{
 	private Thread thDynamicIcon;
@@ -42,12 +43,12 @@ public class VoiceModeHelper{
 		audioMng.setCallBack(new IVoiceCallBack() {
 			
 			@Override
-			public void returnCall(final String state) {
+			public void returnCall(final S2TResult result) {
 				handler.post(new Runnable() {
 					
 					@Override
 					public void run() {
-						states.setText(state);
+						states.setText(result.getType());
 					}
 				});
 			}
