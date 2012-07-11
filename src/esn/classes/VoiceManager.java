@@ -7,8 +7,8 @@ package esn.classes;
 import java.io.IOException;
 import java.io.InputStream;
 
+import esn.activities.R;
 import esn.models.S2TResult;
-import android.R.bool;
 import android.content.res.Resources;
 import android.media.AudioFormat;
 import android.util.Log;
@@ -23,14 +23,32 @@ public class VoiceManager {
 	private AudioWebService auWs;
 	private Resources resource;
 	private Runnable runSendWs;
-	private IVoiceCallBack callBack;
+	private VoiceHandler callBack;
 	
 	public VoiceManager(Resources resource) {
-		recorder = new AudioRecorder(new IRecordCallBack() {
-			
+		recorder = new AudioRecorder(new RecordHandler() {
+
 			@Override
-			public void autoStopRecording() {
-				callBack.autoStopRecording();
+			public void onSpeaking() {
+				//Log.i("VoiceManager", "On Speaking");				
+			}
+
+			@Override
+			public void onSilenting() {
+				stopRecording();
+				//Log.i("VoiceManager", "On Stop");
+			}
+
+			@Override
+			public void onStartingRecord() {
+				beep(R.raw.record_start);
+			}
+
+			@Override
+			public void onStopingRecord() {
+				recorder.stopRecording();
+				beep(R.raw.record_stop);
+				callBack.onStopingRecord();
 			}
 		});
 		
@@ -46,6 +64,7 @@ public class VoiceManager {
 		wavConver.setFormat(1); // 1 FOR PCM
 		wavConver.setChannels(1); //1 => MONO, 2 => STEREO
 		wavConver.setSampleRate(recorder.SAMPLE_RATE);
+		
 		runSendWs = new Runnable() {
 			
 			@Override
@@ -60,13 +79,12 @@ public class VoiceManager {
 		
 	}
 	
-	public void setPostBack(IVoiceCallBack callBack){
-		this.callBack = callBack;
+	public void setVoiceHandler(VoiceHandler handler){
+		this.callBack = handler;
 	}
 	
-	public boolean beep(int soundId){
+	private boolean beep(int soundId){
 		boolean ok = true;
-		player.release();//giai phong bo nho
 		InputStream typeStream = resource.openRawResource(soundId);
 		wavReader.setBuffer(typeStream);
 		if(wavReader.read()){
@@ -75,7 +93,7 @@ public class VoiceManager {
 			setPlayerConfig();
 			player.loadBufferPCM(bufType);
 			bufType = null;
-			player.play();
+			player.playOutsiteTask();
 		}else{
 			ok = false;
 		}
@@ -106,7 +124,7 @@ public class VoiceManager {
 		
 		S2TResult result = auWs.send(buf);
 		Log.i("AudioManager", "Result: " + result.getType());
-		callBack.s2tHviteCall(result);
+		callBack.onS2TPostBack(result);
 //		boolean ok = loadPlayerBuffer("cos lowr ddaast owr", "hafng xanh");
 //		if(ok){
 //			player.play();
@@ -133,7 +151,6 @@ public class VoiceManager {
 	}
 	
 	private boolean loadPlayerBuffer(String type, String address){//Load du lieu vao buffer player theo the loai va dia chi
-		player.release();//giai phong bo nho
 		int auTypeId = AudioLibManager.getAudioType(type);
 		if(auTypeId == AudioLibManager.TYPE_NOT_FOUND){//khong ton tai file
 			Log.e("AudioManager", "Khong tim thay file kieu: \"" + type + "\"");

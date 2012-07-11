@@ -9,6 +9,8 @@ package esn.classes;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder.AudioSource;
@@ -23,56 +25,54 @@ public class AudioRecorder {
 	public int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
 	public int REC_BUFFER_SIZE;
 	public int SILENCE_THRESHOLD = 600;
+	public int LONG_SILENCE = 20;
 	
 	private int RECORDSTATE = RECORDSTATE_STOPPED;
 	private Thread th;
 	private Runnable run;
 	private ByteArrayOutputStream bufferStream;
+	public RecordHandler callBack;
 	
-	private Thread thAutoStop;
-	private Runnable runDetect;
-	private int timeOut = 0;
 	private boolean isSilence = false;
-	private IRecordCallBack callBack;
+	private int timeOut = 0;
+	private boolean isCallBackOnStarting = false;
 	
-	private void silenceCall(){		
+	private class DetectTask extends TimerTask {
+		@Override
+	    public void run() {
+	    	if(isSilence){
+				timeOut++;
+				if(timeOut >= LONG_SILENCE){
+					reset();
+					callBack.onSilenting();
+				}
+			}
+	    }
+	}
+	
+	public void silenceCall(){		
 		isSilence = true;
 	}
 	
-	private void speakingCall(){
+	public void speakingCall(){
 		isSilence = false;
 		timeOut = 0;
+		if(!isCallBackOnStarting){
+			isCallBackOnStarting = true;
+			callBack.onSpeaking();
+		}
 	}
-
-	public AudioRecorder(IRecordCallBack autoStop) {
-		this.callBack = autoStop;
-		
+	
+	public void reset(){
+		timeOut = 0;
+		isCallBackOnStarting = false;
+		isSilence = false;
+	}
+	
+	public AudioRecorder(RecordHandler recHandler) {
+		callBack = recHandler;		
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-		bufferStream = new ByteArrayOutputStream();
-		
-		runDetect = new Runnable() {
-			
-			@Override
-			public void run() {
-				while(RECORDSTATE == RECORDSTATE_RECORDING){
-					if(isSilence){
-						timeOut++;
-						if(timeOut >= 20){
-							Log.i("AudioRecorder", "Auto stop recording");
-							timeOut = 0;
-							stopRecording();
-							callBack.autoStopRecording();
-						}else{
-							try {
-								Thread.sleep(50);
-							} catch (InterruptedException e) {
-								Log.i("AudioRecorder", "Thread Detect on destroy");
-							}
-						}
-					}
-				}
-			}
-		};
+		bufferStream = new ByteArrayOutputStream();		
 		
 		run = new Runnable() {
 
@@ -88,6 +88,13 @@ public class AudioRecorder {
 				int totalReadBytes = 0;
 				byte totalByteBuffer[] = new byte[60 * 44100 * 2];
 				
+				callBack.onStartingRecord();//Goi handler khi chuan bi ghi am
+				
+				//Kich hoat lang nghe noi hoac khong noi
+				Timer timerDetect = new Timer();
+				timerDetect.scheduleAtFixedRate(new DetectTask(), 1, 50);
+				
+				//Bat dau ghi am
 				record.startRecording();
 				try {
 					while (RECORDSTATE == RECORDSTATE_RECORDING) {
@@ -151,8 +158,12 @@ public class AudioRecorder {
 						Log.e("Audiorecorder", "IOException close at output stream");
 					}
 				}
+				
+				//Destroy
 				record.stop();
 				record.release();
+				timerDetect.cancel();
+				timerDetect = null;
 				
 				//Giai phong bo nho
 				tempFloatBuffer = null;
@@ -160,8 +171,7 @@ public class AudioRecorder {
 				dos = null;
 				
 				//Reset nhan dang co dang noi hay khong
-				timeOut = 0;//Reset nhan dang co dang noi hay khong
-				isSilence = false;
+				callBack.onStopingRecord();
 			}
 		};
 	}
@@ -174,14 +184,10 @@ public class AudioRecorder {
 			if(th != null){
 				th.interrupt();
 				th = null;
-				thAutoStop.interrupt();
-				thAutoStop = null;
 			}
 			RECORDSTATE = RECORDSTATE_RECORDING;
 			th = new Thread(run);
 			th.start();
-			thAutoStop = new Thread(runDetect);
-			thAutoStop.start();
 		}
 	}
 
@@ -225,8 +231,6 @@ public class AudioRecorder {
 		if(th != null){
 			th.interrupt();
 			th = null;
-			thAutoStop.interrupt();
-			thAutoStop = null;
 		}
 	}
 
