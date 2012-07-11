@@ -22,6 +22,7 @@ public class AudioRecorder {
 	public int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
 	public int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
 	public int REC_BUFFER_SIZE;
+	public int SILENCE_THRESHOLD = 600;
 	
 	private int RECORDSTATE = RECORDSTATE_STOPPED;
 	private Thread th;
@@ -56,8 +57,9 @@ public class AudioRecorder {
 				while(RECORDSTATE == RECORDSTATE_RECORDING){
 					if(isSilence){
 						timeOut++;
-						if(timeOut == 25){
+						if(timeOut >= 20){
 							Log.i("AudioRecorder", "Auto stop recording");
+							timeOut = 0;
 							stopRecording();
 							callBack.autoStopRecording();
 						}else{
@@ -79,7 +81,6 @@ public class AudioRecorder {
 				byte[] buffer = new byte[REC_BUFFER_SIZE];
 				DataOutputStream dos = new DataOutputStream(bufferStream);
 				AudioRecord record = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
-				record.startRecording();
 				
 				boolean recording = false;
 				float tempFloatBuffer[] = new float[3];
@@ -87,6 +88,7 @@ public class AudioRecorder {
 				int totalReadBytes = 0;
 				byte totalByteBuffer[] = new byte[60 * 44100 * 2];
 				
+				record.startRecording();
 				try {
 					while (RECORDSTATE == RECORDSTATE_RECORDING) {
 						float totalAbsValue = 0.0f;
@@ -96,8 +98,6 @@ public class AudioRecorder {
 						if(count > 0){
 							dos.write(buffer, 0, count);
 						}
-						
-						
 						
 						///////////////////////PHAN TICH DANG XEM DANG NOI HAY NGUNG//////////////////
 						// Analyze Sound.
@@ -112,20 +112,23 @@ public class AudioRecorder {
 						for (int i = 0; i < 3; ++i)
 							temp += tempFloatBuffer[i];
 
-						if ((temp >= 0 && temp <= 350) && recording == false) {
-							//Log.i("TAG", "1");//Chua noi
+						if ((temp >= 0 && temp <= SILENCE_THRESHOLD) && recording == false) {
+							//Log.i("AudioRecorder", "[1] Chua noi");//Chua noi
 							tempIndex++;
 						}
 
-						if (temp > 350 && recording == false) {
-							//Log.i("TAG", "2");//Bat dau noi
+						if (temp >SILENCE_THRESHOLD && recording == false) {
+							//Log.i("AudioRecorder", "[2] Bat dau noi");//Bat dau noi
 							recording = true;
+							continue;
 						}
 
-						if ((temp >= 0 && temp <= 350) && recording == true) {
+						if ((temp >= 0 && temp <=  SILENCE_THRESHOLD) && recording == true) {
 							silenceCall();//Dang ngung noi
+							//Log.i("AudioRecorder", "Dang im lang");
 						}else{
 							speakingCall();//Dang noi
+							//Log.i("AudioRecorder", "Dang noi");
 						}
 
 						// -> Recording sound here.
@@ -150,6 +153,11 @@ public class AudioRecorder {
 				}
 				record.stop();
 				record.release();
+				
+				//Giai phong bo nho
+				tempFloatBuffer = null;
+				totalByteBuffer = null;
+				dos = null;
 				
 				//Reset nhan dang co dang noi hay khong
 				timeOut = 0;//Reset nhan dang co dang noi hay khong
