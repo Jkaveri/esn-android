@@ -150,6 +150,7 @@ public class VoiceManager {
 		thSendWs.start();
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean loadPlayerBuffer(String type, String address){//Load du lieu vao buffer player theo the loai va dia chi
 		int auTypeId = AudioLibManager.getAudioType(type);
 		if(auTypeId == AudioLibManager.TYPE_NOT_FOUND){//khong ton tai file
