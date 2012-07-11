@@ -46,6 +46,7 @@ public class VoiceModeHelper{
 		
 		
 		//Thiet dat goi lai khi thuc thi xong den VoiceManager
+		final int rawStopBeep = R.raw.record_stop;
 		voiceManager.setPostBack(new IVoiceCallBack() {
 			
 			@Override
@@ -67,6 +68,7 @@ public class VoiceModeHelper{
 					thDynamicIcon = null;
 					handler.post(runPost_Mic);
 				}
+				voiceManager.beep(rawStopBeep);
 				voiceManager.sendDataToServer();
 			}
 		});
@@ -98,7 +100,6 @@ public class VoiceModeHelper{
 			}
 		};
 		
-		
 		//Chuyen button thanh icon chiec micro
 		runPost_Mic = new Runnable() {
 			
@@ -111,12 +112,13 @@ public class VoiceModeHelper{
 
 	public void stopRecording() {
 		recording = false;
-		voiceManager.stopRecording();
+		voiceManager.beep(R.raw.record_stop);
 		if (thDynamicIcon != null) {
 			thDynamicIcon.interrupt();
 			thDynamicIcon = null;
 			btnRecord.setImageResource(R.drawable.ic_mic_record);
 		}
+		voiceManager.stopRecording();
 		voiceManager.sendDataToServer();
 	}
 
@@ -125,6 +127,7 @@ public class VoiceModeHelper{
 		voiceManager.startRecording();
 		thDynamicIcon = new Thread(run);
 		thDynamicIcon.start();
+		voiceManager.beep(R.raw.record_start);
 	}
 	
 	public void destroy(){

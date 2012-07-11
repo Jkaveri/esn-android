@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import esn.models.S2TResult;
+import android.R.bool;
 import android.content.res.Resources;
 import android.media.AudioFormat;
 import android.util.Log;
@@ -63,10 +64,37 @@ public class VoiceManager {
 		this.callBack = callBack;
 	}
 	
+	public boolean beep(int soundId){
+		boolean ok = true;
+		player.release();//giai phong bo nho
+		InputStream typeStream = resource.openRawResource(soundId);
+		wavReader.setBuffer(typeStream);
+		if(wavReader.read()){
+			byte[] bufType = wavReader.getData();
+			wavReader.clearBuffer();//giai phong bo nho
+			setPlayerConfig();
+			player.loadBufferPCM(bufType);
+			bufType = null;
+			player.play();
+		}else{
+			ok = false;
+		}
+		try {
+			typeStream.close();
+		} catch (IOException e) {
+			Log.e("AudioManager", "Beep close tream fail");
+		}
+		typeStream = null;//giai phong bo nho
+		return ok;
+	}
+	
 	private void runSendWS() throws IOException{
 		byte[] recordBuf = recorder.getBufferRecord();
 		recorder.clearBuffer();//giai phong bo nho
-		Log.i("AudioManager", "Data record length: " + recordBuf.length);
+//		player.setDefaultConfig();
+//		player.prepare();		
+//		player.loadBufferPCM(recordBuf);
+//		Log.i("AudioManager", "Data record length: " + recordBuf.length);
 		
 		wavConver.setBuffer(recordBuf);
 		recordBuf = null;//giai phong bo nho
@@ -162,9 +190,16 @@ public class VoiceManager {
 			bufferPCM[i] = bufAddress[j];
 			j++;
 		}
-		bufAddress = null;//giai phong bo nho
+		bufAddress = null;//giai phong bo nho		
 		
+		setPlayerConfig();
+		player.loadBufferPCM(bufferPCM);
+		bufferPCM = null;//giai phong bo nho
 		
+		return true;
+	}
+	
+	private void setPlayerConfig(){
 		if(wavReader.getChannels() == 1){
 			player.CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_MONO;
 		}
@@ -181,11 +216,7 @@ public class VoiceManager {
 			player.AUDIO_FORMAT = AudioFormat.ENCODING_PCM_8BIT;
 		}
 		
-		player.prepare();		
-		player.loadBufferPCM(bufferPCM);
-		bufferPCM = null;//giai phong bo nho
-		
-		return true;
+		player.prepare();
 	}
 	
 	public void destroy(){
