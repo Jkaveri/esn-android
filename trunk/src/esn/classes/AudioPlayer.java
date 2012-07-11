@@ -25,7 +25,7 @@ public class AudioPlayer {
 	private int MODE = AudioTrack.MODE_STREAM;
 	private int STREAM_TYPE = AudioManager.STREAM_MUSIC;
 	private static int TR_BUFFER_SIZE;
-	private  int PLAYSTATE = PLAYSTATE_STOPPED;
+	private int PLAYSTATE = PLAYSTATE_STOPPED;
 	
 	private Runnable run;
 	private Thread th;
@@ -37,37 +37,42 @@ public class AudioPlayer {
 
 			@Override
 			public void run() {
-				AudioTrack track = new AudioTrack(STREAM_TYPE, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, TR_BUFFER_SIZE, MODE);
-				byte[] buffer = new byte[TR_BUFFER_SIZE];
-				DataInputStream is;
-				
-				if(bis != null)
-					is = new DataInputStream(bis);
-				else
-					is = new DataInputStream(ips);
-				
-				track.play();				
-				try {
-					while (PLAYSTATE != PLAYSTATE_STOPPED) {
-						int count = is.read(buffer, 0, TR_BUFFER_SIZE);
-						track.write(buffer, 0, count);
-						if(count == -1){
-							PLAYSTATE = PLAYSTATE_STOPPED;//Stop
-						}
-					}
-				} catch (IOException e) {
-					Log.e("AudioPlayer", "IOException read buffer");
-				} finally{
-					try {
-						is.close();
-					} catch (IOException e) {
-						Log.e("AudioPlayer", "IOException close input tream");
-					}
-				}
-				track.stop();
-				track.release();
+				playOutsiteTask();
 			}
 		};
+	}
+
+	public void playOutsiteTask() {
+		AudioTrack track = new AudioTrack(STREAM_TYPE, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, TR_BUFFER_SIZE, MODE);
+		byte[] buffer = new byte[TR_BUFFER_SIZE];
+		DataInputStream is;
+		
+		if(bis != null)
+			is = new DataInputStream(bis);
+		else
+			is = new DataInputStream(ips);
+		
+		track.play();
+		PLAYSTATE = PLAYSTATE_PLAYING;
+		try {
+			while (PLAYSTATE != PLAYSTATE_STOPPED) {
+				int count = is.read(buffer, 0, TR_BUFFER_SIZE);
+				track.write(buffer, 0, count);
+				if(count == -1){
+					PLAYSTATE = PLAYSTATE_STOPPED;//Stop
+				}
+			}
+		} catch (IOException e) {
+			Log.e("AudioPlayer", "IOException read buffer");
+		} finally{
+			try {
+				is.close();
+			} catch (IOException e) {
+				Log.e("AudioPlayer", "IOException close input tream");
+			}
+		}
+		track.stop();
+		track.release();
 	}
 
 	public void loadBufferPCM(byte[] bufferPCM) {
@@ -92,7 +97,6 @@ public class AudioPlayer {
 
 	public void play() {
 		if(PLAYSTATE != PLAYSTATE_PLAYING){
-			PLAYSTATE = PLAYSTATE_PLAYING;
 			if (th != null) {
 				th.interrupt();
 				th = null;

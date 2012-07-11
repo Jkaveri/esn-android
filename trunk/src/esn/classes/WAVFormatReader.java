@@ -11,8 +11,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.util.Log;
-
 public class WAVFormatReader {
 	private DataInputStream is;
 	private long dataChunkSize;
@@ -92,6 +90,7 @@ public class WAVFormatReader {
 		data = null;
 	}
 	
+	@SuppressWarnings("unused")
 	public boolean read()
 	{
 		byte[] tmpLong = new byte[4];
@@ -100,16 +99,16 @@ public class WAVFormatReader {
 		try
 		{
 			String chunkID = "" + (char)is.readByte() + (char)is.readByte() + (char)is.readByte() + (char)is.readByte();
-			Log.i("WAVFormatReader", "chunkID: " + chunkID);
+//			Log.i("WAVFormatReader", "chunkID: " + chunkID);
 			
 			is.read(tmpLong); // read the ChunkSize
 			chunkSize = WAVUtils.byteArrayToLong(tmpLong);
 			
 			String formatTag = "" + (char)is.readByte() + (char)is.readByte() + (char)is.readByte() + (char)is.readByte();
-			Log.i("WAVFormatReader", "formatTag: " + formatTag);
+//			Log.i("WAVFormatReader", "formatTag: " + formatTag);
 			
 			String subChunkID = "" + (char)is.readByte() + (char)is.readByte() + (char)is.readByte() + (char)is.readByte();
-			Log.i("WAVFormatReader", "subChunkID: " + subChunkID);
+//			Log.i("WAVFormatReader", "subChunkID: " + subChunkID);
 			
 			is.read(tmpLong); // read the subChunkSize
 			subChunkSize = WAVUtils.byteArrayToLong(tmpLong);
@@ -134,7 +133,7 @@ public class WAVFormatReader {
 
 			
 			String dataChunkID = "" + (char)is.readByte() + (char)is.readByte() + (char)is.readByte() + (char)is.readByte();
-			Log.i("WAVFormatReader", "dataChunkID: " + dataChunkID);
+//			Log.i("WAVFormatReader", "dataChunkID: " + dataChunkID);
 			
 			is.read(tmpLong); // read the size of the data
 			dataChunkSize = WAVUtils.byteArrayToLong(tmpLong);

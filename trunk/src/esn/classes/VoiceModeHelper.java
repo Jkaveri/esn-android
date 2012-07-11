@@ -1,8 +1,10 @@
 package esn.classes;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.content.res.Resources;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -10,15 +12,31 @@ import esn.activities.R;
 import esn.models.S2TResult;
 
 public class VoiceModeHelper{
-	private Thread thDynamicIcon;
+	private Timer tmrDynIcon;
 	private boolean recording;
-	private Runnable run;
 	private ImageButton btnRecord;
 	private Handler handler;
 	private Runnable runPost_Lig;
 	private Runnable runPost_Red;
-	private Runnable runPost_Mic;
 	private VoiceManager voiceManager;
+	private Runnable runPost_Mic;
+	
+	//Thay doi icon lam cho button nhap nhay
+	private class IconTask extends TimerTask{
+		private boolean type = true;
+		
+		@Override
+		public void run() {
+			if (type) {
+				handler.post(runPost_Lig);
+				type = false;
+			} else {
+				handler.post(runPost_Red);
+				type = true;
+			}
+		}
+		
+	}
 	
 	public VoiceModeHelper(Resources resources, ImageButton record, final TextView states){
 		this.btnRecord = record;
@@ -46,11 +64,10 @@ public class VoiceModeHelper{
 		
 		
 		//Thiet dat goi lai khi thuc thi xong den VoiceManager
-		final int rawStopBeep = R.raw.record_stop;
-		voiceManager.setPostBack(new IVoiceCallBack() {
+		voiceManager.setVoiceHandler(new VoiceHandler() {
 			
 			@Override
-			public void s2tHviteCall(final S2TResult result) {//Goi web service nhan dang giong noi  xong
+			public void onS2TPostBack(final S2TResult result) {//Goi web service nhan dang giong noi  xong
 				handler.post(new Runnable() {
 					
 					@Override
@@ -61,44 +78,16 @@ public class VoiceModeHelper{
 			}
 
 			@Override
-			public void autoStopRecording() {//Khi noi xong tu stop
+			public void onStopingRecord() {//Khi noi xong tu stop
 				recording = false;
-				if (thDynamicIcon != null) {
-					thDynamicIcon.interrupt();
-					thDynamicIcon = null;
-					handler.post(runPost_Mic);
-				}
-				voiceManager.beep(rawStopBeep);
+				tmrDynIcon.cancel();
+				handler.post(runPost_Mic);
 				voiceManager.sendDataToServer();
 			}
 		});
 		
 		//*//
 		
-		
-		//Thay doi icon lam cho button nhap nhay
-		run = new Runnable() {
-
-			@Override
-			public void run() {
-				boolean type = true;
-				while (recording) {
-					if (type) {
-						handler.post(runPost_Lig);
-						type = false;
-					} else {
-						handler.post(runPost_Red);
-						type = true;
-					}
-
-					try {
-						Thread.sleep(1100);
-					} catch (InterruptedException e) {
-						Log.i("Dynamic Icon", "Thread on destroy!");
-					}
-				}
-			}
-		};
 		
 		//Chuyen button thanh icon chiec micro
 		runPost_Mic = new Runnable() {
@@ -110,31 +99,28 @@ public class VoiceModeHelper{
 		};
 	}
 
-	public void stopRecording() {
-		recording = false;
-		voiceManager.beep(R.raw.record_stop);
-		if (thDynamicIcon != null) {
-			thDynamicIcon.interrupt();
-			thDynamicIcon = null;
-			btnRecord.setImageResource(R.drawable.ic_mic_record);
-		}
-		voiceManager.stopRecording();
-		voiceManager.sendDataToServer();
-	}
-
 	public void startRecording(){
 		recording = true;
 		voiceManager.startRecording();
-		thDynamicIcon = new Thread(run);
-		thDynamicIcon.start();
-		voiceManager.beep(R.raw.record_start);
+		tmrDynIcon = new Timer();
+		tmrDynIcon.scheduleAtFixedRate(new IconTask(), 0, 1000);
 	}
 	
-	public void destroy(){
-		voiceManager.destroy();
+	public void stopRecording() {
+		recording = false;
+		voiceManager.stopRecording();
+		tmrDynIcon.cancel();
+		btnRecord.setImageResource(R.drawable.ic_mic_record);
+		voiceManager.sendDataToServer();
 	}
 	
 	public boolean isRecording(){
 		return recording;
+	}
+	
+	public void destroy(){
+		tmrDynIcon.cancel();
+		tmrDynIcon = null;
+		voiceManager.destroy();
 	}
 }
