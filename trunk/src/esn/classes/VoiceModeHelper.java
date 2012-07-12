@@ -60,11 +60,20 @@ public class VoiceModeHelper{
 				btnRecord.setImageResource(R.drawable.ic_mic_stop_red);
 			}
 		};
+		
+		//Chuyen button thanh icon chiec micro
+		runPost_Mic = new Runnable() {
+			
+			@Override
+			public void run() {
+				btnRecord.setImageResource(R.drawable.ic_mic_record);
+			}
+		};
 		//*//
 		
 		
 		//Thiet dat goi lai khi thuc thi xong den VoiceManager
-		voiceManager.setVoiceHandler(new VoiceHandler() {
+		voiceManager.setVoiceListener(new VoiceListener() {
 			
 			@Override
 			public void onS2TPostBack(final S2TResult result) {//Goi web service nhan dang giong noi  xong
@@ -78,40 +87,25 @@ public class VoiceModeHelper{
 			}
 
 			@Override
-			public void onStopingRecord() {//Khi noi xong tu stop
+			public void onStopedRecord() {//Khi noi xong tu stop
+				tmrDynIcon.cancel();//Ngung che do icon dong
+				handler.post(runPost_Mic);//Set icon ve hinh chiec mic
 				recording = false;
-				tmrDynIcon.cancel();
-				handler.post(runPost_Mic);
-				voiceManager.sendDataToServer();
 			}
 		});
 		
 		//*//
-		
-		
-		//Chuyen button thanh icon chiec micro
-		runPost_Mic = new Runnable() {
-			
-			@Override
-			public void run() {
-				btnRecord.setImageResource(R.drawable.ic_mic_record);
-			}
-		};
 	}
 
 	public void startRecording(){
-		recording = true;
 		voiceManager.startRecording();
 		tmrDynIcon = new Timer();
 		tmrDynIcon.scheduleAtFixedRate(new IconTask(), 0, 1000);
+		recording = true;
 	}
 	
 	public void stopRecording() {
-		recording = false;
-		voiceManager.stopRecording();
-		tmrDynIcon.cancel();
-		btnRecord.setImageResource(R.drawable.ic_mic_record);
-		voiceManager.sendDataToServer();
+		voiceManager.stopRecording();//Goi ham nay se phat sinh su kien onStopedRecord()
 	}
 	
 	public boolean isRecording(){

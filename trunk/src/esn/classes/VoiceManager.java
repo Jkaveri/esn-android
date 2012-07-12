@@ -23,32 +23,32 @@ public class VoiceManager {
 	private AudioWebService auWs;
 	private Resources resource;
 	private Runnable runSendWs;
-	private VoiceHandler callBack;
+	private VoiceListener callBack;
 	
 	public VoiceManager(Resources resource) {
-		recorder = new AudioRecorder(new RecordHandler() {
+		recorder = new AudioRecorder(new RecordListener() {
 
 			@Override
 			public void onSpeaking() {
-				//Log.i("VoiceManager", "On Speaking");				
+				//Log.i("VoiceManager", "On Speaking");
 			}
 
 			@Override
 			public void onSilenting() {
-				stopRecording();
-				//Log.i("VoiceManager", "On Stop");
+				recorder.stopRecording();//Goi ham nay se phat sinh su kien onStopingRecord()
+				//Log.i("VoiceManager", "On Silenting");
 			}
 
 			@Override
 			public void onStartingRecord() {
-				beep(R.raw.record_start);
+				beep(R.raw.record_start, true);//beep trong thread record
 			}
 
 			@Override
-			public void onStopingRecord() {
-				recorder.stopRecording();
-				beep(R.raw.record_stop);
-				callBack.onStopingRecord();
+			public void onStopedRecord() {
+				sendDataToServer();//Gui du lieu den server dau tien, ham nay tu chay rieng 1 thread nen se da
+				beep(R.raw.record_stop, false);//Beep ket thuc chay mot thread moi
+				callBack.onStopedRecord();//Goi su kien stop handler
 			}
 		});
 		
@@ -59,11 +59,7 @@ public class VoiceManager {
 		
 		this.resource = resource;
 		
-		wavConver.setBitsPerSample(16); //16 => 16BIT, 8 => 8BIT
-		wavConver.setSubchunkSize(16); //16 => PCM
-		wavConver.setFormat(1); // 1 FOR PCM
-		wavConver.setChannels(1); //1 => MONO, 2 => STEREO
-		wavConver.setSampleRate(recorder.SAMPLE_RATE);
+		wavConver.setDefaultWAVFormat();
 		
 		runSendWs = new Runnable() {
 			
@@ -79,11 +75,11 @@ public class VoiceManager {
 		
 	}
 	
-	public void setVoiceHandler(VoiceHandler handler){
-		this.callBack = handler;
+	public void setVoiceListener(VoiceListener listener){
+		this.callBack = listener;
 	}
 	
-	private boolean beep(int soundId){
+	private boolean beep(int soundId, boolean isInsiteThread){
 		boolean ok = true;
 		InputStream typeStream = resource.openRawResource(soundId);
 		wavReader.setBuffer(typeStream);
@@ -93,7 +89,11 @@ public class VoiceManager {
 			setPlayerConfig();
 			player.loadBufferPCM(bufType);
 			bufType = null;
-			player.playOutsiteTask();
+			if(isInsiteThread){
+				player.playOutsiteTask();//Play thong thuong, neu goi ham nay nen bo trong thread
+			}else{
+				player.play();//Play trong mot thread moi
+			}
 		}else{
 			ok = false;
 		}
@@ -125,7 +125,7 @@ public class VoiceManager {
 		S2TResult result = auWs.send(buf);
 		Log.i("AudioManager", "Result: " + result.getType());
 		callBack.onS2TPostBack(result);
-//		boolean ok = loadPlayerBuffer("cos lowr ddaast owr", "hafng xanh");
+//		boolean ok = loadPlayerSumBuffer("cos lowr ddaast owr", "hafng xanh");
 //		if(ok){
 //			player.play();
 //		}else{
@@ -141,7 +141,7 @@ public class VoiceManager {
 		recorder.startRecording();
 	}
 	
-	public void sendDataToServer(){// Gui du lieu ghi am xuong server
+	private void sendDataToServer(){// Gui du lieu ghi am xuong server
 		if(thSendWs != null){
 			thSendWs.interrupt();
 			thSendWs = null;
@@ -151,7 +151,7 @@ public class VoiceManager {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean loadPlayerBuffer(String type, String address){//Load du lieu vao buffer player theo the loai va dia chi
+	private boolean loadPlayerSumBuffer(String type, String address){//Load du lieu vao buffer player theo the loai va dia chi
 		int auTypeId = AudioLibManager.getAudioType(type);
 		if(auTypeId == AudioLibManager.TYPE_NOT_FOUND){//khong ton tai file
 			Log.e("AudioManager", "Khong tim thay file kieu: \"" + type + "\"");
@@ -174,7 +174,7 @@ public class VoiceManager {
 		int auAddressId = AudioLibManager.getAudioAddress(address);
 		if(auAddressId == AudioLibManager.ADDRESS_NOT_FOUND){//khong ton tai file
 			Log.e("AudioManager", "Khong tim thay file dia chi: \"" + address + "\"");
-			bufType = null;
+			bufType = null;//Giai phong bo nho
 			return false;
 		}
 		InputStream addressStream = resource.openRawResource(auAddressId);

@@ -99,6 +99,7 @@ public class WAVFormatConver {
 	
 	public void setBuffer(byte[] dataPCM){
 		this.dataPCM = dataPCM;
+		dataPCM = null;//giai phong bo nho
 		if(dos != null){
 			try {
 				dos.close();
@@ -179,7 +180,7 @@ public class WAVFormatConver {
 		bitsPerSample = 16; //16 => 16BIT, 8 => 8BIT
 		format = 1;// 1 FOR PCM
 		channels = 1; //1 => MONO, 2 => STEREO
-		sampleRate = 8000;
+		sampleRate = AudioRecorder.SAMPLE_RATE;
 	}
 	
 	public void prepare(){

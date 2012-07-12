@@ -73,6 +73,7 @@ public class AudioPlayer {
 		}
 		track.stop();
 		track.release();
+		track = null;
 	}
 
 	public void loadBufferPCM(byte[] bufferPCM) {
@@ -86,9 +87,9 @@ public class AudioPlayer {
 	}
 	
 	public void setDefaultConfig(){
-		SAMPLE_RATE = 16000;
+		SAMPLE_RATE = AudioRecorder.SAMPLE_RATE;
 		CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_MONO;
-		AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+		AUDIO_FORMAT = AudioRecorder.AUDIO_FORMAT;
 	}
 	
 	public void prepare(){
