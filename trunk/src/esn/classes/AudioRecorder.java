@@ -23,8 +23,8 @@ public class AudioRecorder {
 	public static int SAMPLE_RATE = 8000;
 	public static int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
 	public static int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
-	public static int SILENCE_THRESHOLD = 600;
-	public static int LONG_SILENCE = 20;
+	public int SILENCE_THRESHOLD = 600;
+	public int LONG_SILENCE = 20;
 	
 	public int REC_BUFFER_SIZE;
 	
