@@ -21,6 +21,7 @@
     <string name="esn.global.dateFormat">MM-dd-yyyy</string>
     <string name="esn.global.loading">Loading…</string>
     <string name="esn.global.pleaseWait">Please wait!</string>
+    <string name="esn.global.find">Find</string>
     <string name="esn_global_ok">OK</string>
     <string name="esn.global.Error">Error</string>
     <string name="esn.global.ConnectionError">Connection error !</string>
@@ -55,5 +56,8 @@
 	<string name="esn_welcome_loginWithFacebook">Login with facebook</string>
 	<string name="esn_welcome_signup">Sign Up</string>
 	
-	
+	<string name="esn_userpage_online">Online</string>
+	<string name="esn_userpage_ofline">Offline</string>
+	<string name="esn_userpage_Male">Male</string>
+	<string name="esn_userpage_Female">Female</string>
 </resources>

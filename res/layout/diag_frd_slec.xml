@@ -58,21 +58,33 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="80dip"
             android:layout_height="36dip"
-            android:text="@string/btn.Friends.Lists.Diaglog.Visit" />
+            android:text="@string/btn.Friends.Lists.Diaglog.Visit"
+            android:background="@drawable/rounded_corner_blue"
+            android:layout_margin="2dp"
+            android:textColor="#FFF"
+            />
 
         <Button
             android:id="@+id/btn.Friends.Diaglog.Unfriend"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="80dip"
             android:layout_height="36dip"
-            android:text="@string/btn.Friends.Lists.Diaglog.Unfriend" />
+            android:text="@string/btn.Friends.Lists.Diaglog.Unfriend"
+            android:background="@drawable/rounded_corner_blue"
+            android:layout_margin="2dp"
+            android:textColor="#FFF"
+            />
 
         <Button
             android:id="@+id/btn.Friends.Diaglog.Close"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="80dip"
             android:layout_height="36dip"
-            android:text="@string/btn.Friends.Lists.Diaglog.Close" />
+            android:text="@string/btn.Friends.Lists.Diaglog.Close"
+            android:background="@drawable/rounded_corner_blue"
+            android:layout_margin="2dp"
+            android:textColor="#FFF"
+            />
     </LinearLayout>
 
 </LinearLayout>

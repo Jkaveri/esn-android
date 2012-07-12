@@ -131,7 +131,7 @@ public class UsersManager {
 
 				user.Name = p.getString("Name");
 
-				user.Birthday = p.getString("Birthday");
+				user.Birthday = Utils.GetDateFromJSONString(p.getString("Birthday"));
 			
 				user.Gender = p.getBoolean("Gender");
 
@@ -156,6 +156,7 @@ public class UsersManager {
 	}
 	
 	public Users RetrieveById(int id) throws JSONException,
+		
 		IOException, IllegalArgumentException, IllegalAccessException {
 		HttpHelper helper = new HttpHelper(URL);
 		JSONObject params = new JSONObject();
@@ -168,9 +169,8 @@ public class UsersManager {
 			
 			Users user = new Users();
 			JSONObject jsonUser = response.getJSONObject("d");
-	        
-			user.Name = jsonUser.getString("Name");
-			
+	        Utils.JsonToObject(jsonUser, user);
+						
 			return user;
 	}
 	return null;

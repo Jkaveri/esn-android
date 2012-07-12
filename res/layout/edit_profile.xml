@@ -11,6 +11,8 @@
 	    android:paddingLeft="10dp"
 	    android:paddingRight="10dp"
 	    android:paddingTop="50dp"
+	    android:focusable="true"
+	    android:focusableInTouchMode="true"
 	    >	    
 	    <LinearLayout 
 	        android:orientation="horizontal"
@@ -49,6 +51,8 @@
 	       		    android:textStyle="bold" 
 	       		    android:textColor="@color/text_color"
 	       		    android:textColorHint="@color/text_color"
+	       		    android:singleLine="true"
+	       		    android:maxLength="255"
 	       		    >
 
 		            <requestFocus />
@@ -141,6 +145,7 @@
 	                android:textStyle="bold"
 	                android:textColor="@color/text_color"
 	       		    android:textColorHint="@color/text_color"
+	       		    android:maxLength="255"
 	                />
 		   	
 	        </TableRow>
@@ -176,6 +181,7 @@
 		    	    android:textStyle="bold" 
 		    	    android:textColor="@color/text_color"
 	       		    android:textColorHint="@color/text_color"
+	       		    android:maxLength="255"
 		    	    />
 
     		</TableRow>
@@ -210,6 +216,7 @@
 		    	    android:textStyle="bold"
 		    	    android:textColor="@color/text_color"
 	       		    android:textColorHint="@color/text_color"
+	       		    android:maxLength="255"
 		    	    />
 
     		</TableRow>
@@ -243,6 +250,7 @@
 		    	    android:textStyle="bold"
 		    	    android:textColor="@color/text_color"
 	       		    android:textColorHint="@color/text_color"
+	       		    android:maxLength="255"
 		    	    />
 
     		</TableRow>
@@ -276,6 +284,7 @@
 		    	    android:textStyle="bold"
 		    	    android:textColor="@color/text_color"
 	       		    android:textColorHint="@color/text_color"
+	       		    android:maxLength="255"
 		    	    />
 
     		</TableRow>
@@ -309,6 +318,7 @@
 		    	    android:textStyle="bold" 
 		    	    android:textColor="@color/text_color"
 	       		    android:textColorHint="@color/text_color"
+	       		    android:maxLength="255"
 		    	    />
 
     		</TableRow>  
@@ -341,7 +351,7 @@
 		    	    android:textSize="16dp"
 		    	    android:textStyle="bold"
 		    	    android:textColor="@color/text_color"
-	       		    android:textColorHint="@color/text_color"
+	       		    android:textColorHint="@color/text_color"	       		    
 		    	    />
 
     		</TableRow>

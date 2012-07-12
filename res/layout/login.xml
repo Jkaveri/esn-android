@@ -31,7 +31,9 @@
         android:paddingTop="8dp"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:singleLine="true"
+        />
 
     <EditText
         android:id="@+id/esn_login_pass"
@@ -50,7 +52,9 @@
         android:paddingTop="8dp"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:singleLine="true"
+        />
 
     <Button
         android:id="@+id/btLogin"

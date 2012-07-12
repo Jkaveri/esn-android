@@ -43,7 +43,9 @@
 	            	android:paddingBottom="8dp"
 	            	android:textSize="16dp"
 		            android:background="#c5eaf8"		            
-		            android:editable="false">
+		            android:editable="false"
+		            android:maxLength="100"
+		            >
 		            <requestFocus />
 		        </EditText>
     		</TableRow>
@@ -74,7 +76,8 @@
 	            	android:textSize="16dp"
 	            	android:singleLine="true"
 		            android:background="#c5eaf8"
-		            android:password="true">
+		            android:password="true"
+		            android:maxLength="100">
 		        </EditText>
     		</TableRow>
     		<TableRow >
@@ -105,7 +108,7 @@
 	            	android:textSize="16dp"
 		            android:background="#c5eaf8"
 		            android:password="true"
-			   	    />
+			   	    android:maxLength="100"/>
     		</TableRow>
     		
 	        <TableRow >
@@ -135,7 +138,8 @@
 	            	android:textSize="16dp"
 	            	android:singleLine="true"
 	            	android:password="true"
-		            android:background="#c5eaf8"/>
+		            android:background="#c5eaf8"
+		            android:maxLength="100"/>
 	        </TableRow>
 	        
 		</TableLayout>	

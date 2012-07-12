@@ -242,6 +242,7 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 			//Toast.makeText(context, res.getString(R.string.esn_eventDetail_commensuccess) , 10).show();
 			dialog.show();
 			lastScroll=0;
+			dialog.show();
 			GetListComment();
 		}
 		

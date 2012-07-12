@@ -11,11 +11,15 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import esn.classes.ImageLoader;
+import esn.classes.Utils;
 import esn.models.FriendsManager;
 import esn.models.Users;
+import esn.models.UsersManager;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -29,16 +33,22 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 	public ImageLoader imageLoader;
 	private Activity activity;
 	private DateFormat formatter;
-	
+	Resources res;
+	UserPageActivity context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.userpage);
 		
+		context = this;
+		
+		res = getResources();
+		
 		this.imageLoader = new ImageLoader(this.getApplicationContext());
 		this.imageLoader.setDefaultEmptyImage(R.drawable.ic_no_avata);
 		handler = new Handler();
+		
 		formatter = new SimpleDateFormat(getString(R.string.esn_global_dateFormat));
 		
 		setupActionBar();
@@ -65,36 +75,61 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 			@Override
 			public void run() {
 				try {
-					final Users user = new FriendsManager().RetrieveByAccID(accID);
+					
+					final Users user = new UsersManager().RetrieveById(accID);
+					
 					handler.post(new Runnable() {
 						
 						@Override
 						public void run() {
-							TextView fullName = (TextView) findViewById(R.id.txt_esn_userpage_fullname);
-							fullName.setText(user.Name);
 							
-							TextView status = (TextView) findViewById(R.id.txt_esn_userpage_status);
-							status.setText((user.IsOnline)? getString(R.string.txt_esn_userpage_online): getString(R.string.txt_esn_userpage_offline));
-							
-							TextView adress = (TextView) findViewById(R.id.txt_esn_userpage_adress);
-							adress.setText(user.City);
-							
-							TextView country = (TextView) findViewById(R.id.txt_esn_userpage_country);
-							country.setText(user.Country);
-							
-							TextView birthday = (TextView) findViewById(R.id.txt_esn_userpage_birthday);
-							birthday.setText(formatter.format(user.Birthday));
-							
-							TextView gender = (TextView) findViewById(R.id.txt_esn_userpage_gender);
-							gender.setText((user.Gender)? getString(R.string.txt_esn_userpage_male): getString(R.string.txt_esn_userpage_female));
-							
-							TextView favorite = (TextView) findViewById(R.id.txt_esn_userpage_favorite);
-							favorite.setText(user.Favorite);
-							
-							TextView phone = (TextView) findViewById(R.id.txt_esn_userpage_phone);
-							phone.setText(user.Phone);
-							
+							TextView txtfullName = (TextView) findViewById(R.id.txt_esn_userpage_fullname);
+							TextView txtstatus = (TextView) findViewById(R.id.txt_esn_userpage_status);
+							TextView txtadress = (TextView) findViewById(R.id.txt_esn_userpage_adress);
+							TextView txtcountry = (TextView) findViewById(R.id.txt_esn_userpage_country);
+							TextView txtbirthday = (TextView) findViewById(R.id.txt_esn_userpage_birthday);
+							TextView txtfavorite = (TextView) findViewById(R.id.txt_esn_userpage_favorite);
+							TextView txtgender = (TextView) findViewById(R.id.txt_esn_userpage_gender);
+							TextView txtphone = (TextView) findViewById(R.id.txt_esn_userpage_phone);
 							ImageView avatar = (ImageView) findViewById(R.id.img_esn_userpage_avatar);
+							
+							String name = user.Name;
+							txtfullName.setText(user.Name);						
+							
+							Boolean isonl = user.IsOnline;
+							
+							if(isonl==true)
+							{
+								txtstatus.setText(res.getString(R.string.esn_userpage_online));
+							}
+							else
+							{
+								txtstatus.setText(res.getString(R.string.esn_userpage_ofline));
+							}
+							
+							String city = user.City;						
+							txtadress.setText(city);
+								
+							String country = user.Country;
+							txtcountry.setText(country);
+									
+							txtbirthday.setText(Utils.DateToStringByLocale(user.Birthday,1));
+							
+							Boolean gender = user.Gender;
+							
+							if(gender==true)
+							{
+								txtgender.setText(res.getString(R.string.esn_userpage_Male));
+							}
+							else
+							{
+								txtgender.setText(res.getString(R.string.esn_userpage_Female));
+							}
+							
+							txtfavorite.setText(user.Favorite);
+							
+							txtphone.setText(user.Phone);							
+							
 							imageLoader.displayImage(user.Avatar, activity, avatar);
 							
 							dialog.dismiss();
@@ -139,6 +174,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 		return true;
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		String itemTitle = item.getTitle().toString();

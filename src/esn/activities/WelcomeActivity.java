@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.KeyEvent;
 import android.view.View;
 
 public class WelcomeActivity extends SherlockActivity {
@@ -78,6 +79,13 @@ public class WelcomeActivity extends SherlockActivity {
 		}
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
 	
 	public void btnLoginfbClicked(View view) {
 		if (!mFacebook.isSessionValid()) {// if access token is expired
