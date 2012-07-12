@@ -20,18 +20,19 @@ public class AudioRecorder {
 	public static final int RECORDSTATE_STOPPED = 0;
 	public static final int RECORDSTATE_RECORDING = 1;
 
-	public int SAMPLE_RATE = 16000;
-	public int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
-	public int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+	public static int SAMPLE_RATE = 8000;
+	public static int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
+	public static int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+	public static int SILENCE_THRESHOLD = 600;
+	public static int LONG_SILENCE = 20;
+	
 	public int REC_BUFFER_SIZE;
-	public int SILENCE_THRESHOLD = 600;
-	public int LONG_SILENCE = 20;
 	
 	private int RECORDSTATE = RECORDSTATE_STOPPED;
 	private Thread th;
 	private Runnable run;
 	private ByteArrayOutputStream bufferStream;
-	public RecordHandler callBack;
+	public RecordListener callBack;
 	
 	private boolean isSilence = false;
 	private int timeOut = 0;
@@ -43,8 +44,8 @@ public class AudioRecorder {
 	    	if(isSilence){
 				timeOut++;
 				if(timeOut >= LONG_SILENCE){
-					reset();
 					callBack.onSilenting();
+					reset();
 				}
 			}
 	    }
@@ -69,7 +70,7 @@ public class AudioRecorder {
 		isSilence = false;
 	}
 	
-	public AudioRecorder(RecordHandler recHandler) {
+	public AudioRecorder(RecordListener recHandler) {
 		callBack = recHandler;		
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
 		bufferStream = new ByteArrayOutputStream();		
@@ -81,7 +82,7 @@ public class AudioRecorder {
 				byte[] buffer = new byte[REC_BUFFER_SIZE];
 				DataOutputStream dos = new DataOutputStream(bufferStream);
 				AudioRecord record = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
-				
+				Timer timerDetect = new Timer();
 				boolean recording = false;
 				float tempFloatBuffer[] = new float[3];
 				int tempIndex = 0;
@@ -90,8 +91,7 @@ public class AudioRecorder {
 				
 				callBack.onStartingRecord();//Goi handler khi chuan bi ghi am
 				
-				//Kich hoat lang nghe noi hoac khong noi
-				Timer timerDetect = new Timer();
+				//Kich hoat lang nghe noi hoac khong noi				
 				timerDetect.scheduleAtFixedRate(new DetectTask(), 1, 50);
 				
 				//Bat dau ghi am
@@ -162,16 +162,21 @@ public class AudioRecorder {
 				//Destroy
 				record.stop();
 				record.release();
+				record = null;
 				timerDetect.cancel();
 				timerDetect = null;
 				
 				//Giai phong bo nho
 				tempFloatBuffer = null;
 				totalByteBuffer = null;
+				buffer = null;
 				dos = null;
 				
 				//Reset nhan dang co dang noi hay khong
-				callBack.onStopingRecord();
+				reset();
+				
+				//Phat sinh su kien trong thread truoc khi ket thuc
+				callBack.onStopedRecord();
 			}
 		};
 	}

@@ -1,8 +1,8 @@
 package esn.classes;
 
-public interface RecordHandler {
+public interface RecordListener {
 	public void onSpeaking();
 	public void onSilenting();
 	public void onStartingRecord();
-	public void onStopingRecord();
+	public void onStopedRecord();
 }

@@ -73,6 +73,7 @@ public class WAVFormatReader {
 			}
 		}
 		is = new DataInputStream(new ByteArrayInputStream(byteArrWAV));
+		byteArrWAV = null;
 	}
 	
 	public void setBuffer(InputStream ips){
@@ -95,6 +96,7 @@ public class WAVFormatReader {
 	{
 		byte[] tmpLong = new byte[4];
 		byte[] tmpInt = new byte[2];
+		boolean result = true;
 
 		try
 		{
@@ -144,16 +146,18 @@ public class WAVFormatReader {
 
 			// close the input stream
 			is.close();
-		}
-		catch(IOException e)
-		{
+		} catch(IOException e) {			
+			result =  false;
+		} finally {
 			try {
 				is.close();
 			} catch (IOException x) {
 			}
 			is = null;
-			return false;
 		}
-		return true; // this should probably be something more descriptive
+		
+		tmpLong = null;
+		tmpInt = null;
+		return result; // this should probably be something more descriptive
 	}
 }
