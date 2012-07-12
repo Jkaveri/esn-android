@@ -1,18 +1,24 @@
 package esn.activities;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.json.JSONException;
 
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import esn.adapters.ListViewFriendsAdapter;
+import esn.classes.Sessions;
 import esn.models.FriendsListsDTO;
 import esn.models.FriendsManager;
+import esn.models.UsersManager;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -35,8 +42,11 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 	private int lastScroll = 0;
 	private ProgressDialog dialog;
 	private int page = 1;
-	private int accounID = 9;
-
+	private int accounID = 0;
+	Sessions sessions;
+	Resources res;
+	FriendsManager friendsManager = new FriendsManager();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -44,12 +54,17 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 
 		handler = new Handler();
 		context = this;
+		
+		sessions = Sessions.getInstance(context);
+		
 		setContentView(R.layout.friends_list);
 		setupActionBar();
 		setupListNavigate();
 		
 		setupFriendList();
 
+		res = getResources();
+		
 		lstFriend = (ListView) findViewById(R.id.lisvFriends);
 		
 		lstFriend.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -125,7 +140,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 
 				FriendsManager frdMng = new FriendsManager();
 				try {
-					final ArrayList<FriendsListsDTO> itemList = frdMng.getFriendsList(8, page, accounID);
+					final ArrayList<FriendsListsDTO> itemList = frdMng.getFriendsList(8, page, sessions.currentUser.AccID);
 					handler.post(new Runnable() {
 
 						@Override
@@ -171,10 +186,15 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 	
 
 	protected void onItemLongClick(AdapterView<?> adView, View view, int index, long id) {
+		
 		final FriendsListsDTO bean = (FriendsListsDTO) adapter.getItem(index);
+		
 		final Dialog dialog = new Dialog(this);
+		
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		dialog.setContentView(R.layout.diag_frd_slec);
+		
 		// dialog.setTitle("Title...");
 		TextView dis = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_Discript);
 		dis.setText("Phone: " + bean.Phone);
@@ -185,8 +205,10 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		Button btnVisit = (Button) dialog.findViewById(R.id.btn_Friends_Diaglog_Visit);
 		// if button is clicked, close the custom dialog
 		btnVisit.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+			
+			@Override			
+			public void onClick(View v) {			
+				
 				dialog.dismiss();
 				Intent it = new Intent(context, UserPageActivity.class);
 				it.putExtra("accountID", bean.AccID);
@@ -199,9 +221,53 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		btnUnfriend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dialog.dismiss();
+				
+				final int fId = bean.AccID;
+				final int aId = sessions.currentUser.AccID;
+				
+				new Thread()
+				{
+					public void run() {
+						
+						try {
+							Boolean rs = friendsManager.unfriend(aId, fId);
+							
+							if(rs==true)
+							{							
+								handler.post(new Runnable() {
+									public void run() {
+										dialog.dismiss();
+										Toast.makeText(context, res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendsuccess), Toast.LENGTH_SHORT).show();
+										setupFriendList();
+									}
+								});								
+							}
+							else
+							{
+								handler.post(new Runnable() {
+									
+									@Override
+									public void run() {
+										
+										Toast.makeText(context, res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendnotsuccess), Toast.LENGTH_SHORT).show();
+										
+									}
+								});
+								
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					};
+				}.start();
 			}
 		});
+		
 		Button btnClose = (Button) dialog.findViewById(R.id.btn_Friends_Diaglog_Close);
 		// if button is clicked, close the custom dialog
 		btnClose.setOnClickListener(new OnClickListener() {
@@ -213,6 +279,8 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		dialog.show();
 	}
 
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add("FriendEvent")

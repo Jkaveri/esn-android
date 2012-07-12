@@ -40,12 +40,19 @@ public class FriendsManager {
 		return frds;
 	}
 
-	public boolean unfriend(int accID, int friendID) {
-		return true;
+	public boolean unfriend(int accID, int friendID) throws JSONException, IOException {
+		
+		JSONObject params = new JSONObject();
+		params.put("accID", accID);
+		params.put("friendID", friendID);
+		JSONObject result = helper.invokeWebMethod("Unfriend",params);
+				
+		return result.getBoolean("d");
 	}
 	
 
 	public Users RetrieveByAccID(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException{
+		
 		Users frd = new Users();
 		JSONObject params = new JSONObject();
 		params.put("id", accID);

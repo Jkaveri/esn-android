@@ -1,10 +1,10 @@
 package esn.activities;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -384,15 +384,13 @@ public class RegisterActivity extends SherlockActivity {
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
 			
+			
 			try {
-					
-				bd = sFormat.format(format.parse(bd));
-				
-			} catch (ParseException e) {
-				return;
-			}
-				
-			user.Birthday = bd;	
+				user.Birthday = format.parse(bd);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	
 			
 			EditText phone = (EditText)findViewById(R.id.esn_register_txtPhone);
 				

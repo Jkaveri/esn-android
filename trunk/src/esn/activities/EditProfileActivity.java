@@ -3,7 +3,6 @@ package esn.activities;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -335,11 +334,7 @@ public class EditProfileActivity extends Activity {
 							
 							EditText txtBirthday = (EditText)findViewById(R.id.esn_changeprofile_birthday);
 							
-							String birthday = user.Birthday;
-							
-							java.util.Date bd = (java.util.Date)Utils.GetDateFromJSONString(user.Birthday);
-								
-							txtBirthday.setText(Utils.DateToStringByLocale(bd,2));
+							txtBirthday.setText(Utils.DateToStringByLocale(user.Birthday,1));
 							
 							Boolean gender = user.Gender;					
 							
@@ -451,18 +446,13 @@ public class EditProfileActivity extends Activity {
 					
 					String bd = txtBirthday.getText().toString();
 					
-					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-					SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
-					
+					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");					
 					try {
-							
-						bd = sFormat.format(format.parse(bd));
-						
-					} catch (ParseException e) {
-						return;
-					}	
-					
-					user.Birthday = bd;
+						user.Birthday = format.parse(bd);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 					Spinner ddlGender = (Spinner)findViewById(R.id.esn_changeprofile_gender);			
 					String gender = ddlGender.getSelectedItem().toString();			

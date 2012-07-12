@@ -52,7 +52,8 @@
         	    android:paddingTop="7dp"
         	    android:singleLine="true"
         	    android:textColor="@color/text_color"
-        	    android:textColorHint="@color/text_color" />
+        	    android:textColorHint="@color/text_color"
+        	    android:maxLength="100"/>
 
 	        <EditText
 	            android:id="@+id/esn.register.Password"
@@ -73,7 +74,8 @@
 	            android:password="true"
 	            android:singleLine="true"
 	            android:textColor="@color/text_color"
-	            android:textColorHint="@color/text_color" />
+	            android:textColorHint="@color/text_color"
+	            android:maxLength="100"/>
 	        
            	<TextView
                 android:layout_width="wrap_content"
@@ -101,7 +103,9 @@
                 android:paddingTop="7dp"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
-                android:textColorHint="@color/text_color" />
+                android:textColorHint="@color/text_color"
+                android:maxLength="255"
+                />
                         
              <Spinner
 			        android:id="@+id/esn.register.ddlGender"
@@ -153,7 +157,8 @@
                 android:paddingTop="7dp"
                 android:singleLine="true"
                 android:textColor="@color/text_color"
-                android:textColorHint="@color/text_color" />
+                android:textColorHint="@color/text_color"
+                android:maxLength="255"/>
         
           <Button
               android:id="@+id/btnRegister"
@@ -185,8 +190,7 @@
         	        android:layout_marginRight="30dp"
         	        android:text="@string/esn.register.hlService"
         	        android:textColor="#FFFFFF"
-        	        android:textSize="12dp" />
-
+        	        android:textSize="12dp" />
            <TextView
                android:id="@+id/lkPolicy"
                android:layout_width="wrap_content"

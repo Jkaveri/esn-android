@@ -214,7 +214,8 @@
                     android:paddingTop="8dp"
                     android:textColor="#ffffff"
                     android:hint="@string/esn.eventDetail.comment"
-                    android:textSize="16dp">                
+                    android:textSize="16dp"
+                    android:maxLength="160">                
             </EditText>
             <Button 
                 android:layout_width="50dp"
@@ -227,23 +228,33 @@
                 android:textColor="@drawable/white"
                 />
         </LinearLayout>
-        <ListView
-		    android:id="@+id/esn.eventDetails.listComments"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:layout_marginTop="10dp"
-		    android:layout_marginBottom="10dp">
-		</ListView> 
-		<Button 
-		    android:id="@+id/esn.eventDetails.btShowCommentAll"
-                android:layout_width="fill_parent"
-                android:layout_height="25dp"
-                android:text="@string/esn.eventDetail.commentall"
-                android:background="@drawable/rounded_corners"
-                android:textSize="10dp"
-                android:onClick="ShowAllCommentClicked"
-                android:textColor="@drawable/white"
-                android:layout_marginBottom="10dp"
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+        	<ListView
+			    android:id="@+id/esn.eventDetails.listComments"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dp"
+			    android:layout_marginBottom="10dp"
+			    android:minHeight="10dp"
+			    >
+			</ListView>   
+            
+        	
+        </LinearLayout>
+        <Button 
+			    android:id="@+id/esn.eventDetails.btShowCommentAll"
+	            android:layout_width="fill_parent"
+	            android:layout_height="25dp"
+	            android:text="@string/esn.eventDetail.commentall"
+	            android:background="@drawable/rounded_corners"
+	            android:textSize="10dp"
+	            android:onClick="ShowAllCommentClicked"
+	            android:textColor="@drawable/white"
+	            android:layout_marginBottom="10dp"
                 />
     </LinearLayout>
 </ScrollView>

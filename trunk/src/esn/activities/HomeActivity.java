@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -75,7 +76,10 @@ public class HomeActivity extends SherlockMapActivity implements
 	private EsnMapView mapView;
 	public final static int CODE_REQUEST_SET_FILTER = 2;
 	HomeActivity context;
-
+	
+	Sessions sessions;
+	
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -88,6 +92,8 @@ public class HomeActivity extends SherlockMapActivity implements
 		setupListNavigate();
 
 		context = this;
+		
+		sessions = Sessions.getInstance(context);
 	}
 
 	private void setupListNavigate() {
@@ -195,6 +201,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		map.displayCurrentLocation();
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		item.getTitle().toString();

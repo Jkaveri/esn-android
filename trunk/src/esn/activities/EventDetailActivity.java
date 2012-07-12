@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -28,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,6 +75,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 	
 	Resources res;
 	
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,6 +102,9 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		
 		lstCm = (ListView)findViewById(R.id.esn_eventDetails_listComments);
 				
+		lstCm.setOverScrollMode(View.OVER_SCROLL_NEVER);
+		lstCm.setVerticalScrollBarEnabled(false);
+		
 		lstCm.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -111,7 +118,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		
 		int i = lstCm.getChildCount();
 		
-		
+		ListViewHeight();
 	}
 	
 	@Override
@@ -562,6 +569,7 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		}
 	}
 
+	@SuppressLint("NewApi")
 	public void CommentClicked(View view)
 	{
 		EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
@@ -659,32 +667,27 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 							
 							ListView lv = (ListView)findViewById(R.id.esn_eventDetails_listComments);
 							
-							//Button bt = (Button)findViewById(R.id.esn_eventDetails_btShowCommentAll);
-							
 							if(k==0)
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-								          LinearLayout.LayoutParams.FILL_PARENT,10
-								      ));
-															
-								//bt.setVisibility(0);
+								          LinearLayout.LayoutParams.FILL_PARENT,10));
 							}
 							else if(k==1)
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-								          LinearLayout.LayoutParams.FILL_PARENT,78
+								          LinearLayout.LayoutParams.FILL_PARENT,105
 								      ));
 							}
 							else if(k==2)
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-								          LinearLayout.LayoutParams.FILL_PARENT,147
+								          LinearLayout.LayoutParams.FILL_PARENT,177
 								      ));
 							}
 							else
 							{
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-								          LinearLayout.LayoutParams.FILL_PARENT,204
+								          LinearLayout.LayoutParams.FILL_PARENT,284
 								      ));
 							}
 							
@@ -740,4 +743,27 @@ public class EventDetailActivity extends SherlockActivity implements OnNavigatio
 		startActivity(data);
 	}
 	
+	public void ListViewHeight()
+	{
+		ListView lv = (ListView)findViewById(R.id.esn_eventDetails_listComments);
+		ListAdapter listAdapter = lv.getAdapter();
+		
+        if (listAdapter == null) {           
+            return;
+        }
+
+        int totalHeight = 0;
+        
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, lstCm);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = lv.getLayoutParams();
+        
+        params.height = totalHeight + (lv.getDividerHeight() * (listAdapter.getCount() - 1));
+        lv.setLayoutParams(params);
+        lv.requestLayout();
+	}
 }

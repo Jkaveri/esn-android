@@ -15,7 +15,7 @@
         <Button android:id="@+id/esn_findFriends_friend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/esn_global_find"
+            android:text="@string/esn.global.find"
             android:onClick="btnFindClicked"/>
     </LinearLayout>
 	<ListView android:layout_height="0dp"

@@ -7,6 +7,7 @@ import esn.adapters.EsnListAdapter;
 import esn.classes.EsnListItem;
 import esn.classes.Sessions;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,6 +34,7 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 	
 	private ProgressDialog dialog;
 	
+	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -126,6 +128,7 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 		
 		Intent intent = new Intent(context, WelcomeActivity.class);
 		startActivity(intent);		
+		finish();
 	}
 }
 
