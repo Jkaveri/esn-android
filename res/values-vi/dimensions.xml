@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="metric_padding">12dp</dimen>
+    <dimen name="metric_margin">4dp</dimen>
+    <dimen name="metric_max_height">48dp</dimen>
+    <dimen name="textSize.micro">12sp</dimen>
+    <dimen name="textSize.small">14sp</dimen>
+    <dimen name="textSize.medium">16sp</dimen>
+    <dimen name="textSize.larger">18sp</dimen>
+</resources>

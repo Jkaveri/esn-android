@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str.Friends.UserPage.Title">Thông tin bạn bè</string>
+    <string name="txt.esn.userpage.fullname">Họ Tên :</string>
+    <string name="txt.esn.userpage.status">Trạng Thái :</string>
+    <string name="txt.esn.userpage.adress">Địa chỉ :</string>
+    <string name="txt.esn.userpage.country">Quốc gia :</string>
+    <string name="txt.esn.userpage.birthday">Ngày sinh :</string>
+    <string name="txt.esn.userpage.gender">Giới Tính :</string>
+    <string name="txt.esn.userpage.favorite">Sở thích :</string>
+    <string name="txt.esn.userpage.male">Nam</string>
+    <string name="txt.esn.userpage.female">Nữ</string>
+    <string name="txt.esn.userpage.online">Online</string>
+    <string name="txt.esn.userpage.offline">Offline</string>
+    <string name="txt.esn.userpage.phone">Điện thoại :</string>
+</resources>

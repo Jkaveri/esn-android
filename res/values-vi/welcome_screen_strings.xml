@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="esn_welcomeScreen_lostConnection">Mất kết nối !</string> 
+   <string name="esn_welcomeScreen_lostConnectionDescription">Hãy mở kết nối mạng !</string>
+   
+</resources>

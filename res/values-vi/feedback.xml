@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="esn.app.feedback.title">Tiêu đề</string>
+    <string name="esn.app.feedback.content">Nội dung</string>
+    <string name="esn.app.feedback.send">Gửi</string>
+    <string name="esn.app.feedback.statussendsuccess">Thông tin đã được gửi.</string>
+    <string name="esn.app.feedback.statussendfail">Lỗi, Hãy thực hiện lại.</string>
+</resources>

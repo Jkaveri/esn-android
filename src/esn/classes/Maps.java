@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -71,6 +72,7 @@ public class Maps implements LocationListener {
 		this.map.setOnTouchListener(l);
 	
 	}
+	@SuppressLint("NewApi")
 	public void setOnDragListener(OnDragListener l){
 		this.map.setOnDragListener(l);
 	}
@@ -237,7 +239,7 @@ public class Maps implements LocationListener {
 			Toast.makeText(
 					context,
 					context.getResources().getString(
-							R.string.esn_location_must_enable_gps),
+							R.string.esn_global_must_enable_gps),
 					Toast.LENGTH_LONG);
 		}
 		return currLocation;

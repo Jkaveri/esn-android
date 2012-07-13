@@ -446,11 +446,11 @@ public class EditProfileActivity extends Activity {
 					
 					String bd = txtBirthday.getText().toString();
 					
-					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");					
+					SimpleDateFormat format = new SimpleDateFormat("yyyy MM dd");					
 					try {
 						user.Birthday = format.parse(bd);
 					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
+						
 						e1.printStackTrace();
 					}
 					
