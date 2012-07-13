@@ -4,81 +4,59 @@
     <!-- app name -->
     <string name="app_name">ESN</string>
     <!-- welcome -->
-    <string name="app_register">Đăng ký</string>
-    <string name="app_profile">Profile</string>
-    <string name="app_login">Login</string>
-    <string name="btLoginFB">Đăng kí với facebook</string>
-    <!-- Login -->
-	<string name="btLogin">Đăng nhập</string>
-	<string name="btSignUp">Đăng ký</string>
-	<string name="txtEmail">Email</string>
-	<string name="txtPassword">Mật khẩu</string>
-	<string name="btBack">Trở về</string>	<string name="tvFist">Tên</string>
-	<string name="txtLastName">Họ</string>
-	<string name="txtPhone">0908 123 456</string>
-	<string name="txtBirthday">01/01/1990</string>
-	<string name="txtGender">Male</string>
+    <string name="esn_actName_register">Đăng ký</string>
+    <string name="esn_actName_profile">Thông tin cá nhân</string>
+    <string name="esn_actName_login">Đăng Nhập</string>
+    <string name="esn_actName_selectLabel">Chọn</string>
+    <!-- Login -->    
+
+    <string name="esn.global.must_enable_gps">Hãy mở định vị gps.</string>
+    <string name="esn.global.your_location_not_found">Không tìm thấy vị trí của bạn.</string>
+    <string name="key.maps.googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
+    <string name="help">In this introductory Google Apps webinar</string>
+    <string name="term">In this introductory term</string>
+
+    <!-- Global -->
+    <string name="esn.global.dateFormat">MM-dd-yyyy</string>
+    <string name="esn.global.loading">Đang tải…</string>
+    <string name="esn.global.pleaseWait">Xin chờ !</string>
+    <string name="esn.global.find">Tìm kiếm</string>
+    <string name="esn_global_ok">OK</string>
+    <string name="esn.global.Error">Lỗi</string>
+    <string name="esn.global.ConnectionError">Lỗi kết nối !</string>
+    <string name="app.global.Email">Email</string>
+    <string name="app.global.RequireAllField">Điền đầy đủ thông tin !</string>
+    <string name="app.global.UpdateUnsuccess">Lỗi cập nhật ! Hãy thực hiện lại.</string>
+    <string name="app.global.UpdateSuccess">Cập nhật thành công !</string>
+      <!-- Settings page -->
+    <string name="esn.settings.app_settings">Cài đặt ứng dụng</string>
+    <string name="esn.settings.subscript.app_settings">Setting in your app</string>
+    <string name="esn.settings.account">Tài khoản</string>
+    <string name="esn.settings.subscript.account">Cài đặt tài khoản</string>
+    <string name="esn.settings.provition">Điều khoản</string>
+    <string name="esn.settings.subscript.provition">Điều khoản sử dụng</string>
+    <string name="esn.settings.help">Trợ giúp</string>
+    <string name="esn.settings.subscript.help">Hướng dẫn sử dụng</string>
+    <string name="esn.settings.logout">Đăng xuất</string>
+    <string name="esn.settings.subscript.logout">Đăng xuất khỏi ứng dụng</string>
+    <string name="esn.settings.account.changepass">Đổi mật khẩu</string>
+    <string name="esn.settings.account.sub.changepass">Đổi mật khẩu tài khoản</string>
+    <string name="esn.settings.account.editprofile">Sửa thông tin cá nhân</string>
+    <string name="esn.settings.account.sub.editprofile">Sửa thông tin cá nhân của bạn</string>
+    <string name="app_Setting_Account_ChangePassword">Đổi mật khẩu</string>
+    <string name="app_Setting_Account_ChangeProfile">Sửa thông tin cá nhân</string>
+    <string name="app_Setting_ApplicationSetting">Ứng dụng</string>
+    <string name="app_Setting_Terms">Điều khoản</string>
+    <string name="app_Setting_Help">Trợ giúp</string>
+    <string name="app_Setting_Account">Tài khoản</string>
+    <string name="app_Setting">Cài đặt</string>
+	<!-- Welcome -->
+	<string name="esn_welcome_login">Đăng Nhập</string>
+	<string name="esn_welcome_loginWithFacebook">Đăng nhập bằng tài khoản facebook </string>
+	<string name="esn_welcome_signup">Đăng ký</string>
 	
-	<string name="btJoin">Join</string>
-	<string name="btCancel">Hủy</string>
-	
-	<string name="tvEmail">Email</string>
-	<string name="tvPassword">Mật khẩu</string>	
-	
-	<string name="tvPhone">Số điện thoại</string>
-	<string name="tvBirthday">Ngày sinh</string>
-	<string name="tvGender">Giới tính</string>
-	
-	<string name="hlService">Quy định về dịch vụ</string>
-	<string name="hlPolicy">Chính sách riêng tư</string>
-	<string name="rdbMale">Nam</string>
-	<string name="rdbFemale">Nữ</string>
-    <string name="map_current_location_title">Vị trí hiện tại</string>
-    <string name="map_current_location_subtitle">Bạn đang ở đây</string>
- 	<string name='item'>Item</string>
-    <string name="finding_current_location">Đang tìm vị trí hiện tại</string>
-	<string name="lbAccount">Thông tin tài khoản</string>
-    <string name="search">Tìm kiếm</string>
-    <!-- Edit Profile -->
-	<string name="lbPerson">Thông tin cá nhân</string>
-    <string name="lbEdit_Profile">Chỉnh sửa hồ sơ cá nhân</string>
-	<string name="enter">Đăng nhập bằng tài khoản facebook</string>
-	<string name="request">Request!</string>
-    <string name="hello">Hello World!</string>
-    <string name="tv_edit_Name">Chỉnh sửa họ và tên</string>
-    <string name="tv_edit_DayOfBirth">Chỉnh sửa ngày sinh</string>
-    <string name="tv_edit_Phone">Chỉnh sửa số điện thoại</string>
-    <string name="upload">Đăng tải hình ảnh</string><string name="post">Wall Post!</string>
-    <string name="btDone">Lưu</string>
-    <string name="delete">Delete Post</string>
-    <string name="btCancel">Hủy</string>
-    
-    <!-- Change password -->
-    <string name="lbChange_Pass">Đổi mật khẩu</string>
-    <string name="lblPosition">Vị trí</string>
-	<string name="rdbShow">Hiện ví trí</string>
-	<string name="rdbHide">Ẩn vị trí</string>
-	<string name="lblProfile">Chỉnh sửa hồ sơ cá nhân</string>
-    <string name="tv_current_pass">Mật khẩu hiện tại</string>
-    <string name="tv_new_pass">Mật khẩu mới</string>
-    <string name="tv_confirm_pass">Xác nhận mật khẩu mới</string>
-	<string name="lblPic">Thay đổi ảnh cá nhân</string>
-	<string name="lblChangePass">Đổi mật khẩu</string>
-	<string name="lblHelp">Giúp đỡ</string>
-	<string name="lblAbout">Giới thiệu về ESN</string>
-	<string name="lblTerms">Điều khoản</string>
-	<string name="btnLogOut">Đăng xuất</string>
-	
-	<string name="btDone">Done</string>
-	<string name="btLogout">Logout</string>
-	<string name="esn.location.must_enable_gps">Bạn chưa bật GPS</string>
-	<string name="esn.location.your_location_not_found">Không tìm thấy địa điểm bạn muốn tìm</string>
-	<string name="esn.selectLabel.activityTitle">Chọn nhãn</string>
-	<string name="esn.labels.accidents">Tai nạn</string>
-	<string name="esn.labels.polices">Cảnh sát</string>
-	<string name="esn.addNewEvent.title">Tiêu đề</string>
-	<string name="esn.addNewEvent.description">Mô tả</string>
-	<string name="esn.addNewEvent.add">Tạo mới</string>
-	<string name="esn.addNewEvent.cancel">Hủy</string>
-	<string name="esn.addNewEvent.coordinate">Tọa độ</string>
+	<string name="esn_userpage_online">Online</string>
+	<string name="esn_userpage_ofline">Offline</string>
+	<string name="esn_userpage_Male">Nam</string>
+	<string name="esn_userpage_Female">Nữ</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string-array name="view_types">
+       <item >Bản đồ</item>
+       <item >Danh sách</item>
+   </string-array>
+   
+    <string-array name="Gender_arrays">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
+</resources>

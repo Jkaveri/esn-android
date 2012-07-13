@@ -26,6 +26,7 @@ import android.os.Looper;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -84,6 +85,16 @@ public class LoginActivity extends SherlockActivity{
 		finish();
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        intent = new Intent(context,WelcomeActivity.class);
+	        startActivity(intent);
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+	
+	
 	@SuppressLint({ "NewApi", "NewApi" })
 	public void LoginClicked(View view) {
 

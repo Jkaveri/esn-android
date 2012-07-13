@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="esn.addNewEvent.title">Tiêu đề :</string>
+    <string name="esn.addNewEvent.description">Mô tả:</string>
+    <string name="esn.addNewEvent.add">Thêm</string>
+    <string name="esn.addNewEvent.capture">Chụp hình</string>
+    <string name="esn.addNewEvent.cancel">Hủy bỏ</string>
+    <string name="esn.addNewEvent.coordinate">Tọa độ :</string>
+    <string name="esn.addNewEvent.addresss">Địa chỉ :</string>
+    <string name="esn.addNewEvent.imageeventstatus">Chưa có hình ảnh nào.</string>
+    <string name="esn_addNewEvent_canNotUpload">Không thể tải hình lên.</string>
+    <string name="esn_addNewEvent_wantToContinue">Bạn có muốn tiếp tục không ?</string>
+    <!-- EventDetail -->
+    <string name="esn.eventDetail">Chi Tiết Sự Kiện</string>
+    <string name="esn.eventDetail.like">Đúng</string>
+    <string name="esn.eventDetail.dislike">Sai</string>
+    <string name="esn.eventDetail.image">Hình ảnh</string>
+    <string name="esn.eventDetail.iconEventType">Loại Sự iện</string>
+    <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
+    <string name="esn.eventDetail.description">Mô tả</string>
+    <string name="esn.eventDetail.createby">Tạo bởi</string>
+    <string name="esn_global_ok">OK</string>
+    <string name="esn_global_cancel">Hủy bỏ</string>
+	<string name="esn.eventDetail.send">Bình luận</string>
+    <string name="esn.eventDetail.comment">Nội dung</string>
+    <string name="esn.eventDetail.commentall">Hiển thị tất cả</string>
+    <string name="esn.eventDetail.commensuccess">Thành công</string>
+    <string name="esn.eventDetail.commenfail">Lỗi, Hãy thực hiện lại</string>
+    <string name="esn.eventDetail.islike">Bạn đã xác nhận đúng rồi.</string>
+    <string name="esn.eventDetail.isdislike">Bạn đã xác nhận sai rồi.</string>
+    <string name="esn.eventDetail.likesuccess">Bạn đã xác nhận đúng.</string>
+    <string name="esn.eventDetail.dislikesuccess">Bạn đã xác nhận sai.</string>
+    <string name="esn.eventDetail.likefail">Lỗi, Hãy thực hiện lại.</string>
+    <string name="esn.eventDetail.entercontent">Hãy nhập nội dung !</string>
+    <string name="esn.eventDetail.entereventtitle">Tiêu đề !</string>
+</resources>

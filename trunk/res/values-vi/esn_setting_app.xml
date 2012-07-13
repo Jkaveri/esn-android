@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="esn.setting.app.enableEventNotification">Sự kiện</string>
+    <string name="esn.setting.app.enableEventNotification.small">Cài đặt thông báo cho sự kiện.</string>
+    <string name="esn.setting.app.enableFriendNotification">Bạn bè</string>
+    <string name="esn.setting.app.enableFriendNotification.small">Cài đặt thông báo bạn bè.</string>
+    <string name="esn.setting.app.enableConnectFacebook">Facebook</string>
+    <string name="esn.setting.app.enableConnectFacebook.small">Cài đặt kết nối facebook.</string>
+    
+    <string name="esn.setting.app.event.enable">Mở</string>
+    <string name="esn.setting.app.event.radius">Bán kính</string>
+    <string name="esn.setting.app.event.ok">OK</string>
+    <string name="esn.setting.app.event.enterradius">Nhập bán kính !</string>
+    <string name="esn.setting.app.eventnotifyenablebefore">Hãy kích hoạt chức năng này trước !</string>
+    
+    
+    <string name="esn.setting.app.friend.friendactivity">Họa động của bạn bè.</string>
+    <string name="esn.setting.app.friend.commentlike">Bình luận và Xác nhận.</string>
+    
+    <string name="esn.setting.app.friend.friendcreateevent">Bạn bè tạo sự kiện.</string>
+    <string name="esn.setting.app.friend.friendrequest">Nhận yêu cầu từ bạn bè.</string>
+    <string name="esn.setting.app.friend.friendfacebookjoin">Khi bạn bè trên facebook tham gia.</string>
+    
+    <string name="esn.setting.app.friend.friendcomment">Có người bình luận sự kiện của tôi.</string>
+    <string name="esn.setting.app.friend.friendlike">Có người xác nhận sự kiện của tôi.</string>
+    <string name="esn.setting.app.friend.friendshareplace">Bạn bè chia sẻ sự kiện, vị trí với tôi.</string>
+    
+    <string name="esn.setting.app.facebook.email">Email</string>
+    <string name="esn.setting.app.facebook.pass">Mật khẩu</string>
+    <string name="esn.setting.app.informationsaved">Đã lưu</string>
+    <string name="esn.setting.app.informationenablebefore">Hãy kích hoạt chức năng này trước !</string>
+    <string name="esn.setting.app.enterfacebookemail">Nhập email facebook !</string>
+    <string name="esn.setting.app.enterfacebookpassword">Nhập mật khẩu !</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home -->
+	<string name="str_home_viewAsMap">Bản Đồ</string>
+	<string name="str_home_viewAsList">Danh Sách</string>
+	<string name="esn_home_loadingEvent">Đang tải sự kiện</string>
+	<string name="esn_home_noEvent">Không có sự kiện</string>
+	<string name="esn_home_menuItem_addNewEvent">Thêm sự kiện</string>
+	<string name="esn_home_menuItem_friends">Bạn bè</string>
+	<string name="esn_home_menuItem_settings">Cài đặt</string>
+	<string name="esn_home_menuItem_search">Tìm kiếm</string>
+	<string name="esn_home_menuItem_labels">Lọc</string>
+	<string name="esn_home_menuItem_naviagtor">Navigator</string>
+	<string name="esn_home_menuItem_zoomIn">Phóng to</string>
+	<string name="esn_home_menuItem_zoomOut">Thu nhỏ</string>
+</resources>

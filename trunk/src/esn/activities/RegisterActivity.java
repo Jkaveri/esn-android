@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -167,6 +168,16 @@ public class RegisterActivity extends SherlockActivity {
 		}
 	};
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        	    	
+	    	intent = new Intent(context,WelcomeActivity.class);
+	    	startActivity(intent);
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+	
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {

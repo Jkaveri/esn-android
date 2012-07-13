@@ -29,7 +29,9 @@
     <string name="app.global.RequireAllField">Enter all fields !</string>
     <string name="app.global.UpdateUnsuccess">Update failed ! Try again.</string>
     <string name="app.global.UpdateSuccess">Update success !</string>
-      <!-- Settings page -->
+    
+    <!-- Settings page -->
+    
     <string name="esn.settings.app_settings">Application Settings</string>
     <string name="esn.settings.subscript.app_settings">Setting in your app</string>
     <string name="esn.settings.account">Accounts</string>

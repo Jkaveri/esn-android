@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- EDIT PROFILE -->
+    <string name="tv_Edit_Profile_ChangeAddress">Địa chỉ</string>
+    <string name="tv_Edit_Profile_Address">Số nhà</string>
+    <string name="tv_Edit_Profile_Street">Đường</string>
+    <string name="tv_Edit_Profile_District">Quận</string>
+    <string name="tv_Edit_Profile_City">Tỉnh/Thành phố</string>
+    <string name="tv_Edit_Profile_Country">Quốc gia</string>
+    <string name="tv_Edit_Profile_Other">Khác</string>
+    <string name="tv_Edit_Profile_Favorite">Sở thích</string>
+    <!-- change Password -->
+
+    <string name="esn.changepassword.requirecurrentpassword">Nhập mật khẩu hiện tại !</string>
+    <string name="esn.changepassword.requirepassword">Hãy nhập mật khẩu !</string>
+    <string name="esn.changepassword.requirerepeatpassword">Hãy nhập lại mật khẩu !</string>
+    <string name="esn.changepassword.passwordnotmatch">Mật khẩu không giống nhau !</string>
+    <string name="esn.changepassword.currentpasswordinccorect">Mật khẩu hiện tại không đúng !</string>
+    <string name="esn.changepassword.lbChange_Pass">Đổi mật khẩu</string>
+    <string name="esn.changepassword.lblPosition">Vị trí</string>
+    <string name="esn.changepassword.rdbShow">Hiển thị vị trí</string>
+    <string name="esn.changepassword.rdbHide">Ẩn Position</string>
+    <string name="esn.changepassword.lblProfile">Sửa Thông Tin Cá Nhân</string>
+    <string name="esn.changepassword.tv_current_pass">Mật khẩu hiện tại</string>
+    <string name="esn.changepassword.tv_new_pass">Mật khẩu mới</string>
+    <string name="esn.changepassword.tv_confirm_pass">Nhập lại mật khẩu</string>
+    <string name="esn.changepassword.lblPic">Sửa ảnh đại diện</string>
+    <string name="esn.changepassword.lblChangePass">Đổi mật khẩu</string>
+    <string name="esn.changepassword.lblHelp">Giúp đỡ</string>
+    <string name="esn.changepassword.lblAbout">Giới thiệu</string>
+    <string name="esn.changepassword.lblTerms">Điều khoản</string>
+    <string name="esn.changepassword.btnLogOut">Đăng xuất</string>
+    <string name="esn.changepassword.btDone">Xong</string>
+    <string name="esn.changepassword.btLogout">Đăng xuất</string>
+    <!-- Register -->
+    <string name="esn.register.date"></string>
+    <string name="esn.register.ddlName">Chọn giới tính.</string>
+    <string name="esn.register.RequireFistName">Nhập họ tên !</string>
+    <string name="esn.register.RequireLastName">Nhập họ tên !</string>
+    <string name="esn.register.RequirePassword">Nhập mật khẩu !</string>
+    <string name="esn.register.ValidateEmail">Email không đúng !</string>
+    <string name="esn.register.EmailExists">Email đã được đăng ký !</string>
+    <string name="esn.register.Name">Họ tên !</string>
+    <string name="esn.register.btLogin">Đăng nhập</string>
+    <string name="esn.register.btSignUp">Đăng ký</string>
+    <string name="esn.register.txtEmail">Email</string>
+    <string name="esn.register.txtPassword">Mật khẩu</string>
+    <string name="esn.register.btBack">Trở về</string>
+    <string name="esn.register.tvFist">Họ</string>
+    <string name="esn.register.txtLastName">Tên</string>
+    <string name="esn.register.txtPhone">0908 123 456</string>
+    <string name="esn.register.txtBirthday">01/01/1990</string>
+    <string name="esn.register.txtGender">Nam</string>
+    <string name="esn.register.btLoginFB">Đăng nhập bằng facebook</string>
+    <string name="esn.register.btCancel">Hủy bỏ</string>
+    <string name="esn.register.tvEmail">Email</string>
+    <string name="esn.register.tvPassword">Mật khẩu</string>
+    <string name="esn.register.tvPhone">Điện thoại</string>
+    <string name="esn.register.tvBirthday">Ngày sinh</string>
+    <string name="esn.register.tvGender">Giới Tính</string>
+    <string name="esn.register.hlService">Điều khoản sử dụng</string>
+    <string name="esn.register.hlPolicy">Chính sách cá nhân</string>
+    <string name="esn.register.rdbMale">Nam</string>
+    <string name="esn.register.rdbFemale">Nữ</string>
+    <string name="esn.register.btDone">Xong</string>
+    <string name="esn.register.delete">Delete Post</string>
+    <string name="esn.register.btCancel">Hủy bỏ</string>
+    <string name="esn.register.account">TÀI KHOẢN</string>
+    <string name="esn.register.information">THÔNG TIN CÁ NHÂN</string>
+    
+    <string name="map_current_location_title">Hiện tại</string>
+    <string name="map_current_location_subtitle">Bạn đang ở đây !</string>
+    <string name="item">Item</string>
+    <string name="finding_current_location">Tìm vị trí hiện tại</string>
+    <string name="lbAccount">Thông tin tài khoản</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="esn_register_avatar">Ảnh cá nhân</string>
+    <string name="esn_login_forgotPass">Quên mật khẩu ?</string>
+	
+
+</resources>

@@ -65,7 +65,11 @@
     <string name="esn.register.rdbFemale">Female</string>
     <string name="esn.register.btDone">Done</string>
     <string name="esn.register.delete">Delete Post</string>
+    <string name="esn.register.account">ACCOUNT</string>
+    <string name="esn.register.information">INFORMATION</string>
     <string name="esn.register.btCancel">Cancel</string>
+    
+    
     <string name="map_current_location_title">Current</string>
     <string name="map_current_location_subtitle">You are here!</string>
     <string name="item">Item</string>
