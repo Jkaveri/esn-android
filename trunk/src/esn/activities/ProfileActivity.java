@@ -19,7 +19,6 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
-import com.facebook.android.SessionStore;
 import com.facebook.android.Util;
 
 import esn.adapters.FacebookConnect;
@@ -54,7 +53,7 @@ public class ProfileActivity extends SherlockActivity implements ActionBar.TabLi
 		
 		mFacebook = new Facebook(APP_ID);
 		
-		SessionStore.restore(mFacebook,this);
+	//	SessionStore.restore(mFacebook,this);
 		
 		if(mFacebook.isSessionValid())
 		{
@@ -132,7 +131,7 @@ public class ProfileActivity extends SherlockActivity implements ActionBar.TabLi
 
 	public void LogoutClicked(View view) {
 		
-		SessionStore.clear(getApplicationContext());
+		//SessionStore.clear(getApplicationContext());
 		
 		Intent intent = new Intent(this,WelcomeActivity.class);
 		startActivityForResult(intent, 1);

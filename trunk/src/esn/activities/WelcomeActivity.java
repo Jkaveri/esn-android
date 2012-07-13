@@ -15,6 +15,7 @@ import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
+import com.facebook.android.LoginFaceBookListener;
 import com.facebook.android.Util;
 import esn.classes.Sessions;
 import esn.models.Users;
@@ -31,6 +32,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 public class WelcomeActivity extends SherlockActivity {
 
@@ -77,6 +79,14 @@ public class WelcomeActivity extends SherlockActivity {
 		if (fbAccessExpires != 0) {
 			mFacebook.setAccessExpires(fbAccessExpires);
 		}
+		
+		Intent intent = getIntent();
+		if(intent!=null){
+			String loginResult = intent.getStringExtra("loginResult");
+			if(loginResult!=null && loginResult.length() > 0){
+				Toast.makeText(this, loginResult, Toast.LENGTH_LONG).show();
+			}
+		}
 	}
 	
 	@Override
@@ -88,126 +98,21 @@ public class WelcomeActivity extends SherlockActivity {
 	}
 	
 	public void btnLoginfbClicked(View view) {
-		if (!mFacebook.isSessionValid()) {// if access token is expired
-			
-			mFacebook.authorize(this, FB_PERMISSIONS, new DialogListener() {
-
-				@Override
-				public void onComplete(Bundle values) {
-					session = Sessions.getInstance(context);
-					String access_token = mFacebook.getAccessToken();
-					session.put("fb_access_token", access_token);
-					session.put("fb_access_token_expires",
-							mFacebook.getAccessExpires());
-					mAsyncRunner.request("me", new RequestListener() {
-
-						@Override
-						public void onComplete(String response, Object state) {
-							
-							try {
-								JSONObject accountInfo = Util
-										.parseJson(response);
-								
-								String email = accountInfo.getString("email");
-								
-								Boolean checkEmail = null;
-								try {
-									checkEmail = usersManager.CheckEmailExists(email);
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-								
-								if(checkEmail==true)
-								{
-									Intent intent = new Intent(WelcomeActivity.this,HomeActivity.class);
-									startActivity(intent);
-								}
-								else
-								{
-									Intent intent = new Intent(WelcomeActivity.this,RegisterActivity.class);
-									
-									intent.putExtra("facebookSignup", true);
-									intent.putExtra("fb_id",
-											accountInfo.getString("id"));
-									intent.putExtra("name",
-											accountInfo.getString("name"));
-									intent.putExtra("first_name",
-											accountInfo.getString("first_name"));
-									intent.putExtra("last_name",
-											accountInfo.getString("last_name"));
-									intent.putExtra("email",
-											accountInfo.getString("email"));
-									intent.putExtra("gender",
-											accountInfo.getString("gender"));
-									intent.putExtra("birthday",
-											accountInfo.getString("birthday"));
-									
-									startActivity(intent);
-									finish();
-								}
-								
-							} catch (FacebookError e) {
-								e.printStackTrace();
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-
-						}
-
-						@Override
-						public void onIOException(IOException e, Object state) {
-
-						}
-
-						@Override
-						public void onFileNotFoundException(
-								FileNotFoundException e, Object state) {
-
-						}
-
-						@Override
-						public void onMalformedURLException(
-								MalformedURLException e, Object state) {
-						}
-
-						@Override
-						public void onFacebookError(FacebookError e,
-								Object state) {
-						}
-
-					});
-				}
-
-				@Override
-				public void onFacebookError(FacebookError e) {
-
-				}
-
-				@Override
-				public void onError(DialogError e) {
-
-				}
-
-				@Override
-				public void onCancel() {
-
-				}
-
-			});
+		if (!mFacebook.isSessionValid()) {
+			// if access token is expired
+			mFacebook.authorize(this, FB_PERMISSIONS, new LoginFaceBookListener(this,mFacebook));
+		}else{
+			session.put("isLogined", true);
+			Intent intent = new Intent(this, HomeActivity.class);
+			startActivity(intent);
+			finish();
 		}
 	}
 
 	public void LoginClicked(View view) {
 		
-		
-		if (!mFacebook.isSessionValid()) {
-			Intent intent = new Intent(this, LoginActivity.class);
-			startActivity(intent);
-		} else {
-			Intent intent = new Intent(this, HomeActivity.class);
-			startActivity(intent);
-		}
-		
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
 		finish();
 		
 	}
@@ -233,6 +138,4 @@ public class WelcomeActivity extends SherlockActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		mFacebook.authorizeCallback(requestCode, resultCode, data);
 	}
-
-	
 }

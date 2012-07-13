@@ -1,6 +1,8 @@
 package esn.models;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,67 +20,69 @@ public class UsersManager {
 
 	}
 
-	public int Login(String email, String password) throws JSONException, IOException {
-		
-			JSONObject params = new JSONObject();
+	public int Login(String email, String password) throws JSONException,
+			IOException {
 
-			params.put("email", email);
-			params.put("password", password);
+		JSONObject params = new JSONObject();
 
-			JSONObject jsonObject = helper.invokeWebMethod("Login", params);
+		params.put("email", email);
+		params.put("password", password);
 
-			int rs = jsonObject.getInt("d");
+		JSONObject jsonObject = helper.invokeWebMethod("Login", params);
 
-			return rs;
+		int rs = jsonObject.getInt("d");
+
+		return rs;
 	}
 
 	public int Register(Users user) throws JSONException, IOException {
-			int rs = 0;
+		int rs = 0;
 
-			JSONObject params = new JSONObject();
+		JSONObject params = new JSONObject();
 
-			params.put("name", user.Name);
-			params.put("email", user.Email);
-			params.put("password", user.Password);
-			params.put("birthday", user.Birthday);
-			params.put("phone", user.Phone);
-			params.put("gender", user.Gender);
-			params.put("accessToken", user.AccessToken);
+		params.put("name", user.Name);
+		params.put("email", user.Email);
+		params.put("password", user.Password);
+		params.put("birthday", user.Birthday);
+		params.put("phone", user.Phone);
+		params.put("gender", user.Gender);
+		params.put("accessToken", user.AccessToken);
 
-			JSONObject jsonObject = helper.invokeWebMethod("Register", params);
-			rs = jsonObject.getInt("d");
-			return rs;
+		JSONObject jsonObject = helper.invokeWebMethod("Register", params);
+		rs = jsonObject.getInt("d");
+		return rs;
 	}
 
-	public boolean CheckEmailExists(String email) throws JSONException, IOException {
-		
-			JSONObject params = new JSONObject();
+	public boolean CheckEmailExists(String email) throws JSONException,
+			IOException {
 
-			params.put("email", email);
+		JSONObject params = new JSONObject();
 
-			JSONObject jsonObject = helper.invokeWebMethod("CheckEmailExisted",
-					params);
+		params.put("email", email);
 
-			boolean rs = jsonObject.getBoolean("d");
+		JSONObject jsonObject = helper.invokeWebMethod("CheckEmailExisted",
+				params);
 
-			return rs;
+		boolean rs = jsonObject.getBoolean("d");
+
+		return rs;
 	}
 
-	public Boolean ChangePassword(String email, String currentPass,			
-			String newPass) throws JSONException, IOException {		
+	public Boolean ChangePassword(String email, String currentPass,
+			String newPass) throws JSONException, IOException {
 
-			JSONObject params = new JSONObject();
+		JSONObject params = new JSONObject();
 
-			params.put("email", email);
-			params.put("oldPassword", currentPass);
-			params.put("newPassword", newPass);
+		params.put("email", email);
+		params.put("oldPassword", currentPass);
+		params.put("newPassword", newPass);
 
-			JSONObject jsonObject = helper.invokeWebMethod("ChangePassword",
-					params);
+		JSONObject jsonObject = helper
+				.invokeWebMethod("ChangePassword", params);
 
-			boolean rs = jsonObject.getBoolean("d");
+		boolean rs = jsonObject.getBoolean("d");
 
-			return rs;
+		return rs;
 
 	}
 
@@ -87,11 +91,11 @@ public class UsersManager {
 
 		JSONObject params = new JSONObject();
 
-		
 		params.put("accID", user.AccID);
 		params.put("name", user.Name);
 		params.put("gender", user.Gender);
-		params.put("birthday", user.Birthday);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		params.put("birthday", format.format(user.Birthday));
 		params.put("phone", user.Phone);
 		params.put("address", user.Address);
 		params.put("street", user.Street);
@@ -99,32 +103,101 @@ public class UsersManager {
 		params.put("city", user.City);
 		params.put("country", user.Country);
 		params.put("favorite", user.Favorite);
-			
+
 		params.put("avatar", user.Avatar);
 
-		JSONObject jsonObject = helper.invokeWebMethod("UpdateProfile",params);
+		JSONObject jsonObject = helper.invokeWebMethod("UpdateProfile", params);
 
 		rs = jsonObject.getBoolean("d");
-		
+
 		return rs;
 	}
 
 	public Users RetrieveByEmail(String email) throws JSONException,
 			IOException, IllegalArgumentException, IllegalAccessException {
+		HttpHelper helper = new HttpHelper(URL);
+		JSONObject params = new JSONObject();
+
+		params.put("email", email);
+
+		JSONObject response = helper.invokeWebMethod("RetrieveByEmail", params);
+
+		if (response != null) {
+
+			Users user = new Users();
+			JSONObject jsonUser = response.getJSONObject("d");
+
+			JSONObject p = jsonUser.getJSONObject("Profile");
+
+			user.AccID = jsonUser.getInt("ID");
+			user.AccID = jsonUser.getInt("AccID");
+			user.Password = jsonUser.getString("Password");
+
+			user.Name = p.getString("Name");
+
+			user.Birthday = Utils.GetDateFromJSONString(p.getString("Birthday"));
+
+			user.Gender = p.getBoolean("Gender");
+
+			user.Phone = p.getString("Phone");
+
+			user.Address = p.getString("Address");
+
+			user.Street = p.getString("Street");
+
+			user.District = p.getString("District");
+
+			user.City = p.getString("City");
+
+			user.Country = p.getString("Country");
+
+			user.Favorite = p.getString("Favorite");
+
+			user.Avatar = p.getString("Avatar");
+			return user;
+		}
+		return null;
+	}
+
+	public Users RetrieveById(int id) throws JSONException, IOException,
+			IllegalArgumentException, IllegalAccessException {
+		HttpHelper helper = new HttpHelper(URL);
+		JSONObject params = new JSONObject();
+
+		params.put("id", id);
+
+		JSONObject response = helper.invokeWebMethod("RetrieveJSON", params);
+
+		if (response != null) {
+
+			Users user = new Users();
+			JSONObject jsonUser = response.getJSONObject("d");
+
+			user.Name = jsonUser.getString("Name");
+
+			return user;
+		}
+		return null;
+	}
+
+	public Users RetrieveByAccessToken(String accessToken)
+			throws JSONException, IOException {
+		if (accessToken != null && !accessToken.equals("")) {
 			HttpHelper helper = new HttpHelper(URL);
 			JSONObject params = new JSONObject();
-			
-			params.put("email", email);
-			
-			JSONObject response = helper.invokeWebMethod("RetrieveByEmail", params);
-			
+
+			params.put("accesstoken", accessToken);
+
+			JSONObject response = helper.invokeWebMethod(
+					"GetAccountsByAccessToken", params);
+
 			if (response != null) {
-				
+
 				Users user = new Users();
 				JSONObject jsonUser = response.getJSONObject("d");
 
 				JSONObject p = jsonUser.getJSONObject("Profile");
-				
+
 				user.AccID = jsonUser.getInt("ID");
 				user.AccID = jsonUser.getInt("AccID");
 				user.Password = jsonUser.getString("Password");
@@ -132,7 +205,7 @@ public class UsersManager {
 				user.Name = p.getString("Name");
 
 				user.Birthday = Utils.GetDateFromJSONString(p.getString("Birthday"));
-			
+
 				user.Gender = p.getBoolean("Gender");
 
 				user.Phone = p.getString("Phone");
@@ -151,28 +224,13 @@ public class UsersManager {
 
 				user.Avatar = p.getString("Avatar");
 				return user;
+			}
 		}
 		return null;
 	}
-	
-	public Users RetrieveById(int id) throws JSONException,
-		
-		IOException, IllegalArgumentException, IllegalAccessException {
-		HttpHelper helper = new HttpHelper(URL);
-		JSONObject params = new JSONObject();
-		
-		params.put("id", id);
-		
-		JSONObject response = helper.invokeWebMethod("RetrieveJSON", params);
-		
-		if (response != null) {
-			
-			Users user = new Users();
-			JSONObject jsonUser = response.getJSONObject("d");
-	        Utils.JsonToObject(jsonUser, user);
-						
-			return user;
-	}
-	return null;
-}
+	/*
+	 * public Boolean CheckAccessTokenIsExisted(String accessToken){
+	 * 
+	 * }
+	 */
 }

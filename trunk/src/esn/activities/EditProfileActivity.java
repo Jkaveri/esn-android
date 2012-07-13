@@ -91,7 +91,7 @@ public class EditProfileActivity extends Activity {
 		
 		sessions = Sessions.getInstance(context);
 		
-		String email = sessions.get("email", null);
+		String email = sessions.currentUser.Email;
 				
 		if(sessions==null)
 		{

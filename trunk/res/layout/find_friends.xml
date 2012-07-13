@@ -11,7 +11,8 @@
             android:id="@+id/esn_findFriends_email"
             android:inputType="textEmailAddress" 
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"/>
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
         <Button android:id="@+id/esn_findFriends_friend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
