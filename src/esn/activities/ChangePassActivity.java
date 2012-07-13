@@ -49,11 +49,10 @@ public class ChangePassActivity extends Activity {
 		
 		session = Sessions.getInstance(context);
 		
-		email = session.get("email", null);
-		password = session.get("password", null);
+		
 		
 		EditText txtEmail = (EditText)findViewById(R.id.esn_changepass_email);		
-		txtEmail.setText(email);
+		txtEmail.setText(session.currentUser.Email);
 	}
 	
 	public void changePassCancelClicked(View button) {

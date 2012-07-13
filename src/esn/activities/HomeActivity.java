@@ -76,9 +76,9 @@ public class HomeActivity extends SherlockMapActivity implements
 	private EsnMapView mapView;
 	public final static int CODE_REQUEST_SET_FILTER = 2;
 	HomeActivity context;
-	
+
 	Sessions sessions;
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		setupListNavigate();
 
 		context = this;
-		
+
 		sessions = Sessions.getInstance(context);
 	}
 
@@ -250,6 +250,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		}
 		return true;
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
@@ -271,7 +272,6 @@ public class HomeActivity extends SherlockMapActivity implements
 							(int) (longtitude * 1E6));
 					EventOverlayItem item = new EventOverlayItem(point, title,
 							description, eventId);
-
 					map.setMarker(item, EventType.getIconId(labelId, 1));
 					mapView.getController().animateTo(point);
 				}
@@ -309,7 +309,5 @@ public class HomeActivity extends SherlockMapActivity implements
 
 		return false;
 	}
-
-
 
 }

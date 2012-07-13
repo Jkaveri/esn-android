@@ -89,7 +89,7 @@ public class EventsManager {
 		params.put("filter",filter);
 		// get soap result
 		JSONObject response = helper.invokeWebMethod("GetListEventsAround", params);
-		Log.d("esn", response.toString());
+		//Log.d("esn", response.toString());
 		if (response != null) {
 			// get event Array
 			JSONArray eventArray = response.getJSONArray("d");

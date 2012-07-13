@@ -89,12 +89,13 @@ public class Sessions {
 	}
 
 	public boolean logined() {
-		String email = pref.getString("email", null);
-		return email!=null;
+		boolean isLogined = pref.getBoolean("isLogined", false);
+		return isLogined;
 	}	
 	public boolean restoreFaceBook(Facebook fb){
 		fb.setAccessToken(get("fb_access_token",""));
 		fb.setAccessExpires(get("fb_access_token_expires",Long.MIN_VALUE));
 		return fb.isSessionValid();
 	}
+
 }

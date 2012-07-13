@@ -9,20 +9,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Util;
 
-import esn.activities.LoginActivity.LoginThread;
-import esn.classes.Base64;
-import esn.classes.HttpHelper;
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
-import android.R.bool;
-import android.R.string;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -32,32 +25,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.text.Editable;
 import android.text.Html;
-import android.text.TextWatcher;
-import android.text.format.DateFormat;
-import android.text.format.Formatter;
 import android.text.method.LinkMovementMethod;
 
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class RegisterActivity extends SherlockActivity {
 
 	Intent intent;

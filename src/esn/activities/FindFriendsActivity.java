@@ -3,6 +3,7 @@ package esn.activities;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,29 +17,35 @@ import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 
 import esn.adapters.CustomListAdapter;
+import esn.adapters.ListViewFriendsAdapter;
 import esn.classes.EsnListItem;
 import esn.classes.Sessions;
+import esn.models.FriendsListsDTO;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 
-public class FindFriends extends Activity {
+public class FindFriendsActivity extends Activity {
 	private Facebook mFacebook;
 	private AsyncFacebookRunner mAsync;
 	private Sessions session;
 	private final String TAG_LOG = "FindFriends";
+	private ListViewFriendsAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.find_friends);
-
+		ListView list = (ListView) findViewById(R.id.esn_findFriend_list);
+		adapter = new ListViewFriendsAdapter(this,new ArrayList<esn.models.FriendsListsDTO>());
 		session = Sessions.getInstance(this);
 	}
 
-	public void btnFindClicked() {
+	public void btnFindClicked(View view) {
 		mFacebook = new Facebook(WelcomeActivity.APP_ID);
 		mAsync = new AsyncFacebookRunner(mFacebook);
 
@@ -62,12 +69,14 @@ public class FindFriends extends Activity {
 				JSONArray jsonArray = new JSONArray(response);
 				int count = jsonArray.length();
 				for (int i = 0; i < count; i++) {
+					FriendsListsDTO friend = new FriendsListsDTO();
 					JSONObject jsonObj = jsonArray.getJSONObject(i);
-					String id = jsonObj.getString("uid");
-					String name = jsonObj.getString("name");
-					String pic = jsonObj.getString("pic_square");
-				
+					 friend.uid = jsonObj.getString("uid");
+					 friend.Name = jsonObj.getString("name");
+					 friend.Avatar = jsonObj.getString("pic_square");
+					adapter.add(friend);
 				}
+				adapter.notifyDataSetChanged();
 			} catch (Exception e) {
 				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();

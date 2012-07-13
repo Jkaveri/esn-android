@@ -16,6 +16,7 @@ import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -64,6 +65,7 @@ public class AddNewEvent extends Activity {
 	private final String LOG_TAG = "esn.addNewEvent";
 
 	private static final int SELECT_PICTURE = 1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -149,7 +151,7 @@ public class AddNewEvent extends Activity {
 		return true;
 	}
 
-	@SuppressLint("NewApi")
+	@TargetApi(9)
 	public void btnAddClicked() {
 		// show dialog
 		dialog = new ProgressDialog(context);
@@ -159,18 +161,17 @@ public class AddNewEvent extends Activity {
 
 		EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
 		String title = txtTitle.getText().toString();
-		
-		if(title.isEmpty())
-		{
-			Toast.makeText(context, res.getString(R.string.esn_eventDetail_entereventtitle), Toast.LENGTH_SHORT).show();
+
+		if (title.isEmpty()) {
+			Toast.makeText(context,
+					res.getString(R.string.esn_eventDetail_entereventtitle),
+					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		
-		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);	
+
+		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
 		String description = txtDescription.getText().toString();
-		
-		
-		
+
 		if ((title != null) && title.length() > 0) {
 			if (description != null && description.length() > 0) {
 				// put into result
@@ -186,9 +187,9 @@ public class AddNewEvent extends Activity {
 				event.EventLng = homeData.getDoubleExtra("longtitude", 0);
 				event.ShareType = AppEnums.ShareTypes.Public;
 				int i = 0;
-				//waiting for upload
-				//if uploaded or upload failed
-				while (!isUploaded || isUploadFialed) {
+				// waiting for upload
+				// if uploaded or upload failed
+				while (!isUploaded && !isUploadFialed && i < 25) {
 					try {
 						Log.d(LOG_TAG, "waiting for upload image");
 
@@ -199,22 +200,27 @@ public class AddNewEvent extends Activity {
 						e.printStackTrace();
 					}
 				}
-				if (isUploadFialed) {
-					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-					alertBuilder.setTitle(res.getString(R.string.esn_addNewEvent_canNotUpload));
-					alertBuilder.setMessage(res.getString(R.string.esn_addNewEvent_wantToContinue));
+				if (isUploadFialed || i > 25) {
+					dialog.dismiss();
+					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(
+							this);
+					alertBuilder.setTitle(res
+							.getString(R.string.esn_addNewEvent_canNotUpload));
+					alertBuilder
+							.setMessage(res
+									.getString(R.string.esn_addNewEvent_wantToContinue));
 					alertBuilder.setPositiveButton("OK", new OnClickListener() {
-						
+
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							
+							new CreateEventsThread(event).start();
 						}
 					});
-					
-				}else{
+
+				} else {
 					new CreateEventsThread(event).start();
 				}
-				
+
 			} else {
 				txtDescription.setError("Description is required",
 						res.getDrawable(R.drawable.ic_alerts_and_states_error));
@@ -245,6 +251,23 @@ public class AddNewEvent extends Activity {
 		sessions.put("EventDescription", description);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.new_event_add) {
+			btnAddClicked();
+			return true;
+		} else if (item.getItemId() == R.id.new_event_cancel) {
+
+			btnCancelClicked();
+			return true;
+		} else if (item.getItemId() == R.id.new_event_capture) {
+			CameraClicked();
+			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	public void CameraClicked() {
 
 		final CharSequence[] items = { "Photo Gallery", "Camera", "Cancel" };
@@ -268,23 +291,6 @@ public class AddNewEvent extends Activity {
 		imageSelectDialog.show();
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.new_event_add) {
-			btnAddClicked();
-			return true;
-		} else if (item.getItemId() == R.id.new_event_cancel) {
-
-			btnCancelClicked();
-			return true;
-		} else if (item.getItemId() == R.id.new_event_capture) {
-			CameraClicked();
-			return true;
-		} else {
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
 	public void OpenCamera() {
 		Intent cameraIntent = new Intent(
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -293,8 +299,18 @@ public class AddNewEvent extends Activity {
 
 	}
 
+	public void OpenPhotoGallery() {
+		imageSelectDialog.dismiss();
+		Intent intent = new Intent(Intent.ACTION_PICK,
+				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		intent.setType("image/*");
+		startActivityForResult(intent, SELECT_PICTURE);
+	}
+
 	private static final int CAMERA_PIC_REQUEST = 1337;
 
+	@TargetApi(13)
+	@SuppressLint("ParserError")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -302,8 +318,9 @@ public class AddNewEvent extends Activity {
 			if (resultCode == RESULT_OK) {
 				isUploaded = false;
 				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+				thumbnail  = Bitmap.createScaledBitmap(thumbnail, 250, 250, true);
 				new UploadImageTask().execute(thumbnail);
-
+				//thumbnail.recycle();
 			}
 
 		} else if (requestCode == SELECT_PICTURE) {
@@ -312,27 +329,34 @@ public class AddNewEvent extends Activity {
 				Uri selectedImageUri = data.getData();
 				Bitmap thumbnail = null;
 				try {
+
+					// parse to bitmap
 					thumbnail = BitmapFactory.decodeStream(getContentResolver()
 							.openInputStream(selectedImageUri));
+					
+
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if (thumbnail != null) {
+					//thumbnail  = Bitmap.createScaledBitmap(thumbnail, 250, 250, true);
 					new UploadImageTask().execute(thumbnail);
+					//thumbnail.recycle();
+				} else {
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							Toast.makeText(AddNewEvent.this,
+									"Can't upload image", Toast.LENGTH_LONG)
+									.show();
+						}
+					});
+					isUploaded = true;
 				}
 			}
 		}
-	}
-
-
-	public void OpenPhotoGallery() {
-		imageSelectDialog.dismiss();
-		Intent intent = new Intent(Intent.ACTION_PICK,
-				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-		intent.setType("image/*");
-		startActivityForResult(intent, SELECT_PICTURE);
 	}
 
 	public class UploadImageTask extends AsyncTask<Bitmap, Integer, String> {
@@ -342,14 +366,16 @@ public class AddNewEvent extends Activity {
 
 			try {
 				final Bitmap img = params[0];
+
 				String base64Img = Utils.bitmapToBase64(img);
+
 				HttpHelper helper = new HttpHelper(
 						"http://bangnl.info/ws/ApplicationsWS.asmx");
 				JSONObject p = new JSONObject();
 				p.put("base64Image", base64Img);
 				p.put("fileType", "jpg");
 				JSONObject response = helper.invokeWebMethod("UploadImage", p);
-
+				base64Img = null;
 				if (response != null && response.has("d")) {
 					String url = response.getString("d");
 					event.Picture = url;
@@ -357,9 +383,12 @@ public class AddNewEvent extends Activity {
 
 						@Override
 						public void run() {
-							ImageView image = (ImageView) findViewById(R.id.esn_addnewEvent_imgEvent);
-							TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
+							ImageView image = (ImageView) AddNewEvent.this
+									.findViewById(R.id.esn_addnewEvent_imgEvent);
+							TextView tvImageEventStatus = (TextView) AddNewEvent.this
+									.findViewById(R.id.esn_addNewEvent_txtImageStatus);
 							image.setImageBitmap(img);
+							img.recycle();
 							tvImageEventStatus.setText("");
 						}
 					});
@@ -370,7 +399,7 @@ public class AddNewEvent extends Activity {
 					return "";
 				}
 			} catch (Exception e) {
-				
+
 				isUploadFialed = true;
 				Log.e(LOG_TAG, e.getMessage());
 				return "";
@@ -407,7 +436,7 @@ public class AddNewEvent extends Activity {
 			EventsManager manager = new EventsManager();
 			try {
 
-				Events event = manager.setEntity(this.event);
+				final Events event = manager.setEntity(this.event);
 				if (event.EventID > 0) {
 
 					runOnUiThread(new Runnable() {
@@ -415,6 +444,7 @@ public class AddNewEvent extends Activity {
 						@Override
 						public void run() {
 							dialog.dismiss();
+							homeData.putExtra("eventId", event.EventID);
 							setResult(RESULT_OK, homeData);
 							finish();
 						}

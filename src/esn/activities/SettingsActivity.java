@@ -1,8 +1,7 @@
 package esn.activities;
 
-import com.facebook.android.SessionEvents.LogoutListener;
 
-import esn.activities.LoginActivity.LoginThread;
+
 import esn.adapters.EsnListAdapter;
 import esn.classes.EsnListItem;
 import esn.classes.Sessions;
@@ -10,14 +9,12 @@ import esn.classes.Sessions;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.AlteredCharSequence;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -47,9 +44,9 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 		
 		session = Sessions.getInstance(context);
 		
-		String email = session.get("email",null);
 		
-		if(email.isEmpty())
+		
+		if(session.currentUser==null)
 		{
 			Intent intent = new Intent(context,WelcomeActivity.class);
 			

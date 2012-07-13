@@ -13,7 +13,7 @@
 
     <string name="esn.global.must_enable_gps">You must enable gps</string>
     <string name="esn.global.your_location_not_found">Your Location Not Found</string>
-    <string name="key.maps.googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
+    <string name="key.maps.googleAPI">0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg</string>
     <string name="help">In this introductory Google Apps webinar</string>
     <string name="term">In this introductory term</string>
 
@@ -55,7 +55,6 @@
 	<string name="esn_welcome_login">Login</string>
 	<string name="esn_welcome_loginWithFacebook">Login with facebook</string>
 	<string name="esn_welcome_signup">Sign Up</string>
-	
 	<string name="esn_userpage_online">Online</string>
 	<string name="esn_userpage_ofline">Offline</string>
 	<string name="esn_userpage_Male">Male</string>
