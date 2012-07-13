@@ -10,6 +10,8 @@
     <string name="tv_Edit_Profile_Country">Quốc gia</string>
     <string name="tv_Edit_Profile_Other">Khác</string>
     <string name="tv_Edit_Profile_Favorite">Sở thích</string>
+    <string name="tv_Edit_Profile_updatesuccessful">Cập nhật thông tin thành công .</string>
+    <string name="tv_Edit_Profile_updatefail">Cập nhật thông tin không thành công .</string>
     <!-- change Password -->
 
     <string name="esn.changepassword.requirecurrentpassword">Nhập mật khẩu hiện tại !</string>

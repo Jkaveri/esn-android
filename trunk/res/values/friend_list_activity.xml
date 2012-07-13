@@ -13,4 +13,5 @@
 	<string name="btn.Friends.Lists.Diaglog.Close">Close</string>
 	<string name="btn.Friends.Lists.Diaglog.unfriendsuccess">Unfriend Successfull !</string>
 	<string name="btn.Friends.Lists.Diaglog.unfriendnotsuccess">Error. Try again.</string>
+	<string name="btn.Friends.Lists.Diaglog.nofriend">No friends.</string>
 </resources>

@@ -173,8 +173,8 @@ public class UsersManager {
 			Users user = new Users();
 			JSONObject jsonUser = response.getJSONObject("d");
 
-			user.Name = jsonUser.getString("Name");
-
+			Utils.JsonToObject(jsonUser, user);
+			
 			return user;
 		}
 		return null;

@@ -138,7 +138,11 @@ public class AddNewEvent extends Activity {
 			txtDescription.setText(sessions.get("EventDescription", null)
 					.toString());
 		}
-
+		if (sessions.get("EventAddress", null) != null) {
+			TextView txtDescription = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
+			txtDescription.setText(sessions.get("EventAddress", null)
+					.toString());
+		}
 	}
 
 	@Override
@@ -214,11 +218,17 @@ public class AddNewEvent extends Activity {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							new CreateEventsThread(event).start();
+							sessions.put("EventTitle", null);
+							sessions.put("EventDescription", null);
+							sessions.put("EventAddress", null);
 						}
 					});
 
 				} else {
 					new CreateEventsThread(event).start();
+					sessions.put("EventTitle", null);
+					sessions.put("EventDescription", null);
+					sessions.put("EventAddress", null);
 				}
 
 			} else {
@@ -234,21 +244,33 @@ public class AddNewEvent extends Activity {
 	}
 
 	public void btnCancelClicked() {
+		sessions.put("EventTitle", null);
+		sessions.put("EventDescription", null);
+		sessions.put("EventAddress", null);
+		
 		Intent it = new Intent(this, HomeActivity.class);
 		startActivity(it);
+		
 	}
 
 	public void ChangeEventType(View view) {
-		Intent intent = new Intent(this, SelectEventLabel.class);
-		startActivity(intent);
-
+		
 		EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
 		String title = txtTitle.getText().toString();
 		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
 		String description = txtDescription.getText().toString();
+		
+		TextView txtAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
+		String address = txtAddress.getText().toString();
 
 		sessions.put("EventTitle", title);
 		sessions.put("EventDescription", description);
+		sessions.put("EventAddress", address);
+		
+		Intent intent = new Intent(this, SelectEventLabel.class);
+		startActivity(intent);
+
+		
 	}
 
 	@Override
