@@ -344,7 +344,7 @@ public class EditProfileActivity extends Activity {
 								
 								ArrayAdapter arr = (ArrayAdapter)sp.getAdapter();
 								
-								int pos = arr.getPosition("Male");
+								int pos = arr.getPosition(res.getString(R.string.esn_register_rdbMale));
 										
 								sp.setSelection(pos);
 							}
@@ -354,7 +354,7 @@ public class EditProfileActivity extends Activity {
 								
 								ArrayAdapter arr = (ArrayAdapter)sp.getAdapter();
 								
-								int pos = arr.getPosition("Female");
+								int pos = arr.getPosition(res.getString(R.string.esn_register_rdbFemale));
 										
 								sp.setSelection(pos);
 							}
@@ -456,7 +456,7 @@ public class EditProfileActivity extends Activity {
 					
 					Spinner ddlGender = (Spinner)findViewById(R.id.esn_changeprofile_gender);			
 					String gender = ddlGender.getSelectedItem().toString();			
-					if(gender.equals("Male"))
+					if(gender.equals(res.getString(R.string.esn_register_rdbMale)))
 					{
 						user.Gender=true;
 					}
@@ -491,7 +491,8 @@ public class EditProfileActivity extends Activity {
 		public void run() {
 			dialog.dismiss();
 			
-			Util.showAlert(context, "Configuration", "Update successfully !");			
+			Toast.makeText(context, res.getString(R.string.tv_Edit_Profile_updatesuccessful), Toast.LENGTH_SHORT).show();		
+			
 		}
 	}
 	
@@ -500,7 +501,7 @@ public class EditProfileActivity extends Activity {
 		public void run() {
 			dialog.dismiss();
 			
-			Util.showAlert(context, "Error", "Update Fail. Try Again.");			
+			Toast.makeText(context, res.getString(R.string.tv_Edit_Profile_updatefail), Toast.LENGTH_SHORT).show();			
 		}
 	}
 	

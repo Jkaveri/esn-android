@@ -13,4 +13,5 @@
 	<string name="btn.Friends.Lists.Diaglog.Close">Đóng</string>
 	<string name="btn.Friends.Lists.Diaglog.unfriendsuccess">Xóa bạn thành công !</string>
 	<string name="btn.Friends.Lists.Diaglog.unfriendnotsuccess">Lỗi, Hãy thực hiện lại.</string>
+	<string name="btn.Friends.Lists.Diaglog.nofriend">Không có bạn bè.</string>
 </resources>

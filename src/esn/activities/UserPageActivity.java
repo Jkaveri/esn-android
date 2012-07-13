@@ -107,7 +107,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 								txtstatus.setText(res.getString(R.string.esn_userpage_ofline));
 							}
 							
-							String city = user.City;						
+							String city = user.Address +" "+ user.Street +", "+ user.District +", "+ user.City ;						
 							txtadress.setText(city);
 								
 							String country = user.Country;

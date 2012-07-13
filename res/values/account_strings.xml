@@ -10,6 +10,8 @@
     <string name="tv_Edit_Profile_Country">Country</string>
     <string name="tv_Edit_Profile_Other">Edit Other</string>
     <string name="tv_Edit_Profile_Favorite">Favorite</string>
+    <string name="tv_Edit_Profile_updatesuccessful">Update Successfull.</string>
+    <string name="tv_Edit_Profile_updatefail">Update fail. Try again.</string>
     <!-- change Password -->
 
     <string name="esn.changepassword.requirecurrentpassword">Current password is required !</string>
