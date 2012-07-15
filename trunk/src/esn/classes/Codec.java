@@ -1,3 +1,7 @@
+/*
+ * By lnbienit@gmail.com
+ */
+
 package esn.classes;
 
 public class Codec {
