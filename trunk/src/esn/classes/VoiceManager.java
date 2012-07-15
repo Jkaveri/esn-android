@@ -109,25 +109,26 @@ public class VoiceManager {
 	private void runSendWS() throws IOException{
 		byte[] recordBuf = recorder.getBufferRecord();
 		recorder.clearBuffer();//giai phong bo nho
+//		player.release();
 //		player.setDefaultConfig();
 //		player.prepare();		
 //		player.loadBufferPCM(recordBuf);
-//		Log.i("AudioManager", "Data record length: " + recordBuf.length);
+		Log.i("AudioManager", "Data record length: " + recordBuf.length);
 		
-		wavConver.setBuffer(recordBuf);
-		recordBuf = null;//giai phong bo nho
-		wavConver.prepare();
-		wavConver.conver();
+//		wavConver.setBuffer(recordBuf);
+//		recordBuf = null;//giai phong bo nho
+//		wavConver.prepare();
+//		wavConver.conver();
+//		
+//		byte[] buf = wavConver.getWAVData();
+//		wavConver.clearBuffer();//giai phong bo nho
 		
-		byte[] buf = wavConver.getWAVData();
-		wavConver.clearBuffer();//giai phong bo nho
-		
-		S2TResult result = auWs.send(buf);
+		S2TResult result = auWs.send(recordBuf);
 		Log.i("AudioManager", "Result: " + result.getType());
 		callBack.onS2TPostBack(result);
 //		boolean ok = loadPlayerSumBuffer("cos lowr ddaast owr", "hafng xanh");
 //		if(ok){
-//			player.play();
+			player.play();
 //		}else{
 //			Log.e("AudioManager", "Voice phan hoi khong thanh cong");
 //		}
