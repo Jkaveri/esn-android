@@ -37,6 +37,8 @@ public class AudioRecorder {
 	private boolean isSilence = false;
 	private int timeOut = 0;
 	private boolean isCallBackOnStarting = false;
+	private String TAG = "AudioRecorder";
+	private Codec codec;
 	
 	private class DetectTask extends TimerTask {
 		@Override
@@ -71,8 +73,22 @@ public class AudioRecorder {
 	}
 	
 	public AudioRecorder(RecordListener recHandler) {
-		callBack = recHandler;		
+		callBack = recHandler;
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
+		codec = Codec.instance(30);
+		int truncated;
+        
+        if (REC_BUFFER_SIZE == AudioRecord.ERROR_BAD_VALUE) {
+        	 Log.i(TAG, "GET REC_BUFFER_SIZE IS AudioRecord.ERROR_BAD_VALUE");
+        }
+        
+        // 480 bytes for 30ms(y mode)
+        truncated = REC_BUFFER_SIZE % 480;
+        if (truncated != 0) {
+        	REC_BUFFER_SIZE += 480 - truncated;
+            Log.i(TAG, "Extend buffer to " + REC_BUFFER_SIZE);
+        }
+        
 		bufferStream = new ByteArrayOutputStream();		
 		
 		run = new Runnable() {
@@ -80,6 +96,7 @@ public class AudioRecorder {
 			@Override
 			public void run() {
 				byte[] buffer = new byte[REC_BUFFER_SIZE];
+				byte[] bufferEncode = new byte[REC_BUFFER_SIZE];
 				DataOutputStream dos = new DataOutputStream(bufferStream);
 				AudioRecord record = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
 				Timer timerDetect = new Timer();
@@ -102,9 +119,21 @@ public class AudioRecorder {
 						short sample = 0;
 						
 						int count = record.read(buffer, 0, REC_BUFFER_SIZE);
-						if(count > 0){
-							dos.write(buffer, 0, count);
-						}
+						
+						if (count == AudioRecord.ERROR_INVALID_OPERATION) {
+							Log.i(TAG, "READ BUFFER_SIZE IS AudioRecord.ERROR_INVALID_OPERATION");
+                        } else if (count == AudioRecord.ERROR_BAD_VALUE) {
+                        	Log.i(TAG, "READ BUFFER_SIZE IS AudioRecord.ERROR_BAD_VALUE");
+                        } else if (count == AudioRecord.ERROR) {
+                        	Log.i(TAG, "READ BUFFER_SIZE IS AudioRecord.ERROR");
+                        }
+						
+						//iLBC encode block 30msec
+						int encount = codec.encode(buffer, 0, count, bufferEncode, 0);
+						dos.write(bufferEncode, 0, encount);
+						
+						//dos.write(buffer, 0, count);
+
 						
 						///////////////////////PHAN TICH DANG XEM DANG NOI HAY NGUNG//////////////////
 						// Analyze Sound.
@@ -120,22 +149,22 @@ public class AudioRecorder {
 							temp += tempFloatBuffer[i];
 
 						if ((temp >= 0 && temp <= SILENCE_THRESHOLD) && recording == false) {
-							//Log.i("AudioRecorder", "[1] Chua noi");//Chua noi
+							//Log.i(TAG, "[1] Chua noi");//Chua noi
 							tempIndex++;
 						}
 
 						if (temp >SILENCE_THRESHOLD && recording == false) {
-							//Log.i("AudioRecorder", "[2] Bat dau noi");//Bat dau noi
+							//Log.i(TAG, "[2] Bat dau noi");//Bat dau noi
 							recording = true;
 							continue;
 						}
 
 						if ((temp >= 0 && temp <=  SILENCE_THRESHOLD) && recording == true) {
 							silenceCall();//Dang ngung noi
-							//Log.i("AudioRecorder", "Dang im lang");
+							//Log.i(TAG, "Dang im lang");
 						}else{
 							speakingCall();//Dang noi
-							//Log.i("AudioRecorder", "Dang noi");
+							//Log.i(TAG, "Dang noi");
 						}
 
 						// -> Recording sound here.
@@ -149,13 +178,13 @@ public class AudioRecorder {
 						
 					}
 				} catch (IOException e) {
-					Log.e("Audiorecorder", "IOException write() at output stream");
+					Log.e(TAG, "IOException write() at output stream");
 				}finally{
 					try {
 						dos.flush();
 						dos.close();
 					} catch (IOException e){
-						Log.e("Audiorecorder", "IOException close at output stream");
+						Log.e(TAG, "IOException close at output stream");
 					}
 				}
 				
@@ -170,6 +199,7 @@ public class AudioRecorder {
 				tempFloatBuffer = null;
 				totalByteBuffer = null;
 				buffer = null;
+				bufferEncode = null;
 				dos = null;
 				
 				//Reset nhan dang co dang noi hay khong
@@ -216,7 +246,7 @@ public class AudioRecorder {
 			try {
 				bufferStream.close();
 			} catch (IOException e) {
-				Log.e("Audiorecorder", "IOException close at buffer stream");
+				Log.e(TAG, "IOException close at buffer stream");
 			}
 		}
 		bufferStream = new ByteArrayOutputStream();
@@ -228,7 +258,7 @@ public class AudioRecorder {
 			try {
 				bufferStream.close();
 			} catch (IOException e) {
-				Log.e("Audiorecorder", "IOException close at buffer stream");
+				Log.e(TAG , "IOException close at buffer stream");
 			}
 			bufferStream = null;
 		}

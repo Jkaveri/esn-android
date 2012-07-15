@@ -5,11 +5,13 @@ import java.util.Hashtable;
 import org.ksoap2.serialization.SoapObject;
 
 import esn.models.S2TResult;
+import android.annotation.SuppressLint;
 import android.util.Base64;
 
+@SuppressLint("NewApi")
 public class AudioWebService {
 	public static final String NAMSPACE = "http://www.aprotrain.com/";
-	public static final String URL = "http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";
+	public static final String URL = "http://192.168.1.4/s2tweb/s2tws.asmx";//"http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";
 	private EsnWebServices service;
 	
 	public AudioWebService() {
