@@ -300,10 +300,10 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		String itemTitle = item.getTitle().toString();
-		if (itemTitle.equals("Search")) {
+		if (itemTitle.equals(res.getString(R.string.app_global_search))) {
 			item.collapseActionView();
 			return true;
-		} else if (itemTitle.equals("FriendEvent")) {
+		} else if (itemTitle.equals(res.getString(R.string.app_global_friendevent))) {
 			finish();
 			Intent intenFdsEvent = new Intent(this, FriendEventsActivity.class);
 			startActivity(intenFdsEvent);

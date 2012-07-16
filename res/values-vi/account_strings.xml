@@ -36,7 +36,7 @@
     <string name="esn.changepassword.btDone">Xong</string>
     <string name="esn.changepassword.btLogout">Đăng xuất</string>
     <!-- Register -->
-    <string name="esn.register.date"></string>
+    <string name="esn.register.date">Ngày sinh</string>
     <string name="esn.register.ddlName">Chọn giới tính.</string>
     <string name="esn.register.RequireFistName">Nhập họ tên !</string>
     <string name="esn.register.RequireLastName">Nhập họ tên !</string>
@@ -52,7 +52,7 @@
     <string name="esn.register.tvFist">Họ</string>
     <string name="esn.register.txtLastName">Tên</string>
     <string name="esn.register.txtPhone">0908 123 456</string>
-    <string name="esn.register.txtBirthday">01/01/1990</string>
+    <string name="esn.register.txtBirthday">Ngày sinh</string>
     <string name="esn.register.txtGender">Nam</string>
     <string name="esn.register.btLoginFB">Đăng nhập bằng facebook</string>
     <string name="esn.register.btCancel">Hủy bỏ</string>
@@ -70,6 +70,10 @@
     <string name="esn.register.btCancel">Hủy bỏ</string>
     <string name="esn.register.account">TÀI KHOẢN</string>
     <string name="esn.register.information">THÔNG TIN CÁ NHÂN</string>
+    <string name="esn.register.btCancel">Hủy bỏ</string>
+    <string name="esn.register.activeyouraccount">Kích hoạt tài khoản ?</string>
+    <string name="esn.register.activeno">Đồng ý</string>
+    <string name="esn.register.activeyes">Để sau</string>
     
     <string name="map_current_location_title">Hiện tại</string>
     <string name="map_current_location_subtitle">Bạn đang ở đây !</string>

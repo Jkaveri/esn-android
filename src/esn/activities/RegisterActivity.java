@@ -38,6 +38,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class RegisterActivity extends SherlockActivity {
@@ -106,7 +107,7 @@ public class RegisterActivity extends SherlockActivity {
 				
 				ArrayAdapter arr = (ArrayAdapter)sp.getAdapter();
 				
-				int pos = arr.getPosition("Male");
+				int pos = arr.getPosition(res.getString(R.string.esn_register_rdbFemale));
 						
 				sp.setSelection(pos);			
 			}
@@ -116,7 +117,7 @@ public class RegisterActivity extends SherlockActivity {
 				
 				ArrayAdapter arr = (ArrayAdapter)sp.getAdapter();
 				
-				int pos = arr.getPosition("Female");
+				int pos = arr.getPosition(res.getString(R.string.esn_register_rdbFemale));
 						
 				sp.setSelection(pos);	
 			}
@@ -150,7 +151,7 @@ public class RegisterActivity extends SherlockActivity {
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 		
-		mDateDisplay.setHint("Birthday");
+		mDateDisplay.setHint(res.getString(R.string.esn_register_txtBirthday));
 	}
 
 	private void updateDisplay() {
@@ -233,7 +234,7 @@ public class RegisterActivity extends SherlockActivity {
 								
 								@Override
 								public void run() {
-									Util.showAlert(context, "Error", "Email is exists !");
+									Toast.makeText(context, res.getString(R.string.esn_register_EmailExists), Toast.LENGTH_SHORT).show();
 								}
 							});
 							
@@ -246,7 +247,7 @@ public class RegisterActivity extends SherlockActivity {
 								public void run() {
 									dialog = new ProgressDialog(RegisterActivity.this);
 									dialog.setTitle(getResources().getString(R.string.esn_global_loading));
-									dialog.setMessage("Waiting ....");
+									dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
 									dialog.show();	
 									
 									RegistertThread registerThread = new RegistertThread();
@@ -429,9 +430,9 @@ public class RegisterActivity extends SherlockActivity {
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			
-			builder.setMessage("Kích hoạt tài khoản ?")
+			builder.setMessage(res.getString(R.string.esn_register_activeyouraccount))
 			       .setCancelable(false)
-			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			       .setPositiveButton(res.getString(R.string.esn_register_activeyes), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   
 			        	   EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
@@ -449,7 +450,7 @@ public class RegisterActivity extends SherlockActivity {
 			        	   startActivity(browse);
 			           }
 			       })
-			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			       .setNegativeButton(res.getString(R.string.esn_register_activeno), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   Intent intent = new Intent(context, LoginActivity.class);
 			   				startActivity(intent);
@@ -465,7 +466,7 @@ public class RegisterActivity extends SherlockActivity {
 		public void run() {
 			dialog.dismiss();
 			
-			Util.showAlert(context, "Error", "Register Fail. Try Again.");			
+			Util.showAlert(context, res.getString(R.string.esn_global_Error), res.getString(R.string.esn_global_tryagain));			
 		}
 	}
 	

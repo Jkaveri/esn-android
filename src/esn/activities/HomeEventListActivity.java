@@ -125,7 +125,7 @@ public class HomeEventListActivity extends SherlockActivity implements OnNavigat
 				
 				int ids = bean.EventID;
 				it.putExtra("id", bean.EventID);
-				startActivity(it);
+				startActivity(it);mNavigationItems = new EsnListItem[2];
 			}
 		});
 
@@ -133,12 +133,13 @@ public class HomeEventListActivity extends SherlockActivity implements OnNavigat
 	private void setupListNavigate() {
 		
 		mNavigationItems = new EsnListItem[2];
+		
 		mNavigationItems[0] = new EsnListItem(1);
-		mNavigationItems[0].setTitle("View as List");
+		mNavigationItems[0].setTitle("Danh Sách");
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_list);
 		
 		mNavigationItems[1] = new EsnListItem(2);
-		mNavigationItems[1].setTitle("View as Map");
+		mNavigationItems[1].setTitle("Bản Đồ");
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_map2);
 		
 		Context context = getSupportActionBar().getThemedContext();
@@ -196,7 +197,7 @@ public class HomeEventListActivity extends SherlockActivity implements OnNavigat
 				
 			} catch (Exception e) {
 				AlertDialog.Builder builder = new Builder(this);
-				builder.setTitle("Error");
+				builder.setTitle(res.getString(R.string.esn_global_Error));
 				builder.setMessage(e.getMessage());
 				builder.show();
 			}

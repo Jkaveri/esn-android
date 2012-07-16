@@ -11,6 +11,7 @@
     <string name="esn.addNewEvent.imageeventstatus">No image for this event.</string>
     <string name="esn_addNewEvent_canNotUpload">Can\'t upload image</string>
     <string name="esn_addNewEvent_wantToContinue">Would you want to countinue?</string>
+    <string name="esn_addNewEvent_sharetype">Share Type:</string>
     <!-- EventDetail -->
     <string name="esn.eventDetail">Event detail</string>
     <string name="esn.eventDetail.like">True</string>
@@ -24,7 +25,7 @@
     <string name="esn_global_cancel">Cancel</string>
 	<string name="esn.eventDetail.send">Send</string>
     <string name="esn.eventDetail.comment">Comment</string>
-    <string name="esn.eventDetail.commentall">Show all</string>
+    <string name="esn.eventDetail.commentall">Show all comment</string>
     <string name="esn.eventDetail.commensuccess">Successfully</string>
     <string name="esn.eventDetail.commenfail">Fail. Try again.</string>
     <string name="esn.eventDetail.islike">Bạn đã xác nhận đúng rồi.</string>

@@ -66,6 +66,7 @@ public class AddNewEvent extends Activity {
 
 	private static final int SELECT_PICTURE = 1;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -113,9 +114,20 @@ public class AddNewEvent extends Activity {
 			e.printStackTrace();
 		}
 
-		TextView eventTypeName = (TextView) findViewById(R.id.esn_addNewEvent_txtEventTypeName);
-		eventTypeName.setText(homeData.getStringExtra("labelName"));
-
+		
+		String eventTypeName = homeData.getStringExtra("labelName");
+		
+		TextView txteventTypeName = (TextView) findViewById(R.id.esn_addNewEvent_txtEventTypeName);
+		
+		if(eventTypeName == null)
+		{
+			txteventTypeName.setText(res.getString(R.string.esn_eventDetail_iconEventType));
+		}		
+		else
+		{
+			txteventTypeName.setText(eventTypeName);
+		}
+		
 		ImageView imgType = (ImageView) findViewById(R.id.esn_addNewEvent_txtEventTypeImage);
 
 		int i = homeData.getIntExtra("labelIcon", 0);
@@ -292,10 +304,10 @@ public class AddNewEvent extends Activity {
 
 	public void CameraClicked() {
 
-		final CharSequence[] items = { "Photo Gallery", "Camera", "Cancel" };
+		final CharSequence[] items = {res.getString(R.string.app_global_gallery), res.getString(R.string.app_global_camera), res.getString(R.string.app_global_cancel) };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Choose");
+		builder.setTitle(res.getString(R.string.app_global_choose));
 
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
@@ -371,7 +383,7 @@ public class AddNewEvent extends Activity {
 						@Override
 						public void run() {
 							Toast.makeText(AddNewEvent.this,
-									"Can't upload image", Toast.LENGTH_LONG)
+									res.getString(R.string.app_global_cantnotuploadimage), Toast.LENGTH_LONG)
 									.show();
 						}
 					});
