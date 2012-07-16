@@ -1,31 +1,19 @@
 package esn.activities;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.entity.mime.MinimalField;
-import org.json.JSONException;
-
 import com.actionbarsherlock.app.SherlockActivity;
-import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
-import com.facebook.android.RequestGraphMe;
-
 import esn.classes.LoginThread;
 import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.EventType;
 import esn.models.EventTypeManager;
-import esn.models.Users;
 import esn.models.UsersManager;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +29,6 @@ public class WelcomeScreen extends SherlockActivity {
 	private Resources res;
 	private final String TAG_LOG = "WELCOME_SCREEN";
 	WelcomeScreen context;
-	private Object accessToken;
 	private Facebook fb;
 
 	@Override
@@ -56,24 +43,15 @@ public class WelcomeScreen extends SherlockActivity {
 		context = this;
 
 		session = Sessions.getInstance(context);
+		//get resource
 		res = getResources();
-		Intent data = getIntent();
-		// neu co ket noi mang
+		//check ket noi mang
 		if (Utils.isNetworkAvailable(this)) {
-			// neu tu trang login or loginfacebook chuyen ra :)
-			boolean reLogin = false;
-			if (data != null) {
-				reLogin = data.getBooleanExtra("reAuthor", false);
-			}
+			
 
-			if (reLogin) {
-				// login lai
-				executeLogin();
-			} else {
-				initConfig();
-				loadModelThread = new LoadModelsThread();
-				loadModelThread.start();
-			}
+			initConfig();
+			loadModelThread = new LoadModelsThread();
+			loadModelThread.start();
 
 		} else {
 			// ko co ket noi mang thi thong bao cho nguoi ta biet
@@ -103,7 +81,7 @@ public class WelcomeScreen extends SherlockActivity {
 	private void initConfig() {
 		// application session
 		session = Sessions.getInstance(this);
-
+		
 		boolean firstLauch = session.get("firstLauch", true);
 
 		if (firstLauch) {
@@ -138,11 +116,12 @@ public class WelcomeScreen extends SherlockActivity {
 				@Override
 				public void run() {
 					try {
+						Looper.prepare();
 						session.currentUser = new UsersManager()
 								.RetrieveByAccessToken(session.get(
 										"fb_access_token", ""));
 						if (session.currentUser != null) {
-							new Handler().post(new Runnable() {
+							runOnUiThread(new Runnable() {
 
 								@Override
 								public void run() {
@@ -155,10 +134,12 @@ public class WelcomeScreen extends SherlockActivity {
 								}
 							});
 						} else {
-							AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(
-									fb);
-							mAsyncRunner.request("me", new RequestGraphMe(
-									WelcomeScreen.this));                                 
+							
+							session.put("isLogined", false);
+							Intent loginIntent = new Intent(WelcomeScreen.this,
+									WelcomeActivity.class);
+							startActivity(loginIntent);
+							finish();                                 
 						}
 					} catch (Exception e) {
 						Log.e(TAG_LOG, e.getMessage());

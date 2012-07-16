@@ -26,6 +26,7 @@ import esn.models.EventType;
 
 public class SetFilterActivity extends SherlockActivity implements
 		onItemCheckedListener {
+	private static final String LOG_TAG = "SetFilterActivity";
 	private JSONObject filterListJson;
 	private Sessions session;
 	private ListMultiChoiceAdapter adapter;
@@ -92,6 +93,7 @@ public class SetFilterActivity extends SherlockActivity implements
 			for (int i = 0; i < eventTypes.size(); i++) {
 				EventType type = eventTypes.get(i);
 				EsnListItem item = new EsnListItem();
+				Log.d(LOG_TAG, "put-tag");
 				item.setTitle(type.EventTypeName);
 				item.setIcon(EventType.getIconId(type.EventTypeID, 3));
 				item.setId(type.EventTypeID);
@@ -126,14 +128,21 @@ public class SetFilterActivity extends SherlockActivity implements
 		case R.id.set_filter_menuItem_ok:
 			try {
 				JSONObject json2Save = new JSONObject();
+				boolean flag = false;
 				for (int i = 0; i < adapter.getCount(); i++) {
 					EsnListItem listItem = (EsnListItem) adapter.getItem(i);
-
+					Log.d(LOG_TAG, "put_type");
+					if(listItem.isChecked()){
+						flag = true;
+					}
 					json2Save.put(listItem.getTagName(),
 							listItem.isChecked());
 
 				}
-				Log.d("json2save",json2Save.toString());
+				if(!flag){
+					json2Save.put("all", true);
+				}
+				//Log.d("json2save",json2Save.toString());
 				String filterString = getFilterString(json2Save);
 				session.put("filterList", json2Save.toString());
 				session.put("filterString", filterString);

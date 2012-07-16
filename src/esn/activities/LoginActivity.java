@@ -116,13 +116,15 @@ public class LoginActivity extends SherlockActivity{
 			return;
 		}
 		
-		Sessions session = Sessions.getInstance(this);
-		session.put("email", email);
-		session.put("password", password);
-		Intent welcomeScreenIntent = new Intent(this,WelcomeScreen.class);
-		welcomeScreenIntent.putExtra("reAuthor", true);
-		startActivity(welcomeScreenIntent);
-		finish();
+		
+		ProgressDialog dialog = new ProgressDialog(this);
+		dialog.setTitle(res.getString(R.string.esn_global_loading));
+		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
+		dialog.setCancelable(false);
+		dialog.show();
+		LoginThread loginThread  = new LoginThread(this, email, password, dialog);
+	    Intent home = new Intent(this, HomeActivity.class);
+		loginThread.setSuccessIntent(home);
 	}
 
 

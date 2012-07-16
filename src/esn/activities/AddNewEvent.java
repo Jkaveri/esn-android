@@ -1,46 +1,37 @@
 package esn.activities;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
 import org.json.JSONException;
-import org.json.JSONObject;
+import com.facebook.android.Util;
 
-import esn.classes.Base64;
-import esn.classes.HttpHelper;
+import esn.classes.EsnCameras;
 import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.AppEnums;
-import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -57,12 +48,13 @@ public class AddNewEvent extends Activity {
 	Sessions sessions;
 	private Context context;
 	private AlertDialog imageSelectDialog;
-	private ImageView image;
 	private Events event;
 	private ProgressDialog dialog;
 	private boolean isUploaded = true;
-	private boolean isUploadFialed = false;
+	private boolean isUploadFailed = false;
 	private final String LOG_TAG = "esn.addNewEvent";
+	private UploadImageTask task;
+	private Uri fileUri;
 
 	private static final int SELECT_PICTURE = 1;
 
@@ -169,11 +161,17 @@ public class AddNewEvent extends Activity {
 
 	@TargetApi(9)
 	public void btnAddClicked() {
-		// show dialog
-		dialog = new ProgressDialog(context);
-		dialog.setTitle(res.getString(R.string.esn_global_loading));
-		dialog.setTitle(res.getString(R.string.esn_global_pleaseWait));
-		dialog.show();
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				// show dialog
+				dialog = new ProgressDialog(context);
+				dialog.setTitle(res.getString(R.string.esn_global_loading));
+				dialog.setTitle(res.getString(R.string.esn_global_pleaseWait));
+				dialog.show();
+			}
+		});
 
 		EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
 		String title = txtTitle.getText().toString();
@@ -205,7 +203,7 @@ public class AddNewEvent extends Activity {
 				int i = 0;
 				// waiting for upload
 				// if uploaded or upload failed
-				while (!isUploaded && !isUploadFialed && i < 25) {
+				while (!isUploaded && !isUploadFailed && i < 25) {
 					try {
 						Log.d(LOG_TAG, "waiting for upload image");
 
@@ -216,7 +214,12 @@ public class AddNewEvent extends Activity {
 						e.printStackTrace();
 					}
 				}
-				if (isUploadFialed || i > 25) {
+				Log.d(LOG_TAG, "isUploadFailed:" + isUploadFailed);
+				Log.d(LOG_TAG, "i: " + i);
+				if (isUploadFailed || i >= 25) {
+					if (task != null) {
+						task.cancel(true);
+					}
 					dialog.dismiss();
 					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(
 							this);
@@ -304,33 +307,32 @@ public class AddNewEvent extends Activity {
 
 	public void CameraClicked() {
 
-		final CharSequence[] items = {res.getString(R.string.app_global_gallery), res.getString(R.string.app_global_camera), res.getString(R.string.app_global_cancel) };
+	//	final CharSequence[] items = {res.getString(R.string.app_global_gallery), res.getString(R.string.app_global_camera), res.getString(R.string.app_global_cancel) };
+		OpenCamera();
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(res.getString(R.string.app_global_choose));
-
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-				if (item == 0) {
-					OpenPhotoGallery();
-				} else if (item == 1) {
-					OpenCamera();
-				} else {
-					return;
-				}
-			}
-		});
-
-		imageSelectDialog = builder.create();
-		imageSelectDialog.show();
+		/*
+		 * final CharSequence[] items = { "Photo Gallery", "Camera", "Cancel" };
+		 * 
+		 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		 * builder.setTitle("Choose");
+		 * 
+		 * builder.setItems(items, new DialogInterface.OnClickListener() {
+		 * public void onClick(DialogInterface dialog, int item) { if (item ==
+		 * 0) { OpenPhotoGallery(); } else if (item == 1) { OpenCamera(); } else
+		 * { return; } } });
+		 * 
+		 * imageSelectDialog = builder.create(); imageSelectDialog.show();
+		 */
 	}
 
 	public void OpenCamera() {
-		Intent cameraIntent = new Intent(
+		EsnCameras mCamera = new EsnCameras(this);
+		Intent intent = new Intent(
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
-		startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-
+		// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		fileUri = mCamera.getOutputMediaFileUri(EsnCameras.MEDIA_TYPE_IMAGE);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+		startActivityForResult(intent, EsnCameras.TAKE_PICTURE_REQUEST_CODE);
 	}
 
 	public void OpenPhotoGallery() {
@@ -341,100 +343,81 @@ public class AddNewEvent extends Activity {
 		startActivityForResult(intent, SELECT_PICTURE);
 	}
 
-	private static final int CAMERA_PIC_REQUEST = 1337;
-
 	@TargetApi(13)
 	@SuppressLint("ParserError")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == CAMERA_PIC_REQUEST) {
+		if (requestCode == EsnCameras.TAKE_PICTURE_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				isUploaded = false;
-				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-				thumbnail  = Bitmap.createScaledBitmap(thumbnail, 250, 250, true);
-				new UploadImageTask().execute(thumbnail);
-				//thumbnail.recycle();
+
+				if (fileUri != null) {
+					
+					new UploadImageTask().execute(fileUri);
+				} else {
+					Toast.makeText(
+							this,
+							res.getString(R.string.esn_addNewEvent_canNotUpload),
+							Toast.LENGTH_LONG).show();
+				}
+			} else {
+				Toast.makeText(this,
+						res.getString(R.string.esn_addNewEvent_noPicture),
+						Toast.LENGTH_LONG).show();
 			}
 
 		} else if (requestCode == SELECT_PICTURE) {
 			if (resultCode == RESULT_OK) {
 				isUploaded = false;
-				Uri selectedImageUri = data.getData();
-				Bitmap thumbnail = null;
-				try {
-
-					// parse to bitmap
-					thumbnail = BitmapFactory.decodeStream(getContentResolver()
-							.openInputStream(selectedImageUri));
-					
-
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (thumbnail != null) {
-					//thumbnail  = Bitmap.createScaledBitmap(thumbnail, 250, 250, true);
-					new UploadImageTask().execute(thumbnail);
-					//thumbnail.recycle();
+				if (data != null) {
+					final Uri selectedImageUri = data.getData();
+					new UploadImageTask().execute(selectedImageUri);
 				} else {
-					runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							Toast.makeText(AddNewEvent.this,
-									res.getString(R.string.app_global_cantnotuploadimage), Toast.LENGTH_LONG)
-									.show();
-						}
-					});
-					isUploaded = true;
+					Toast.makeText(
+							this,
+							res.getString(R.string.esn_addNewEvent_canNotUpload),
+							Toast.LENGTH_LONG).show();
 				}
+
+			} else {
+				Toast.makeText(this,
+						res.getString(R.string.esn_addNewEvent_noPicture),
+						Toast.LENGTH_LONG).show();
 			}
 		}
 	}
 
-	public class UploadImageTask extends AsyncTask<Bitmap, Integer, String> {
+	public class UploadImageTask extends AsyncTask<Uri, Integer, String> {
 
 		@Override
-		protected String doInBackground(Bitmap... params) {
+		protected String doInBackground(Uri... params) {
 
 			try {
-				final Bitmap img = params[0];
+				Uri photoUri = params[0];
+				byte[] imgBytes = Utils.scaleImage(AddNewEvent.this, photoUri);
+				Bundle p = new Bundle();
+				p.putByteArray("photo", imgBytes);
+				p.putString("ext", "jpg");
+				String url = "http://bangnl.info/esn/Upload.aspx";
+				String result = Util.openUrl(url, "POST", p);
+				Log.d(LOG_TAG, result);
 
-				String base64Img = Utils.bitmapToBase64(img);
+				// Log.d(LOG_TAG, "up anh xong");
+				if (result != null) {
 
-				HttpHelper helper = new HttpHelper(
-						"http://bangnl.info/ws/ApplicationsWS.asmx");
-				JSONObject p = new JSONObject();
-				p.put("base64Image", base64Img);
-				p.put("fileType", "jpg");
-				JSONObject response = helper.invokeWebMethod("UploadImage", p);
-				base64Img = null;
-				if (response != null && response.has("d")) {
-					String url = response.getString("d");
-					event.Picture = url;
-					runOnUiThread(new Runnable() {
+					event.Picture = result;
+					// set image into UI
+					runOnUiThread(new SetImage(imgBytes));
 
-						@Override
-						public void run() {
-							ImageView image = (ImageView) AddNewEvent.this
-									.findViewById(R.id.esn_addnewEvent_imgEvent);
-							TextView tvImageEventStatus = (TextView) AddNewEvent.this
-									.findViewById(R.id.esn_addNewEvent_txtImageStatus);
-							image.setImageBitmap(img);
-							img.recycle();
-							tvImageEventStatus.setText("");
-						}
-					});
 					isUploaded = true;
 					return url;
 				} else {
-					isUploadFialed = true;
+					isUploadFailed = true;
 					return "";
 				}
 			} catch (Exception e) {
 
-				isUploadFialed = true;
+				isUploadFailed = true;
 				Log.e(LOG_TAG, e.getMessage());
 				return "";
 			}
@@ -494,4 +477,27 @@ public class AddNewEvent extends Activity {
 		}
 	}
 
+	private class SetImage implements Runnable {
+		private byte[] imgBytes;
+
+		public SetImage(byte[] bytes) {
+			imgBytes = bytes;
+		}
+
+		@Override
+		public void run() {
+			Bitmap img = BitmapFactory.decodeByteArray(imgBytes, 0,
+					imgBytes.length);
+
+			ImageView image = (ImageView) AddNewEvent.this
+					.findViewById(R.id.esn_addnewEvent_imgEvent);
+			TextView tvImageEventStatus = (TextView) AddNewEvent.this
+					.findViewById(R.id.esn_addNewEvent_txtImageStatus);
+			image.setImageBitmap(img);
+			// img.recycle();
+			tvImageEventStatus.setText("");
+			
+			imgBytes = null;
+		}
+	}
 }

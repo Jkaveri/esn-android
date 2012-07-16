@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
-    <LinearLayout android:layout_width="fill_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       android:layout_marginLeft="6dp"
-       android:layout_marginRight="6dp"
-       android:layout_marginBottom="10dp"
-       android:focusable="true"
-       android:focusableInTouchMode="true"
-       android:paddingTop="10dp"
-       >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingTop="10dp" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -36,225 +36,240 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="16dp" 
-                    android:textStyle="bold"
                     android:textColor="#33b5e5"
-                    />
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/esn.eventDetail.dateCreated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="11dp" 
-                    android:textStyle="bold"
-                    android:textColor="#33b5e5"/>
+                    android:textColor="#33b5e5"
+                    android:textSize="11dp"
+                    android:textStyle="bold" />
             </LinearLayout>
             <!-- Title -->
 
         </LinearLayout>
-		<TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
 
-		    <View
-	            android:layout_width="fill_parent"
-	            android:layout_height="2dip"
-	            android:layout_marginBottom="10dp"
-	            android:background="#ACCC" />
-		    
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:background="#ACCC" />
+
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp" >
-                <TextView 
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
                     android:text="@string/esn.eventDetail.description"
-                    android:gravity="right"
-                    android:layout_marginRight="10dp"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
+
                 <TextView
-		            android:id="@+id/esn.eventDetail.description"
-		            android:layout_width="200dp"
-		            android:layout_height="wrap_content"
-		            android:paddingRight="2dp"
-		            android:textAppearance="?android:attr/textAppearanceMedium" 
-		            android:textSize="16dp"
-		            android:singleLine="false"		            
-		            android:textColor="#33b5e5"/>
-            </TableRow>           
-            
+                    android:id="@+id/esn.eventDetail.description"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="2dp"
+                    android:singleLine="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp" />
+            </TableRow>
+
             <View
-	            android:layout_width="fill_parent"
-	            android:layout_height="2dip"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginTop="10dp"
-	            android:background="#ACCC" />
-	        
-            <TableRow 
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
-                
-                <TextView 
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#ACCC" />
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
                     android:text="@string/esn.eventDetail.like"
-                    android:gravity="right"
-                    android:layout_marginRight="10dp"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    />
-                
+                    android:textStyle="bold" />
+
                 <TextView
-		            android:id="@+id/esn.eventDetail.like"
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:textSize="16dp"
-		            android:textColor="#33b5e5"/>
+                    android:id="@+id/esn.eventDetail.like"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp" />
             </TableRow>
+
             <View
-	            android:layout_width="fill_parent"
-	            android:layout_height="2dip"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginTop="10dp"
-	            android:background="#ACCC" />
-	        
-            <TableRow 
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >                
-                <TextView 
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#ACCC" />
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/esn.eventDetail.dislike"
-                    android:gravity="right"
                     android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:text="@string/esn.eventDetail.dislike"
                     android:textColor="#33b5e5"
-                    android:textStyle="bold"
                     android:textSize="16dp"
-                    />                
+                    android:textStyle="bold" />
+
                 <TextView
-		            android:id="@+id/esn.eventDetail.dislike"
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:textSize="16dp"
-		            android:textColor="#33b5e5"/>
+                    android:id="@+id/esn.eventDetail.dislike"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp" />
             </TableRow>
+
             <View
-	            android:layout_width="fill_parent"
-	            android:layout_height="2dip"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginTop="10dp"
-	            android:background="#ACCC" />
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#ACCC" />
+
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp" >
-                <TextView 
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/esn.eventDetail.createby"
-                    android:textSize="16dp"
-                    android:textColor="#33b5e5"
-                    android:textStyle="bold"
-                    android:gravity="right"
                     android:layout_marginRight="10dp"
-                    />
-                <TextView
-		            android:id="@+id/esn.eventDetail.name"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:textAppearance="?android:attr/textAppearanceMedium" 
-		            android:textSize="16dp"
-		            android:singleLine="false"
-		            android:textColor="#33b5e5"/>
-            </TableRow>
-             <View
-	            android:layout_width="fill_parent"
-	            android:layout_height="2dip"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginTop="10dp"
-	            android:background="#ACCC" />
-             
-        </TableLayout>
-        <LinearLayout 
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >            
-            <ImageView
-                android:id="@+id/esn_eventDetail_image" 
-                android:layout_width="300dp"
-                android:layout_height="150dp"
-                />            
-        </LinearLayout>
-        <LinearLayout 
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            >                       
-            <EditText
-                    android:id="@+id/esn.eventDetail.txtComment"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corners"
-                    android:inputType="text"
-                    android:textColorHint="#FFF"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:paddingTop="8dp"
-                    android:textColor="#ffffff"
-                    android:hint="@string/esn.eventDetail.comment"
+                    android:gravity="right"
+                    android:text="@string/esn.eventDetail.createby"
+                    android:textColor="#33b5e5"
                     android:textSize="16dp"
-                    android:maxLength="160">                
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/esn.eventDetail.name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp" />
+            </TableRow>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#ACCC" />
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/esn_eventDetail_notConfirmed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/esn_eventDetail_eventIsWaiting"
+                android:textSize="@dimen/textSize.medium"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/esn_eventDetail_image"
+                android:contentDescription="@string/esn.eventDetail.image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="180dp"
+                android:maxWidth="300dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/esn.eventDetail.txtComment"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corners"
+                android:hint="@string/esn.eventDetail.comment"
+                android:inputType="text"
+                android:maxLength="160"
+                android:paddingBottom="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="8dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#FFF"
+                android:textSize="16dp" >
             </EditText>
-            <Button 
+
+            <Button
                 android:layout_width="50dp"
                 android:layout_height="38dp"
-                android:text="@string/esn.eventDetail.send"
-                android:background="@drawable/rounded_corners"
                 android:layout_marginLeft="3dp"
+                android:background="@drawable/rounded_corners"
                 android:onClick="CommentClicked"
-                android:textSize="16dp"
+                android:text="@string/esn.eventDetail.send"
                 android:textColor="@drawable/white"
-                />
+                android:textSize="16dp" />
         </LinearLayout>
-        
-        <LinearLayout 
+
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            >
-        	<ListView
-			    android:id="@+id/esn.eventDetails.listComments"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:layout_marginTop="10dp"
-			    android:layout_marginBottom="10dp"
-			    android:minHeight="10dp"
-			    >
-			</ListView>   
-            
-        	
+            android:layout_height="fill_parent" >
+
+            <ListView
+                android:id="@+id/esn.eventDetails.listComments"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:minHeight="10dp" >
+            </ListView>
         </LinearLayout>
-        <Button 
-			    android:id="@+id/esn.eventDetails.btShowCommentAll"
-	            android:layout_width="fill_parent"
-	            android:layout_height="25dp"
-	            android:text="@string/esn.eventDetail.commentall"
-	            android:background="@drawable/rounded_corners"
-	            android:textSize="10dp"
-	            android:onClick="ShowAllCommentClicked"
-	            android:textColor="@drawable/white"
-	            android:layout_marginBottom="10dp"
-                />
+
+        <Button
+            android:id="@+id/esn.eventDetails.btShowCommentAll"
+            android:layout_width="fill_parent"
+            android:layout_height="25dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_corners"
+            android:onClick="ShowAllCommentClicked"
+            android:text="@string/esn.eventDetail.commentall"
+            android:textColor="@drawable/white"
+            android:textSize="10dp" />
     </LinearLayout>
+
 </ScrollView>

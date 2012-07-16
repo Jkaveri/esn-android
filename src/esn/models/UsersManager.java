@@ -191,8 +191,7 @@ public class UsersManager {
 			JSONObject response = helper.invokeWebMethod(
 					"GetAccountsByAccessToken", params);
 
-			if (response != null) {
-
+			if (response != null && response.has("d") && !response.isNull("d")) {
 				Users user = new Users();
 				JSONObject jsonUser = response.getJSONObject("d");
 

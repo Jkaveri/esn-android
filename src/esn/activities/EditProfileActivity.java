@@ -85,13 +85,11 @@ public class EditProfileActivity extends Activity {
 		handler = new Handler();		
 		res = getResources();
 				
-		Users user = new Users();
 		
 		imgl = new ImageLoader(this.getApplicationContext());
 		
 		sessions = Sessions.getInstance(context);
 		
-		String email = sessions.currentUser.Email;
 				
 		if(sessions==null)
 		{
@@ -99,7 +97,7 @@ public class EditProfileActivity extends Activity {
 			startActivity(intent);
 		}
 		mDateDisplay = (EditText) findViewById(R.id.esn_changeprofile_birthday);
-
+		
 		mDateDisplay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				showDialog(DATE_DIALOG_ID);

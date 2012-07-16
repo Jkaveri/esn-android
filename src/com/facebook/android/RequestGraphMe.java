@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -14,10 +13,7 @@ import android.util.Log;
 
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 
-import esn.activities.HomeActivity;
 import esn.activities.RegisterActivity;
-import esn.activities.WelcomeActivity;
-import esn.classes.Sessions;
 
 public class RequestGraphMe implements RequestListener {
 	private Activity activity;
@@ -32,9 +28,7 @@ public class RequestGraphMe implements RequestListener {
 		try {
 			JSONObject accountInfo = Util
 					.parseJson(response);
-			Sessions session = Sessions.getInstance(context);
 			
-			String email = accountInfo.getString("email");
 			Intent intent = new Intent(context,RegisterActivity.class);
 			
 			intent.putExtra("facebookSignup", true);

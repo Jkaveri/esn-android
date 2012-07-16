@@ -1,6 +1,9 @@
 package esn.classes;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -28,6 +32,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Bitmap.CompressFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -198,11 +203,24 @@ public class Utils {
 	public static String bitmapToBase64(Bitmap img) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			img.compress(Bitmap.CompressFormat.PNG, 100, bos);
+			img.compress(CompressFormat.PNG, 100, bos);
 			byte[] byteArr = bos.toByteArray();
+			img.recycle();
 			bos.close();
 			bos = null;
+			return Base64.encodeToString(byteArr, Base64.DEFAULT);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
 
+	}
+
+	@SuppressLint("NewApi")
+	public static String bitmapToBase64(Context context, Uri uri) {
+		try {
+
+			byte[] byteArr = Utils.scaleImage(context, uri);
 			return Base64.encodeToString(byteArr, Base64.DEFAULT);
 		} catch (IOException e) {
 
@@ -212,63 +230,42 @@ public class Utils {
 
 	}
 
+	public static Bitmap base64ToBitmap(String base64Img) {
+		byte[] byteArr = Base64.decode(base64Img, Base64.DEFAULT);
+		return BitmapFactory.decodeByteArray(byteArr, 0, byteArr.length);
+	}
+
 	public static byte[] scaleImage(Context context, Uri photoUri)
 			throws IOException {
 		InputStream is = context.getContentResolver().openInputStream(photoUri);
-		BitmapFactory.Options dbo = new BitmapFactory.Options();
-		dbo.inJustDecodeBounds = true;
-		BitmapFactory.decodeStream(is, null, dbo);
+
+		BitmapFactory.Options bmo = new BitmapFactory.Options();
+		bmo.inJustDecodeBounds = true;
+		BitmapFactory.decodeStream(is, null, bmo);
 		is.close();
-
-		int rotatedWidth, rotatedHeight;
-
-		int orientation = getOrientation(context, photoUri);
-
-		if (orientation == 90 || orientation == 270) {
-			rotatedWidth = dbo.outHeight;
-			rotatedHeight = dbo.outWidth;
-		} else {
-			rotatedWidth = dbo.outWidth;
-			rotatedHeight = dbo.outHeight;
-		}
-
-		Bitmap srcBitmap;
 		is = context.getContentResolver().openInputStream(photoUri);
-		if (rotatedWidth > MAX_IMAGE_DIMENSION
-				|| rotatedHeight > MAX_IMAGE_DIMENSION) {
-			float widthRatio = ((float) rotatedWidth)
+		String type = bmo.outMimeType;
+		Bitmap uploadImage;
+
+		if (bmo.outHeight > MAX_IMAGE_DIMENSION
+				|| bmo.outWidth > MAX_IMAGE_DIMENSION) {
+			float widthRatio = ((float) bmo.outHeight)
 					/ ((float) MAX_IMAGE_DIMENSION);
-			float heightRatio = ((float) rotatedHeight)
+			float heightRatio = ((float) bmo.outWidth)
 					/ ((float) MAX_IMAGE_DIMENSION);
 			float maxRatio = Math.max(widthRatio, heightRatio);
-
-			// Create the bitmap from file
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inSampleSize = (int) maxRatio;
-			srcBitmap = BitmapFactory.decodeStream(is, null, options);
+			bmo.inSampleSize = (int) maxRatio;
+			bmo.inJustDecodeBounds = false;
+			uploadImage = BitmapFactory.decodeStream(is, null, bmo);
 		} else {
-			srcBitmap = BitmapFactory.decodeStream(is);
+			uploadImage = BitmapFactory.decodeStream(is);
 		}
 		is.close();
-
-		/*
-		 * if the orientation is not 0 (or -1, which means we don't know), we
-		 * have to do a rotation.
-		 */
-		if (orientation > 0) {
-			Matrix matrix = new Matrix();
-			matrix.postRotate(orientation);
-
-			srcBitmap = Bitmap.createBitmap(srcBitmap, 0, 0,
-					srcBitmap.getWidth(), srcBitmap.getHeight(), matrix, true);
-		}
-
-		String type = context.getContentResolver().getType(photoUri);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (type.equals("image/png")) {
-			srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+			uploadImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
 		} else if (type.equals("image/jpg") || type.equals("image/jpeg")) {
-			srcBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+			uploadImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 		}
 		byte[] bMapArray = baos.toByteArray();
 		baos.close();
@@ -288,4 +285,120 @@ public class Utils {
 		cursor.moveToFirst();
 		return cursor.getInt(0);
 	}
+
+	public String sendFileToServer(String filename, String targetUrl) {
+		String response = "error";
+		Log.e("Image filename", filename);
+		Log.e("url", targetUrl);
+		HttpURLConnection connection = null;
+		DataOutputStream outputStream = null;
+		// DataInputStream inputStream = null;
+
+		String pathToOurFile = filename;
+		String urlServer = targetUrl;
+		String lineEnd = "\r\n";
+		String twoHyphens = "--";
+		String boundary = "*****";
+		DateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss");
+
+		int bytesRead, bytesAvailable, bufferSize;
+		byte[] buffer;
+		int maxBufferSize = 1 * 1024;
+		try {
+			FileInputStream fileInputStream = new FileInputStream(new File(
+					pathToOurFile));
+
+			URL url = new URL(urlServer);
+			connection = (HttpURLConnection) url.openConnection();
+
+			// Allow Inputs & Outputs
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setUseCaches(false);
+			connection.setChunkedStreamingMode(1024);
+			// Enable POST method
+			connection.setRequestMethod("POST");
+
+			connection.setRequestProperty("Connection", "Keep-Alive");
+			connection.setRequestProperty("Content-Type",
+					"multipart/form-data;boundary=" + boundary);
+
+			outputStream = new DataOutputStream(connection.getOutputStream());
+			outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+
+			String connstr = null;
+			connstr = "Content-Disposition: form-data; name=\"uploadedfile\";filename=\""
+					+ pathToOurFile + "\"" + lineEnd;
+			Log.i("Connstr", connstr);
+
+			outputStream.writeBytes(connstr);
+			outputStream.writeBytes(lineEnd);
+
+			bytesAvailable = fileInputStream.available();
+			bufferSize = Math.min(bytesAvailable, maxBufferSize);
+			buffer = new byte[bufferSize];
+
+			// Read file
+			bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+			Log.e("Image length", bytesAvailable + "");
+			try {
+				while (bytesRead > 0) {
+					try {
+						outputStream.write(buffer, 0, bufferSize);
+					} catch (OutOfMemoryError e) {
+						e.printStackTrace();
+						response = "outofmemoryerror";
+						return response;
+					}
+					bytesAvailable = fileInputStream.available();
+					bufferSize = Math.min(bytesAvailable, maxBufferSize);
+					bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				response = "error";
+				return response;
+			}
+			outputStream.writeBytes(lineEnd);
+			outputStream.writeBytes(twoHyphens + boundary + twoHyphens
+					+ lineEnd);
+
+			// Responses from the server (code and message)
+			int serverResponseCode = connection.getResponseCode();
+			String serverResponseMessage = connection.getResponseMessage();
+			Log.i("Server Response Code ", "" + serverResponseCode);
+			Log.i("Server Response Message", serverResponseMessage);
+
+			if (serverResponseCode == 200) {
+				response = "true";
+			}
+
+			String CDate = null;
+			Date serverTime = new Date(connection.getDate());
+			try {
+				CDate = df.format(serverTime);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e("Date Exception", e.getMessage() + " Parse Exception");
+			}
+			Log.i("Server Response Time", CDate + "");
+
+			filename = CDate
+					+ filename.substring(filename.lastIndexOf("."),
+							filename.length());
+			Log.i("File Name in Server : ", filename);
+
+			fileInputStream.close();
+			outputStream.flush();
+			outputStream.close();
+			outputStream = null;
+		} catch (Exception ex) {
+			// Exception handling
+			response = "error";
+			Log.e("Send file Exception", ex.getMessage() + "");
+			ex.printStackTrace();
+		}
+		return response;
+	}
+
 }

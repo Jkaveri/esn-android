@@ -11,6 +11,7 @@
     <string name="esn.addNewEvent.imageeventstatus">No image for this event.</string>
     <string name="esn_addNewEvent_canNotUpload">Can\'t upload image</string>
     <string name="esn_addNewEvent_wantToContinue">Would you want to countinue?</string>
+    <string name="esn_addNewEvent_noPicture">No picture!</string>
     <string name="esn_addNewEvent_sharetype">Share Type:</string>
     <!-- EventDetail -->
     <string name="esn.eventDetail">Event detail</string>
@@ -35,4 +36,5 @@
     <string name="esn.eventDetail.likefail">Error. Try again.</string>
     <string name="esn.eventDetail.entercontent">Enter message !</string>
     <string name="esn.eventDetail.entereventtitle">Enter event title !</string>
+    <string name="esn_eventDetail_eventIsWaiting">Picture is waiting for confirm...</string>
 </resources>
