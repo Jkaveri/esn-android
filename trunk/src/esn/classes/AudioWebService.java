@@ -11,7 +11,7 @@ import android.util.Base64;
 @SuppressLint("NewApi")
 public class AudioWebService {
 	public static final String NAMSPACE = "http://www.aprotrain.com/";
-	public static final String URL = "http://192.168.1.4/s2tweb/s2tws.asmx";//"http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";
+	public static final String URL = "http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";//"http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";
 	private EsnWebServices service;
 	
 	public AudioWebService() {
@@ -25,7 +25,7 @@ public class AudioWebService {
 		Hashtable<String, Object> params = new Hashtable<String, Object>();
 		params.put("arrBytes", byteString);
 		
-		SoapObject response = service.InvokeMethod("ESNSpeechRecognition_android", params);
+		SoapObject response = service.InvokeMethod("ESNSpeechRecognition_iLBC", params);
 		if (response != null) {
 			Object result = response.getProperty(0);
 			s2tResult.setProperty(0, result);
