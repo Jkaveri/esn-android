@@ -3,13 +3,13 @@ package esn.classes;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.google.android.maps.MapView;
+
 import android.content.res.Resources;
 import android.os.Handler;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import esn.activities.R;
-import esn.models.S2TResult;
 
 public class VoiceModeHelper{
 	private Timer tmrDynIcon;
@@ -18,7 +18,7 @@ public class VoiceModeHelper{
 	private Handler handler;
 	private Runnable runPost_Lig;
 	private Runnable runPost_Red;
-	private VoiceManager voiceManager;
+	private VoiceProcesser voiceProcesser;
 	private Runnable runPost_Mic;
 	
 	//Thay doi icon lam cho button nhap nhay
@@ -38,9 +38,9 @@ public class VoiceModeHelper{
 		
 	}
 	
-	public VoiceModeHelper(Resources resources, ImageButton record, final TextView states){
+	public VoiceModeHelper(Resources resources, ImageButton record, final TextView states, MapView maps){
 		this.btnRecord = record;
-		voiceManager = new VoiceManager(resources);
+		voiceProcesser = new VoiceProcesser(resources, maps);
 		handler = new Handler();
 		
 		
@@ -71,17 +71,18 @@ public class VoiceModeHelper{
 		};
 		//*//
 		
-		
-		//Thiet dat goi lai khi thuc thi xong den VoiceManager
-		voiceManager.setVoiceListener(new VoiceListener() {
+		//////////////////////////////////////////////////////
+		//Thiet dat goi lai khi thuc thi xong den voiceProcesser
+		voiceProcesser.setVoiceListener(new VoiceListener() {
 			
 			@Override
-			public void onS2TPostBack(final S2TResult result) {//Goi web service nhan dang giong noi  xong
+			public void onS2TPostBack(final S2TParser result) {//Goi web service nhan dang giong noi  xong	
+				voiceProcesser.onS2TPostback();
 				handler.post(new Runnable() {
 					
 					@Override
 					public void run() {
-						states.setText(result.getType());
+						states.setText(result.getStrRecog());
 					}
 				});
 			}
@@ -93,19 +94,18 @@ public class VoiceModeHelper{
 				recording = false;
 			}
 		});
-		
 		//*//
 	}
 
 	public void startRecording(){
-		voiceManager.startRecording();
+		voiceProcesser.startRecording();
 		tmrDynIcon = new Timer();
 		tmrDynIcon.scheduleAtFixedRate(new IconTask(), 0, 1000);
 		recording = true;
 	}
 	
 	public void stopRecording() {
-		voiceManager.stopRecording();//Goi ham nay se phat sinh su kien onStopedRecord()
+		voiceProcesser.stopRecording();//Goi ham nay se phat sinh su kien onStopedRecord()
 	}
 	
 	public boolean isRecording(){
@@ -115,6 +115,6 @@ public class VoiceModeHelper{
 	public void destroy(){
 		tmrDynIcon.cancel();
 		tmrDynIcon = null;
-		voiceManager.destroy();
+		voiceProcesser.destroy();
 	}
 }
