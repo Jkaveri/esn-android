@@ -17,7 +17,7 @@ public class EsnCameras {
 	public static final int MEDIA_TYPE_VIDEO = 1;
 	public static final int TAKE_PICTURE_REQUEST_CODE = 1111;
 	//picture uri
-	private Uri fileUri;
+	public Uri fileUri;
 	//context
 	private Activity activity;
 	public EsnCameras(Activity act){
@@ -25,11 +25,12 @@ public class EsnCameras {
 	}
 	
 	public void takePicture(){
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-		
+		Intent intent = new Intent(
+				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		fileUri = getOutputMediaFileUri(EsnCameras.MEDIA_TYPE_IMAGE);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-		activity.startActivityForResult(intent, TAKE_PICTURE_REQUEST_CODE);		
+		activity.startActivityForResult(intent, EsnCameras.TAKE_PICTURE_REQUEST_CODE);	
 	}
 	
 	/** Create a file Uri for saving an image or video */
