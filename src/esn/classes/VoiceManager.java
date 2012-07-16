@@ -1,29 +1,29 @@
 /*
  * By lnbienit@gmail.com 
  */
-
 package esn.classes;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import esn.activities.R;
-import esn.models.S2TResult;
 import android.content.res.Resources;
 import android.media.AudioFormat;
 import android.util.Log;
+import esn.activities.R;
+import esn.models.S2TResult;
 
-public class VoiceManager {
+public abstract class VoiceManager {
+	private S2TParser s2tParser;
+	private WAVFormatReader wavReader;
 	private AudioRecorder recorder;
 	private AudioPlayer player;
 	private WAVFormatConver wavConver;
-	private WAVFormatReader wavReader;
 
 	private Thread thSendWs;
 	private AudioWebService auWs;
-	private Resources resource;
 	private Runnable runSendWs;
 	private VoiceListener callBack;
+	
+	protected Resources resource;
 	
 	public VoiceManager(Resources resource) {
 		recorder = new AudioRecorder(new RecordListener() {
@@ -79,7 +79,7 @@ public class VoiceManager {
 		this.callBack = listener;
 	}
 	
-	private boolean beep(int soundId, boolean isInsiteThread){
+	protected boolean beep(int soundId, boolean isInsiteThread){
 		boolean ok = true;
 		InputStream typeStream = resource.openRawResource(soundId);
 		wavReader.setBuffer(typeStream);
@@ -109,10 +109,6 @@ public class VoiceManager {
 	private void runSendWS() throws IOException{
 		byte[] recordBuf = recorder.getBufferRecord();
 		recorder.clearBuffer();//giai phong bo nho
-//		player.release();
-//		player.setDefaultConfig();
-//		player.prepare();		
-//		player.loadBufferPCM(recordBuf);
 		Log.i("AudioManager", "Data record length: " + recordBuf.length);
 		
 //		wavConver.setBuffer(recordBuf);
@@ -124,14 +120,9 @@ public class VoiceManager {
 //		wavConver.clearBuffer();//giai phong bo nho
 		
 		S2TResult result = auWs.send(recordBuf);
-		Log.i("AudioManager", "Result: " + result.getType());
-		callBack.onS2TPostBack(result);
-//		boolean ok = loadPlayerSumBuffer("cos lowr ddaast owr", "hafng xanh");
-//		if(ok){
-			player.play();
-//		}else{
-//			Log.e("AudioManager", "Voice phan hoi khong thanh cong");
-//		}
+		Log.i("AudioManager", "Result: " + result.getResult());
+		s2tParser.parse(result.getResult());//Gui du lieu len class cha S2TProcess
+		callBack.onS2TPostBack(s2tParser);
 	}
 	
 	public void stopRecording(){
@@ -150,47 +141,64 @@ public class VoiceManager {
 		thSendWs = new Thread(runSendWs);
 		thSendWs.start();
 	}
+		
+	private void setPlayerConfig(){
+		if(wavReader.getChannels() == 1){
+			player.CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_MONO;
+		}
+		else{
+			player.CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_STEREO;
+		}
+		
+		player.SAMPLE_RATE = (int) wavReader.getSampleRate();
+		
+		if(wavReader.getBitsPerSample() == 16){
+			player.AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+		}
+		else if(wavReader.getBitsPerSample() == 8){
+			player.AUDIO_FORMAT = AudioFormat.ENCODING_PCM_8BIT;
+		}
+		
+		player.prepare();
+	}
 	
-	@SuppressWarnings("unused")
-	private boolean loadPlayerSumBuffer(String type, String address){//Load du lieu vao buffer player theo the loai va dia chi
-		int auTypeId = AudioLibManager.getAudioType(type);
-		if(auTypeId == AudioLibManager.TYPE_NOT_FOUND){//khong ton tai file
-			Log.e("AudioManager", "Khong tim thay file kieu: \"" + type + "\"");
-			return false;
-		}
-		InputStream typeStream = resource.openRawResource(auTypeId);
-		wavReader.setBuffer(typeStream);
+	private byte[] getBufferSoundLib(int fileID){
+		InputStream ipStream = resource.openRawResource(fileID);
+		wavReader.setBuffer(ipStream);
 		if(!wavReader.read()){
 			wavReader.clearBuffer();//giai phong bo nho
-			typeStream = null;//giai phong bo nho
-			Log.e("AudioManager", "Khong doc duoc file kieu: \"" + type + "\"");
-			return false;
+			try {
+				ipStream.close();
+			} catch (IOException e) {
+				Log.e("AudioManager", "Khong close File Stream trong Sound Lib");
+			}
+			ipStream = null;//giai phong bo nho
+			Log.e("AudioManager", "Khong doc duoc file trong Sound Lib");
+			return null;
 		}
-		byte[] bufType = wavReader.getData();
+		byte[] buffer = wavReader.getData();
 		wavReader.clearBuffer();//giai phong bo nho
-		typeStream = null;//giai phong bo nho
-		
-		
-		
-		int auAddressId = AudioLibManager.getAudioAddress(address);
-		if(auAddressId == AudioLibManager.ADDRESS_NOT_FOUND){//khong ton tai file
-			Log.e("AudioManager", "Khong tim thay file dia chi: \"" + address + "\"");
-			bufType = null;//Giai phong bo nho
+		try {
+			ipStream.close();
+		} catch (IOException e) {
+			Log.e("AudioManager", "Khong close File Stream trong Sound Lib");
+		}
+		ipStream = null;//giai phong bo nho
+		return buffer;
+	}
+	
+	private boolean voiceJoinPlay(int auIdA, int auIDB){//Load du lieu vao buffer player theo the loai va dia chi
+		if(auIdA == AudioLibManager.FILE_NOT_FOUND){//khong ton tai file
+			Log.e("AudioManager", "Khong tim thay file auIdA trong Sound Lid");
 			return false;
 		}
-		InputStream addressStream = resource.openRawResource(auAddressId);
-		wavReader.setBuffer(addressStream);
-		if(!wavReader.read()){
-			wavReader.clearBuffer();//giai phong bo nho
-			addressStream = null;//giai phong bo nho
-			Log.e("AudioManager", "Khong doc duoc file dia chi: \"" + address + "\"");
+		if(auIDB == AudioLibManager.FILE_NOT_FOUND){//khong ton tai file
+			Log.e("AudioManager", "Khong tim thay file auIDB trong Sound Lid");
 			return false;
 		}
-		byte[] bufAddress = wavReader.getData();
-		wavReader.clearBuffer();//giai phong bo nho
-		addressStream = null;//giai phong bo nho
 		
-		
+		byte[] bufType = getBufferSoundLib(auIdA);
+		byte[] bufAddress = getBufferSoundLib(auIDB);		
 		
 		int sizeTypBuf = bufType.length;
 		int sizeAssBuf = bufAddress.length;
@@ -214,28 +222,8 @@ public class VoiceManager {
 		setPlayerConfig();
 		player.loadBufferPCM(bufferPCM);
 		bufferPCM = null;//giai phong bo nho
-		
+		player.play();
 		return true;
-	}
-	
-	private void setPlayerConfig(){
-		if(wavReader.getChannels() == 1){
-			player.CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_MONO;
-		}
-		else{
-			player.CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_STEREO;
-		}
-		
-		player.SAMPLE_RATE = (int) wavReader.getSampleRate();
-		
-		if(wavReader.getBitsPerSample() == 16){
-			player.AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
-		}
-		else if(wavReader.getBitsPerSample() == 8){
-			player.AUDIO_FORMAT = AudioFormat.ENCODING_PCM_8BIT;
-		}
-		
-		player.prepare();
 	}
 	
 	public void destroy(){
@@ -245,5 +233,21 @@ public class VoiceManager {
 			thSendWs.interrupt();
 			thSendWs = null;
 		}
+	}
+
+	protected S2TParser getS2TParserResult(){
+		return s2tParser;
+	}
+	
+	protected boolean voiceAlertHasEvent(String event, String address){
+		int evAuID = AudioLibManager.getAudioTypeEvent(event);
+		int addAuID = AudioLibManager.getAudioAddress(address);
+		return voiceJoinPlay(evAuID, addAuID);
+	}
+	
+	protected boolean voiceAlertActive(String event){
+		int active = AudioLibManager.getAudioActive("DA_KICH_HOAT");
+		int evAuID = AudioLibManager.getAudioEventName(event);
+		return voiceJoinPlay(active, evAuID);
 	}
 }
