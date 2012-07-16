@@ -25,8 +25,9 @@ public class ImageLoader {
 	private MemoryCache<Bitmap> memoryCache;
 	private FileCache fileCache;
 	private int stub_id;
-	
-	private Map<ImageView, String> imageViews = Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
+
+	private Map<ImageView, String> imageViews = Collections
+			.synchronizedMap(new WeakHashMap<ImageView, String>());
 
 	public ImageLoader(Context context) {
 		// Make the background thead low priority. This way it will not affect
@@ -36,8 +37,8 @@ public class ImageLoader {
 		memoryCache = new MemoryCache<Bitmap>();
 		fileCache = new FileCache(context);
 	}
-	
-	public void setDefaultEmptyImage(int r_drawable_image){
+
+	public void setDefaultEmptyImage(int r_drawable_image) {
 		this.stub_id = r_drawable_image;
 	}
 
@@ -68,18 +69,20 @@ public class ImageLoader {
 	}
 
 	private Bitmap getBitmap(String url) {
+
 		File f = fileCache.getFile(url);
-
-		// from SD cache
-		Bitmap b = decodeFile(f);
-		if (b != null)
-			return b;
-
+		if (f.exists()) {
+			// from SD cache
+			Bitmap b = decodeFile(f);
+			if (b != null)
+				return b;
+		}
 		// from web
 		try {
 			Bitmap bitmap = null;
 			URL imageUrl = new URL(url);
-			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) imageUrl
+					.openConnection();
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
 			InputStream is = conn.getInputStream();

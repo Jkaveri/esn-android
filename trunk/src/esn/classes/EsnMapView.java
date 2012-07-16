@@ -216,7 +216,7 @@ public class EsnMapView extends TapControlledMapView {
 		
 		final GeoPoint p2 = this.getProjection().fromPixels(size.x, size.y/2);
 		Log.d("esn", p.toString()+"|"+p2.toString());
-		return Math.floor(Utils.distanceOfTwoPoint(p, p2));
+		return Utils.distanceOfTwoPoint(p, p2);
 	}
 	public MapActivity getActivity() {
 		return activity;

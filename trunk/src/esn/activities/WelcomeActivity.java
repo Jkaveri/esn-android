@@ -1,35 +1,16 @@
 package esn.activities;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.CharacterData;
-
 import com.actionbarsherlock.app.SherlockActivity;
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.AsyncFacebookRunner.RequestListener;
-import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
-import com.facebook.android.Facebook.DialogListener;
-import com.facebook.android.FacebookError;
 import com.facebook.android.LoginFaceBookListener;
-import com.facebook.android.Util;
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
 
-import android.accounts.AccountManager;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -42,10 +23,8 @@ public class WelcomeActivity extends SherlockActivity {
 	
 	public static final String APP_ID = "257584821008998";
 	private Facebook mFacebook;
-	private AsyncFacebookRunner mAsyncRunner;
 	protected Sessions session;
 	protected Context context;
-	private ProgressDialog dialog;
 	
 	public Handler handler;
 	public Users user;
@@ -67,8 +46,6 @@ public class WelcomeActivity extends SherlockActivity {
 		// init facebook
 		mFacebook = new Facebook(APP_ID);
 		// init facebook runner
-		mAsyncRunner = new AsyncFacebookRunner(mFacebook);
-		// get fb acess token was stored
 		String fbAccessToken = session.get("fb_access_token", null);
 		// cho long do
 		long fbAccessExpires = session.get("fb_access_token_expires", Long.MIN_VALUE);

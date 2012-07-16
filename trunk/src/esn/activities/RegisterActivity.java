@@ -139,7 +139,7 @@ public class RegisterActivity extends SherlockActivity {
 
 		// Date time dialog view
 		mDateDisplay = (EditText) findViewById(R.id.esn_register_txtBirthday);
-
+		
 		mDateDisplay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				showDialog(DATE_DIALOG_ID);
