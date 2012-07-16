@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="choose">Choose</string>
+ 
+    <string-array name="sharetype">
+        <item>Public</item>
+        <item>Private</item>        
+    </string-array>
+ 
+</resources>

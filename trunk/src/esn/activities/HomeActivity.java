@@ -99,11 +99,11 @@ public class HomeActivity extends SherlockMapActivity implements
 	private void setupListNavigate() {
 		mNavigationItems = new EsnListItem[2];
 		mNavigationItems[0] = new EsnListItem(1);
-		mNavigationItems[0].setTitle("View as Map");
+		mNavigationItems[0].setTitle(res.getString(R.string.app_global_viewasmap));
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
 
 		mNavigationItems[1] = new EsnListItem(2);
-		mNavigationItems[1].setTitle("View as List");
+		mNavigationItems[1].setTitle(res.getString(R.string.app_global_viewaslist));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();

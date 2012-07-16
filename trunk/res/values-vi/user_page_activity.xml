@@ -10,7 +10,7 @@
     <string name="txt.esn.userpage.favorite">Sở thích :</string>
     <string name="txt.esn.userpage.male">Nam</string>
     <string name="txt.esn.userpage.female">Nữ</string>
-    <string name="txt.esn.userpage.online">Online</string>
-    <string name="txt.esn.userpage.offline">Offline</string>
+    <string name="txt.esn.userpage.online">Trực tuyến</string>
+    <string name="txt.esn.userpage.offline">Ngoại tuyến</string>
     <string name="txt.esn.userpage.phone">Điện thoại :</string>
 </resources>

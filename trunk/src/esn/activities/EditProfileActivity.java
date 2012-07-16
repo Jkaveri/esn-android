@@ -118,7 +118,7 @@ public class EditProfileActivity extends Activity {
 		
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
-		dialog.setMessage("Waiting ....");
+		dialog.setMessage(res.getString(R.string.esn_global_Error));
 		dialog.show();
 		
 		ShowProfileThread  showProfileThread = new ShowProfileThread();
@@ -158,10 +158,10 @@ public class EditProfileActivity extends Activity {
 	
 	public void AvatarClicked(View view) {
 
-		final CharSequence[] items = { "Photo Gallery", "Camera", "Cancel" };
+		final CharSequence[] items = { res.getString(R.string.app_global_gallery), res.getString(R.string.app_global_camera), res.getString(R.string.app_global_cancel)};
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Choose");
+		builder.setTitle(res.getString(R.string.app_global_choose));
 
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {

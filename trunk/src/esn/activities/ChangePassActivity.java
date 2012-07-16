@@ -99,7 +99,7 @@ public class ChangePassActivity extends Activity {
 		{
 			dialog = new ProgressDialog(this);
 			dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
-			dialog.setMessage("Waiting ....");
+			dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
 			dialog.show();
 			ChangePasswordThread changePassword = new ChangePasswordThread();
 			changePassword.start();
@@ -179,7 +179,7 @@ public class ChangePassActivity extends Activity {
 			
 			dialog.dismiss();
 			
-			Util.showAlert(context, "Success", "Password have been change !.");			
+			Toast.makeText(context, res.getString(R.string.app_global_UpdateSuccess), Toast.LENGTH_SHORT).show();		
 		}
 	}
 	
@@ -188,7 +188,7 @@ public class ChangePassActivity extends Activity {
 		public void run() {
 			dialog.dismiss();
 			
-			Util.showAlert(context, "Error", "Change password fail. Try Again.");			
+			Toast.makeText(context, res.getString(R.string.app_global_UpdateUnsuccess), Toast.LENGTH_SHORT).show();			
 		}
 	}
 }

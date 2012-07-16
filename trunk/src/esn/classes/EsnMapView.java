@@ -28,6 +28,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.readystatesoftware.maps.TapControlledMapView;
 
+import esn.activities.AddNewEvent;
 import esn.activities.R;
 import esn.activities.SelectEventLabel;
 import esn.models.EventType;
@@ -80,7 +81,7 @@ public class EsnMapView extends TapControlledMapView {
 					int latitudeE6 = p.getLatitudeE6();
 					int longtitudeE6 = p.getLongitudeE6();
 					Intent addNewEventIntent = new Intent(context,
-							SelectEventLabel.class);
+							AddNewEvent.class);
 					addNewEventIntent
 							.putExtra("latitude", latitudeE6 / 1E6);
 					addNewEventIntent.putExtra("longtitude",

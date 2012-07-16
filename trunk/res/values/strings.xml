@@ -24,12 +24,24 @@
     <string name="esn.global.find">Find</string>
     <string name="esn_global_ok">OK</string>
     <string name="esn.global.Error">Error</string>
+    <string name="esn.global.tryagain">Try again.</string>
     <string name="esn.global.ConnectionError">Connection error !</string>
     <string name="app.global.Email">Email</string>
     <string name="app.global.RequireAllField">Enter all fields !</string>
     <string name="app.global.UpdateUnsuccess">Update failed ! Try again.</string>
     <string name="app.global.UpdateSuccess">Update success !</string>
-    
+    <string name="app.global.gallery">Photo gallery</string>
+    <string name="app.global.camera">Camera</string>
+    <string name="app.global.cancel">Cancel</string>
+    <string name="app.global.choose">Choose</string>
+    <string name="app.global.cantnotuploadimage">Can\'t upload image</string>
+    <string name="app.global.search">Search</string>
+    <string name="app.global.friendevent">FriendEvent</string>
+    <string name="app.global.friendlist">FriendList</string>
+    <string name="app.global.yes">Yes</string>
+    <string name="app.global.no">No</string>
+    <string name="app.global.viewasmap">View as Map</string>
+    <string name="app.global.viewaslist">View as List</string>
     <!-- Settings page -->
     
     <string name="esn.settings.app_settings">Application Settings</string>

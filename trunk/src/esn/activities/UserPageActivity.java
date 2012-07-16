@@ -178,7 +178,7 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		String itemTitle = item.getTitle().toString();
-		if (itemTitle.equals("Search")) {
+		if (itemTitle.equals(res.getString(R.string.app_global_search))) {
 			item.collapseActionView();
 			return true;
 		}else if(itemTitle.equals("FriendList")){

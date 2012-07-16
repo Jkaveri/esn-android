@@ -99,9 +99,12 @@ public class WelcomeActivity extends SherlockActivity {
 	
 	public void btnLoginfbClicked(View view) {
 		if (!mFacebook.isSessionValid()) {
-			// if access token is expired
+			// if access token is expired			
+			
 			mFacebook.authorize(this, FB_PERMISSIONS, new LoginFaceBookListener(this,mFacebook));
+			
 		}else{
+			
 			session.put("isLogined", true);
 			Intent intent = new Intent(this, HomeActivity.class);
 			startActivity(intent);

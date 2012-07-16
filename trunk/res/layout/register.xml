@@ -135,7 +135,6 @@
                 android:background="@drawable/rounded_corner_white"
                 android:editable="false"
                 android:height="40dp"
-                android:hint="@string/esn.register.date"
                 android:onClick="DatePickerDialogShow"
                 android:paddingLeft="5dp"
                 android:textColor="@color/text_color"

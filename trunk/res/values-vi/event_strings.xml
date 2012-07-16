@@ -11,20 +11,21 @@
     <string name="esn.addNewEvent.imageeventstatus">Chưa có hình ảnh nào.</string>
     <string name="esn_addNewEvent_canNotUpload">Không thể tải hình lên.</string>
     <string name="esn_addNewEvent_wantToContinue">Bạn có muốn tiếp tục không ?</string>
+    <string name="esn_addNewEvent_sharetype">Loại Chia Sẻ :</string>
     <!-- EventDetail -->
     <string name="esn.eventDetail">Chi Tiết Sự Kiện</string>
     <string name="esn.eventDetail.like">Đúng</string>
     <string name="esn.eventDetail.dislike">Sai</string>
     <string name="esn.eventDetail.image">Hình ảnh</string>
-    <string name="esn.eventDetail.iconEventType">Loại Sự iện</string>
+    <string name="esn.eventDetail.iconEventType">Loại Sự Kiện</string>
     <string name="esn.eventDetail.likeAndDislikeCount">{0} like, {1} dislike, {3}</string>
     <string name="esn.eventDetail.description">Mô tả</string>
     <string name="esn.eventDetail.createby">Tạo bởi</string>
     <string name="esn_global_ok">OK</string>
     <string name="esn_global_cancel">Hủy bỏ</string>
-	<string name="esn.eventDetail.send">Bình luận</string>
-    <string name="esn.eventDetail.comment">Nội dung</string>
-    <string name="esn.eventDetail.commentall">Hiển thị tất cả</string>
+	<string name="esn.eventDetail.send">Gửi</string>
+    <string name="esn.eventDetail.comment">Nội dung bình luận</string>
+    <string name="esn.eventDetail.commentall">Hiển thị tất cả bình luận</string>
     <string name="esn.eventDetail.commensuccess">Thành công</string>
     <string name="esn.eventDetail.commenfail">Lỗi, Hãy thực hiện lại</string>
     <string name="esn.eventDetail.islike">Bạn đã xác nhận đúng rồi.</string>

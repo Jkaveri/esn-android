@@ -100,14 +100,14 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage("Are you want to logout?")
 						.setCancelable(false)
-						.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						.setPositiveButton(res.getString(R.string.app_global_yes), new DialogInterface.OnClickListener() {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								ExecuteLogout();
 							}
 						})
-						.setNegativeButton("No", new DialogInterface.OnClickListener() {
+						.setNegativeButton(res.getString(R.string.app_global_no), new DialogInterface.OnClickListener() {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {

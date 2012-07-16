@@ -36,7 +36,7 @@
     <string name="esn.changepassword.btDone">Done</string>
     <string name="esn.changepassword.btLogout">Logout</string>
     <!-- Register -->
-    <string name="esn.register.date"></string>
+    <string name="esn.register.date">Birthday</string>
     <string name="esn.register.ddlName">Choose a gender</string>
     <string name="esn.register.RequireFistName">Full Name not blank !</string>
     <string name="esn.register.RequireLastName">Last Name not blank !</string>
@@ -52,7 +52,7 @@
     <string name="esn.register.tvFist">Fist Name</string>
     <string name="esn.register.txtLastName">Last Name</string>
     <string name="esn.register.txtPhone">0908 123 456</string>
-    <string name="esn.register.txtBirthday">01/01/1990</string>
+    <string name="esn.register.txtBirthday">Birthday</string>
     <string name="esn.register.txtGender">Male</string>
     <string name="esn.register.btLoginFB">Login With Facebook</string>
     <string name="esn.register.btCancel">Cancel</string>
@@ -70,7 +70,9 @@
     <string name="esn.register.account">ACCOUNT</string>
     <string name="esn.register.information">INFORMATION</string>
     <string name="esn.register.btCancel">Cancel</string>
-    
+    <string name="esn.register.activeyouraccount">Active your account ?</string>
+    <string name="esn.register.activeno">Yes</string>
+    <string name="esn.register.activeyes">No</string>
     
     <string name="map_current_location_title">Current</string>
     <string name="map_current_location_subtitle">You are here!</string>

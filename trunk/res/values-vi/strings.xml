@@ -23,14 +23,27 @@
     <string name="esn.global.find">Tìm kiếm</string>
     <string name="esn_global_ok">OK</string>
     <string name="esn.global.Error">Lỗi</string>
+    <string name="esn.global.tryagain">Hãy thử lại. </string>
     <string name="esn.global.ConnectionError">Lỗi kết nối !</string>
     <string name="app.global.Email">Email</string>
     <string name="app.global.RequireAllField">Điền đầy đủ thông tin !</string>
     <string name="app.global.UpdateUnsuccess">Lỗi cập nhật ! Hãy thực hiện lại.</string>
     <string name="app.global.UpdateSuccess">Cập nhật thành công !</string>
+    <string name="app.global.gallery">Thư viện ảnh</string>
+    <string name="app.global.camera">Máy ảnh</string>
+    <string name="app.global.cancel">Hủy bỏ</string>
+    <string name="app.global.choose">Chọn</string>
+    <string name="app.global.cantnotuploadimage">Không thể upload hình ảnh.</string>
+    <string name="app.global.search">Tìm kiếm</string>
+    <string name="app.global.friendevent">FriendEvent</string>
+    <string name="app.global.friendlist">FriendList</string>
+    <string name="app.global.yes">Đồng Ý</string>
+    <string name="app.global.no">Không</string>
+    <string name="app.global.viewasmap">Bản Đồ</string>
+    <string name="app.global.viewaslist">Danh Sách</string>
       <!-- Settings page -->
     <string name="esn.settings.app_settings">Cài đặt ứng dụng</string>
-    <string name="esn.settings.subscript.app_settings">Setting in your app</string>
+    <string name="esn.settings.subscript.app_settings">Cài đặt cho ứng dụng. </string>
     <string name="esn.settings.account">Tài khoản</string>
     <string name="esn.settings.subscript.account">Cài đặt tài khoản</string>
     <string name="esn.settings.provition">Điều khoản</string>
@@ -55,8 +68,8 @@
 	<string name="esn_welcome_loginWithFacebook">Đăng nhập bằng tài khoản facebook </string>
 	<string name="esn_welcome_signup">Đăng ký</string>
 	
-	<string name="esn_userpage_online">Online</string>
-	<string name="esn_userpage_ofline">Offline</string>
+	<string name="esn_userpage_online">Trực tuyến</string>
+	<string name="esn_userpage_ofline">Ngoại tuyến</string>
 	<string name="esn_userpage_Male">Nam</string>
 	<string name="esn_userpage_Female">Nữ</string>
 </resources>

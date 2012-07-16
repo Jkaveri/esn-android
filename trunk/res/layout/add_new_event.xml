@@ -8,7 +8,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
+        android:paddingRight="10dp" 
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
 
         <TableLayout
             android:layout_width="fill_parent"
@@ -117,10 +120,42 @@
                         android:onClick="ChangeEventType"
                         android:textColor="#33b5e5"
                         android:textSize="16dp"
+                        android:text="@string/esn.eventDetail.iconEventType"
                         android:textStyle="bold" />
                 </LinearLayout>
             </TableRow>
 
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:text="@string/esn_addNewEvent_sharetype"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Spinner
+			        android:id="@+id/esn.addNewEvent.sharetype"
+			        android:layout_width="fill_parent"
+			        android:layout_height="40dp"
+			        android:entries="@array/sharetype"
+			        android:prompt="@string/app.global.choose"
+			        android:background="@drawable/rounded_corner_blue"
+			        android:paddingLeft="4dp"
+			    	android:textColor="#FFF"  
+			        />
+            </TableRow>
+            
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -220,7 +255,7 @@
                 <ImageView
                     android:id="@+id/esn.addnewEvent.imgEvent"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>
