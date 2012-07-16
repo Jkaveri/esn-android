@@ -327,12 +327,7 @@ public class AddNewEvent extends Activity {
 
 	public void OpenCamera() {
 		EsnCameras mCamera = new EsnCameras(this);
-		Intent intent = new Intent(
-				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		fileUri = mCamera.getOutputMediaFileUri(EsnCameras.MEDIA_TYPE_IMAGE);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-		startActivityForResult(intent, EsnCameras.TAKE_PICTURE_REQUEST_CODE);
+		mCamera.takePicture();
 	}
 
 	public void OpenPhotoGallery() {
@@ -393,12 +388,14 @@ public class AddNewEvent extends Activity {
 		protected String doInBackground(Uri... params) {
 
 			try {
+				isUploaded = false;
+				isUploadFailed = false;
 				Uri photoUri = params[0];
 				byte[] imgBytes = Utils.scaleImage(AddNewEvent.this, photoUri);
 				Bundle p = new Bundle();
 				p.putByteArray("photo", imgBytes);
 				p.putString("ext", "jpg");
-				String url = "http://bangnl.info/esn/Upload.aspx";
+				String url = "http://bangnl.info/ws/Upload.aspx";
 				String result = Util.openUrl(url, "POST", p);
 				Log.d(LOG_TAG, result);
 
