@@ -23,7 +23,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:onClick="btnDetectMyLocation"
-	        android:background="@null"
+	        android:background="@drawable/bg_access_current_location"
 	        android:padding="2dp"
 	        android:src="@drawable/ic_location" />
     </LinearLayout>
@@ -40,7 +40,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginRight="25dp"
 	        android:layout_marginTop="50dp"
-	        android:background="@null"
+	        android:background="@drawable/bg_access_current_voice"
 	        android:onClick="btnDetectMyLocation"
 	        android:padding="2dp"
 	        android:src="@drawable/ic_voice" />

@@ -12,7 +12,6 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         >
-
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -152,7 +151,8 @@
 			        android:prompt="@string/app.global.choose"
 			        android:background="@drawable/rounded_corner_blue"
 			        android:paddingLeft="4dp"
-			    	android:textColor="#FFF"  
+			    	android:textColor="#FFF"
+			    	android:spinnerMode="dialog"
 			        />
             </TableRow>
             
