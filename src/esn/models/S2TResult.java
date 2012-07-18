@@ -6,16 +6,12 @@ import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
 public class S2TResult implements KvmSerializable{
-	private String type;
-//	private String address;
-
+	private String result;
 	@Override
 	public Object getProperty(int index) {
 		switch (index) {
 		case 0:			
-			return type;
-//		case 1:			
-//			return address;
+			return result;
 		default:
 			return null;
 		}
@@ -32,12 +28,8 @@ public class S2TResult implements KvmSerializable{
 		switch (index) {
 		case 0:
 			proInf.type = PropertyInfo.STRING_CLASS;
-			proInf.name = "ESNSpeechRecognition_androidResult";
+			proInf.name = "ESNSpeechRecognition_iLBCResult";
 			break;
-//		case 1:
-//			proInf.type = PropertyInfo.STRING_CLASS;
-//			proInf.name = "Address";
-//			break;
 		}
 	}
 
@@ -45,19 +37,12 @@ public class S2TResult implements KvmSerializable{
 	public void setProperty(int index, Object value) {
 		switch (index) {
 		case 0:
-			type = value.toString();
+			result = value.toString();
 			break;
-//		case 1:
-//			address = value.toString();
-//			break;
 		}
 	}
-
-//	public String getAddress() {
-//		return address;
-//	}
 	
-	public String getType() {
-		return type;
+	public String getResult() {
+		return result;
 	}
 }
