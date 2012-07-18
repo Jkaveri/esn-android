@@ -11,7 +11,7 @@ import android.util.Log;
 import esn.activities.R;
 import esn.models.S2TResult;
 
-public abstract class VoiceManager {
+public class VoiceManager {
 	private S2TParser s2tParser;
 	private WAVFormatReader wavReader;
 	private AudioRecorder recorder;
@@ -124,6 +124,7 @@ public abstract class VoiceManager {
 		Log.i("AudioManager", "Result: " + result.getResult());
 		s2tParser.parse(result.getResult());//Gui du lieu len class cha S2TProcess
 		callBack.onS2TPostBack(s2tParser);
+		onS2TPostback(s2tParser);
 	}
 	
 	public void stopRecording(){
@@ -246,5 +247,9 @@ public abstract class VoiceManager {
 		int active = AudioLibManager.getAudioActive("DA_KICH_HOAT");
 		int evAuID = AudioLibManager.getAudioEventName(event);
 		return voiceJoinPlay(active, evAuID);
+	}
+	
+	protected void onS2TPostback(S2TParser result){
+		
 	}
 }

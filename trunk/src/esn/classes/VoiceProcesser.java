@@ -13,6 +13,7 @@ public class VoiceProcesser extends VoiceManager{
 		super(resource);
 	}
 	
+	@Override
 	public void onS2TPostback(S2TParser result){
 		
 		//Example
