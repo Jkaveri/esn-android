@@ -102,13 +102,6 @@ public class VoiceModeHelper{
 		tmrDynIcon = new Timer();
 		tmrDynIcon.scheduleAtFixedRate(new IconTask(), 0, 1000);
 		recording = true;
-		
-//		boolean a = voiceProcesser.voiceAlertAction("KET_XE");
-//		boolean a = voiceProcesser.voiceAlertHasEvent("KET_XE", "HANG_XANH");
-//		if(a)
-//			Log.e("TTTTTTTTTT", "True");
-//		else
-//			Log.e("TTTTTTTTTT", "False");
 	}
 	
 	public void stopRecording() {
