@@ -14,6 +14,8 @@ public class VoiceProcesser extends VoiceManager{
 	}
 	
 	public void onS2TPostback(S2TParser result){
+		
+		//Example
 		if(result.getAction().equals("KICH_HOAT")){
 			voiceAlertActivate(result.getEvent());
 		}else if(result.getAction().equals("SAP_TOI")){
