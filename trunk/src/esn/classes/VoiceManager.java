@@ -235,10 +235,6 @@ public abstract class VoiceManager {
 			thSendWs = null;
 		}
 	}
-
-	protected S2TParser getS2TParserResult(){
-		return s2tParser;
-	}
 	
 	protected boolean voiceAlertHasEvent(String event, String address){
 		int evAuID = AudioLibManager.getAudioTypeEvent(event);
