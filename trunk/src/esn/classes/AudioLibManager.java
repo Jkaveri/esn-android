@@ -44,7 +44,7 @@ public class AudioLibManager {
 	private static final String[] ADDRESS = {
 		"GO_VAP",
 		"HANG_XANH",
-		"THU_ĐUC"
+		"THU_DUC"
 	};
 	private static final int[] AUDIO_ADDRESS = {
 		R.raw.a_go_vap,
@@ -64,7 +64,7 @@ public class AudioLibManager {
 	public static int getAudioTypeEvent(String eventName){
 		int audioId = FILE_NOT_FOUND;
 		int len = TYPE_EVENT.length;
-		eventName = eventName.trim().toLowerCase();
+		eventName = eventName.trim();
 		for(int i = 0; i < len; i++){
 			if(eventName.equals(TYPE_EVENT[i])){
 				audioId = AUDIO_ALERT_HAS_EVENT[i];
@@ -76,7 +76,7 @@ public class AudioLibManager {
 	public static int getAudioAddress(String address){
 		int audioId = FILE_NOT_FOUND;
 		int len = ADDRESS.length;
-		address = address.trim().toLowerCase();
+		address = address.trim();
 		for(int i = 0; i < len; i++){
 			if(address.equals(ADDRESS[i])){
 				audioId = AUDIO_ADDRESS[i];
@@ -88,7 +88,7 @@ public class AudioLibManager {
 	public static int getAudioEventName(String eventName) {
 		int audioId = FILE_NOT_FOUND;
 		int len = TYPE_EVENT.length;
-		eventName = eventName.trim().toLowerCase();
+		eventName = eventName.trim();
 		for(int i = 0; i < len; i++){
 			if(eventName.equals(TYPE_EVENT[i])){
 				audioId = AUDIO_EVENT_NAME[i];

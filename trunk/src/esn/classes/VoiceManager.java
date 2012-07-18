@@ -26,6 +26,7 @@ public abstract class VoiceManager {
 	protected Resources resource;
 	
 	public VoiceManager(Resources resource) {
+		s2tParser = new S2TParser();
 		recorder = new AudioRecorder(new RecordListener() {
 
 			@Override
@@ -115,7 +116,7 @@ public abstract class VoiceManager {
 //		recordBuf = null;//giai phong bo nho
 //		wavConver.prepare();
 //		wavConver.conver();
-//		
+//		   
 //		byte[] buf = wavConver.getWAVData();
 //		wavConver.clearBuffer();//giai phong bo nho
 		
@@ -245,7 +246,7 @@ public abstract class VoiceManager {
 		return voiceJoinPlay(evAuID, addAuID);
 	}
 	
-	protected boolean voiceAlertActive(String event){
+	protected boolean voiceAlertActivate(String event){
 		int active = AudioLibManager.getAudioActive("DA_KICH_HOAT");
 		int evAuID = AudioLibManager.getAudioEventName(event);
 		return voiceJoinPlay(active, evAuID);

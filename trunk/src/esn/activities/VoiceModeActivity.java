@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
 
 import esn.classes.VoiceModeHelper;
 
@@ -22,7 +23,9 @@ public class VoiceModeActivity extends MapActivity{
 		txtStates.setSelected(true);
 		
         ImageButton btnRecord = (ImageButton) findViewById(R.id.esn_voicemode_btn_record);
-		helper = new VoiceModeHelper(this.getResources(), btnRecord, txtStates);
+        
+        MapView maps = (MapView)findViewById(R.id.esn_google_maps_state);
+		helper = new VoiceModeHelper(this.getResources(), btnRecord, txtStates, maps);
 	}
 	
 	public void btnRecordClick(View view) {
