@@ -94,8 +94,6 @@ public class LoginActivity extends SherlockActivity{
 	    return super.onKeyDown(keyCode, event);
 	}
 	
-	
-	@SuppressLint({ "NewApi", "NewApi" })
 	public void LoginClicked(View view) {
 
 		EditText txtEmail = (EditText) findViewById(R.id.esn_login_Email);
@@ -126,8 +124,4 @@ public class LoginActivity extends SherlockActivity{
 	    Intent home = new Intent(this, HomeActivity.class);
 		loginThread.setSuccessIntent(home);
 	}
-
-
-	
-	
 }

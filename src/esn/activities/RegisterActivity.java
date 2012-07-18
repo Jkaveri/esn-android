@@ -89,6 +89,7 @@ public class RegisterActivity extends SherlockActivity {
 		res = getResources();
 		
 		boolean isFbSignup = intent.getBooleanExtra("facebookSignup", false);
+		
 		if (isFbSignup) {
 			String first_name = intent.getStringExtra("first_name");
 			String last_name = intent.getStringExtra("last_name");
@@ -374,12 +375,12 @@ public class RegisterActivity extends SherlockActivity {
 				
 			String bd = txtBirthday.getText().toString();
 			
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
-			
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");		
 			
 			try {
+				
 				user.Birthday = format.parse(bd);
+				
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -393,7 +394,7 @@ public class RegisterActivity extends SherlockActivity {
 			
 			String gender = ddlGender.getSelectedItem().toString();
 			
-			if(gender.equals("Male"))
+			if(gender.equals(res.getString(R.string.esn_register_rdbMale)))
 			{
 				user.Gender=true;
 			}

@@ -36,17 +36,23 @@ public class UsersManager {
 	}
 
 	public int Register(Users user) throws JSONException, IOException {
+
 		int rs = 0;
 
 		JSONObject params = new JSONObject();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 
 		params.put("name", user.Name);
 		params.put("email", user.Email);
 		params.put("password", user.Password);
-		params.put("birthday", user.Birthday);
+
+		params.put("birthday", format.format(user.Birthday));
 		params.put("phone", user.Phone);
 		params.put("gender", user.Gender);
 		params.put("accessToken", user.AccessToken);
+
+		String s = user.Name + user.Email + user.Password + user.Birthday
+				+ user.Phone + user.Gender + user.AccessToken;
 
 		JSONObject jsonObject = helper.invokeWebMethod("Register", params);
 		rs = jsonObject.getInt("d");
@@ -103,7 +109,6 @@ public class UsersManager {
 		params.put("city", user.City);
 		params.put("country", user.Country);
 		params.put("favorite", user.Favorite);
-
 		params.put("avatar", user.Avatar);
 
 		JSONObject jsonObject = helper.invokeWebMethod("UpdateProfile", params);
@@ -135,7 +140,8 @@ public class UsersManager {
 
 			user.Name = p.getString("Name");
 
-			user.Birthday = Utils.GetDateFromJSONString(p.getString("Birthday"));
+			user.Birthday = Utils
+					.GetDateFromJSONString(p.getString("Birthday"));
 
 			user.Gender = p.getBoolean("Gender");
 
@@ -174,7 +180,7 @@ public class UsersManager {
 			JSONObject jsonUser = response.getJSONObject("d");
 
 			Utils.JsonToObject(jsonUser, user);
-			
+
 			return user;
 		}
 		return null;
@@ -203,7 +209,8 @@ public class UsersManager {
 
 				user.Name = p.getString("Name");
 
-				user.Birthday = Utils.GetDateFromJSONString(p.getString("Birthday"));
+				user.Birthday = Utils.GetDateFromJSONString(p
+						.getString("Birthday"));
 
 				user.Gender = p.getBoolean("Gender");
 
