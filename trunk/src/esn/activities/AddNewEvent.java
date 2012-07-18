@@ -30,7 +30,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,10 +54,11 @@ public class AddNewEvent extends Activity {
 	private boolean isUploadFailed = false;
 	private final String LOG_TAG = "esn.addNewEvent";
 	private UploadImageTask task;
-	private Uri fileUri;
+	private EsnCameras mCamera;
 
 	private static final int SELECT_PICTURE = 1;
-
+	private static final int SELECT_EVENT_TYPE = 12;
+	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -301,9 +301,7 @@ public class AddNewEvent extends Activity {
 		sessions.put("EventAddress", address);
 		
 		Intent intent = new Intent(this, SelectEventLabel.class);
-		startActivity(intent);
-
-		
+		startActivityForResult(intent, SELECT_EVENT_TYPE);		
 	}
 
 	@Override
@@ -344,7 +342,7 @@ public class AddNewEvent extends Activity {
 	}
 
 	public void OpenCamera() {
-		EsnCameras mCamera = new EsnCameras(this);
+	 mCamera = new EsnCameras(this);
 		mCamera.takePicture();
 	}
 
@@ -364,9 +362,9 @@ public class AddNewEvent extends Activity {
 		if (requestCode == EsnCameras.TAKE_PICTURE_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 
-				if (fileUri != null) {
+				if (mCamera.fileUri != null) {
 					
-					new UploadImageTask().execute(fileUri);
+					new UploadImageTask().execute(mCamera.fileUri);
 				} else {
 					Toast.makeText(
 							this,
@@ -396,6 +394,10 @@ public class AddNewEvent extends Activity {
 				Toast.makeText(this,
 						res.getString(R.string.esn_addNewEvent_noPicture),
 						Toast.LENGTH_LONG).show();
+			}
+		}else if(requestCode == SELECT_EVENT_TYPE){
+			if(resultCode == RESULT_OK){
+				
 			}
 		}
 	}
@@ -479,6 +481,18 @@ public class AddNewEvent extends Activity {
 							homeData.putExtra("eventId", event.EventID);
 							setResult(RESULT_OK, homeData);
 							finish();
+						}
+					});
+				}else{
+					runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							dialog.dismiss();
+							AlertDialog.Builder builder = new AlertDialog.Builder(context);
+							builder.setTitle("");
+							builder.setMessage("");
+							builder.create().show();
 						}
 					});
 				}

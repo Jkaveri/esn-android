@@ -10,7 +10,7 @@ import com.google.android.maps.MapView;
 
 import esn.classes.VoiceModeHelper;
 
-public class VoiceModeActivity extends MapActivity{
+public class VoiceModeActivity extends MapActivity {
 	private VoiceModeHelper helper;
 
 	@Override
@@ -18,30 +18,31 @@ public class VoiceModeActivity extends MapActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.esn_voice_mode);
 		this.setTitle(getString(R.string.esn_voicemode_title));
-		
-		TextView txtStates = (TextView) this.findViewById(R.id.esn_voicemode_txt_state);  
+
+		TextView txtStates = (TextView) this
+				.findViewById(R.id.esn_voicemode_txt_state);
 		txtStates.setSelected(true);
-		
-        ImageButton btnRecord = (ImageButton) findViewById(R.id.esn_voicemode_btn_record);
-        
-        MapView maps = (MapView)findViewById(R.id.esn_google_maps_state);
-		helper = new VoiceModeHelper(this.getResources(), btnRecord, txtStates, maps);
+
+		ImageButton btnRecord = (ImageButton) findViewById(R.id.esn_voicemode_btn_record);
+		MapView maps = (MapView) findViewById(R.id.esn_google_maps_state);
+		helper = new VoiceModeHelper(this.getResources(), btnRecord, txtStates,
+				maps);
 	}
-	
+
 	public void btnRecordClick(View view) {
-		if(helper.isRecording()){
+		if (helper.isRecording()) {
 			helper.stopRecording();
-		}else{
+		} else {
 			helper.startRecording();
 		}
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		helper.destroy();
 		super.onDestroy();
 	}
-	
+
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;

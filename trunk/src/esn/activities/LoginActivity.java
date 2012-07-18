@@ -123,5 +123,6 @@ public class LoginActivity extends SherlockActivity{
 		LoginThread loginThread  = new LoginThread(this, email, password, dialog);
 	    Intent home = new Intent(this, HomeActivity.class);
 		loginThread.setSuccessIntent(home);
+		loginThread.start();
 	}
 }

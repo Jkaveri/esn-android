@@ -88,6 +88,7 @@ public class WelcomeScreen extends SherlockActivity {
 			// set radius for load event around
 			session.put("radiusEventAround", 2);
 			session.get("firstLauch", false);
+			session.put("filterList", "");
 		}
 
 	}
