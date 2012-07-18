@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 
@@ -27,7 +25,7 @@ import esn.models.EventType;
 public class SetFilterActivity extends SherlockActivity implements
 		onItemCheckedListener {
 	private static final String LOG_TAG = "SetFilterActivity";
-	private JSONObject filterListJson;
+	private JSONObject filterListJson=null;
 	private Sessions session;
 	private ListMultiChoiceAdapter adapter;
 	private ListView listView;
@@ -49,7 +47,7 @@ public class SetFilterActivity extends SherlockActivity implements
 		if (!filterList.equals("")) {
 			try {
 				filterListJson = new JSONObject(filterList);
-				Log.d("filter_list",filterListJson.toString());
+				Log.d("filter_list", filterListJson.toString());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -64,51 +62,84 @@ public class SetFilterActivity extends SherlockActivity implements
 
 			adapter = new ListMultiChoiceAdapter();
 			adapter.setOnItemCheckedListener(this);
-			// all
-			EsnListItem showAllItem = new EsnListItem();
-			showAllItem.setTitle("All");
-			showAllItem.setTagName("all");
-			showAllItem.setIcon(R.drawable.ic_select_all);
-			boolean allItemChecked = false;
-			if (filterListJson != null && filterListJson.has("all")) {
-				allItemChecked = filterListJson.getBoolean("all");
-			}
-			showAllItem.setChecked(allItemChecked);
-			adapter.add(showAllItem);
-			// friend
-			EsnListItem friendItem = new EsnListItem();
-			friendItem.setTitle("Friend");
-			friendItem.setIcon(R.drawable.ic_friends_dark);
-			friendItem.setTagName("friend");
-			if (filterListJson != null && !allItemChecked
-					&& filterListJson.has("friend")) {
-				friendItem.setChecked(filterListJson.getBoolean("friend"));
-			} else {
-				friendItem.setChecked(false);
-			}
-
-			adapter.add(friendItem);
-			// eventtype
-			List<EventType> eventTypes = session.eventTypes;
-			for (int i = 0; i < eventTypes.size(); i++) {
-				EventType type = eventTypes.get(i);
-				EsnListItem item = new EsnListItem();
-				Log.d(LOG_TAG, "put-tag");
-				item.setTitle(type.EventTypeName);
-				item.setIcon(EventType.getIconId(type.EventTypeID, 3));
-				item.setId(type.EventTypeID);
-				item.setTagName(type.EventTypeID+"");
-				if (filterListJson != null
-						&& filterListJson.has(type.EventTypeID+"")) {
-					boolean checked = filterListJson.getBoolean(String
-							.valueOf(type.EventTypeID));
-					item.setChecked(checked);
-				} else {
-					item.setChecked(false);
+			if (filterListJson != null) {
+				// all
+				EsnListItem showAllItem = new EsnListItem();
+				showAllItem.setTitle("All");
+				showAllItem.setTagName("all");
+				showAllItem.setIcon(R.drawable.ic_select_all);
+				boolean allItemChecked = false;
+				if (filterListJson != null && filterListJson.has("all")) {
+					allItemChecked = filterListJson.getBoolean("all");
 				}
-				adapter.add(item);
+				showAllItem.setChecked(allItemChecked);
+				adapter.add(showAllItem);
+				// friend
+				EsnListItem friendItem = new EsnListItem();
+				friendItem.setTitle("Friend");
+				friendItem.setIcon(R.drawable.ic_friends_dark);
+				friendItem.setTagName("friend");
+				if (filterListJson != null && !allItemChecked
+						&& filterListJson.has("friend")) {
+					friendItem.setChecked(filterListJson.getBoolean("friend"));
+				} else {
+					friendItem.setChecked(false);
+				}
+
+				adapter.add(friendItem);
+				// eventtype
+				List<EventType> eventTypes = session.eventTypes;
+				for (int i = 0; i < eventTypes.size(); i++) {
+					EventType type = eventTypes.get(i);
+					EsnListItem item = new EsnListItem();
+					Log.d(LOG_TAG, "put-tag");
+					item.setTitle(type.EventTypeName);
+					item.setIcon(EventType.getIconId(type.EventTypeID, 3));
+					item.setId(type.EventTypeID);
+					item.setTagName(type.EventTypeID + "");
+					if (filterListJson != null
+							&& filterListJson.has(type.EventTypeID + "")) {
+						boolean checked = filterListJson.getBoolean(String
+								.valueOf(type.EventTypeID));
+						item.setChecked(checked);
+					} else {
+						item.setChecked(false);
+					}
+					adapter.add(item);
+				}
+
+			}else{
+				// all
+				EsnListItem showAllItem = new EsnListItem();
+				showAllItem.setTitle("All");
+				showAllItem.setTagName("all");
+				showAllItem.setIcon(R.drawable.ic_select_all);
+				
+				showAllItem.setChecked(true);
+				adapter.add(showAllItem);
+				// friend
+				EsnListItem friendItem = new EsnListItem();
+				friendItem.setTitle("Friend");
+				friendItem.setIcon(R.drawable.ic_friends_dark);
+				friendItem.setTagName("friend");
+				friendItem.setChecked(false);
+				adapter.add(friendItem);
+				// eventtype
+				List<EventType> eventTypes = session.eventTypes;
+				for (int i = 0; i < eventTypes.size(); i++) {
+					EventType type = eventTypes.get(i);
+					EsnListItem item = new EsnListItem();
+					Log.d(LOG_TAG, "put-tag");
+					item.setTitle(type.EventTypeName);
+					item.setIcon(EventType.getIconId(type.EventTypeID, 3));
+					item.setId(type.EventTypeID);
+					item.setTagName(type.EventTypeID + "");
+					item.setChecked(true);
+					adapter.add(item);
+				}
 			}
 			listView.setAdapter(adapter);
+
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,17 +163,16 @@ public class SetFilterActivity extends SherlockActivity implements
 				for (int i = 0; i < adapter.getCount(); i++) {
 					EsnListItem listItem = (EsnListItem) adapter.getItem(i);
 					Log.d(LOG_TAG, "put_type");
-					if(listItem.isChecked()){
+					if (listItem.isChecked()) {
 						flag = true;
 					}
-					json2Save.put(listItem.getTagName(),
-							listItem.isChecked());
+					json2Save.put(listItem.getTagName(), listItem.isChecked());
 
 				}
-				if(!flag){
+				if (!flag) {
 					json2Save.put("all", true);
 				}
-				//Log.d("json2save",json2Save.toString());
+				// Log.d("json2save",json2Save.toString());
 				String filterString = getFilterString(json2Save);
 				session.put("filterList", json2Save.toString());
 				session.put("filterString", filterString);
@@ -187,7 +217,7 @@ public class SetFilterActivity extends SherlockActivity implements
 				int count = adapter.getCount();
 				for (int i = 0; i < count; i++) {
 					EsnListItem listItem = (EsnListItem) adapter.getItem(i);
-					if(listItem.getTagName().equals("all")){
+					if (listItem.getTagName().equals("all")) {
 						listItem.setChecked(false);
 						allIsChecked = false;
 						break;
@@ -205,10 +235,10 @@ public class SetFilterActivity extends SherlockActivity implements
 			String eventTypeFilter = "";
 
 			boolean flag = false;
-			Iterator keys = filterList.keys();
+			Iterator<String> keys = filterList.keys();
 
 			while (keys.hasNext()) {
-				String key = (String) keys.next();
+				String key = keys.next();
 				boolean checked = filterList.getBoolean(key);
 				// neu da check all thi ko can xet nua
 				if (key.equals("all") && checked)
@@ -218,8 +248,10 @@ public class SetFilterActivity extends SherlockActivity implements
 
 				} else {
 					if (checked) {
-						if (!flag)
+						if (!flag){
 							eventTypeFilter += "type:";
+							flag =true;
+						}
 						if (!eventTypeFilter.equals("type:"))
 							eventTypeFilter += ",";
 						eventTypeFilter += key;

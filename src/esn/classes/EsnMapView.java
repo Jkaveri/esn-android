@@ -3,6 +3,7 @@ package esn.classes;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 
@@ -26,6 +27,7 @@ import com.actionbarsherlock.app.SherlockMapActivity;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 import com.readystatesoftware.maps.TapControlledMapView;
 
 import esn.activities.AddNewEvent;
@@ -43,22 +45,26 @@ public class EsnMapView extends TapControlledMapView {
 	private Context context;
 	public Handler handler;
 	public static final int REQUEST_CODE_ADD_NEW_EVENT = 1;
+	public static final String LOG_TAG = "EsnMapView";
 	private MapActivity activity;
 	public ArrayList<Events> events = new ArrayList<Events>();
-	public EsnMapView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-       init(context);
-    }
 
-    public EsnMapView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context);
-    }
+	public EsnMapView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init(context);
+	}
+
+	public EsnMapView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		init(context);
+	}
+
 	public EsnMapView(Context context, String apiString) {
 		super(context, apiString);
 		init(context);
 	}
-	private void init(Context context){
+
+	private void init(Context context) {
 		this.context = context;
 		handler = new Handler();
 		this.lastMapCenter = new GeoPoint(0, 0);
@@ -68,12 +74,13 @@ public class EsnMapView extends TapControlledMapView {
 		double radius = calculateRadius();
 		new LoadEventsAroundThread(radius).start();
 	}
+
 	@Override
 	public void onLongPress(MotionEvent e) {
-		if(e.getAction() ==MotionEvent.ACTION_DOWN){
+		if (e.getAction() == MotionEvent.ACTION_DOWN) {
 			// get current point
-			final GeoPoint p = this.getProjection()
-					.fromPixels((int) e.getX(), (int) e.getY());
+			final GeoPoint p = this.getProjection().fromPixels((int) e.getX(),
+					(int) e.getY());
 
 			new Thread(new Runnable() {
 				public void run() {
@@ -82,11 +89,11 @@ public class EsnMapView extends TapControlledMapView {
 					int longtitudeE6 = p.getLongitudeE6();
 					Intent addNewEventIntent = new Intent(context,
 							AddNewEvent.class);
+					addNewEventIntent.putExtra("latitude", latitudeE6 / 1E6);
 					addNewEventIntent
-							.putExtra("latitude", latitudeE6 / 1E6);
-					addNewEventIntent.putExtra("longtitude",
-							longtitudeE6 / 1E6);
-					activity.startActivityForResult(addNewEventIntent, REQUEST_CODE_ADD_NEW_EVENT);
+							.putExtra("longtitude", longtitudeE6 / 1E6);
+					activity.startActivityForResult(addNewEventIntent,
+							REQUEST_CODE_ADD_NEW_EVENT);
 				}
 			}).start();
 		}
@@ -96,13 +103,15 @@ public class EsnMapView extends TapControlledMapView {
 	public boolean onTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
 			isTouchEnded = false;
-			Drawable drawable = context.getResources().getDrawable(R.drawable.ic_event_type_0_1);
-			EsnItemizedOverlay marker = new EsnItemizedOverlay(drawable, this);
-			marker.hideAllBalloons();
+			// Drawable drawable =
+			// context.getResources().getDrawable(R.drawable.ic_event_type_0_1);
+			// EsnItemizedOverlay marker = new EsnItemizedOverlay(drawable,
+			// this);
+			// marker.hideAllBalloons();
 		} else if (ev.getAction() == MotionEvent.ACTION_UP) {
 			isTouchEnded = true;
-			
-		//	Log.d("esn", "touch ended");
+
+			// Log.d("esn", "touch ended");
 		} else if (ev.getAction() == MotionEvent.ACTION_MOVE) {
 			isFirstComputeScroll = true;
 		}
@@ -115,35 +124,39 @@ public class EsnMapView extends TapControlledMapView {
 		if (!isTouchEnded && this.getMapCenter().equals(lastMapCenter)
 				&& isFirstComputeScroll) {
 			isFirstComputeScroll = false;
-		} else if(isTouchEnded && isFirstComputeScroll) {	
+		} else if (isTouchEnded && isFirstComputeScroll) {
 			isTouchEnded = false;
 			lastMapCenter = this.getMapCenter();
-			
-		//	Log.d("esn","lastMapCenter: "+lastMapCenter.toString());
+
+			// Log.d("esn","lastMapCenter: "+lastMapCenter.toString());
 			double radius = calculateRadius();
 			new LoadEventsAroundThread(radius).start();
 		}
 	}
 
-	
 	public class LoadEventsAroundThread extends Thread {
 		private double radius;
+
 		public LoadEventsAroundThread(double radius) {
 			this.radius = radius;
 		}
+
 		@Override
 		public void run() {
-			if(lastMapCenter!=null){
-				Log.d("esn","Load events around....");
+			if (lastMapCenter != null) {
+				Log.d("esn", "Load events around....");
 				EventsManager manager = new EventsManager();
 				Events[] events;
 				try {
 					double lat = lastMapCenter.getLatitudeE6() / 1E6;
 					double lon = lastMapCenter.getLongitudeE6() / 1E6;
-					Log.d("radius",String.valueOf(radius));
-					String filter = manager.getFilterString(Sessions.getInstance(context));
-					events = manager.getEventsAround(lat, lon, this.radius,filter);
-					
+					Log.d("radius", String.valueOf(radius));
+					String filter = manager.getFilterString(Sessions
+							.getInstance(context));
+					Log.d(LOG_TAG, filter);
+					events = manager.getEventsAround(lat, lon, this.radius,
+							filter);
+
 					handler.post(new LoadEventsAroundHandler(events));
 
 				} catch (IllegalArgumentException e) {
@@ -187,7 +200,7 @@ public class EsnMapView extends TapControlledMapView {
 						icon);
 			}
 			invalidate();
-			Log.d("esn","end load events around!");
+			Log.d("esn", "end load events around!");
 		}
 	}
 
@@ -203,31 +216,37 @@ public class EsnMapView extends TapControlledMapView {
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
 		// set marker
-		getOverlays().add(marker);
-		//invalidate();
+		List<Overlay> mOverlays = getOverlays();
+		if (mOverlays.contains(mOverlays)) {
+			mOverlays.remove(mOverlays);
+		}
+		mOverlays.add(marker);
+
+		// invalidate();
 	}
-	public double calculateRadius(){
-		WindowManager mn = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
+	public double calculateRadius() {
+		WindowManager mn = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
 		Display display = mn.getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
-		final GeoPoint p = this.getProjection()
-				.fromPixels(0, size.y/2);
-		
-		final GeoPoint p2 = this.getProjection().fromPixels(size.x, size.y/2);
-		Log.d("esn", p.toString()+"|"+p2.toString());
+		final GeoPoint p = this.getProjection().fromPixels(0, size.y / 2);
+
+		final GeoPoint p2 = this.getProjection().fromPixels(size.x, size.y / 2);
+		Log.d("esn", p.toString() + "|" + p2.toString());
 		return Utils.distanceOfTwoPoint(p, p2);
 	}
+
 	public MapActivity getActivity() {
 		return activity;
 	}
 
 	public void setActivity(MapActivity activity) {
-		
-		
+
 		this.activity = activity;
 	}
-	
-	//getter & setter
-	
+
+	// getter & setter
+
 }
