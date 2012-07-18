@@ -76,8 +76,7 @@ public class VoiceModeHelper{
 		voiceProcesser.setVoiceListener(new VoiceListener() {
 			
 			@Override
-			public void onS2TPostBack(final S2TParser result) {//Goi web service nhan dang giong noi  xong	
-				voiceProcesser.onS2TPostback(result);
+			public void onS2TPostBack(final S2TParser result) {//Goi web service nhan dang giong noi  xong
 				handler.post(new Runnable() {
 					
 					@Override

@@ -6,13 +6,19 @@ public class S2TParser {
 	private String event;
 	
 	public void parse(String resultRecog){
-		int fi = resultRecog.indexOf('|');
-		int li = resultRecog.lastIndexOf('|');
-		
-		action = resultRecog.substring(0, fi).trim();
-		event = resultRecog.substring(fi+1, li).trim();
-		strRecog = resultRecog.substring(li + 1).trim();
-		strRecog = strRecog.substring(0, 1).toUpperCase() + strRecog.substring(1);
+		if(resultRecog != null){
+			int fi = resultRecog.indexOf('|');
+			int li = resultRecog.lastIndexOf('|');
+			
+			action = resultRecog.substring(0, fi).trim();
+			event = resultRecog.substring(fi+1, li).trim();
+			strRecog = resultRecog.substring(li + 1).trim();
+			strRecog = strRecog.substring(0, 1).toUpperCase() + strRecog.substring(1);
+		}else{
+			strRecog = "Ex";
+			action = "Ex";
+			event = "Ex";
+		}
 	}
 	
 	public String getStrRecog() {
