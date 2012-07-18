@@ -13,6 +13,10 @@
     <string name="esn_addNewEvent_wantToContinue">Would you want to countinue?</string>
     <string name="esn_addNewEvent_noPicture">No picture!</string>
     <string name="esn_addNewEvent_sharetype">Share Type:</string>
+    <string name="esn_addNewEvent_sharetypepublic">Public</string>
+    <string name="esn_addNewEvent_sharetypeprivate">Private</string>
+    <string name="esn_addNewEvent_chooseeventtype">Choose event type.</string>
+    
     <!-- EventDetail -->
     <string name="esn.eventDetail">Event detail</string>
     <string name="esn.eventDetail.like">True</string>

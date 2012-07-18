@@ -12,6 +12,9 @@
     <string name="esn_addNewEvent_canNotUpload">Không thể tải hình lên.</string>
     <string name="esn_addNewEvent_wantToContinue">Bạn có muốn tiếp tục không ?</string>
     <string name="esn_addNewEvent_sharetype">Loại Chia Sẻ :</string>
+    <string name="esn_addNewEvent_sharetypepublic">Cộng đồng</string>
+    <string name="esn_addNewEvent_sharetypeprivate">Riêng tư</string>
+    <string name="esn_addNewEvent_chooseeventtype">Hãy chọn loại sự kiện. </string>
     <!-- EventDetail -->
     <string name="esn.eventDetail">Chi Tiết Sự Kiện</string>
     <string name="esn.eventDetail.like">Đúng</string>

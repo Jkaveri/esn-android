@@ -38,6 +38,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -197,9 +198,26 @@ public class AddNewEvent extends Activity {
 				event.Title = title;
 				event.Description = description;
 				event.EventTypeID = homeData.getIntExtra("labelId", 0);
+				
+				if(event.EventTypeID==0)
+				{
+					Toast.makeText(context, res.getString(R.string.esn_addNewEvent_chooseeventtype), Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				event.EventLat = homeData.getDoubleExtra("latitude", 0);
-				event.EventLng = homeData.getDoubleExtra("longtitude", 0);
-				event.ShareType = AppEnums.ShareTypes.Public;
+				event.EventLng = homeData.getDoubleExtra("longtitude", 0);				
+				
+				event.ShareType = 0;
+				Spinner ddlShareType = (Spinner)findViewById(R.id.esn_addNewEvent_sharetype);
+				
+				String eventtype = ddlShareType.getSelectedItem().toString();
+							
+				if(eventtype.equals(res.getString(R.string.esn_addNewEvent_sharetypepublic)))
+				{
+					event.ShareType = 1;
+				}
+				
 				int i = 0;
 				// waiting for upload
 				// if uploaded or upload failed
