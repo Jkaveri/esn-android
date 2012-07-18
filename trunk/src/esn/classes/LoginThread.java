@@ -152,7 +152,10 @@ public class LoginThread extends Thread {
 			UsersManager manager = new UsersManager();
 
 			try {
-				Users user = manager.RetrieveByEmail(session.get("email", ""));
+				String email = session.get("email", "");
+				
+				Users user = manager.RetrieveByEmail(email);
+				
 				if (user != null) {
 					session.currentUser = user;
 				}else{

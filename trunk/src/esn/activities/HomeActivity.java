@@ -310,4 +310,9 @@ public class HomeActivity extends SherlockMapActivity implements
 		return false;
 	}
 
+	public void btnVoidMode(View view)
+	{
+		Intent intent = new Intent(context,VoiceModeActivity.class);
+		startActivity(intent);
+	}
 }

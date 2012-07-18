@@ -298,6 +298,7 @@ public class EditProfileActivity extends Activity {
 									.getString(R.string.esn_register_rdbMale));
 
 							sp.setSelection(pos);
+
 						} else {
 							Spinner sp = (Spinner) findViewById(R.id.esn_changeprofile_gender);
 
@@ -358,7 +359,7 @@ public class EditProfileActivity extends Activity {
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
 
 		dialog.show();
-
+		
 		UpdateProfileThread updateProfileThread = new UpdateProfileThread();
 
 		updateProfileThread.start();
@@ -394,7 +395,7 @@ public class EditProfileActivity extends Activity {
 				user.City = txtCity.getText().toString();
 				user.Country = txtCountry.getText().toString();
 				user.Favorite = txtFavorite.getText().toString();
-
+				
 				String bd = txtBirthday.getText().toString();
 
 				SimpleDateFormat format = new SimpleDateFormat("yyyy MM dd");
@@ -473,7 +474,7 @@ public class EditProfileActivity extends Activity {
 
 				// Log.d(LOG_TAG, "up anh xong");
 				if (result != null) {
-
+					user.Avatar = result;
 					Bitmap bm = BitmapFactory.decodeByteArray(imgBytes, 0,
 							imgBytes.length);
 					// set image into UI
