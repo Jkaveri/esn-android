@@ -112,8 +112,10 @@ public class VoiceModeHelper{
 	}
 	
 	public void destroy(){
-		tmrDynIcon.cancel();
-		tmrDynIcon = null;
+		if(tmrDynIcon != null){
+			tmrDynIcon.cancel();
+			tmrDynIcon = null;
+		}
 		voiceProcesser.destroy();
 	}
 }
