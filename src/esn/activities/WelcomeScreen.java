@@ -3,7 +3,9 @@ package esn.activities;
 import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Facebook;
+
 import esn.classes.LoginThread;
+import esn.classes.Maps;
 import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.EventType;
@@ -13,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -30,10 +33,11 @@ public class WelcomeScreen extends SherlockActivity {
 	private final String TAG_LOG = "WELCOME_SCREEN";
 	WelcomeScreen context;
 	private Facebook fb;
+	public double centerLong;
+	public double centerLat;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome_screen);
 
@@ -43,12 +47,13 @@ public class WelcomeScreen extends SherlockActivity {
 		context = this;
 
 		session = Sessions.getInstance(context);
-		//get resource
+		// get resource
 		res = getResources();
-		//check ket noi mang
+		// check ket noi mang
 		if (Utils.isNetworkAvailable(this)) {
 			
-
+			
+			
 			initConfig();
 			loadModelThread = new LoadModelsThread();
 			loadModelThread.start();
@@ -81,10 +86,12 @@ public class WelcomeScreen extends SherlockActivity {
 	private void initConfig() {
 		// application session
 		session = Sessions.getInstance(this);
-		
+
 		boolean firstLauch = session.get("firstLauch", true);
 
 		if (firstLauch) {
+			/* TODO: confirm user to detect location */
+
 			// set radius for load event around
 			session.put("radiusEventAround", 2);
 			session.get("firstLauch", false);
@@ -108,6 +115,7 @@ public class WelcomeScreen extends SherlockActivity {
 			Intent successIntent = new Intent(this, HomeActivity.class);
 			Intent failIntent = new Intent(this, WelcomeActivity.class);
 			failIntent.putExtra("loginResult", "Login failed");
+
 			loginThread.setSuccessIntent(successIntent);
 			loginThread.setFailIntent(failIntent);
 			loginThread.start();
@@ -135,12 +143,12 @@ public class WelcomeScreen extends SherlockActivity {
 								}
 							});
 						} else {
-							
+
 							session.put("isLogined", false);
 							Intent loginIntent = new Intent(WelcomeScreen.this,
 									WelcomeActivity.class);
 							startActivity(loginIntent);
-							finish();                                 
+							finish();
 						}
 					} catch (Exception e) {
 						Log.e(TAG_LOG, e.getMessage());
@@ -171,6 +179,8 @@ public class WelcomeScreen extends SherlockActivity {
 				list = manager.getList();
 				// store session list to session
 				session.eventTypes = list;
+				
+
 				// session
 				if (session.logined()) {
 					// neu da tung login thi execute login

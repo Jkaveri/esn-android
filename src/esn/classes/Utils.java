@@ -30,9 +30,11 @@ import android.graphics.Bitmap.CompressFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Utils {
 	private static final String EMAIL_PATTERN = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+){1,3}$";
@@ -305,5 +307,15 @@ public class Utils {
 
 		cursor.moveToFirst();
 		return cursor.getInt(0);
+	}
+	public static void showToast(final Context context,final String text, final int duration){
+		new Handler().post(new Runnable() {
+			
+			@Override
+			public void run() {
+				Toast.makeText(context, text, duration).show();
+			}
+		});
+		
 	}
 }

@@ -1,7 +1,6 @@
 package esn.classes;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -10,111 +9,74 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.DragEvent;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-
-import esn.activities.HomeActivity;
 import esn.activities.R;
-import esn.models.Events;
 
 public class Maps implements LocationListener {
 	private MapView map;
 	private MapController mapController;
 	private Context context;
-	private EsnItemizedOverlay marker;
+	private EsnItemizedOverlay<?> marker;
 	private Location currLocation;
 	private GeoPoint currPoint;
 	private boolean displayCurrentLocation = false;
 	private int currMarkerIcon;
 	private ProgressDialog dialog;
-	private Handler handler;
 	protected Geocoder geoCoder;
 	private Resources res;
 	private List<Overlay> mapOverlays;
-	private ArrayList<Events> events;
+
+	private final int WIFI_ENABLED = 1;
+	private final int GPS_ENABLED = 2;
+	private LocationManager locationManager;
+	private String provider;
+
 	public Maps(Context context, MapView map) {
 		this.map = map;
 		this.context = context;
 		this.res = context.getResources();
 		this.mapController = map.getController();
 		mapOverlays = map.getOverlays();
-		handler = new Handler();
-		events = new ArrayList<Events>();
-		
+		new Handler();
+		locationManager = (LocationManager) context
+				.getSystemService(Context.LOCATION_SERVICE);
 	}
-	public void addEvent(Events event){
-		events.add(event);
-	}
-	public void removeEvent(Events event){
-		events.remove(event);
-	}
-	public Events getEvent(int index){
-		return events.get(index);
-	}
-	
-	public void setOnTouchEvent(OnTouchListener l){
+
+	public void setOnTouchEvent(OnTouchListener l) {
 		this.map.setOnTouchListener(l);
-	
+
 	}
-	@SuppressLint("NewApi")
-	public void setOnDragListener(OnDragListener l){
-		this.map.setOnDragListener(l);
-	}
-	public void hideAllBallon(){
-		if(marker!=null){
+
+	public void hideAllBallon() {
+		if (marker != null) {
 			marker.hideAllBalloons();
 		}
 	}
-	
+
 	public void setMarker(EventOverlayItem item, int drawable) {
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
 		// instance HelloItemizedOverlay with image
-		marker = new EsnItemizedOverlay(markerIcon, map);
+		marker = new EsnItemizedOverlay<EventOverlayItem>(markerIcon, map);
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
 		// set marker
 		mapOverlays.add(marker);
 	}
 
-	public void setMarker(EventOverlayItem item, Drawable drawable) {
-		// instance HelloItemizedOverlay with image
-		marker = new EsnItemizedOverlay(drawable, map);
-		// add itemOVerlay to itemizedOverlay
-		marker.addOverlay(item);
-		// set marker
-		mapOverlays.add(marker);
-	}
-
-	public void setMarker(GeoPoint point, String title, String subtitle,int eventId,
-			int drawable) {
-		// create overlay item
-		EventOverlayItem item = new EventOverlayItem(point, title, subtitle,eventId);
-		// get pointer image
-		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// instance HelloItemizedOverlay with image
-		marker = new EsnItemizedOverlay(markerIcon, map);
-		// add itemOVerlay to itemizedOverlay
-		marker.addOverlay(item);
-		// set marker
-		mapOverlays.add(marker);
-	}
 	public void setMarker(GeoPoint point, String title, String subtitle,
 			int drawable) {
 		// create overlay item
@@ -122,70 +84,47 @@ public class Maps implements LocationListener {
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
 		// instance HelloItemizedOverlay with image
-		marker = new EsnItemizedOverlay(markerIcon, map);
+		marker = new EsnItemizedOverlay<EventOverlayItem>(markerIcon, map);
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
 		// set marker
 		mapOverlays.add(marker);
 	}
+
 	public void search(final String query) {
 		// show dialog
 		dialog = ProgressDialog.show(context, "Search...",
 				"Searching your request");
 		dialog.show();
-		Thread th = new Thread() {
-			public void run() {
-				try {
-					Thread.sleep(500);
-					// get geo coder
-					geoCoder = new Geocoder(context);
-					// search by address
+		// get geo coder
+		geoCoder = new Geocoder(context);
+		boolean isFirst = true;
+		List<Address> listAddress = null;
+		try {
+			listAddress = geoCoder.getFromLocationName(query, 5);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GeoPoint point = null;
+		// with every address
+		for (Address address : listAddress) {
 
-					handler.post(new Runnable() {
-
-						@Override
-						public void run() {
-							boolean isFirst = true;
-							List<Address> listAddress = null;
-							try {
-								listAddress = geoCoder.getFromLocationName(
-										query, 5);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							GeoPoint point = null;
-							// with every address
-							for (Address address : listAddress) {
-
-								// get point
-								point = new GeoPoint((int) (address
-										.getLatitude() * 1E6), (int) (address
-										.getLongitude() * 1E6));
-								// initialize itemOverlay with current point
-								EventOverlayItem itemOverlay = new EventOverlayItem(
-										point, address.getCountryName(),
-										address.getLocality(),0);
-								setMarker(itemOverlay, R.drawable.pointer);
-								if (isFirst) {
-									mapController.setCenter(point);
-									isFirst = false;
-								}
-
-							}
-							dialog.hide();
-							mapController.animateTo(map.getMapCenter());
-						}
-
-					});
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
+			// get point
+			point = new GeoPoint((int) (address.getLatitude() * 1E6),
+					(int) (address.getLongitude() * 1E6));
+			// initialize itemOverlay with current point
+			EventOverlayItem itemOverlay = new EventOverlayItem(point,
+					address.getCountryName(), address.getLocality(), 0);
+			setMarker(itemOverlay, R.drawable.pointer);
+			if (isFirst) {
+				mapController.setCenter(point);
+				isFirst = false;
 			}
-		};
-		th.start();
+
+		}
+		dialog.hide();
+		mapController.animateTo(map.getMapCenter());
 	}
 
 	public void setMap(MapView map) {
@@ -199,9 +138,11 @@ public class Maps implements LocationListener {
 	public void setContext(Context context) {
 		this.context = context;
 	}
-	public Context getContext(){
+
+	public Context getContext() {
 		return this.context;
 	}
+
 	public void setZoom(int level) {
 		mapController.setZoom(level);
 	}
@@ -209,86 +150,93 @@ public class Maps implements LocationListener {
 	public void setCenter(GeoPoint point) {
 		mapController.setCenter(point);
 	}
-	public GeoPoint getCenter(){
+
+	public GeoPoint getCenter() {
 		return map.getMapCenter();
 	}
+
 	public int getZoomLevel() {
 		// TODO Auto-generated method stub
 		return map.getZoomLevel();
 	}
-	public boolean zoomIn(){
+
+	public boolean zoomIn() {
 		return mapController.zoomIn();
 	}
-	public boolean zoomOut(){
+
+	public boolean zoomOut() {
 		return mapController.zoomOut();
 	}
-	public Location getCurrentLocation() {
-		LocationManager locationManager = (LocationManager) context
-				.getSystemService(Context.LOCATION_SERVICE);
-		boolean enabled = locationManager
+
+	public int getSupportProvider() {
+
+		boolean gpsEnabled = locationManager
 				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		boolean wifiEnabled = locationManager
+				.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+		return (wifiEnabled) ? WIFI_ENABLED : (gpsEnabled) ? GPS_ENABLED : 0;
+
+	}
+
+	public Location getCurrentLocation() {
+
+		int providerEnabled = getSupportProvider();
+
 		// set event listener for current location is change
-		
-		if (enabled) {
-			Criteria criteria = new Criteria();
-			String provider = locationManager.getBestProvider(criteria, false);
+		// neu wifi support
+		if (providerEnabled == WIFI_ENABLED) {
+			// provider
+			provider = LocationManager.NETWORK_PROVIDER;
 			currLocation = locationManager.getLastKnownLocation(provider);
-			handler.post(new LocationUpudate(locationManager));
-			
+
+		} else
+		// neu gps support
+		if (providerEnabled == GPS_ENABLED) {
+			// get provider
+			provider = LocationManager.GPS_PROVIDER;
+			currLocation = locationManager.getLastKnownLocation(provider);
+			// set listener
+			locationManager.requestLocationUpdates(provider, 0, 0, this);
 		} else {
 			Toast.makeText(
 					context,
 					context.getResources().getString(
 							R.string.esn_global_must_enable_gps),
-					Toast.LENGTH_LONG);
+					Toast.LENGTH_LONG).show();
 		}
 		return currLocation;
 
 	}
 
 	public void displayCurrentLocation() {
-		dialog = new ProgressDialog(context);
-		dialog.setTitle(R.string.finding_current_location);
-		dialog.show();
-		Thread th = new Thread() {
-			@Override
-			public void run() {
 
-				try {
-					Thread.sleep(500);
-					handler.post(new Runnable() {
-
-						@Override
-						public void run() {
-							getCurrentLocation();
-							if (currLocation != null) {
-								displayCurrentLocation = true;
-								currPoint = new GeoPoint(
-										(int) (currLocation.getLatitude() * 1E6),
-										(int) (currLocation.getLongitude() * 1E6));
-								setMarker(
-										currPoint,
-										context.getString(R.string.map_current_location_title),
-										context.getString(R.string.map_current_location_subtitle),
-										currMarkerIcon);
-								mapController.animateTo(currPoint);
-								dialog.hide();
-							} else {
-								dialog.hide();
-								Toast.makeText(
-										context,
-										res.getString(R.string.esn_global_your_location_not_found),
-										Toast.LENGTH_SHORT).show();
-							}
-
-						}
-					});
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		th.start();
+		if (currLocation != null) {
+			displayCurrentLocation = true;
+			currPoint = new GeoPoint((int) (currLocation.getLatitude() * 1E6),
+					(int) (currLocation.getLongitude() * 1E6));
+			setMarker(currPoint,
+					context.getString(R.string.map_current_location_title),
+					context.getString(R.string.map_current_location_subtitle),
+					currMarkerIcon);
+			mapController.animateTo(currPoint);
+			
+		} else if (getCurrentLocation() != null) {
+			displayCurrentLocation = true;
+			currPoint = new GeoPoint((int) (currLocation.getLatitude() * 1E6),
+					(int) (currLocation.getLongitude() * 1E6));
+			setMarker(currPoint,
+					context.getString(R.string.map_current_location_title),
+					context.getString(R.string.map_current_location_subtitle),
+					currMarkerIcon);
+			mapController.animateTo(currPoint);
+			
+		} else {
+			dialog.hide();
+			Toast.makeText(context,
+					res.getString(R.string.esn_global_your_location_not_found),
+					Toast.LENGTH_SHORT).show();
+		}
 
 	}
 
@@ -304,8 +252,6 @@ public class Maps implements LocationListener {
 					context.getString(R.string.map_current_location_title),
 					context.getString(R.string.map_current_location_subtitle),
 					currMarkerIcon);
-			//mapController.animateTo(currPoint);
-
 		}
 	}
 
@@ -328,6 +274,11 @@ public class Maps implements LocationListener {
 
 	}
 
+	public void EnableOnLocationChangedListener(){
+		locationManager.removeUpdates(this);
+		// set listioner
+		locationManager.requestLocationUpdates(provider, 0, 0, this);
+	}
 	public int getCurrMarkerIcon() {
 		return currMarkerIcon;
 	}
@@ -335,18 +286,5 @@ public class Maps implements LocationListener {
 	public void setCurrMarkerIcon(int currMarkerIcon) {
 		this.currMarkerIcon = currMarkerIcon;
 	}
-	private class LocationUpudate implements Runnable{
-		
-		private LocationManager locationManager;
-		public LocationUpudate(LocationManager manager) {
-			locationManager = manager;
-		}
-		@Override
-		public void run() {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-					0, Maps.this);
-		}
-	}
-	
-	
+
 }

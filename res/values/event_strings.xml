@@ -16,7 +16,8 @@
     <string name="esn_addNewEvent_sharetypepublic">Public</string>
     <string name="esn_addNewEvent_sharetypeprivate">Private</string>
     <string name="esn_addNewEvent_chooseeventtype">Choose event type.</string>
-    
+    <string name="esn_addNewEvent_uploading">Please wait!</string>
+    <string name="esn_addNewEvent_uploadEventImage">Uploading image…</string>
     <!-- EventDetail -->
     <string name="esn.eventDetail">Event detail</string>
     <string name="esn.eventDetail.like">True</string>
