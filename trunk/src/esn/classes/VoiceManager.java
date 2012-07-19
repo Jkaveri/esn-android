@@ -122,7 +122,7 @@ public class VoiceManager {
 		
 		S2TResult result = auWs.send(recordBuf);
 		//Log.i("AudioManager", "Result: " + result.getResult());
-		//s2tParser.parse(result.getResult());//Gui du lieu len class cha S2TProcess
+		s2tParser.parse(result.getResult());//Gui du lieu len class cha
 		callBack.onS2TPostBack(s2tParser);
 		onS2TPostback(s2tParser);
 	}
