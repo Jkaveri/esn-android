@@ -42,6 +42,7 @@
     <string name="app.global.no">No</string>
     <string name="app.global.viewasmap">View as Map</string>
     <string name="app.global.viewaslist">View as List</string>
+    <string name="esn_global_lostConnection"></string>
     <!-- Settings page -->
     
     <string name="esn.settings.app_settings">Application Settings</string>

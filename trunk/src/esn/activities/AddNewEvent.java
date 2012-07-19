@@ -9,7 +9,6 @@ import com.facebook.android.Util;
 import esn.classes.EsnCameras;
 import esn.classes.Sessions;
 import esn.classes.Utils;
-import esn.models.AppEnums;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.annotation.SuppressLint;
@@ -58,37 +57,38 @@ public class AddNewEvent extends Activity {
 
 	private static final int SELECT_PICTURE = 1;
 	private static final int SELECT_EVENT_TYPE = 12;
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_new_event);
 
-		res = getResources();
-
-		homeData = getIntent();
-
-		context = this;
-
-		sessions = Sessions.getInstance(context);
-
-		// instance new event
-		event = new Events();
-
-		TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate);
-		double lat = homeData.getDoubleExtra("latitude", 0);
-		double lon = homeData.getDoubleExtra("longtitude", 0);
-		event.EventLat = lat;
-		event.EventLng = lon;
-
-		// display coordinate
-		txtCoordinate.setText(String.format("{%1$s}, {%2$s}", lat, lon));
-		// convert coordinate to address
-		TextView tvAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
-		Geocoder geoCoder = new Geocoder(this);
 		try {
+			// TODO Auto-generated method stub
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.add_new_event);
+
+			res = getResources();
+
+			homeData = getIntent();
+
+			context = this;
+
+			sessions = Sessions.getInstance(context);
+
+			// instance new event
+			event = new Events();
+
+			TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate);
+			double lat = homeData.getDoubleExtra("latitude", 0);
+			double lon = homeData.getDoubleExtra("longtitude", 0);
+			event.EventLat = lat;
+			event.EventLng = lon;
+
+			// display coordinate
+			txtCoordinate.setText(String.format("{%1$s}, {%2$s}", lat, lon));
+			// convert coordinate to address
+			TextView tvAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
+			Geocoder geoCoder = new Geocoder(this);
 
 			List<Address> listAddress = geoCoder.getFromLocation(lat, lon, 1);
 			if (listAddress.size() > 0) {
@@ -102,206 +102,139 @@ public class AddNewEvent extends Activity {
 				}
 				tvAddress.setText(add);
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
+			TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
+			tvImageEventStatus.setText(String.format(
+					res.getString(R.string.esn_addNewEvent_imageeventstatus),
+					this));
+		} catch (Exception e) {
+			Utils.showToast(this, res.getString(R.string.esn_global_Error),
+					Toast.LENGTH_SHORT);
+			Log.e(LOG_TAG, e.getMessage());
 			e.printStackTrace();
 		}
 
-		
-		String eventTypeName = homeData.getStringExtra("labelName");
-		
-		TextView txteventTypeName = (TextView) findViewById(R.id.esn_addNewEvent_txtEventTypeName);
-		
-		if(eventTypeName == null)
-		{
-			txteventTypeName.setText(res.getString(R.string.esn_eventDetail_iconEventType));
-		}		
-		else
-		{
-			txteventTypeName.setText(eventTypeName);
-		}
-		
-		ImageView imgType = (ImageView) findViewById(R.id.esn_addNewEvent_txtEventTypeImage);
-
-		int i = homeData.getIntExtra("labelIcon", 0);
-		imgType.setImageResource(i);
-
-		TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
-		tvImageEventStatus
-				.setText(String.format(res
-						.getString(R.string.esn_addNewEvent_imageeventstatus),
-						this));
-
-		if (sessions.get("EventTitle", null) != null) {
-			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
-
-			txtTitle.setText(sessions.get("EventTitle", null).toString());
-		}
-
-		if (sessions.get("EventDescription", null) != null) {
-			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
-			txtDescription.setText(sessions.get("EventDescription", null)
-					.toString());
-		}
-		if (sessions.get("EventAddress", null) != null) {
-			TextView txtDescription = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
-			txtDescription.setText(sessions.get("EventAddress", null)
-					.toString());
-		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		try {
 
-		MenuInflater menuInflater = new MenuInflater(this);
+			MenuInflater menuInflater = new MenuInflater(this);
 
-		menuInflater.inflate(R.menu.new_event_menu, menu);
+			menuInflater.inflate(R.menu.new_event_menu, menu);
 
-		return true;
+			return true;
+		} catch (Exception e) {
+			Log.e(LOG_TAG, e.getMessage());
+			Utils.showToast(this, res.getString(R.string.esn_global_Error),
+					Toast.LENGTH_SHORT);
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 	@TargetApi(9)
 	public void btnAddClicked() {
-		runOnUiThread(new Runnable() {
 
-			@Override
-			public void run() {
+		try {
+			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
+			String title = txtTitle.getText().toString();
+
+			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
+			String description = txtDescription.getText().toString();
+
+			if ((title == null) || title.length() <= 0) {
+				txtTitle.setError("Title is required",
+						res.getDrawable(R.drawable.ic_alerts_and_states_error));
+				txtTitle.requestFocus();
+				return;
+			}
+			if (description == null || description.length() <= 0) {
+
+				txtDescription.setError("Description is required",
+						res.getDrawable(R.drawable.ic_alerts_and_states_error));
+				txtDescription.requestFocus();
+				return;
+			}
+
+			if (event.EventTypeID <= 0) {
+				Toast.makeText(context, "Ban phai chon loai su kien",
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			event.AccID = sessions.currentUser.AccID;
+			event.Title = title;
+			event.Description = description;
+
+			event.ShareType = 0;
+			Spinner ddlShareType = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
+
+			String eventtype = ddlShareType.getSelectedItem().toString();
+
+			if (eventtype.equals(res
+					.getString(R.string.esn_addNewEvent_sharetypepublic))) {
+				event.ShareType = 1;
+			}
+
+			int i = 0;
+			// waiting for upload
+			// if uploaded or upload failed
+			while (!isUploaded && !isUploadFailed && i < 25) {
+
+				Log.d(LOG_TAG, "waiting for upload image");
+
+				Thread.sleep(200);
+				i++;
+
+			}
+
+			if (isUploadFailed || i >= 25) {
+				if (task != null) {
+					task.cancel(true);
+				}
+				dialog.dismiss();
+				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				alertBuilder.setTitle(res
+						.getString(R.string.esn_addNewEvent_canNotUpload));
+				alertBuilder.setMessage(res
+						.getString(R.string.esn_addNewEvent_wantToContinue));
+				alertBuilder.setPositiveButton("OK", new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						new CreateEventsThread(event).start();
+					}
+				});
+
+			} else {
 				// show dialog
 				dialog = new ProgressDialog(context);
 				dialog.setTitle(res.getString(R.string.esn_global_loading));
 				dialog.setTitle(res.getString(R.string.esn_global_pleaseWait));
 				dialog.show();
+				new CreateEventsThread(event).start();
 			}
-		});
-
-		EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
-		String title = txtTitle.getText().toString();
-
-		if (title.isEmpty()) {
-			Toast.makeText(context,
-					res.getString(R.string.esn_eventDetail_entereventtitle),
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-
-		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
-		String description = txtDescription.getText().toString();
-
-		if ((title != null) && title.length() > 0) {
-			if (description != null && description.length() > 0) {
-				// put into result
-				homeData.putExtra("eventTitle", title);
-				homeData.putExtra("eventDescription", description);
-				// put into object
-
-				event.AccID = sessions.currentUser.AccID;
-				event.Title = title;
-				event.Description = description;
-				event.EventTypeID = homeData.getIntExtra("labelId", 0);
-				
-				if(event.EventTypeID==0)
-				{
-					Toast.makeText(context, res.getString(R.string.esn_addNewEvent_chooseeventtype), Toast.LENGTH_SHORT).show();
-					return;
-				}
-				
-				event.EventLat = homeData.getDoubleExtra("latitude", 0);
-				event.EventLng = homeData.getDoubleExtra("longtitude", 0);				
-				
-				event.ShareType = 0;
-				Spinner ddlShareType = (Spinner)findViewById(R.id.esn_addNewEvent_sharetype);
-				
-				String eventtype = ddlShareType.getSelectedItem().toString();
-							
-				if(eventtype.equals(res.getString(R.string.esn_addNewEvent_sharetypepublic)))
-				{
-					event.ShareType = 1;
-				}
-				
-				int i = 0;
-				// waiting for upload
-				// if uploaded or upload failed
-				while (!isUploaded && !isUploadFailed && i < 25) {
-					try {
-						Log.d(LOG_TAG, "waiting for upload image");
-
-						Thread.sleep(200);
-						i++;
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				Log.d(LOG_TAG, "isUploadFailed:" + isUploadFailed);
-				Log.d(LOG_TAG, "i: " + i);
-				if (isUploadFailed || i >= 25) {
-					if (task != null) {
-						task.cancel(true);
-					}
-					dialog.dismiss();
-					AlertDialog.Builder alertBuilder = new AlertDialog.Builder(
-							this);
-					alertBuilder.setTitle(res
-							.getString(R.string.esn_addNewEvent_canNotUpload));
-					alertBuilder
-							.setMessage(res
-									.getString(R.string.esn_addNewEvent_wantToContinue));
-					alertBuilder.setPositiveButton("OK", new OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							new CreateEventsThread(event).start();
-							sessions.put("EventTitle", null);
-							sessions.put("EventDescription", null);
-							sessions.put("EventAddress", null);
-						}
-					});
-
-				} else {
-					new CreateEventsThread(event).start();
-					sessions.put("EventTitle", null);
-					sessions.put("EventDescription", null);
-					sessions.put("EventAddress", null);
-				}
-
-			} else {
-				txtDescription.setError("Description is required",
-						res.getDrawable(R.drawable.ic_alerts_and_states_error));
-				return;
-			}
-		} else {
-			txtTitle.setError("Title is required",
-					res.getDrawable(R.drawable.ic_alerts_and_states_error));
-			return;
+		} catch (Exception e) {
+			Log.e(LOG_TAG, e.getMessage());
+			Utils.showToast(this, res.getString(R.string.esn_global_Error),
+					Toast.LENGTH_SHORT);
+			e.printStackTrace();
 		}
 	}
 
 	public void btnCancelClicked() {
-		sessions.put("EventTitle", null);
-		sessions.put("EventDescription", null);
-		sessions.put("EventAddress", null);
-		
 		Intent it = new Intent(this, HomeActivity.class);
 		startActivity(it);
-		
+
 	}
 
 	public void ChangeEventType(View view) {
-		
-		EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
-		String title = txtTitle.getText().toString();
-		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
-		String description = txtDescription.getText().toString();
-		
-		TextView txtAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
-		String address = txtAddress.getText().toString();
-
-		sessions.put("EventTitle", title);
-		sessions.put("EventDescription", description);
-		sessions.put("EventAddress", address);
-		
+		Log.d(LOG_TAG, "Chang event Type");
 		Intent intent = new Intent(this, SelectEventLabel.class);
-		startActivityForResult(intent, SELECT_EVENT_TYPE);		
+		startActivityForResult(intent, SELECT_EVENT_TYPE);
 	}
 
 	@Override
@@ -323,7 +256,10 @@ public class AddNewEvent extends Activity {
 
 	public void CameraClicked() {
 
-	//	final CharSequence[] items = {res.getString(R.string.app_global_gallery), res.getString(R.string.app_global_camera), res.getString(R.string.app_global_cancel) };
+		// final CharSequence[] items =
+		// {res.getString(R.string.app_global_gallery),
+		// res.getString(R.string.app_global_camera),
+		// res.getString(R.string.app_global_cancel) };
 		OpenCamera();
 
 		/*
@@ -342,7 +278,7 @@ public class AddNewEvent extends Activity {
 	}
 
 	public void OpenCamera() {
-	 mCamera = new EsnCameras(this);
+		mCamera = new EsnCameras(this);
 		mCamera.takePicture();
 	}
 
@@ -363,7 +299,7 @@ public class AddNewEvent extends Activity {
 			if (resultCode == RESULT_OK) {
 
 				if (mCamera.fileUri != null) {
-					
+
 					new UploadImageTask().execute(mCamera.fileUri);
 				} else {
 					Toast.makeText(
@@ -395,14 +331,44 @@ public class AddNewEvent extends Activity {
 						res.getString(R.string.esn_addNewEvent_noPicture),
 						Toast.LENGTH_LONG).show();
 			}
-		}else if(requestCode == SELECT_EVENT_TYPE){
-			if(resultCode == RESULT_OK){
-				
+		} else if (requestCode == SELECT_EVENT_TYPE) {
+			if (resultCode == RESULT_OK) {
+				int id = data.getIntExtra("labelId", 0);
+
+				String eventTypeName = data.getStringExtra("labelName");
+
+				TextView txteventTypeName = (TextView) findViewById(R.id.esn_addNewEvent_txtEventTypeName);
+
+				if (eventTypeName == null) {
+					txteventTypeName.setText(res
+							.getString(R.string.esn_eventDetail_iconEventType));
+				} else {
+					txteventTypeName.setText(eventTypeName);
+				}
+
+				ImageView imgType = (ImageView) findViewById(R.id.esn_addNewEvent_txtEventTypeImage);
+
+				int i = homeData.getIntExtra("labelIcon", 0);
+				imgType.setImageResource(i);
+
+				event.EventTypeID = id;
 			}
 		}
 	}
 
 	public class UploadImageTask extends AsyncTask<Uri, Integer, String> {
+		@Override
+		protected void onPreExecute() {
+			// show dialog
+			dialog = new ProgressDialog(context);
+			dialog.setTitle(res.getString(R.string.esn_addNewEvent_uploading));
+			dialog.setTitle(res
+					.getString(R.string.esn_addNewEvent_uploadEventImage));
+			dialog.setCancelable(false);
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.show();
+
+		}
 
 		@Override
 		protected String doInBackground(Uri... params) {
@@ -449,8 +415,10 @@ public class AddNewEvent extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			if (result != null) {
+				dialog.dismiss();
 				Log.d("esn_uploadImage", result);
 			} else {
+				dialog.dismiss();
 				Log.d("esn_uploadImage", "failed");
 			}
 		}
@@ -479,17 +447,22 @@ public class AddNewEvent extends Activity {
 						public void run() {
 							dialog.dismiss();
 							homeData.putExtra("eventId", event.EventID);
+							homeData.putExtra("labelId", event.EventTypeID);
+							homeData.putExtra("eventTitle", event.Title);
+							homeData.putExtra("eventDescription",
+									event.Description);
 							setResult(RESULT_OK, homeData);
 							finish();
 						}
 					});
-				}else{
+				} else {
 					runOnUiThread(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							dialog.dismiss();
-							AlertDialog.Builder builder = new AlertDialog.Builder(context);
+							AlertDialog.Builder builder = new AlertDialog.Builder(
+									context);
 							builder.setTitle("");
 							builder.setMessage("");
 							builder.create().show();
@@ -500,7 +473,8 @@ public class AddNewEvent extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
+				Log.e(LOG_TAG,e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -525,7 +499,7 @@ public class AddNewEvent extends Activity {
 			image.setImageBitmap(img);
 			// img.recycle();
 			tvImageEventStatus.setText("");
-			
+
 			imgBytes = null;
 		}
 	}

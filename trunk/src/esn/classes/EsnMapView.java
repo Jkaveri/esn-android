@@ -11,28 +11,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.method.HideReturnsTransformationMethod;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockMapActivity;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.readystatesoftware.maps.TapControlledMapView;
 
 import esn.activities.AddNewEvent;
 import esn.activities.R;
-import esn.activities.SelectEventLabel;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
@@ -48,6 +40,7 @@ public class EsnMapView extends TapControlledMapView {
 	public static final String LOG_TAG = "EsnMapView";
 	private MapActivity activity;
 	public ArrayList<Events> events = new ArrayList<Events>();
+	private EsnItemizedOverlay<EventOverlayItem> markers;
 
 	public EsnMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -59,21 +52,41 @@ public class EsnMapView extends TapControlledMapView {
 		init(context);
 	}
 
+	/**
+	 * need for mapView
+	 * 
+	 * @param context
+	 * @param apiString
+	 */
 	public EsnMapView(Context context, String apiString) {
 		super(context, apiString);
 		init(context);
 	}
 
+	/**
+	 * initialize
+	 * 
+	 * @param context
+	 */
 	private void init(Context context) {
 		this.context = context;
 		handler = new Handler();
 		this.lastMapCenter = new GeoPoint(0, 0);
 		this.isTouchEnded = false;
 		this.isFirstComputeScroll = true;
+		// instance HelloItemizedOverlay with image
+		markers = new EsnItemizedOverlay<EventOverlayItem>(context
+				.getResources().getDrawable(R.drawable.ic_event_type_0_3), this);
+
 		lastMapCenter = getMapCenter();
 		double radius = calculateRadius();
+
 		new LoadEventsAroundThread(radius).start();
 	}
+
+	/**
+	 * On long press event (create event o long press)
+	 */
 
 	@Override
 	public void onLongPress(MotionEvent e) {
@@ -99,15 +112,13 @@ public class EsnMapView extends TapControlledMapView {
 		}
 	}
 
+	/**
+	 * Override super class fires when touch. For ON DRAG MAP EVENT
+	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
 			isTouchEnded = false;
-			// Drawable drawable =
-			// context.getResources().getDrawable(R.drawable.ic_event_type_0_1);
-			// EsnItemizedOverlay marker = new EsnItemizedOverlay(drawable,
-			// this);
-			// marker.hideAllBalloons();
 		} else if (ev.getAction() == MotionEvent.ACTION_UP) {
 			isTouchEnded = true;
 
@@ -118,6 +129,9 @@ public class EsnMapView extends TapControlledMapView {
 		return super.onTouchEvent(ev);
 	}
 
+	/**
+	 * Override super class
+	 */
 	@Override
 	public void computeScroll() {
 		super.computeScroll();
@@ -134,6 +148,135 @@ public class EsnMapView extends TapControlledMapView {
 		}
 	}
 
+	/**
+	 * Calculate radius base on current screen size and current zoom level
+	 * 
+	 * @return radius
+	 */
+	public double calculateRadius() {
+		WindowManager mn = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		Display display = mn.getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		final GeoPoint p = this.getProjection().fromPixels(0, size.y / 2);
+
+		final GeoPoint p2 = this.getProjection().fromPixels(size.x, size.y / 2);
+		// Log.d("esn", p.toString() + "|" + p2.toString());
+		return Utils.distanceOfTwoPoint(p, p2);
+	}
+
+	public MapActivity getActivity() {
+		return activity;
+	}
+
+	/**
+	 * set activity for mapview
+	 * 
+	 * @param activity
+	 */
+	public void setActivity(MapActivity activity) {
+
+		this.activity = activity;
+	}
+
+	/**
+	 * Set marker for map view
+	 * 
+	 * @param point
+	 *            Coordinate
+	 * @param title
+	 *            Title for marker
+	 * @param subtitle
+	 *            Description
+	 * @param eventId
+	 *            event id
+	 * @param drawable
+	 *            icon for marker
+	 */
+	public void setMarker(GeoPoint point, String title, String subtitle,
+			int eventId, int drawable) {
+		// create overlay item
+		EventOverlayItem item = new EventOverlayItem(point, title, subtitle,
+				eventId);
+		// for clear markers
+		item.setCanRemove(true);
+		// get pointer image
+		Drawable markerIcon = context.getResources().getDrawable(drawable);
+		// remove before add
+		if(item.isCanRemove())	markers.removeOverlay(item);
+		// add itemOVerlay to itemizedOverlay
+		markers.addOverlay(item, markerIcon);
+		// set marker
+		List<Overlay> mOverlays = getOverlays();
+		mOverlays.remove(markers);
+		mOverlays.add(markers);
+		mOverlays = null;
+		// invalidate();
+	}
+
+	/**
+	 * set marker
+	 * 
+	 * @param point
+	 * @param title
+	 * @param subtitle
+	 * @param drawable
+	 * @param canRemove
+	 */
+	public void setMarker(GeoPoint point, String title, String subtitle,
+			int drawable, boolean canRemove) {
+		// create overlay item
+		EventOverlayItem item = new EventOverlayItem(point, title, subtitle);
+
+		// for clear markers
+		item.setCanRemove(canRemove);
+		// get pointer image
+		Drawable markerIcon = context.getResources().getDrawable(drawable);
+		// remove before add
+	
+			markers.removeOverlay(item);
+		// add itemOVerlay to itemizedOverlay
+		markers.addOverlay(item, markerIcon);
+		// set marker
+		List<Overlay> mOverlays = getOverlays();
+		mOverlays.remove(markers);
+		mOverlays.add(markers);
+		mOverlays = null;
+	}
+
+	/**
+	 * Clear Marker: Giup clear marker truoc khi add moi... neu event item set
+	 * canremove = true thi moi remove :))
+	 */
+	public void clearMarkers() {
+		// lay het cac overlays
+		List<Overlay> overlays = getOverlays();
+		// duyet
+		for (int i = 0; i < overlays.size(); i++) {
+			@SuppressWarnings("unchecked")
+			// lay item
+			EsnItemizedOverlay<EventOverlayItem> items = (EsnItemizedOverlay<EventOverlayItem>) overlays
+					.get(i);
+			// duyet itemized overlay
+			for (int j = 0; j < items.size(); j++) {
+				// remove neu duoc
+				EventOverlayItem item = items.getItem(j);
+				if (item.isCanRemove()) {
+					items.removeOverlay(item);
+				}
+			}
+
+		}
+
+	}
+
+	/**
+	 * Load events around thread
+	 * 
+	 * @author JK
+	 * 
+	 */
 	public class LoadEventsAroundThread extends Thread {
 		private double radius;
 
@@ -179,6 +322,12 @@ public class EsnMapView extends TapControlledMapView {
 		}
 	}
 
+	/**
+	 * Load events around hanlder: run on UI
+	 * 
+	 * @author JK
+	 * 
+	 */
 	private class LoadEventsAroundHandler implements Runnable {
 		private Events[] events;
 
@@ -188,9 +337,9 @@ public class EsnMapView extends TapControlledMapView {
 
 		@Override
 		public void run() {
-			getOverlays().clear();
 			for (int i = 0; i < events.length; i++) {
 				Events event = events[i];
+
 				EsnMapView.this.events.add(event);
 				GeoPoint point = new GeoPoint((int) (event.EventLat * 1E6),
 						(int) (event.EventLng * 1E6));
@@ -203,50 +352,4 @@ public class EsnMapView extends TapControlledMapView {
 			Log.d("esn", "end load events around!");
 		}
 	}
-
-	public void setMarker(GeoPoint point, String title, String subtitle,
-			int eventId, int drawable) {
-		// create overlay item
-		EventOverlayItem item = new EventOverlayItem(point, title, subtitle,
-				eventId);
-		// get pointer image
-		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// instance HelloItemizedOverlay with image
-		EsnItemizedOverlay marker = new EsnItemizedOverlay(markerIcon, this);
-		// add itemOVerlay to itemizedOverlay
-		marker.addOverlay(item);
-		// set marker
-		List<Overlay> mOverlays = getOverlays();
-		if (mOverlays.contains(mOverlays)) {
-			mOverlays.remove(mOverlays);
-		}
-		mOverlays.add(marker);
-
-		// invalidate();
-	}
-
-	public double calculateRadius() {
-		WindowManager mn = (WindowManager) context
-				.getSystemService(Context.WINDOW_SERVICE);
-		Display display = mn.getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		final GeoPoint p = this.getProjection().fromPixels(0, size.y / 2);
-
-		final GeoPoint p2 = this.getProjection().fromPixels(size.x, size.y / 2);
-		Log.d("esn", p.toString() + "|" + p2.toString());
-		return Utils.distanceOfTwoPoint(p, p2);
-	}
-
-	public MapActivity getActivity() {
-		return activity;
-	}
-
-	public void setActivity(MapActivity activity) {
-
-		this.activity = activity;
-	}
-
-	// getter & setter
-
 }
