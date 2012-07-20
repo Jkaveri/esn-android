@@ -9,7 +9,7 @@ import android.widget.TextView;
 public class VoiceModeHelper{
 	public static final int STATE_RECORDING = 1;
 	public static final int STATE_LOADING = 2;
-	public static final int STATE_STOPED = 3;	
+	public static final int STATE_STOPED = 3;
 	
 	private int recordState = STATE_STOPED;
 	private VoiceManager voiceMng;
@@ -33,7 +33,22 @@ public class VoiceModeHelper{
 					}
 				});
 				
-				dynIcon.stopIconRecord();//Ws post back
+				dynIcon.stopIconRecord();//Ws post back				
+				////////////////////////////////
+				
+				
+				//Example
+				if(result.getAction().equals("KICH_HOAT")){
+					voiceMng.voiceAlertActivate(result.getEvent());
+				}else if(result.getAction().equals("SAP_TOI")){
+					//Gia su co su kien tai Go Vap
+					voiceMng.voiceAlertHasEvent(result.getEvent(), "GO_VAP");
+				}				
+				
+				
+				
+				
+				/////////////////////////				
 				recordState = STATE_STOPED;
 			}
 
