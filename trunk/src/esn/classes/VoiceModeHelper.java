@@ -12,14 +12,15 @@ import android.widget.TextView;
 import esn.activities.R;
 
 public class VoiceModeHelper{
+	public static final int STATE_RECORDING = 1;
+	public static final int STATE_LOADING = 2;
+	public static final int STATE_STOPED = 3;
+	
 	private Timer tmrDynIcon;
-	private boolean recording;
+	private int recordState = STATE_STOPED;
 	private ImageButton btnRecord;
 	private Handler handler;
-	private Runnable runPost_Lig;
-	private Runnable runPost_Red;
-	private VoiceProcesser voiceProcesser;
-	private Runnable runPost_Mic;
+	private VoiceManager voiceMng;
 	
 	//Thay doi icon lam cho button nhap nhay
 	private class IconTask extends TimerTask{
@@ -28,87 +29,134 @@ public class VoiceModeHelper{
 		@Override
 		public void run() {
 			if (type) {
-				handler.post(runPost_Lig);
+				postIcon(R.drawable.ic_mic_stop_lig);
 				type = false;
 			} else {
-				handler.post(runPost_Red);
+				postIcon(R.drawable.ic_mic_stop_red);
 				type = true;
 			}
 		}
 		
 	}
 	
+	private class IconTaskLoad extends TimerTask{
+		private int key = 1;
+		
+		@Override
+		public void run() {
+			switch (key) {
+			case 1:
+				postIcon(R.drawable.rec_load_1);
+				break;
+			case 2:
+				postIcon(R.drawable.rec_load_2);
+				break;
+			case 3:
+				postIcon(R.drawable.rec_load_3);
+				break;
+			case 4:
+				postIcon(R.drawable.rec_load_4);
+				break;
+			case 5:
+				postIcon(R.drawable.rec_load_5);
+				break;
+			case 6:
+				postIcon(R.drawable.rec_load_6);
+				break;
+			case 7:
+				postIcon(R.drawable.rec_load_7);
+				break;
+			case 8:
+				postIcon(R.drawable.rec_load_8);
+				break;
+			case 9:
+				postIcon(R.drawable.rec_load_9);
+				break;
+			case 10:
+				postIcon(R.drawable.rec_load_10);
+				break;
+			case 11:
+				postIcon(R.drawable.rec_load_11);
+				break;
+			case 12:
+				postIcon(R.drawable.rec_load_12);
+				break;
+			}
+			
+			if(key == 12)
+				key = 1;
+			else
+				key++;
+		}		
+	}
+	
+	private void postIcon(final int idIcon){
+		handler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				btnRecord.setImageResource(idIcon);
+			}
+		});
+	}
+	
 	public VoiceModeHelper(Resources resources, ImageButton record, final TextView states, MapView maps){
 		this.btnRecord = record;
-		voiceProcesser = new VoiceProcesser(resources, maps);
+		voiceMng = new VoiceManager(resources);
 		handler = new Handler();
 		
-		
-		//Thay doi icon lam cho nut nhap nhay
-		runPost_Lig = new Runnable() {
-			
-			@Override
-			public void run() {
-				btnRecord.setImageResource(R.drawable.ic_mic_stop_lig);
-			}
-		};
-		
-		runPost_Red = new Runnable() {
-			
-			@Override
-			public void run() {
-				btnRecord.setImageResource(R.drawable.ic_mic_stop_red);
-			}
-		};
-		
-		//Chuyen button thanh icon chiec micro
-		runPost_Mic = new Runnable() {
-			
-			@Override
-			public void run() {
-				btnRecord.setImageResource(R.drawable.ic_mic_record);
-			}
-		};
-		//*//
-		
 		//////////////////////////////////////////////////////
-		//Thiet dat goi lai khi thuc thi xong den voiceProcesser
-		voiceProcesser.setVoiceListener(new VoiceListener() {
+		//Thiet dat goi lai khi thuc thi xong den voiceMng
+		voiceMng.setVoiceListener(new VoiceListener() {
 			
 			@Override
 			public void onS2TPostBack(final S2TParser result) {//Goi web service nhan dang giong noi  xong
+				tmrDynIcon.cancel();
 				handler.post(new Runnable() {
 					
 					@Override
 					public void run() {
 						states.setText(result.getStrRecog());
+						btnRecord.setImageResource(R.drawable.ic_mic_record);
 					}
-				});
+				});				
+				recordState = STATE_STOPED;
 			}
 
 			@Override
 			public void onStopedRecord() {//Khi noi xong tu stop
-				tmrDynIcon.cancel();//Ngung che do icon dong
-				handler.post(runPost_Mic);//Set icon ve hinh chiec mic
-				recording = false;
+				startIconLoading();				
+				recordState = STATE_LOADING;
 			}
 		});
 		//*//
 	}
+	
+	private void startIconLoading(){
+		
+		if(tmrDynIcon != null){
+			tmrDynIcon.cancel();
+		}
+		tmrDynIcon = new Timer();
+		tmrDynIcon.scheduleAtFixedRate(new IconTaskLoad(), 0, 100);
+	}
 
 	public void startRecording(){
-		voiceProcesser.startRecording();
+		voiceMng.startRecording();
+		if(tmrDynIcon != null){
+			tmrDynIcon.cancel();
+		}
 		tmrDynIcon = new Timer();
 		tmrDynIcon.scheduleAtFixedRate(new IconTask(), 0, 1000);
-		recording = true;
+		recordState = STATE_RECORDING;
 	}
 	
 	public void stopRecording() {
-		voiceProcesser.stopRecording();//Goi ham nay se phat sinh su kien onStopedRecord()
+		voiceMng.stopRecording();//Goi ham nay se phat sinh su kien onStopedRecord()
 	}
 	
-	public boolean isRecording(){
-		return recording;
+	public int getRecordState(){
+		return recordState;
 	}
 	
 	public void destroy(){
@@ -116,6 +164,6 @@ public class VoiceModeHelper{
 			tmrDynIcon.cancel();
 			tmrDynIcon = null;
 		}
-		voiceProcesser.destroy();
+		voiceMng.destroy();
 	}
 }

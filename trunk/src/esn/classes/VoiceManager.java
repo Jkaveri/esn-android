@@ -124,7 +124,6 @@ public class VoiceManager {
 		//Log.i("AudioManager", "Result: " + result.getResult());
 		s2tParser.parse(result.getResult());//Gui du lieu len class cha
 		callBack.onS2TPostBack(s2tParser);
-		onS2TPostback(s2tParser);
 	}
 	
 	public void stopRecording(){
@@ -237,19 +236,15 @@ public class VoiceManager {
 		}
 	}
 	
-	protected boolean voiceAlertHasEvent(String event, String address){
+	public boolean voiceAlertHasEvent(String event, String address){
 		int evAuID = AudioLibManager.getAudioTypeEvent(event);
 		int addAuID = AudioLibManager.getAudioAddress(address);
 		return voiceJoinPlay(evAuID, addAuID);
 	}
 	
-	protected boolean voiceAlertActivate(String event){
+	public boolean voiceAlertActivate(String event){
 		int active = AudioLibManager.getAudioActive("DA_KICH_HOAT");
 		int evAuID = AudioLibManager.getAudioEventName(event);
 		return voiceJoinPlay(active, evAuID);
-	}
-	
-	protected void onS2TPostback(S2TParser result){
-		
 	}
 }
