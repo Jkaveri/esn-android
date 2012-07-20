@@ -18,7 +18,7 @@ public class DynamicIconRecord {
 	}
 	
 	//Thay doi icon lam cho button nhap nhay
-	private class IconTask extends TimerTask{
+	private class IconTaskRec extends TimerTask{
 		private boolean type = true;
 		
 		@Override
@@ -117,7 +117,7 @@ public class DynamicIconRecord {
 			tmrDynIcon.cancel();
 		}
 		tmrDynIcon = new Timer();
-		tmrDynIcon.scheduleAtFixedRate(new IconTask(), 0, 1000);
+		tmrDynIcon.scheduleAtFixedRate(new IconTaskRec(), 0, 1000);
 	}
 	
 	public void destroy(){
