@@ -206,7 +206,7 @@ public class VoiceManager {
 		setPlayerConfig();
 		player.loadBufferPCM(bufferPCM);
 		bufferPCM = null;//giai phong bo nho
-		player.play();
+		player.playOutsiteTask();
 		return true;
 	}
 	

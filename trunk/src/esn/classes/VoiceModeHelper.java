@@ -33,18 +33,19 @@ public class VoiceModeHelper{
 					}
 				});
 				
-				dynIcon.stopIconRecord();//Ws post back				
+				dynIcon.stopIconRecord();//Ws post back
 				////////////////////////////////
 				
 				
 				//Example
-				if(result.getAction().equals("KICH_HOAT")){
-					voiceMng.voiceAlertActivate(result.getEvent());
-				}else if(result.getAction().equals("SAP_TOI")){
-					//Gia su co su kien tai Go Vap
-					voiceMng.voiceAlertHasEvent(result.getEvent(), "GO_VAP");
-				}				
-				
+//				if(result.getAction().equals("KICH_HOAT")){
+//					voiceMng.voiceAlertActivate(result.getEvent());
+//				}else if(result.getAction().equals("SAP_TOI")){
+//					//Gia su co su kien tai Go Vap
+//					voiceMng.voiceAlertHasEvent(result.getEvent(), "GO_VAP");
+					voiceMng.voiceAlertHasEvent("LO_DAT", "GO_VAP");
+					voiceMng.voiceAlertHasEvent("KET_XE", "HANG_XANH");
+//				}
 				
 				
 				
