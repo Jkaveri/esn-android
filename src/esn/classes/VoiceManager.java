@@ -82,7 +82,7 @@ public class VoiceManager {
 		this.callBack = listener;
 	}
 	
-	protected boolean beep(int soundId, boolean isInsiteThread){
+	public boolean beep(int soundId, boolean isInsiteThread){
 		boolean ok = true;
 		InputStream typeStream = resource.openRawResource(soundId);
 		wavReader.setBuffer(typeStream);
