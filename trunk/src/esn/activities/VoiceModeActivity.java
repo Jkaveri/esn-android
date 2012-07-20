@@ -30,9 +30,9 @@ public class VoiceModeActivity extends MapActivity {
 	}
 
 	public void btnRecordClick(View view) {
-		if (helper.isRecording()) {
+		if (helper.getRecordState() == VoiceModeHelper.STATE_RECORDING) {
 			helper.stopRecording();
-		} else {
+		} else if(helper.getRecordState() == VoiceModeHelper.STATE_STOPED){
 			helper.startRecording();
 		}
 	}
