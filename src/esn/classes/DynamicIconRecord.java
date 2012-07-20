@@ -93,8 +93,7 @@ public class DynamicIconRecord {
 				btnRecord.setImageResource(idIcon);
 			}
 		});
-	}
-	
+	}	
 	
 	public void startIconLoading(){		
 		if(tmrDynIcon != null){
@@ -125,5 +124,7 @@ public class DynamicIconRecord {
 			tmrDynIcon.cancel();
 			tmrDynIcon = null;
 		}
+		btnRecord = null;
+		handler = null;
 	}
 }
