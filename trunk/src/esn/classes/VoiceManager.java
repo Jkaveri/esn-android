@@ -27,6 +27,13 @@ public class VoiceManager {
 	
 	public VoiceManager(Resources resource) {
 		s2tParser = new S2TParser();
+		player = new AudioPlayer();
+		wavConver = new WAVFormatConver();
+		wavReader = new WAVFormatReader();
+		auWs = new AudioWebService();
+		this.resource = resource;
+		wavConver.setDefaultWAVFormat();
+		
 		recorder = new AudioRecorder(new RecordListener() {
 
 			@Override
@@ -49,28 +56,23 @@ public class VoiceManager {
 			public void onStopedRecord() {
 				sendDataToServer();//Gui du lieu den server dau tien, ham nay tu chay rieng 1 thread nen se da
 				beep(R.raw.record_stop, false);//Beep ket thuc chay mot thread moi
-				callBack.onStopedRecord();//Goi su kien stop handler
+				if(callBack != null)
+					callBack.onStopedRecord();//Goi su kien stop handler
 			}
 		});
-		
-		player = new AudioPlayer();
-		wavConver = new WAVFormatConver();
-		wavReader = new WAVFormatReader();
-		auWs = new AudioWebService();
-		
-		this.resource = resource;
-		
-		wavConver.setDefaultWAVFormat();
 		
 		runSendWs = new Runnable() {
 			
 			@Override
 			public void run() {
-				try {
-					runSendWS();
-				} catch (IOException e) {
-					Log.e("AudioManager", "IOException, call runSendWS()", e);
-				}
+				byte[] recordBuf = recorder.getBufferRecord();
+				recorder.clearBuffer();//giai phong bo nho
+				Log.i("AudioManager", "Data record length: " + recordBuf.length);
+				S2TResult result = auWs.send(recordBuf);
+				Log.i("AudioManager", "Result: " + result.getResult());
+				s2tParser.parse(result.getResult());//Gui du lieu len class cha
+				if(callBack != null)
+					callBack.onS2TPostBack(s2tParser);
 			}
 		};
 		
@@ -105,25 +107,6 @@ public class VoiceManager {
 		}
 		typeStream = null;//giai phong bo nho
 		return ok;
-	}
-	
-	private void runSendWS() throws IOException{
-		byte[] recordBuf = recorder.getBufferRecord();
-		recorder.clearBuffer();//giai phong bo nho
-		Log.i("AudioManager", "Data record length: " + recordBuf.length);
-		
-//		wavConver.setBuffer(recordBuf);
-//		recordBuf = null;//giai phong bo nho
-//		wavConver.prepare();
-//		wavConver.conver();
-//		   
-//		byte[] buf = wavConver.getWAVData();
-//		wavConver.clearBuffer();//giai phong bo nho
-		
-		S2TResult result = auWs.send(recordBuf);
-		//Log.i("AudioManager", "Result: " + result.getResult());
-		s2tParser.parse(result.getResult());//Gui du lieu len class cha
-		callBack.onS2TPostBack(s2tParser);
 	}
 	
 	public void stopRecording(){
