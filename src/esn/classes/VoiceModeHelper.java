@@ -43,8 +43,8 @@ public class VoiceModeHelper{
 //				}else if(result.getAction().equals("SAP_TOI")){
 //					//Gia su co su kien tai Go Vap
 //					voiceMng.voiceAlertHasEvent(result.getEvent(), "GO_VAP");
-					voiceMng.voiceAlertHasEvent("LO_DAT", "GO_VAP");
-					voiceMng.voiceAlertHasEvent("KET_XE", "HANG_XANH");
+//					voiceMng.voiceAlertHasEvent("LO_DAT", "GO_VAP");
+//					voiceMng.voiceAlertHasEvent("KET_XE", "HANG_XANH");
 //				}
 				
 				
