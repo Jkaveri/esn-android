@@ -23,7 +23,7 @@ public class VoiceManager {
 	private Runnable runSendWs;
 	private VoiceListener callBack;
 	
-	protected Resources resource;
+	public Resources resource;
 	
 	public VoiceManager(Resources resource) {
 		s2tParser = new S2TParser();
