@@ -210,15 +210,6 @@ public class VoiceManager {
 		return true;
 	}
 	
-	public void destroy(){
-		player.release();
-		recorder.release();
-		if(thSendWs != null){
-			thSendWs.interrupt();
-			thSendWs = null;
-		}
-	}
-	
 	public boolean voiceAlertHasEvent(String event, String address){
 		int evAuID = AudioLibManager.getAudioTypeEvent(event);
 		int addAuID = AudioLibManager.getAudioAddress(address);
@@ -229,5 +220,14 @@ public class VoiceManager {
 		int active = AudioLibManager.getAudioActive("DA_KICH_HOAT");
 		int evAuID = AudioLibManager.getAudioEventName(event);
 		return voiceJoinPlay(active, evAuID);
+	}
+	
+	public void destroy(){
+		player.release();
+		recorder.release();
+		if(thSendWs != null){
+			thSendWs.interrupt();
+			thSendWs = null;
+		}
 	}
 }
