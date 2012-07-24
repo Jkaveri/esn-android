@@ -18,6 +18,7 @@
     <string name="esn_addNewEvent_chooseeventtype">Choose event type.</string>
     <string name="esn_addNewEvent_uploading">Please wait!</string>
     <string name="esn_addNewEvent_uploadEventImage">Uploading image…</string>
+    <string name="esn_addNewEvent_noAddress">Address not Found</string>
     <!-- EventDetail -->
     <string name="esn.eventDetail">Event detail</string>
     <string name="esn.eventDetail.like">True</string>

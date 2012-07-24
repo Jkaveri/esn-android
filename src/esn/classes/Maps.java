@@ -3,19 +3,18 @@ package esn.classes;
 import java.io.IOException;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
@@ -24,6 +23,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import esn.activities.R;
+import esn.models.EventType;
 
 public class Maps implements LocationListener {
 	private MapView map;
@@ -43,6 +43,7 @@ public class Maps implements LocationListener {
 	private final int GPS_ENABLED = 2;
 	private LocationManager locationManager;
 	private String provider;
+	private EsnItemizedOverlay<?> eventMarkers;
 
 	public Maps(Context context, MapView map) {
 		this.map = map;
@@ -50,7 +51,9 @@ public class Maps implements LocationListener {
 		this.res = context.getResources();
 		this.mapController = map.getController();
 		mapOverlays = map.getOverlays();
-		new Handler();
+
+		eventMarkers = new EsnItemizedOverlay<EventOverlayItem>(context
+				.getResources().getDrawable(EventType.getIconId(0, 3)), map);
 		locationManager = (LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE);
 	}
@@ -75,6 +78,27 @@ public class Maps implements LocationListener {
 		marker.addOverlay(item);
 		// set marker
 		mapOverlays.add(marker);
+	}
+
+	public void setEventMarker(GeoPoint point, String title,
+			String description, int eventID, int drawable) {
+		// create overlay item
+		EventOverlayItem item = new EventOverlayItem(point, title, description,
+				eventID);
+		// for clear markers
+		item.setCanRemove(true);
+		// get pointer image
+		Drawable markerIcon = context.getResources().getDrawable(drawable);
+		// remove before add
+		if (item.isCanRemove())
+			eventMarkers.removeOverlay(item);
+		// add itemOVerlay to itemizedOverlay
+		eventMarkers.addOverlay(item, markerIcon);
+		// set marker
+		List<Overlay> mOverlays = map.getOverlays();
+		mOverlays.remove(eventMarkers);
+		mOverlays.add(eventMarkers);
+		mOverlays = null;
 	}
 
 	public void setMarker(GeoPoint point, String title, String subtitle,
@@ -151,6 +175,11 @@ public class Maps implements LocationListener {
 		mapController.setCenter(point);
 	}
 
+	public void animateTo(GeoPoint point) {
+		mapController.animateTo(point);
+
+	}
+
 	public GeoPoint getCenter() {
 		return map.getMapCenter();
 	}
@@ -179,25 +208,44 @@ public class Maps implements LocationListener {
 
 	}
 
+	public boolean isProviderSupported(String provider) {
+		return locationManager.isProviderEnabled(provider);
+	}
+
 	public Location getCurrentLocation() {
+		currLocation = null;
 
+		/*
+		 * // get best provider Criteria criteria = new Criteria(); // yeu cau
+		 * do chinh xac la tuong doi
+		 * criteria.setAccuracy(Criteria.ACCURACY_COARSE); // bat buoc provider
+		 * cung cap ve do cao criteria.setAltitudeRequired(false); // bat buoc
+		 * provider cung cap thong tin ve mang
+		 * criteria.setBearingRequired(false); // cho phep provider duoc cap 1
+		 * luong chi phi' criteria.setCostAllowed(true);
+		 * criteria.setPowerRequirement(Criteria.NO_REQUIREMENT); String
+		 * provider = locationManager.getBestProvider(criteria, true);
+		 * 
+		 * if (isProviderSupported(provider)) { currLocation =
+		 * locationManager.getLastKnownLocation(provider); return currLocation;
+		 * } else { Toast.makeText( context, context.getResources().getString(
+		 * R.string.esn_global_must_enable_gps), Toast.LENGTH_LONG).show(); }
+		 * return null;
+		 */
+
+		// get support provider
 		int providerEnabled = getSupportProvider();
-
 		// set event listener for current location is change
 		// neu wifi support
-		if (providerEnabled == WIFI_ENABLED) {
-			// provider
+		if (providerEnabled == WIFI_ENABLED) { // provider
 			provider = LocationManager.NETWORK_PROVIDER;
 			currLocation = locationManager.getLastKnownLocation(provider);
 
-		} else
-		// neu gps support
+		} else // neu gps support
 		if (providerEnabled == GPS_ENABLED) {
 			// get provider
 			provider = LocationManager.GPS_PROVIDER;
 			currLocation = locationManager.getLastKnownLocation(provider);
-			// set listener
-			locationManager.requestLocationUpdates(provider, 0, 0, this);
 		} else {
 			Toast.makeText(
 					context,
@@ -210,7 +258,7 @@ public class Maps implements LocationListener {
 	}
 
 	public void displayCurrentLocation() {
-
+		currLocation = getCurrentLocation();
 		if (currLocation != null) {
 			displayCurrentLocation = true;
 			currPoint = new GeoPoint((int) (currLocation.getLatitude() * 1E6),
@@ -220,19 +268,8 @@ public class Maps implements LocationListener {
 					context.getString(R.string.map_current_location_subtitle),
 					currMarkerIcon);
 			mapController.animateTo(currPoint);
-			
-		} else if (getCurrentLocation() != null) {
-			displayCurrentLocation = true;
-			currPoint = new GeoPoint((int) (currLocation.getLatitude() * 1E6),
-					(int) (currLocation.getLongitude() * 1E6));
-			setMarker(currPoint,
-					context.getString(R.string.map_current_location_title),
-					context.getString(R.string.map_current_location_subtitle),
-					currMarkerIcon);
-			mapController.animateTo(currPoint);
-			
+
 		} else {
-			dialog.hide();
 			Toast.makeText(context,
 					res.getString(R.string.esn_global_your_location_not_found),
 					Toast.LENGTH_SHORT).show();
@@ -274,11 +311,12 @@ public class Maps implements LocationListener {
 
 	}
 
-	public void EnableOnLocationChangedListener(){
+	public void EnableOnLocationChangedListener() {
 		locationManager.removeUpdates(this);
 		// set listioner
 		locationManager.requestLocationUpdates(provider, 0, 0, this);
 	}
+
 	public int getCurrMarkerIcon() {
 		return currMarkerIcon;
 	}

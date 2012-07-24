@@ -206,7 +206,7 @@ public class UsersManager {
 				user.AccID = jsonUser.getInt("ID");
 				user.AccID = jsonUser.getInt("AccID");
 				user.Password = jsonUser.getString("Password");
-
+				
 				user.Name = p.getString("Name");
 
 				user.Birthday = Utils.GetDateFromJSONString(p

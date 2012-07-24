@@ -15,9 +15,9 @@ public class S2TParser {
 			strRecog = resultRecog.substring(li + 1).trim();
 			strRecog = strRecog.substring(0, 1).toUpperCase() + strRecog.substring(1);
 		}else{
-			strRecog = "Ex";
-			action = "Ex";
-			event = "Ex";
+			strRecog = "NULL";
+			action = "NULL";
+			event = "NULL";
 		}
 	}
 	

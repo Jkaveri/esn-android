@@ -180,7 +180,7 @@ public class EditProfileActivity extends Activity {
 		intent.setType("image/*");
 		startActivityForResult(intent, SELECT_PICTURE);
 	}
-
+ 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		ImageView image = (ImageView) findViewById(R.id.esn_changeprogile_avatar);
@@ -225,114 +225,127 @@ public class EditProfileActivity extends Activity {
 		}
 
 		public void run() {
+			if (sessions.currentUser != null) {
 
-			String email = sessions.get("email", null);
+				try {
+					user = usersManager
+							.RetrieveById(sessions.currentUser.AccID);
+					sessions.currentUser = user;
+				} catch (IllegalArgumentException e1) {
+					e1.printStackTrace();
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					e1.printStackTrace();
+				}
 
-			try {
-				user = usersManager.RetrieveByEmail(email);
+				if (user != null) {
+					handler.post(new Runnable() {
 
-			} catch (IllegalArgumentException e1) {
-				e1.printStackTrace();
-			} catch (JSONException e1) {
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			} catch (IllegalAccessException e1) {
-				e1.printStackTrace();
-			}
+						@Override
+						public void run() {
 
-			if (user != null) {
-				handler.post(new Runnable() {
+							dialog.dismiss();
 
-					@Override
-					public void run() {
+							int id = user.AccID;
 
-						dialog.dismiss();
+							sessions.put("AccId", id);
 
-						int id = user.AccID;
+							EditText txtName = (EditText) findViewById(R.id.esn_changeprofile_fullname);
+							EditText txtPhone = (EditText) findViewById(R.id.esn_changeprofile_phone);
+							EditText txtaddress = (EditText) findViewById(R.id.esn_changeprofile_address);
+							EditText txtStreet = (EditText) findViewById(R.id.esn_changeprofile_street);
+							EditText txtDistrict = (EditText) findViewById(R.id.esn_changeprofile_district);
+							EditText txtCity = (EditText) findViewById(R.id.esn_changeprofile_city);
+							EditText txtCountry = (EditText) findViewById(R.id.esn_changeprofile_country);
+							EditText txtFavorite = (EditText) findViewById(R.id.esn_changeprofile_favorite);
 
-						sessions.put("AccId", id);
+							final String url = user.Avatar;
 
-						EditText txtName = (EditText) findViewById(R.id.esn_changeprofile_fullname);
-						EditText txtPhone = (EditText) findViewById(R.id.esn_changeprofile_phone);
-						EditText txtaddress = (EditText) findViewById(R.id.esn_changeprofile_address);
-						EditText txtStreet = (EditText) findViewById(R.id.esn_changeprofile_street);
-						EditText txtDistrict = (EditText) findViewById(R.id.esn_changeprofile_district);
-						EditText txtCity = (EditText) findViewById(R.id.esn_changeprofile_city);
-						EditText txtCountry = (EditText) findViewById(R.id.esn_changeprofile_country);
-						EditText txtFavorite = (EditText) findViewById(R.id.esn_changeprofile_favorite);
+							if (url != null) {
+								new Thread() {
+									public void run() {
 
-						final String url = user.Avatar;
+										Bitmap bitmap = null;
+										try {
+											bitmap = Utils
+													.getBitmapFromURL(url);
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 
-						if (url != null) {
-							new Thread() {
-								public void run() {
+										handler.post(new SetAvatar(bitmap));
 
-									Bitmap bitmap = null;
-									try {
-										bitmap = Utils.getBitmapFromURL(url);
-									} catch (IOException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+									};
+								}.start();
+							}
 
-									handler.post(new SetAvatar(bitmap));
+							if (user.Birthday != null) {
+								EditText txtBirthday = (EditText) findViewById(R.id.esn_changeprofile_birthday);
 
-								};
-							}.start();
+								txtBirthday.setText(Utils.DateToStringByLocale(
+										user.Birthday, 1));
+							}
+							Boolean gender = user.Gender;
+
+							if (gender == true) {
+								Spinner sp = (Spinner) findViewById(R.id.esn_changeprofile_gender);
+								if (sp != null) {
+									ArrayAdapter<String> arr = (ArrayAdapter<String>) sp
+											.getAdapter();
+
+									int pos = arr.getPosition(res
+											.getString(R.string.esn_register_rdbMale));
+
+									sp.setSelection(pos);
+								}
+
+							} else {
+								Spinner sp = (Spinner) findViewById(R.id.esn_changeprofile_gender);
+
+								if (sp != null) {
+									ArrayAdapter arr = (ArrayAdapter) sp
+											.getAdapter();
+
+									int pos = arr.getPosition(res
+											.getString(R.string.esn_register_rdbFemale));
+
+									sp.setSelection(pos);
+								}
+							}
+
+							txtName.setText(user.Name);
+							txtPhone.setText(user.Phone);
+							txtaddress.setText(user.Address);
+							txtStreet.setText(user.Street);
+							txtDistrict.setText(user.District);
+							txtCity.setText(user.City);
+							txtCountry.setText(user.Country);
+							txtFavorite.setText(user.Favorite);
 						}
+					});
+				} else {
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							dialog.dismiss();
 
-						EditText txtBirthday = (EditText) findViewById(R.id.esn_changeprofile_birthday);
-
-						txtBirthday.setText(Utils.DateToStringByLocale(
-								user.Birthday, 1));
-
-						Boolean gender = user.Gender;
-
-						if (gender == true) {
-							Spinner sp = (Spinner) findViewById(R.id.esn_changeprofile_gender);
-
-							ArrayAdapter arr = (ArrayAdapter) sp.getAdapter();
-
-							int pos = arr.getPosition(res
-									.getString(R.string.esn_register_rdbMale));
-
-							sp.setSelection(pos);
-
-						} else {
-							Spinner sp = (Spinner) findViewById(R.id.esn_changeprofile_gender);
-
-							ArrayAdapter arr = (ArrayAdapter) sp.getAdapter();
-
-							int pos = arr.getPosition(res
-									.getString(R.string.esn_register_rdbFemale));
-
-							sp.setSelection(pos);
+							Util.showAlert(
+									context,
+									res.getResourceName(R.string.esn_global_Error),
+									res.getResourceEntryName(R.string.esn_global_ConnectionError));
 						}
-
-						txtName.setText(user.Name);
-						txtPhone.setText(user.Phone);
-						txtaddress.setText(user.Address);
-						txtStreet.setText(user.Street);
-						txtDistrict.setText(user.District);
-						txtCity.setText(user.City);
-						txtCountry.setText(user.Country);
-						txtFavorite.setText(user.Favorite);
-					}
-				});
+					});
+				}
 			} else {
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						dialog.dismiss();
-
-						Util.showAlert(
-								context,
-								res.getResourceName(R.string.esn_global_Error),
-								res.getResourceEntryName(R.string.esn_global_ConnectionError));
-					}
-				});
+				Utils.showToast(EditProfileActivity.this,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_SHORT);
 			}
+
 		}
 	}
 
@@ -348,7 +361,7 @@ public class EditProfileActivity extends Activity {
 		public void run() {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_changeprogile_avatar);
 
-			avatar.setImageBitmap(bitmap);
+			avatar.setImageBitmap(bitmap) ;
 		}
 
 	}
@@ -359,7 +372,7 @@ public class EditProfileActivity extends Activity {
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
 
 		dialog.show();
-		
+
 		UpdateProfileThread updateProfileThread = new UpdateProfileThread();
 
 		updateProfileThread.start();
@@ -395,7 +408,7 @@ public class EditProfileActivity extends Activity {
 				user.City = txtCity.getText().toString();
 				user.Country = txtCountry.getText().toString();
 				user.Favorite = txtFavorite.getText().toString();
-				
+
 				String bd = txtBirthday.getText().toString();
 
 				SimpleDateFormat format = new SimpleDateFormat("yyyy MM dd");
