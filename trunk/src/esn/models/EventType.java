@@ -2,7 +2,9 @@ package esn.models;
 
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
@@ -11,14 +13,13 @@ import esn.activities.R;
 
 import android.graphics.drawable.Drawable;
 
-public class EventType implements KvmSerializable {
+public class EventType{
 	public int EventTypeID;
 	public String EventTypeName;
 	public String LabelImage;
 	public String Slug;
 	public int Time;
 	public int Status;
-
 	
 	public static int getIconId(int eventTypeID,int level) {
 		int default_icon = R.drawable.ic_event_label_1;
@@ -40,29 +41,28 @@ public class EventType implements KvmSerializable {
 		return default_icon;
 	}
 	
-	
-	@Override
-	public Object getProperty(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getPropertyCount() {
-		// TODO Auto-generated method stub
+	public static int getID(String eventType){
+		if(eventType.equals("KET_XE")){
+			return 1;
+		}else if(eventType.equals("LO_COT")){
+			return 2;
+		}else if(eventType.equals("TAI_NAN")){
+			return 3;
+		}else if(eventType.equals("LU_LUT")){
+			return 4;
+		}else if(eventType.equals("LO_DAT")){
+			return 5;
+		}else if(eventType.equals("DUONG XAU")){
+			return 6;
+		}else if(eventType.equals("CHAY_NO")){
+			return 7;
+		}else if(eventType.equals("DUONG_CHAN")){
+			return 8;
+		}else if(eventType.equals("DONG_DAT")){
+			return 9;
+		}
 		return 0;
 	}
-
-	@Override
-	public void getPropertyInfo(int index, Hashtable arg, PropertyInfo info) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setProperty(int index, Object value) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

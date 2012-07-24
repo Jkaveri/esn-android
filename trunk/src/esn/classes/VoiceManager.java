@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import android.content.res.Resources;
 import android.media.AudioFormat;
+import android.os.Looper;
 import android.util.Log;
 import esn.activities.R;
 import esn.models.S2TResult;
@@ -65,6 +66,7 @@ public class VoiceManager {
 			
 			@Override
 			public void run() {
+				Looper.prepare();
 				byte[] recordBuf = recorder.getBufferRecord();
 				recorder.clearBuffer();//giai phong bo nho
 				Log.i("AudioManager", "Data record length: " + recordBuf.length);

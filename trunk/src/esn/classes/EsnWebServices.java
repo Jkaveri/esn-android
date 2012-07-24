@@ -1,12 +1,7 @@
 package esn.classes;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
-
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;

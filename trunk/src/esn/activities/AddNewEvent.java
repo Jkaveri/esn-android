@@ -65,6 +65,7 @@ public class AddNewEvent extends Activity {
 		try {
 			// TODO Auto-generated method stub
 			super.onCreate(savedInstanceState);
+
 			setContentView(R.layout.add_new_event);
 
 			res = getResources();
@@ -72,12 +73,12 @@ public class AddNewEvent extends Activity {
 			homeData = getIntent();
 
 			context = this;
-
+			// instance session
 			sessions = Sessions.getInstance(context);
 
 			// instance new event
 			event = new Events();
-
+			// toa do
 			TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate);
 			double lat = homeData.getDoubleExtra("latitude", 0);
 			double lon = homeData.getDoubleExtra("longtitude", 0);
@@ -89,7 +90,7 @@ public class AddNewEvent extends Activity {
 			// convert coordinate to address
 			TextView tvAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
 			Geocoder geoCoder = new Geocoder(this);
-
+			// hien dia chi
 			List<Address> listAddress = geoCoder.getFromLocation(lat, lon, 1);
 			if (listAddress.size() > 0) {
 				Address address = listAddress.get(0);
@@ -101,8 +102,12 @@ public class AddNewEvent extends Activity {
 					add += address.getAddressLine(i);
 				}
 				tvAddress.setText(add);
+			} else {
+				//neu tim duoc dia chi boi toa do
+				tvAddress.setText(res
+						.getString(R.string.esn_addNewEvent_noAddress));
 			}
-
+			
 			TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
 			tvImageEventStatus.setText(String.format(
 					res.getString(R.string.esn_addNewEvent_imageeventstatus),
@@ -473,8 +478,10 @@ public class AddNewEvent extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
-				Log.e(LOG_TAG,e.getMessage());
+				Utils.showToast(AddNewEvent.this,
+						res.getString(R.string.esn_global_ConnectionError),
+						Toast.LENGTH_SHORT);
+				Log.e(LOG_TAG, e.getMessage());
 				e.printStackTrace();
 			}
 		}

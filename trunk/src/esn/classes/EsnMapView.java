@@ -9,8 +9,10 @@ import org.json.JSONException;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
@@ -18,6 +20,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.widget.Toast;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.Overlay;
@@ -41,6 +45,8 @@ public class EsnMapView extends TapControlledMapView {
 	private MapActivity activity;
 	public ArrayList<Events> events = new ArrayList<Events>();
 	private EsnItemizedOverlay<EventOverlayItem> markers;
+	private Maps map;
+	private Resources res;
 
 	public EsnMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -74,11 +80,17 @@ public class EsnMapView extends TapControlledMapView {
 		this.lastMapCenter = new GeoPoint(0, 0);
 		this.isTouchEnded = false;
 		this.isFirstComputeScroll = true;
+		// get resource
+		res = context.getResources();
 		// instance HelloItemizedOverlay with image
 		markers = new EsnItemizedOverlay<EventOverlayItem>(context
 				.getResources().getDrawable(R.drawable.ic_event_type_0_3), this);
+		// instance Maps object
+		map = new Maps(context, this);
+		// get event around
 
 		lastMapCenter = getMapCenter();
+
 		double radius = calculateRadius();
 
 		new LoadEventsAroundThread(radius).start();
@@ -100,13 +112,28 @@ public class EsnMapView extends TapControlledMapView {
 					Looper.prepare();
 					int latitudeE6 = p.getLatitudeE6();
 					int longtitudeE6 = p.getLongitudeE6();
-					Intent addNewEventIntent = new Intent(context,
-							AddNewEvent.class);
-					addNewEventIntent.putExtra("latitude", latitudeE6 / 1E6);
-					addNewEventIntent
-							.putExtra("longtitude", longtitudeE6 / 1E6);
-					activity.startActivityForResult(addNewEventIntent,
-							REQUEST_CODE_ADD_NEW_EVENT);
+					// get current location
+					Location cLocation = map.getCurrentLocation();
+					if (cLocation != null) {
+						GeoPoint cPoint = new GeoPoint((int) (cLocation
+								.getLatitude() * 1E6), (int) (cLocation
+								.getLongitude() * 1E6));
+						// start activity
+						Intent addNewEventIntent = new Intent(context,
+								AddNewEvent.class);
+						addNewEventIntent
+								.putExtra("latitude", latitudeE6 / 1E6);
+						addNewEventIntent.putExtra("longtitude",
+								longtitudeE6 / 1E6);
+						activity.startActivityForResult(addNewEventIntent,
+								REQUEST_CODE_ADD_NEW_EVENT);
+					} else {
+						Toast.makeText(
+								activity,
+								res.getString(R.string.esn_global_your_location_not_found),
+								Toast.LENGTH_SHORT).show();
+					}
+
 				}
 			}).start();
 		}
@@ -204,7 +231,8 @@ public class EsnMapView extends TapControlledMapView {
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
 		// remove before add
-		if(item.isCanRemove())	markers.removeOverlay(item);
+		if (item.isCanRemove())
+			markers.removeOverlay(item);
 		// add itemOVerlay to itemizedOverlay
 		markers.addOverlay(item, markerIcon);
 		// set marker
@@ -234,8 +262,8 @@ public class EsnMapView extends TapControlledMapView {
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
 		// remove before add
-	
-			markers.removeOverlay(item);
+
+		markers.removeOverlay(item);
 		// add itemOVerlay to itemizedOverlay
 		markers.addOverlay(item, markerIcon);
 		// set marker

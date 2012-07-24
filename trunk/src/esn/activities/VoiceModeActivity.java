@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
+import esn.classes.Maps;
 import esn.classes.VoiceModeHelper;
 
 public class VoiceModeActivity extends MapActivity {
@@ -24,15 +25,15 @@ public class VoiceModeActivity extends MapActivity {
 		txtStates.setSelected(true);
 
 		ImageButton btnRecord = (ImageButton) findViewById(R.id.esn_voicemode_btn_record);
-		MapView maps = (MapView) findViewById(R.id.esn_google_maps_state);
-		helper = new VoiceModeHelper(this.getResources(), btnRecord, txtStates,
-				maps);
+		MapView mapView = (MapView) findViewById(R.id.esn_google_maps_state);
+		Maps map = new Maps(this, mapView);
+		helper = new VoiceModeHelper(this, btnRecord, txtStates, map);
 	}
 
 	public void btnRecordClick(View view) {
 		if (helper.getRecordState() == VoiceModeHelper.STATE_RECORDING) {
 			helper.stopRecording();
-		} else if(helper.getRecordState() == VoiceModeHelper.STATE_STOPED){
+		} else if (helper.getRecordState() == VoiceModeHelper.STATE_STOPED) {
 			helper.startRecording();
 		}
 	}
@@ -40,6 +41,7 @@ public class VoiceModeActivity extends MapActivity {
 	@Override
 	public void onDestroy() {
 		helper.destroy();
+		
 		super.onDestroy();
 	}
 

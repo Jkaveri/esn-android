@@ -1,70 +1,37 @@
 package esn.activities;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Hashtable;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.ksoap2.serialization.SoapObject;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.provider.SyncStateContract.Helpers;
-import android.util.Log;
-import android.view.DragEvent;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.facebook.android.Util;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
-import com.google.android.maps.OverlayItem;
 import com.readystatesoftware.maps.OnSingleTapListener;
-import com.readystatesoftware.maps.TapControlledMapView;
-
 import esn.adapters.EsnListAdapterNoSub;
 import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
-import esn.classes.EsnWebServices;
 import esn.classes.EventOverlayItem;
-import esn.classes.FilterLabelsDialog;
-import esn.classes.ListNavigationItem;
 import esn.classes.Maps;
 import esn.classes.Sessions;
-import esn.models.AppEnums;
+import esn.classes.Utils;
 import esn.models.EventType;
-import esn.models.Events;
-import esn.models.EventsManager;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
@@ -72,7 +39,6 @@ public class HomeActivity extends SherlockMapActivity implements
 	private Maps map;
 	private Resources res;
 	protected Handler handler;
-	private ProgressDialog progressDialog;
 	private EsnMapView mapView;
 	public final static int CODE_REQUEST_SET_FILTER = 2;
 	HomeActivity context;
@@ -99,11 +65,13 @@ public class HomeActivity extends SherlockMapActivity implements
 	private void setupListNavigate() {
 		mNavigationItems = new EsnListItem[2];
 		mNavigationItems[0] = new EsnListItem(1);
-		mNavigationItems[0].setTitle(res.getString(R.string.app_global_viewasmap));
+		mNavigationItems[0].setTitle(res
+				.getString(R.string.app_global_viewasmap));
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
 
 		mNavigationItems[1] = new EsnListItem(2);
-		mNavigationItems[1].setTitle(res.getString(R.string.app_global_viewaslist));
+		mNavigationItems[1].setTitle(res
+				.getString(R.string.app_global_viewaslist));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();
@@ -137,8 +105,19 @@ public class HomeActivity extends SherlockMapActivity implements
 
 		mapView.setActivity(this);
 		map = new Maps(this, mapView);
-		// set zoom level to 14
-		map.setZoom(4);
+
+		// get current location
+		Location cLocation = map.getCurrentLocation();
+		if (cLocation != null) {
+			GeoPoint cPoint = new GeoPoint(
+					(int) (cLocation.getLatitude() * 1E6),
+					(int) (cLocation.getLongitude() * 1E6));
+			map.setCenter(cPoint);
+			map.animateTo(cPoint);
+		}
+
+		// set zoom level to 15
+		map.setZoom(16);
 		map.setCurrMarkerIcon(R.drawable.ic_current_location);
 		mapView.setOnSingleTapListener(new OnSingleTapListener() {
 
@@ -243,6 +222,11 @@ public class HomeActivity extends SherlockMapActivity implements
 				addNewEventIntent.putExtra("longtitude", longtitude);
 				startActivityForResult(addNewEventIntent,
 						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+			} else {
+				Utils.showToast(
+						this,
+						res.getString(R.string.esn_global_your_location_not_found),
+						Toast.LENGTH_SHORT);
 			}
 			break;
 		default:
@@ -310,9 +294,8 @@ public class HomeActivity extends SherlockMapActivity implements
 		return false;
 	}
 
-	public void btnVoidMode(View view)
-	{
-		Intent intent = new Intent(context,VoiceModeActivity.class);
+	public void btnVoidMode(View view) {
+		Intent intent = new Intent(context, VoiceModeActivity.class);
 		startActivity(intent);
 	}
 }

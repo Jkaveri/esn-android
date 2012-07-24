@@ -269,21 +269,20 @@ public class Utils {
 			uploadImage = BitmapFactory.decodeStream(is);
 		}
 		is.close();
-		
-		 /*
-         * if the orientation is not 0 (or -1, which means we don't know), we
-         * have to do a rotation.
-         */
-        if (orientation > 0) {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(orientation);
 
-            uploadImage = Bitmap.createBitmap(uploadImage, 0, 0, uploadImage.getWidth(),
-                    uploadImage.getHeight(), matrix, true);
-        }
-		
-		
-		
+		/*
+		 * if the orientation is not 0 (or -1, which means we don't know), we
+		 * have to do a rotation.
+		 */
+		if (orientation > 0) {
+			Matrix matrix = new Matrix();
+			matrix.postRotate(orientation);
+
+			uploadImage = Bitmap.createBitmap(uploadImage, 0, 0,
+					uploadImage.getWidth(), uploadImage.getHeight(), matrix,
+					true);
+		}
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (type.equals("image/png")) {
 			uploadImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -300,7 +299,8 @@ public class Utils {
 		Cursor cursor = context.getContentResolver().query(photoUri,
 				new String[] { MediaStore.Images.ImageColumns.ORIENTATION },
 				null, null, null);
-		if(cursor == null) return -1;
+		if (cursor == null)
+			return -1;
 		if (cursor.getCount() != 1) {
 			return -1;
 		}
@@ -308,14 +308,30 @@ public class Utils {
 		cursor.moveToFirst();
 		return cursor.getInt(0);
 	}
-	public static void showToast(final Context context,final String text, final int duration){
-		new Handler().post(new Runnable() {
-			
+
+	public static void showToast(final Activity act, final String text,
+			final int duration) {
+		act.runOnUiThread(new Runnable() {
+
 			@Override
 			public void run() {
-				Toast.makeText(context, text, duration).show();
+				
+				Toast.makeText(act, text, duration).show();
 			}
 		});
+
+	}
+	/**
+	 * 
+	 * @param time1 start
+	 * @param time2 end
+	 * @return number of minute
+	 */
+	public static int calculateTime(Date time1, Date time2){
 		
+		long t1 = time1.getTime();
+		long t2 = time2.getTime();
+		int t = (int)(t1-t2)/(1000*60);
+		return t;		
 	}
 }
