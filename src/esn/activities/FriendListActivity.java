@@ -294,6 +294,13 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
 								| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		
+		menu.add("FindMoreFriend")
+				.setIcon(R.drawable.ic_friend_event)
+				.setShowAsAction(
+						MenuItem.SHOW_AS_ACTION_IF_ROOM
+								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		
 		return true;
 	}
 
@@ -308,6 +315,11 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 			Intent intenFdsEvent = new Intent(this, FriendEventsActivity.class);
 			startActivity(intenFdsEvent);
 			return true;
+		} else if (itemTitle.equals("FindMoreFriend")) {
+			finish();
+			Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
+			startActivity(intenFdsEvent);
+			return true;			
 		} else {
 			return super.onMenuItemSelected(featureId, item);
 		}

@@ -8,6 +8,7 @@
     <drawable name="white">#ffffff</drawable>
     <drawable name="transparent">#00FFFFFF</drawable>
     <drawable name="black">#000000</drawable>
-    <color name="text_color">#327df2</color>
+    <color name="text_color">#327df2</color>    
+    <color name="text_white">#ffffff</color>
     <color name="BgWhite">#ffffff</color>
 </resources>

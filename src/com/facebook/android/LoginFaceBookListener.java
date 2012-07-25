@@ -101,7 +101,5 @@ public class LoginFaceBookListener implements DialogListener {
 
 	@Override
 	public void onCancel() {
-
 	}
-
 }

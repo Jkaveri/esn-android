@@ -1,7 +1,6 @@
 package esn.classes;
 
 import com.google.android.maps.GeoPoint;
-import esn.activities.EsnServices;
 import esn.activities.R;
 import esn.models.EventType;
 import esn.models.Events;

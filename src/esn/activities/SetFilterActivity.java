@@ -87,6 +87,32 @@ public class SetFilterActivity extends SherlockActivity implements
 				}
 
 				adapter.add(friendItem);
+				//hot
+				EsnListItem hotItem = new EsnListItem();
+				friendItem.setTitle("Hot");
+				friendItem.setIcon(R.drawable.ic_hot_new);
+				friendItem.setTagName("hot");
+				if (filterListJson != null && !allItemChecked
+						&& filterListJson.has("hot")) {
+					friendItem.setChecked(filterListJson.getBoolean("hot"));
+				} else {
+					friendItem.setChecked(false);
+				}
+
+				adapter.add(friendItem);
+				//new
+				EsnListItem newItem = new EsnListItem();
+				friendItem.setTitle("New");
+				friendItem.setIcon(R.drawable.ic_new);
+				friendItem.setTagName("new");
+				if (filterListJson != null && !allItemChecked
+						&& filterListJson.has("new")) {
+					friendItem.setChecked(filterListJson.getBoolean("hot"));
+				} else {
+					friendItem.setChecked(false);
+				}
+
+				adapter.add(friendItem);
 				// eventtype
 				List<EventType> eventTypes = session.eventTypes;
 				for (int i = 0; i < eventTypes.size(); i++) {
@@ -245,8 +271,14 @@ public class SetFilterActivity extends SherlockActivity implements
 					return "";
 				if (key.equals("friend") && checked) {
 					friendFilter = "friend:" + session.currentUser.AccID;
-
-				} else {
+				}
+				if(key.equals("hot") && checked){
+					friendFilter += "level:1";
+				
+				}else if(key.equals("new") && checked){
+					friendFilter += "level:0";
+				}
+				else {
 					if (checked) {
 						if (!flag){
 							eventTypeFilter += "type:";

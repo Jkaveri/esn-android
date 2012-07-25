@@ -54,6 +54,9 @@ public class SettingsAppActivity extends Activity implements OnItemClickListener
 		adapter.add(new EsnListItem(res.getString(R.string.esn_setting_app_enableConnectFacebook), 
 				res.getString(R.string.esn_setting_app_enableConnectFacebook_small), R.drawable.ic_setting_app_connection));
 		
+		adapter.add(new EsnListItem(res.getString(R.string.esn_setting_app_enablelocation), 
+				res.getString(R.string.esn_setting_app_enablelocation_small), R.drawable.ic_setting_access_location));
+		
 		settingList.setAdapter(adapter);
 		
 		settingList.setOnItemClickListener(this);
@@ -63,6 +66,7 @@ public class SettingsAppActivity extends Activity implements OnItemClickListener
 	public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
 		
 		Intent intent;
+		
 		if (index == 0) {
 			intent = new Intent(this, SettingAppEventActivity.class);
 			startActivity(intent);
@@ -74,6 +78,10 @@ public class SettingsAppActivity extends Activity implements OnItemClickListener
 			intent = new Intent(this, SettingAppFacebookActivity.class);
 			startActivity(intent);
 		}
+		else if (index == 3) {
+			intent = new Intent(this, SettingAppLocationActivity.class);
+			startActivity(intent);
+		}		
 		else
 		{
 			return;

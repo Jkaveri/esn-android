@@ -49,6 +49,9 @@ public class SettingsAccountActivity extends Activity implements OnItemClickList
 			startActivity(intent);
 		} else if (index == 1) {
 			intent = new Intent(this, EditProfileActivity.class);
+			startActivity(intent);		
+		} else if (index == 2) {
+			intent = new Intent(this, FindFriendsActivity.class);
 			startActivity(intent);
 		}
 	} // end onItemClick
