@@ -3,6 +3,7 @@ package esn.adapters;
 import java.util.ArrayList;
 
 import esn.classes.ImageLoader;
+import esn.models.FriendsListsDTO;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -149,4 +150,5 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 	public int getDefaultEmptyImage() {
 		return idIcon;
 	}
+
 }

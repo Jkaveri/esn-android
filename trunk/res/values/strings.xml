@@ -13,7 +13,7 @@
 
     <string name="esn.global.must_enable_gps">You must enable gps</string>
     <string name="esn.global.your_location_not_found">Your Location Not Found</string>
-    <string name="key.maps.googleAPI">0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg</string>
+    <string name="key.maps.googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
     <string name="help">In this introductory Google Apps webinar</string>
     <string name="term">In this introductory term</string>
 
@@ -42,7 +42,21 @@
     <string name="app.global.no">No</string>
     <string name="app.global.viewasmap">View as Map</string>
     <string name="app.global.viewaslist">View as List</string>
-    <string name="esn_global_lostConnection"></string>
+    <string name="esn_global_lostConnection">Lost Connection</string>
+    <string name="esn_global_page_voice">Voice</string>
+    <string name="esn_global_page_login">Login</string>
+    <string name="esn_global_page_profile">Profile</string>
+    <string name="esn_global_page_newevent">New Event</string>
+    <string name="esn_global_page_eventfriend">Friend Event</string>
+    <string name="esn_global_page_firendlist">Friend List</string>
+    <string name="esn_global_page_fillter">Fillter</string>
+    <string name="esn_global_page_findfriend">Find Friend</string>
+    <string name="esn_global_page_settingevent">Setting Event</string>
+    <string name="esn_global_page_settingfacebook">Setting Facebook</string>
+    <string name="esn_global_page_eventdetail">Event Detail</string>
+    <string name="esn_global_page_feedback">Feedback</string>
+    <string name="esn_global_page_settingfriend">Friend Setting</string>
+    <string name="esn_global_page_recoverypassword">Recovery Password</string>
     <!-- Settings page -->
     
     <string name="esn.settings.app_settings">Application Settings</string>

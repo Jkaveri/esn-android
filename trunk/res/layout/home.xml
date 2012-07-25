@@ -25,7 +25,7 @@
 	        android:onClick="btnDetectMyLocation"
 	        android:background="@drawable/bg_access_current_location"
 	        android:padding="2dp"
-	        android:src="@drawable/ic_location" />
+	        android:src="@drawable/ic_location_access" />
     </LinearLayout>
     <LinearLayout 
         android:layout_width="fill_parent"

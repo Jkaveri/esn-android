@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    > 
+    <TableLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        >        
+        <TableRow 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="10dp"
+            >            
+            <TextView 
+	    	android:layout_width="280dp"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/text_color"
+	        android:text="@string/esn.setting.app.event.enable"
+	        android:textSize="16dp"
+	        />
+		    <CheckBox 
+		        android:id="@+id/esn.setting.app.location.check"
+		        android:onClick="Checked"
+		        />
+            
+        </TableRow>        
+    </TableLayout>      
+</LinearLayout>

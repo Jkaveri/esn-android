@@ -6,6 +6,8 @@
     <string name="esn.setting.app.enableFriendNotification.small">Cài đặt thông báo bạn bè.</string>
     <string name="esn.setting.app.enableConnectFacebook">Facebook</string>
     <string name="esn.setting.app.enableConnectFacebook.small">Cài đặt kết nối facebook.</string>
+    <string name="esn.setting.app.enablelocation">Vị trí</string>
+    <string name="esn.setting.app.enablelocation.small">Cài đặt cho phép truy cập vị trí hiện tại.</string>
     
     <string name="esn.setting.app.event.enable">Mở</string>
     <string name="esn.setting.app.event.radius">Bán kính</string>
