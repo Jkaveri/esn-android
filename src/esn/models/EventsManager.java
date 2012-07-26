@@ -3,18 +3,9 @@ package esn.models;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.List;
-
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ksoap2.serialization.SoapObject;
-
-import android.util.Log;
-
 import com.google.android.maps.GeoPoint;
 
 import esn.classes.EsnWebServices;
@@ -118,15 +109,15 @@ public class EventsManager {
 	}
 
 	public Events[] lookingAheadEvents(double lat, double log, double radius,
-			String eventType) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
-		int typeId = EventType.getID(eventType);
+			String filter) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+		
 		Events[] events = null;
 		JSONObject params = new JSONObject();
 		params.put("lat", lat);
 		
 		params.put("lon", log);
 		params.put("radius", radius);
-		params.put("filter", "type:" + typeId);
+		params.put("filter", filter);
 		// get soap result
 		JSONObject response = helper.invokeWebMethod("GetListEventsAround",
 				params);

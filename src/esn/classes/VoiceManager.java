@@ -25,7 +25,7 @@ public class VoiceManager {
 	private VoiceListener callBack;
 	
 	public Resources resource;
-	
+	public AudioLibManager libManager;
 	public VoiceManager(Resources resource) {
 		s2tParser = new S2TParser();
 		player = new AudioPlayer();
@@ -33,6 +33,7 @@ public class VoiceManager {
 		wavReader = new WAVFormatReader();
 		auWs = new AudioWebService();
 		this.resource = resource;
+		this.libManager = new AudioLibManager();
 		wavConver.setDefaultWAVFormat();
 		
 		recorder = new AudioRecorder(new RecordListener() {
@@ -211,17 +212,23 @@ public class VoiceManager {
 		player.playOutsiteTask();
 		return true;
 	}
-	
-	public boolean voiceAlertHasEvent(String event, String address){
-		int evAuID = AudioLibManager.getAudioTypeEvent(event);
-		int addAuID = AudioLibManager.getAudioAddress(address);
-		return voiceJoinPlay(evAuID, addAuID);
+	public void play(int audioId){
+		byte[] buff = getBufferSoundLib(audioId);
+		setPlayerConfig();
+		player.loadBufferPCM(buff);
+		buff = null;//clean up
+		player.playOutsiteTask();
 	}
 	
-	public boolean voiceAlertActivate(String event){
-		int active = AudioLibManager.getAudioActive("DA_KICH_HOAT");
-		int evAuID = AudioLibManager.getAudioEventName(event);
-		return voiceJoinPlay(active, evAuID);
+	public void voiceAlertHasEvent(String eventType, String street){
+		int evAuID = libManager.getHasEventTypeAudio(eventType);
+		int addAuID = libManager.getStreetAudio(street);
+		voiceJoinPlay(evAuID, addAuID);	
+		
+	}
+	
+	public void voiceAlertActivate(){
+		play(R.raw.thongbaokichhoat);
 	}
 	
 	public void destroy(){

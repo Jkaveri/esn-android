@@ -1,18 +1,16 @@
 package esn.classes;
 
 import com.google.android.maps.GeoPoint;
+import esn.activities.EsnLookingAheadEventsServices;
 import esn.activities.R;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.Resources;
+import android.location.Address;
 import android.location.Location;
-import android.os.IBinder;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -32,18 +30,7 @@ public class VoiceModeHelper {
 	private Activity act;
 	private Resources res;
 	public Intent service;
-	private ServiceConnection mConnection = new ServiceConnection() {
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			Log.d(LOG_TAG, "Service Disconnected" + name.getShortClassName());
-		}
-
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			Log.d(LOG_TAG, "Service connected");
-		}
-	};
+	public AudioLibManager audioLibManager;
 
 	public VoiceModeHelper(Activity _activity, ImageButton btnRecord,
 			TextView tv, Maps _map) {
@@ -58,6 +45,8 @@ public class VoiceModeHelper {
 		voiceMng.setVoiceListener(new VoiceModeListener());
 		// get resource
 		res = act.getResources();
+		//
+		audioLibManager = new AudioLibManager();
 	}
 
 	public void startRecording() {
@@ -78,9 +67,7 @@ public class VoiceModeHelper {
 	public void destroy() {
 		dynIcon.destroy();
 		voiceMng.destroy();
-		if (service != null) {
-			act.unbindService(mConnection);
-		}
+		stopService();
 	}
 
 	private class VoiceModeListener implements VoiceListener {
@@ -101,23 +88,24 @@ public class VoiceModeHelper {
 				Location currLocation = map.getCurrentLocation();
 				if (result.getAction().equals("KICH_HOAT")) {
 					Utils.showToast(act, "KICH_HOAT", Toast.LENGTH_SHORT);
-					/*if (service == null) {
+					if (service == null) {
 						service = new Intent(act.getApplicationContext(),
-								EsnServices.class);
-						act.bindService(service, mConnection,
-								Context.BIND_AUTO_CREATE);
-					}*/
+								EsnLookingAheadEventsServices.class);
+						act.startService(service);
+					}
+					voiceMng.voiceAlertActivate();
 
 				} else if (result.getAction().equals("SAP_TOI")) {
+					String filter = "type:"+EventType.getID(result.getEvent());
 					new LookingEventsThread(currLocation.getLatitude(),
-							currLocation.getLongitude(), result.getEvent(), 1)
+							currLocation.getLongitude(), filter, 1)
 							.start();
 				} else if (result.getAction().equals("NULL")) {
-					// TODO: thong bao cho nguoi ta co loi bang giong noi
+					voiceMng.play(R.raw.xinloi);
 					Utils.showToast(act, "Ko nhan dang duoc",
 							Toast.LENGTH_SHORT);
 				} else if (result.getAction().equals("ERROR")) {
-					// TODO: thong bao cho nguoi ta co loi bang giong noi
+					voiceMng.play(R.raw.xinloi);
 					Utils.showToast(act, "Loi tu webservice",
 							Toast.LENGTH_SHORT);
 					Log.e(LOG_TAG, result.getStrRecog());
@@ -160,6 +148,7 @@ public class VoiceModeHelper {
 
 		public LookingEventsThread(double lat, double lon, String eventType,
 				double radius) {
+			
 			super();
 			this.lat = lat;
 			this.lon = lon;
@@ -171,12 +160,15 @@ public class VoiceModeHelper {
 		public void run() {
 			try {
 				EventsManager _manager = new EventsManager();
+				
 				Events[] events = _manager.lookingAheadEvents(lat, lon, radius,
 						eventType);
-				Log.d(LOG_TAG,"events: "+events.length);
+				Log.d(LOG_TAG, "events: " + events.length);
+				// kiem tra co event nao ko
 				if (events != null && events.length > 0) {
-					voiceMng.voiceAlertHasEvent(eventType, "GO_VAP");
 					act.runOnUiThread(new LoadEventsAroundHandler(events));
+				}else{
+					
 				}
 
 			} catch (Exception e) {
@@ -204,17 +196,52 @@ public class VoiceModeHelper {
 
 		@Override
 		public void run() {
+			// play chu y
+			voiceMng.play(R.raw.chuy);
+			// duyet tat ca cac event
 			for (int i = 0; i < events.length; i++) {
+				// lay event
 				Events event = events[i];
+				// lay dia chi cua event
+				Address address = event.getAddress(act
+						.getApplicationContext());
+				// lay so dong dia chi
+				int addressLineCount = address.getMaxAddressLineIndex();
+				// flag, da phat
+				boolean played = false;
+				// duyet cac dong dia chi
+				// neu phat hien 1 dong nao la duong (co tong tai trong
+				// thu vien audio thi play)
 
+				for (int j = 0; j < addressLineCount; j++) {
+					// lay ten duong
+					String street = address.getAddressLine(j)
+							.replace(" ", "").toLowerCase();
+					if (audioLibManager.isExistStreetAudio(street)) {
+						voiceMng.voiceAlertHasEvent(
+								String.valueOf(event.EventID), street);
+						// bat co
+						played = true;
+						break;
+					}
+				}
+				if (!played) {
+					voiceMng.play(audioLibManager
+							.getHasEventTypeAudio(String
+									.valueOf(event.EventID)));
+
+				}
+				//set marker cho event do
 				GeoPoint point = new GeoPoint((int) (event.EventLat * 1E6),
 						(int) (event.EventLng * 1E6));
 				int icon = EventType.getIconId(event.EventTypeID,
 						event.getLevel());
 				map.setEventMarker(point, event.Title, event.Description,
 						event.EventID, icon);
+				map.postInvalidate();
+
 			}
-			map.getMap().invalidate();
+			
 			Log.d("esn", "end load events around!");
 		}
 	}

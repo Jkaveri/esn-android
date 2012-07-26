@@ -23,6 +23,7 @@ import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MyLocationOverlay;
 import com.readystatesoftware.maps.OnSingleTapListener;
 import esn.adapters.EsnListAdapterNoSub;
 import esn.classes.EsnListItem;
@@ -44,6 +45,7 @@ public class HomeActivity extends SherlockMapActivity implements
 	HomeActivity context;
 
 	Sessions sessions;
+	private MyLocationOverlay myLocationOverlay;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -105,20 +107,10 @@ public class HomeActivity extends SherlockMapActivity implements
 
 		mapView.setActivity(this);
 		map = new Maps(this, mapView);
-
-		// get current location
-		Location cLocation = map.getCurrentLocation();
-		if (cLocation != null) {
-			GeoPoint cPoint = new GeoPoint(
-					(int) (cLocation.getLatitude() * 1E6),
-					(int) (cLocation.getLongitude() * 1E6));
-			map.setCenter(cPoint);
-			map.animateTo(cPoint);
-		}
-
+		map.displayCurrentLocationMarker();
 		// set zoom level to 15
 		map.setZoom(16);
-		map.setCurrMarkerIcon(R.drawable.ic_current_location);
+
 		mapView.setOnSingleTapListener(new OnSingleTapListener() {
 
 			@Override
@@ -135,6 +127,18 @@ public class HomeActivity extends SherlockMapActivity implements
 				map.hideAllBallon();
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		map.enableMyLocation();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		map.disableMyLocation();
+		super.onPause();
 	}
 
 	@Override
@@ -177,7 +181,7 @@ public class HomeActivity extends SherlockMapActivity implements
 	}
 
 	public void btnDetectMyLocation(View view) {
-		map.displayCurrentLocation();
+		map.displayCurrentLocationMarker();
 	}
 
 	@SuppressLint("NewApi")

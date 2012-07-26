@@ -111,8 +111,6 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 		map = new Maps(this, mapView);
 		// set zoom level to 14
 		map.setZoom(14);
-		map.setCurrMarkerIcon(R.drawable.ic_current_location);
-		map.displayCurrentLocation();
 	}
 
 	@Override
