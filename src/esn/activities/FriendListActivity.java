@@ -2,9 +2,7 @@ package esn.activities;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.json.JSONException;
-
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -13,7 +11,6 @@ import esn.adapters.ListViewFriendsAdapter;
 import esn.classes.Sessions;
 import esn.models.FriendsListsDTO;
 import esn.models.FriendsManager;
-import esn.models.UsersManager;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -29,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;

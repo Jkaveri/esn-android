@@ -1,80 +1,146 @@
 package esn.activities;
 
 import java.util.ArrayList;
-
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.MapView;
-import esn.adapters.ListViewFriendsAdapter;
+import esn.adapters.ListViewEventHomeAdapter;
 import esn.adapters.EsnListAdapterNoSub;
 import esn.classes.EsnListItem;
-import esn.classes.ListNavigationItem;
 import esn.classes.Maps;
+import esn.classes.Sessions;
+import esn.models.EventType;
+import esn.models.Events;
+import esn.models.EventsManager;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.ActionMode;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class FriendEventsActivity extends SherlockMapActivity implements
 		OnNavigationListener, OnItemClickListener {
+	
+	private int pageIndex = 0;
+	private static int PAGE_SIZE = 10;
+	private int lastScroll = 0;
+	
 	private EsnListItem[] mNavigationItems;
 	private Maps map;
-	private ActionMode mMode;
-	private Resources res;
-	private MapView mapView;
-
 	private ListView lstFdEvents;
-	private ListViewFriendsAdapter adapter;
-	private ArrayList<Object> itemList;
+	private ListViewEventHomeAdapter adapter;
+	private ArrayList<Events> itemList;
+	private EventsManager eventsMng;
+	private Thread th;
+	private Handler handler;
+	private Activity context;
+	private Sessions sessions;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
-		setRes(getResources());
-
 		setContentView(R.layout.friend_events);
-		setupActionBar();
-		setupMap();
-		setupFdEvent();
-		setupListNavigate();
-		setupListView();
-	}
-
-	private void setupListView() {
-		itemList = new ArrayList<Object>();
-		addObjectToList(R.drawable.ic_search, "Search", "Search desc");
-		addObjectToList(R.drawable.ic_settings, "Settings", "Settings desc");
-
+		
+		context = this;
+		
+		eventsMng = new EventsManager();
+		handler = new Handler();		
+		sessions = Sessions.getInstance(context);		
+		
+		map = new Maps(this, (MapView) findViewById(R.id.maps_friend_google));
+		// set zoom level to 14
+		map.setZoom(16);
+		
+		//Setup list
 		lstFdEvents = (ListView) findViewById(R.id.lisvFdEvents);
-//		adapter = new ListViewFriendsAdapter(this, itemList);
-		lstFdEvents.setAdapter(adapter);
 		lstFdEvents.setOnItemClickListener(this);
+		adapter = new ListViewEventHomeAdapter(context, new ArrayList<Events>());
+		lstFdEvents.setAdapter(adapter);
+		
+		lstFdEvents.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				int scroll = firstVisibleItem + visibleItemCount;
+				boolean acti = scroll == totalItemCount-1;
+				if(acti && scroll > lastScroll){
+					lastScroll = scroll;
+					loadEvent();
+					Toast.makeText(context, "Load data", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+		loadEvent();
+		
+		setupActionBar();
+		setupListNavigate();		
+	}
+	
+
+	@Override
+	public void onDestroy() {
+		adapter.stopThread();
+		adapter.clearCache();
+		lstFdEvents.setAdapter(null);
+		super.onDestroy();
 	}
 
-	// Add one item into the Array List
-	private void addObjectToList(int image, String title, String desc) {
-		// bean = new ItemBean();
-		// bean.setDescription(desc);
-		// bean.setImage(image);
-		// bean.setTitle(title);
-		// itemList.add(bean);
-	}
+	private void loadEvent() {
+		if(th != null){
+			th.interrupt();
+			th = null;
+		}
+		
+		th = new Thread(new Runnable() {			
 
-	private void setupFdEvent() {
+			@Override
+			public void run() {
+				pageIndex++;
 				
+				try {
+					itemList = eventsMng.getListEventsFriends(sessions.currentUser.AccID, pageIndex, PAGE_SIZE);
+				} catch (Exception e) {
+					itemList = null;
+					pageIndex --;
+				}
+				
+				if(itemList != null && itemList.size() > 0){
+					handler.post(new Runnable() {
+	
+						@Override
+						public void run() {
+							adapter.add(itemList);
+						}
+					});
+					
+					for (Events ev : itemList) {
+						map.setMarker(ev.getPoint(), ev.Title, ev.Description, EventType.getIconId(ev.EventTypeID, ev.getLevel()));
+					}
+				}
+			}
+		});
+		
+		th.start();
 	}
-
+	
 	private void setupListNavigate() {
 		mNavigationItems = new EsnListItem[2];
 		mNavigationItems[0] = new EsnListItem();
@@ -104,23 +170,10 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 	}
 
-	private void setupMap() {
-
-		/** setup map **/
-		mapView = (MapView) findViewById(R.id.maps_friend_google);
-		map = new Maps(this, mapView);
-		// set zoom level to 14
-		map.setZoom(14);
-	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-			long id) {
-		// TODO Auto-generated method stub
-		// ItemBean bean = (ItemBean)adapter.getItem(position);
-		// Toast.makeText(this,
-		// "Title => "+bean.getTitle()+" n Description => "+bean.getDescription(),
-		// Toast.LENGTH_SHORT).show();
+	public void onItemClick(AdapterView<?> adView, View view, int position, long id) {
+		
 	}
 
 	@Override
@@ -157,7 +210,6 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -168,28 +220,11 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 
 		if (postTitle.equals(getString(R.string.str_Friends_Events_ViewAsMap))) {
 			lstFdEvents.setVisibility(View.INVISIBLE);
-			mapView.setVisibility(View.VISIBLE);
-		} else if (postTitle
-				.equals(getString(R.string.str_Friends_Events_ViewAsList))) {
+			map.getMap().setVisibility(View.VISIBLE);
+		} else if (postTitle.equals(getString(R.string.str_Friends_Events_ViewAsList))) {
 			lstFdEvents.setVisibility(View.VISIBLE);
-			mapView.setVisibility(View.INVISIBLE);
+			map.getMap().setVisibility(View.INVISIBLE);
 		}
 		return true;
-	}
-
-	public void setmMode(ActionMode mMode) {
-		this.mMode = mMode;
-	}
-
-	public ActionMode getmMode() {
-		return mMode;
-	}
-
-	public void setRes(Resources res) {
-		this.res = res;
-	}
-
-	public Resources getRes() {
-		return res;
 	}
 }
