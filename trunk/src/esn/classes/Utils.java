@@ -327,11 +327,11 @@ public class Utils {
 	 * @param time2 end
 	 * @return number of minute
 	 */
-	public static int calculateTime(Date time1, Date time2){
+	public static long calculateTime(Date start, Date end){
 		
-		long t1 = time1.getTime();
-		long t2 = time2.getTime();
-		int t = (int)(t1-t2)/(1000*60);
+		long t1 = start.getTime();
+		long t2 = end.getTime();
+		long t = (t2-t1);
 		return t;		
 	}
 }

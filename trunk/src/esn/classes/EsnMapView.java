@@ -44,7 +44,7 @@ public class EsnMapView extends TapControlledMapView {
 	public static final String LOG_TAG = "EsnMapView";
 	private MapActivity activity;
 	public ArrayList<Events> events = new ArrayList<Events>();
-	private EsnItemizedOverlay<EventOverlayItem> markers;
+	private EventItemizedOverlays<EventOverlayItem> markers;
 	private Maps map;
 	private Resources res;
 
@@ -83,7 +83,7 @@ public class EsnMapView extends TapControlledMapView {
 		// get resource
 		res = context.getResources();
 		// instance HelloItemizedOverlay with image
-		markers = new EsnItemizedOverlay<EventOverlayItem>(context
+		markers = new EventItemizedOverlays<EventOverlayItem>(context
 				.getResources().getDrawable(R.drawable.ic_event_type_0_3), this);
 		// instance Maps object
 		map = new Maps(context, this);
@@ -284,7 +284,7 @@ public class EsnMapView extends TapControlledMapView {
 		for (int i = 0; i < overlays.size(); i++) {
 			@SuppressWarnings("unchecked")
 			// lay item
-			EsnItemizedOverlay<EventOverlayItem> items = (EsnItemizedOverlay<EventOverlayItem>) overlays
+			EventItemizedOverlays<EventOverlayItem> items = (EventItemizedOverlays<EventOverlayItem>) overlays
 					.get(i);
 			// duyet itemized overlay
 			for (int j = 0; j < items.size(); j++) {

@@ -8,58 +8,52 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
-import android.os.Handler;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import esn.activities.R;
 import esn.models.EventType;
 
-public class Maps implements LocationListener {
-	private MapView map;
+public class Maps {
+	private MapView mapView;
 	private MapController mapController;
 	private Context context;
-	private EsnItemizedOverlay<?> marker;
+	private EventItemizedOverlays<?> marker;
 	private Location currLocation;
-	private GeoPoint currPoint;
-	private boolean displayCurrentLocation = false;
-	private int currMarkerIcon;
 	private ProgressDialog dialog;
 	protected Geocoder geoCoder;
-	private Resources res;
-	private List<Overlay> mapOverlays;
 
 	private final int WIFI_ENABLED = 1;
 	private final int GPS_ENABLED = 2;
 	private LocationManager locationManager;
 	private String provider;
-	private EsnItemizedOverlay<?> eventMarkers;
+	private EventItemizedOverlays<EventOverlayItem> eventMarkers;
+	private MyLocationOverlay myLocationOverlay;
+	private Resources res;
 
 	public Maps(Context context, MapView map) {
-		this.map = map;
+		this.mapView = map;
 		this.context = context;
-		this.res = context.getResources();
 		this.mapController = map.getController();
-		mapOverlays = map.getOverlays();
+		this.res = context.getResources();
 
-		eventMarkers = new EsnItemizedOverlay<EventOverlayItem>(context
+		eventMarkers = new EventItemizedOverlays<EventOverlayItem>(context
 				.getResources().getDrawable(EventType.getIconId(0, 3)), map);
+		myLocationOverlay = new MyLocationOverlay(context, map);
 		locationManager = (LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE);
 	}
 
 	public void setOnTouchEvent(OnTouchListener l) {
-		this.map.setOnTouchListener(l);
+		this.mapView.setOnTouchListener(l);
 
 	}
 
@@ -69,36 +63,34 @@ public class Maps implements LocationListener {
 		}
 	}
 
-	public void setMarker(EventOverlayItem item, int drawable) {
-		// get pointer image
-		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// instance HelloItemizedOverlay with image
-		marker = new EsnItemizedOverlay<EventOverlayItem>(markerIcon, map);
-		// add itemOVerlay to itemizedOverlay
-		marker.addOverlay(item);
-		// set marker
-		mapOverlays.add(marker);
-	}
-
 	public void setEventMarker(GeoPoint point, String title,
 			String description, int eventID, int drawable) {
 		// create overlay item
 		EventOverlayItem item = new EventOverlayItem(point, title, description,
 				eventID);
-		// for clear markers
-		item.setCanRemove(true);
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// remove before add
-		if (item.isCanRemove())
-			eventMarkers.removeOverlay(item);
+
 		// add itemOVerlay to itemizedOverlay
 		eventMarkers.addOverlay(item, markerIcon);
 		// set marker
-		List<Overlay> mOverlays = map.getOverlays();
+		List<Overlay> mOverlays = mapView.getOverlays();
 		mOverlays.remove(eventMarkers);
 		mOverlays.add(eventMarkers);
 		mOverlays = null;
+	}
+
+	public void setMarker(EventOverlayItem item, int drawable) {
+		// get pointer image
+		Drawable markerIcon = context.getResources().getDrawable(drawable);
+		// instance HelloItemizedOverlay with image
+		marker = new EventItemizedOverlays<EventOverlayItem>(markerIcon,
+				mapView);
+		// add itemOVerlay to itemizedOverlay
+		marker.addOverlay(item);
+		List<Overlay> mOverlays = mapView.getOverlays();
+		// set marker
+		mOverlays.add(marker);
 	}
 
 	public void setMarker(GeoPoint point, String title, String subtitle,
@@ -108,11 +100,41 @@ public class Maps implements LocationListener {
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
 		// instance HelloItemizedOverlay with image
-		marker = new EsnItemizedOverlay<EventOverlayItem>(markerIcon, map);
+		marker = new EventItemizedOverlays<EventOverlayItem>(markerIcon,
+				mapView);
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
+		List<Overlay> mOverlays = mapView.getOverlays();
 		// set marker
-		mapOverlays.add(marker);
+		mOverlays.add(marker);
+		mOverlays = null;
+	}
+
+	public void displayCurrentLocationMarker() {
+		if (!myLocationOverlay.isMyLocationEnabled()) {
+			if (!enableMyLocation()) {
+				Toast.makeText(context,
+						res.getString(R.string.esn_global_must_enable_gps),
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+		}
+		List<Overlay> mOverlays = mapView.getOverlays();
+		mOverlays.remove(myLocationOverlay);
+		mOverlays.add(myLocationOverlay);
+
+		GeoPoint cPoint = myLocationOverlay.getMyLocation();
+
+		animateTo(cPoint);
+		mOverlays = null;
+	}
+
+	public boolean enableMyLocation() {
+		return myLocationOverlay.enableMyLocation();
+	}
+
+	public void disableMyLocation() {
+		myLocationOverlay.disableMyLocation();
 	}
 
 	public void search(final String query) {
@@ -148,15 +170,15 @@ public class Maps implements LocationListener {
 
 		}
 		dialog.hide();
-		mapController.animateTo(map.getMapCenter());
+		mapController.animateTo(mapView.getMapCenter());
 	}
 
 	public void setMap(MapView map) {
-		this.map = map;
+		this.mapView = map;
 	}
 
 	public MapView getMap() {
-		return map;
+		return mapView;
 	}
 
 	public void setContext(Context context) {
@@ -176,17 +198,18 @@ public class Maps implements LocationListener {
 	}
 
 	public void animateTo(GeoPoint point) {
-		mapController.animateTo(point);
+		if (point != null) {
+			mapController.animateTo(point);
+		}
 
 	}
 
 	public GeoPoint getCenter() {
-		return map.getMapCenter();
+		return mapView.getMapCenter();
 	}
 
 	public int getZoomLevel() {
-		// TODO Auto-generated method stub
-		return map.getZoomLevel();
+		return mapView.getZoomLevel();
 	}
 
 	public boolean zoomIn() {
@@ -196,7 +219,9 @@ public class Maps implements LocationListener {
 	public boolean zoomOut() {
 		return mapController.zoomOut();
 	}
-
+	public void postInvalidate(){
+		mapView.postInvalidate();
+	}
 	public int getSupportProvider() {
 
 		boolean gpsEnabled = locationManager
@@ -213,25 +238,8 @@ public class Maps implements LocationListener {
 	}
 
 	public Location getCurrentLocation() {
-		currLocation = null;
 
-		/*
-		 * // get best provider Criteria criteria = new Criteria(); // yeu cau
-		 * do chinh xac la tuong doi
-		 * criteria.setAccuracy(Criteria.ACCURACY_COARSE); // bat buoc provider
-		 * cung cap ve do cao criteria.setAltitudeRequired(false); // bat buoc
-		 * provider cung cap thong tin ve mang
-		 * criteria.setBearingRequired(false); // cho phep provider duoc cap 1
-		 * luong chi phi' criteria.setCostAllowed(true);
-		 * criteria.setPowerRequirement(Criteria.NO_REQUIREMENT); String
-		 * provider = locationManager.getBestProvider(criteria, true);
-		 * 
-		 * if (isProviderSupported(provider)) { currLocation =
-		 * locationManager.getLastKnownLocation(provider); return currLocation;
-		 * } else { Toast.makeText( context, context.getResources().getString(
-		 * R.string.esn_global_must_enable_gps), Toast.LENGTH_LONG).show(); }
-		 * return null;
-		 */
+		currLocation = null;
 
 		// get support provider
 		int providerEnabled = getSupportProvider();
@@ -247,82 +255,15 @@ public class Maps implements LocationListener {
 			provider = LocationManager.GPS_PROVIDER;
 			currLocation = locationManager.getLastKnownLocation(provider);
 		} else {
-			Toast.makeText(
-					context,
-					context.getResources().getString(
-							R.string.esn_global_must_enable_gps),
+			Toast.makeText(context,
+					res.getString(R.string.esn_global_must_enable_gps),
 					Toast.LENGTH_LONG).show();
 		}
 		return currLocation;
 
 	}
 
-	public void displayCurrentLocation() {
-		currLocation = getCurrentLocation();
-		if (currLocation != null) {
-			displayCurrentLocation = true;
-			currPoint = new GeoPoint((int) (currLocation.getLatitude() * 1E6),
-					(int) (currLocation.getLongitude() * 1E6));
-			setMarker(currPoint,
-					context.getString(R.string.map_current_location_title),
-					context.getString(R.string.map_current_location_subtitle),
-					currMarkerIcon);
-			mapController.animateTo(currPoint);
-
-		} else {
-			Toast.makeText(context,
-					res.getString(R.string.esn_global_your_location_not_found),
-					Toast.LENGTH_SHORT).show();
-		}
-
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		if (displayCurrentLocation && currLocation != null) {
-
-			marker.removeOverlay(currPoint);
-
-			currPoint = new GeoPoint((int) (location.getLatitude() * 1E6),
-					(int) (location.getLongitude() * 1E6));
-			setMarker(currPoint,
-					context.getString(R.string.map_current_location_title),
-					context.getString(R.string.map_current_location_subtitle),
-					currMarkerIcon);
-		}
-	}
-
-	@Override
-	public void onProviderDisabled(String arg0) {
-		Toast.makeText(context, "GPS Provider is disabled", Toast.LENGTH_SHORT)
-				.show();
-
-	}
-
-	@Override
-	public void onProviderEnabled(String stri) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void EnableOnLocationChangedListener() {
-		locationManager.removeUpdates(this);
 		// set listioner
-		locationManager.requestLocationUpdates(provider, 0, 0, this);
 	}
-
-	public int getCurrMarkerIcon() {
-		return currMarkerIcon;
-	}
-
-	public void setCurrMarkerIcon(int currMarkerIcon) {
-		this.currMarkerIcon = currMarkerIcon;
-	}
-
 }

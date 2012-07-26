@@ -1,17 +1,7 @@
 package esn.models;
 
 import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Map;
-
-import org.ksoap2.serialization.KvmSerializable;
-import org.ksoap2.serialization.PropertyInfo;
-
 import esn.activities.R;
-
-import android.graphics.drawable.Drawable;
 
 public class EventType{
 	public int EventTypeID;
@@ -52,7 +42,7 @@ public class EventType{
 			return 4;
 		}else if(eventType.equals("LO_DAT")){
 			return 5;
-		}else if(eventType.equals("DUONG XAU")){
+		}else if(eventType.equals("DUONG_XAU")){
 			return 6;
 		}else if(eventType.equals("CHAY_NO")){
 			return 7;
