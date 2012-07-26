@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:apiKey="@string/key.maps.googleAPI"
-        android:clickable="true" />
+        android:clickable="true" />    
     
     <LinearLayout
         android:layout_width="fill_parent"
@@ -45,7 +45,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="@null" >
-
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="32dp"
@@ -84,5 +83,5 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>    
 </RelativeLayout>

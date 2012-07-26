@@ -130,6 +130,7 @@ public class UsersManager {
 		if (response != null) {
 
 			Users user = new Users();
+			
 			JSONObject jsonUser = response.getJSONObject("d");
 
 			JSONObject p = jsonUser.getJSONObject("Profile");
@@ -137,9 +138,12 @@ public class UsersManager {
 			user.AccID = jsonUser.getInt("ID");
 			user.AccID = jsonUser.getInt("AccID");
 			user.Password = jsonUser.getString("Password");
-
+			user.Email = jsonUser.getString("Email");
+			user.AccessToken = jsonUser.getString("AccessToken");
+			
+			
 			user.Name = p.getString("Name");
-
+			
 			user.Birthday = Utils
 					.GetDateFromJSONString(p.getString("Birthday"));
 
@@ -234,9 +238,18 @@ public class UsersManager {
 		}
 		return null;
 	}
-	/*
-	 * public Boolean CheckAccessTokenIsExisted(String accessToken){
-	 * 
-	 * }
-	 */
+	public Boolean UpdateAccessToken(int accID, String accessToken) throws JSONException, IOException {
+		
+		JSONObject params = new JSONObject();
+
+		params.put("accId", accID);
+		
+		params.put("accesstoken", accessToken);
+
+		JSONObject response = helper.invokeWebMethod("UpdateAccessToken", params);
+
+		Boolean rs = response.getBoolean("d");
+
+		return rs;		
+	}
 }
