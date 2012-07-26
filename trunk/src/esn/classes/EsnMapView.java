@@ -373,8 +373,7 @@ public class EsnMapView extends TapControlledMapView {
 						(int) (event.EventLng * 1E6));
 				int icon = EventType.getIconId(event.EventTypeID,
 						event.getLevel());
-				setMarker(point, event.Title, event.Description, event.EventID,
-						icon);
+				map.setEventMarker(point, event.Title, event.Description, event.EventID, icon);
 			}
 			invalidate();
 			Log.d("esn", "end load events around!");

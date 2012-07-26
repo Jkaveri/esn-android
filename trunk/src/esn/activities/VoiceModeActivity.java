@@ -104,7 +104,7 @@ public class VoiceModeActivity extends MapActivity {
 
 				map.setEventMarker(point, event.Title, event.Description,
 						event.EventID, drawable);
-
+				
 				map.postInvalidate();
 				// play audio
 				// lay dia chi cua event
@@ -126,7 +126,6 @@ public class VoiceModeActivity extends MapActivity {
 				} else {
 					// lay so dong dia chi
 					int addressLineCount = address.getMaxAddressLineIndex();
-
 					// duyet cac dong dia chi
 					// neu phat hien 1 dong nao la duong (co tong tai trong
 					// thu vien audio thi play)

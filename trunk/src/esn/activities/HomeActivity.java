@@ -258,9 +258,7 @@ public class HomeActivity extends SherlockMapActivity implements
 						&& longtitude != Integer.MIN_VALUE) {
 					GeoPoint point = new GeoPoint((int) (latitude * 1E6),
 							(int) (longtitude * 1E6));
-					EventOverlayItem item = new EventOverlayItem(point, title,
-							description, eventId);
-					map.setMarker(item, EventType.getIconId(labelId, 1));
+					map.setEventMarker(point, title, description, eventId, labelId);
 					mapView.getController().animateTo(point);
 				}
 				break;

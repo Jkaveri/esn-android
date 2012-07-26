@@ -34,7 +34,7 @@ public class Events{
 		return 1;
 	}
 	public Address getAddress(Context ctx){
-		Locale en_US = new Locale("en");
+		Locale en_US = new Locale("en","US");
 
 		Geocoder coder = new Geocoder(ctx,en_US);
 		try {

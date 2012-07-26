@@ -176,6 +176,7 @@ public class EsnLookingAheadEventsServices extends IntentService implements
 				EventsManager _manager = new EventsManager();
 				Events[] events = _manager.lookingAheadEvents(lat, lon, radius,
 						eventType);
+				
 				if (events != null && events.length > 0) {
 					// send broad cast
 

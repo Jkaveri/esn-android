@@ -28,7 +28,6 @@ public class EventItemizedOverlays<item extends OverlayItem> extends
 	
 	public void addOverlay(EventOverlayItem item) {
 		items.add(item);
-
 		populate();
 	}
 	public void addOverlay(EventOverlayItem item,Drawable marker) {
@@ -38,7 +37,6 @@ public class EventItemizedOverlays<item extends OverlayItem> extends
 		populate();
 	}
 	public void removeOverlay(EventOverlayItem item) {
-
 		items.remove(item);
 		populate();
 	}

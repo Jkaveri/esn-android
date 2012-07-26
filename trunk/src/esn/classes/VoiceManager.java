@@ -213,11 +213,14 @@ public class VoiceManager {
 		return true;
 	}
 	public void play(int audioId){
-		byte[] buff = getBufferSoundLib(audioId);
-		setPlayerConfig();
-		player.loadBufferPCM(buff);
-		buff = null;//clean up
-		player.playOutsiteTask();
+		if(audioId!=AudioLibManager.FILE_NOT_FOUND){
+			byte[] buff = getBufferSoundLib(audioId);
+			setPlayerConfig();
+			player.loadBufferPCM(buff);
+			buff = null;//clean up
+			player.playOutsiteTask();
+		}
+		
 	}
 	
 	public void voiceAlertHasEvent(String eventType, String street){
@@ -226,7 +229,6 @@ public class VoiceManager {
 		voiceJoinPlay(evAuID, addAuID);	
 		
 	}
-	
 	public void voiceAlertActivate(){
 		play(R.raw.thongbaokichhoat);
 	}

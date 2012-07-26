@@ -26,7 +26,7 @@ public class Maps {
 	private MapView mapView;
 	private MapController mapController;
 	private Context context;
-	private EventItemizedOverlays<?> marker;
+	private EsnItemizedOverlays marker;
 	private Location currLocation;
 	private ProgressDialog dialog;
 	protected Geocoder geoCoder;
@@ -45,8 +45,10 @@ public class Maps {
 		this.mapController = map.getController();
 		this.res = context.getResources();
 
-		eventMarkers = new EventItemizedOverlays<EventOverlayItem>(context
-				.getResources().getDrawable(EventType.getIconId(0, 3)), map);
+		eventMarkers = new EventItemizedOverlays<EventOverlayItem>(res.getDrawable(EventType.getIconId(0, 3)), map);
+		
+		// instance HelloItemizedOverlay with image
+				marker = new EsnItemizedOverlays(res.getDrawable(R.drawable.pointer));
 		myLocationOverlay = new MyLocationOverlay(context, map);
 		locationManager = (LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE);
@@ -58,9 +60,9 @@ public class Maps {
 	}
 
 	public void hideAllBallon() {
-		if (marker != null) {
+		/*if (marker != null) {
 			marker.hideAllBalloons();
-		}
+		}*/
 	}
 
 	public void setEventMarker(GeoPoint point, String title,
@@ -70,7 +72,8 @@ public class Maps {
 				eventID);
 		// get pointer image
 		Drawable markerIcon = context.getResources().getDrawable(drawable);
-
+		//remove before add
+		eventMarkers.removeOverlay(item);
 		// add itemOVerlay to itemizedOverlay
 		eventMarkers.addOverlay(item, markerIcon);
 		// set marker
@@ -80,32 +83,17 @@ public class Maps {
 		mOverlays = null;
 	}
 
-	public void setMarker(EventOverlayItem item, int drawable) {
-		// get pointer image
-		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// instance HelloItemizedOverlay with image
-		marker = new EventItemizedOverlays<EventOverlayItem>(markerIcon,
-				mapView);
-		// add itemOVerlay to itemizedOverlay
-		marker.addOverlay(item);
-		List<Overlay> mOverlays = mapView.getOverlays();
-		// set marker
-		mOverlays.add(marker);
-	}
-
 	public void setMarker(GeoPoint point, String title, String subtitle,
 			int drawable) {
 		// create overlay item
-		EventOverlayItem item = new EventOverlayItem(point, title, subtitle);
-		// get pointer image
-		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// instance HelloItemizedOverlay with image
-		marker = new EventItemizedOverlays<EventOverlayItem>(markerIcon,
-				mapView);
+		EsnOverlayItem item = new EsnOverlayItem(point, title, subtitle);
+		//remove befor add
+		marker.removeOverlay(item);
 		// add itemOVerlay to itemizedOverlay
 		marker.addOverlay(item);
 		List<Overlay> mOverlays = mapView.getOverlays();
 		// set marker
+		mOverlays.remove(marker);
 		mOverlays.add(marker);
 		mOverlays = null;
 	}
@@ -160,9 +148,7 @@ public class Maps {
 			point = new GeoPoint((int) (address.getLatitude() * 1E6),
 					(int) (address.getLongitude() * 1E6));
 			// initialize itemOverlay with current point
-			EventOverlayItem itemOverlay = new EventOverlayItem(point,
-					address.getCountryName(), address.getLocality(), 0);
-			setMarker(itemOverlay, R.drawable.pointer);
+			setMarker(point,address.toString(),address.getLocality(),R.drawable.pointer);
 			if (isFirst) {
 				mapController.setCenter(point);
 				isFirst = false;
