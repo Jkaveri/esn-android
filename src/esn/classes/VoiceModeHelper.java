@@ -205,30 +205,53 @@ public class VoiceModeHelper {
 				// lay dia chi cua event
 				Address address = event.getAddress(act
 						.getApplicationContext());
-				// lay so dong dia chi
-				int addressLineCount = address.getMaxAddressLineIndex();
 				// flag, da phat
 				boolean played = false;
 				// duyet cac dong dia chi
 				// neu phat hien 1 dong nao la duong (co tong tai trong
 				// thu vien audio thi play)
 
-				for (int j = 0; j < addressLineCount; j++) {
-					// lay ten duong
-					String street = address.getAddressLine(j)
-							.replace(" ", "").toLowerCase();
-					if (audioLibManager.isExistStreetAudio(street)) {
-						voiceMng.voiceAlertHasEvent(
-								String.valueOf(event.EventID), street);
-						// bat co
-						played = true;
-						break;
+				// play audio
+				// lay dia chi cua event
+				// flag, da phat
+				// street
+				String street = address.getThoroughfare();
+				if (street != null) {
+					street = street.replace("Đường", "").replace(" ", "")
+							.toLowerCase();
+				}
+				if (street != null && audioLibManager.isExistStreetAudio(street)) {
+					voiceMng.voiceAlertHasEvent(
+							String.valueOf(event.EventTypeID), street);
+					// bat co
+					played = true;
+
+				} else {
+					// lay so dong dia chi
+					int addressLineCount = address.getMaxAddressLineIndex();
+					// duyet cac dong dia chi
+					// neu phat hien 1 dong nao la duong (co tong tai trong
+					// thu vien audio thi play)
+
+					for (int j = 0; j < addressLineCount; j++) {
+						// lay ten duong
+						street = address.getAddressLine(j).replace(" ", "")
+								.toLowerCase();
+
+						if (street != null
+								&& audioLibManager.isExistStreetAudio(street)) {
+							voiceMng.voiceAlertHasEvent(
+									String.valueOf(event.EventID), street);
+							// bat co
+							played = true;
+							break;
+						}
 					}
 				}
+
 				if (!played) {
-					voiceMng.play(audioLibManager
-							.getHasEventTypeAudio(String
-									.valueOf(event.EventID)));
+					voiceMng.play(audioLibManager.getHasEventTypeAudio(String
+							.valueOf(event.EventTypeID)));
 
 				}
 				//set marker cho event do
