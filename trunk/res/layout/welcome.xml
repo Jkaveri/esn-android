@@ -12,6 +12,15 @@
         android:layout_height="wrap_content"
         android:src="@drawable/main_logo" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tnt"
+        android:textColor="#ffff"
+        android:textSize="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        />
     <Button
         android:id="@+id/btloginfb"
         android:layout_width="fill_parent"

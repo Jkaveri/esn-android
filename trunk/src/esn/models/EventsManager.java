@@ -264,4 +264,10 @@ public class EventsManager {
 		}
 		return true;
 	}
+
+	public ArrayList<Events> getListEventsFriends(int accID, int pageIndex,
+			int pAGE_SIZE) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

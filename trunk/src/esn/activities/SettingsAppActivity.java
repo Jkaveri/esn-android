@@ -1,23 +1,31 @@
 package esn.activities;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+
+import com.facebook.android.AccessFaceBookListener;
+import com.facebook.android.Facebook;
+import com.facebook.android.LoginFaceBookListener;
+
 import esn.adapters.EsnListAdapter;
-import esn.classes.EsnListItem;
 import esn.classes.Sessions;
+import esn.models.Users;
+import esn.models.UsersManager;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.Switch;
+import android.widget.Toast;
 
-public class SettingsAppActivity extends Activity implements OnItemClickListener{
+public class SettingsAppActivity extends Activity{
 
 	private EsnListAdapter adapter;
 	private Resources res;
@@ -26,6 +34,23 @@ public class SettingsAppActivity extends Activity implements OnItemClickListener
 	private Context context;
 	
 	private ProgressDialog dialog;
+	private Intent intent;
+	
+	UsersManager usersManager;
+	
+	private final String[] FB_PERMISSIONS = { "email","read_friendlists","publish_actions"," publish_stream","user_birthday" };
+	
+	public static final String APP_ID = "257584821008998";
+	
+	private Facebook mFacebook;	
+	
+	String accessToken=null;
+	
+	String email;
+	
+	Users users;
+	
+	Handler handler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,52 +64,130 @@ public class SettingsAppActivity extends Activity implements OnItemClickListener
 		
 		session = Sessions.getInstance(context);
 		
-		ListView settingList = (ListView) findViewById(R.id.setting_app_list);
+		handler = new Handler();
 		
-		adapter = new EsnListAdapter();
-		adapter = new EsnListAdapter();
+		mFacebook = new Facebook(APP_ID);
 		
+		users = new Users();
+		usersManager = new UsersManager();
 		
-		adapter.add(new EsnListItem(res.getString(R.string.esn_setting_app_enableEventNotification),
-						res.getString(R.string.esn_setting_app_enableEventNotification_small), R.drawable.ic_setting_enablenotification));
-		
-		adapter.add(new EsnListItem(res.getString(R.string.esn_setting_app_enableFriendNotification), 
-				res.getString(R.string.esn_setting_app_enableFriendNotification_small), R.drawable.ic_setting_eventnotice));
-		
-		adapter.add(new EsnListItem(res.getString(R.string.esn_setting_app_enableConnectFacebook), 
-				res.getString(R.string.esn_setting_app_enableConnectFacebook_small), R.drawable.ic_setting_app_connection));
-		
-		adapter.add(new EsnListItem(res.getString(R.string.esn_setting_app_enablelocation), 
-				res.getString(R.string.esn_setting_app_enablelocation_small), R.drawable.ic_setting_access_location));
-		
-		settingList.setAdapter(adapter);
-		
-		settingList.setOnItemClickListener(this);
+		ShowInfoSettingFb();
+		ShowInfoSettingLocation();
 	}
 	
-	@Override
-	public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
+	public void SettingFriendClicked(View v)
+	{
+		intent = new Intent(this, SettingAppEventActivity.class);
+		startActivity(intent);
+	}
+	
+	public void SettingEventCliked(View v)
+	{
+		intent = new Intent(this, SettingAppEventActivity.class);
+		startActivity(intent);
+	}
+	
+	public void SwitchFbClicked(View v)
+	{
+		Switch sw = (Switch)findViewById(R.id.esn_setting_app_facebook_enable);
 		
-		Intent intent;
-		
-		if (index == 0) {
-			intent = new Intent(this, SettingAppEventActivity.class);
-			startActivity(intent);
-		} else if (index == 1) {
-			intent = new Intent(this, SettingAppFriendActivity.class);
-			startActivity(intent);
+		if(sw.isChecked())
+		{	
+			email = session.currentUser.Email;		
+			
+				new Thread(){
+					public void run() {						
+						
+						try {
+							users = usersManager.RetrieveByEmail(email);
+							
+							handler.post(new Runnable() {
+								
+								@Override
+								public void run() {
+									
+									accessToken = users.AccessToken;
+									
+									if(accessToken.isEmpty() || accessToken.equals("_"))
+									{
+										ConnecToFacebook();										
+									}
+								}
+							});
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}.start();
 		}
-		else if (index == 2) {
-			intent = new Intent(this, SettingAppFacebookActivity.class);
-			startActivity(intent);
-		}
-		else if (index == 3) {
-			intent = new Intent(this, SettingAppLocationActivity.class);
-			startActivity(intent);
-		}		
 		else
 		{
+			session.put("app.setting.facebook.enable",false);			
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
 			return;
 		}
+	}	
+	
+	public void CheckLocationClicked(View v)
+	{
+		CheckBox chk = (CheckBox)findViewById(R.id.esn_setting_app_location_check);
+		
+		if(chk.isChecked())
+		{
+			session.put("app.setting.location.location", true);
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
+		}
+		else
+		{
+			session.put("app.setting.location.location", false);
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
+		}
+	}
+		
+	public void ShowInfoSettingFb()
+	{
+		Boolean check = session.get("app.setting.facebook.enable",false);
+		
+		Switch sw = (Switch)findViewById(R.id.esn_setting_app_facebook_enable);
+				
+		if(check==true)
+		{		
+			sw.setChecked(true);		
+		}
+		else
+		{
+			sw.setChecked(false);			
+		}
+	}
+	
+	public void ShowInfoSettingLocation()
+	{
+		CheckBox chkbox = (CheckBox)findViewById(R.id.esn_setting_app_location_check);
+		
+		boolean chk = session.get("app.setting.location.location", false);
+		
+		if(chk==true)
+		{
+			chkbox.setChecked(true);
+		}
+	}
+	
+	public void ConnecToFacebook()
+	{	
+		mFacebook.authorize(this, FB_PERMISSIONS, new AccessFaceBookListener(SettingsAppActivity.this,mFacebook));
+		
+		session.put("app.setting.facebook.enable",true);			
+		Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
+						
 	}
 }

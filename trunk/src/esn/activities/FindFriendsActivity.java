@@ -57,6 +57,7 @@ public class FindFriendsActivity extends Activity {
 	Context context;
 	
 	FriendsManager friendsManager = new FriendsManager();
+	
 	private final String[] FB_PERMISSIONS = { "email","read_friendlists","publish_actions"," publish_stream","user_birthday" };
 	
 	@Override
@@ -81,8 +82,8 @@ public class FindFriendsActivity extends Activity {
 			}
 		});
 		
-		
 		GetFriendFacebook();
+		
 	}
 
 	private void GetFriendFacebook() {
