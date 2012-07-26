@@ -38,7 +38,7 @@ public class AudioRecorder {
 	private int timeOut = 0;
 	private boolean isCallBackOnStarting = false;
 	private String TAG = "AudioRecorder";
-	private Codec codec;
+	private static Codec codec;
 	
 	private class DetectTask extends TimerTask {
 		@Override
@@ -75,7 +75,7 @@ public class AudioRecorder {
 	public AudioRecorder(RecordListener recHandler) {
 		callBack = recHandler;
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-		codec = Codec.instance(30);
+		codec = Codec.instance();
 		int truncated;
         
         if (REC_BUFFER_SIZE == AudioRecord.ERROR_BAD_VALUE) {

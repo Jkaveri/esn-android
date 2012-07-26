@@ -13,12 +13,14 @@ public class Codec {
 
 	private native int init(int mode);
 
-	private Codec(int mode) {
+	private Codec() {
 		System.loadLibrary("ilbc-codec");
-		init(mode);
+		init(30);
 	}
 
-	public static Codec instance(int mode) {
-		return new Codec(mode);
+	static final private Codec INSTANCE = new Codec();
+	
+	public static Codec instance() {
+		return INSTANCE;
 	}
 }
