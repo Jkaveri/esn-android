@@ -5,6 +5,7 @@ import com.google.android.maps.GeoPoint;
 
 import esn.activities.VoiceModeActivity.EventAlertReciever;
 import esn.classes.Utils;
+import esn.classes.VoiceManager;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.app.IntentService;
@@ -29,21 +30,28 @@ public class EsnLookingAheadEventsServices extends IntentService implements
 	public static final String LOG_TAG = null;
 	private LocationManager locationManager;
 	private Date lastTime = null;
-	private static final long TIME_OUT = 180000; // 3min.
-	private static final double DICTANCE = 5;// 0.5km
+	private static final long TIME_OUT = 300000; // 5min.
+	private static final double DICTANCE = 1;// 1km
 	private GeoPoint lastPoint = null;
 	private LookingEventsThread lookingEventsThread;
+	private VoiceManager voiceManager;
 
+	@Override
+	public void onCreate() {
+		voiceManager = new VoiceManager(getResources());
+		super.onCreate();
+	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+		
 		String provider = getBestProvider();
 
 		if (locationManager.isProviderEnabled(provider)) {
 			locationManager.requestLocationUpdates(provider, 0, 0, this);
 		} else {
-
+			voiceManager.play(R.raw.kichhoatgps);
 		}
 		return START_NOT_STICKY;
 	}
@@ -64,6 +72,14 @@ public class EsnLookingAheadEventsServices extends IntentService implements
 		return locationManager.getBestProvider(criteria, true);
 	}
 
+	@Override
+	public void onDestroy() {
+		if(locationManager!=null){
+			locationManager.removeUpdates(this);
+		}
+		super.onDestroy();
+	}
+	
 	@Override
 	public void onLocationChanged(Location location) {
 		Log.d(LOG_TAG, "Location Changed");
@@ -92,22 +108,24 @@ public class EsnLookingAheadEventsServices extends IntentService implements
 				lookingEventsThread = new LookingEventsThread(lat, lng, "",
 						DICTANCE);
 				lookingEventsThread.start();
+				lastPoint = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
+				lastTime = now;
 			}
-
+			
 		} else {
-			// clean up thread before run new thread
+			/*// clean up thread before run new thread
 			if (lookingEventsThread != null) {
 				lookingEventsThread.interrupt();
 				lookingEventsThread = null;
 			}
 			lookingEventsThread = new LookingEventsThread(lat, lng, "",
 					DICTANCE);
-			lookingEventsThread.start();
+			lookingEventsThread.start();*/
+			lastPoint = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
+			lastTime = now;
 
-			
 		}
-		lastPoint = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
-		lastTime = now;
+
 	}
 
 	@Override
@@ -176,25 +194,26 @@ public class EsnLookingAheadEventsServices extends IntentService implements
 				EventsManager _manager = new EventsManager();
 				Events[] events = _manager.lookingAheadEvents(lat, lon, radius,
 						eventType);
-				
+
 				if (events != null && events.length > 0) {
 					// send broad cast
 
 					for (int i = 0; i < events.length; i++) {
 						Events event = events[i];
-
 						sendDataToVoiceMode(event);
-						Thread.sleep(500);
+						Thread.sleep(1000);
 					}
 
 					// TODO: can bien lam
 
 					// voiceMng.voiceAlertHasEvent(eventType, "GO_VAP");
 
+				}else{
+					voiceManager.play(R.raw.khongcosukiennao);
 				}
 
 			} catch (Exception e) {
-				// TODO: thong bao cho nguoi ta co loi bang giong noi
+				voiceManager.play(R.raw.kichhoatmang);
 				Log.e(LOG_TAG, e.getMessage());
 				e.printStackTrace();
 			}

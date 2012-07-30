@@ -5,7 +5,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Facebook;
 
 import esn.classes.LoginThread;
-import esn.classes.Maps;
 import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.EventType;
@@ -15,7 +14,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -35,7 +33,7 @@ public class WelcomeScreen extends SherlockActivity {
 	private Facebook fb;
 	public double centerLong;
 	public double centerLat;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,9 +89,9 @@ public class WelcomeScreen extends SherlockActivity {
 
 		if (firstLauch) {
 			/* TODO: confirm user to detect location */
-
+			
 			// set radius for load event around
-			session.put("radiusEventAround", 2);
+			session.put("app.setting.event.radius", (float) 2.0);
 			session.get("firstLauch", false);
 			session.put("filterList", "");
 		}

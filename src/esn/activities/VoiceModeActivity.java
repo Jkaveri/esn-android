@@ -19,6 +19,7 @@ import esn.classes.AudioLibManager;
 import esn.classes.Maps;
 import esn.classes.VoiceManager;
 import esn.classes.VoiceModeHelper;
+import esn.classes.removeUTF8;
 import esn.models.EventType;
 import esn.models.Events;
 
@@ -69,6 +70,7 @@ public class VoiceModeActivity extends MapActivity {
 	public void onDestroy() {
 		helper.destroy();
 		unregisterReceiver(receiver);
+		
 		super.onDestroy();
 	}
 
@@ -104,7 +106,7 @@ public class VoiceModeActivity extends MapActivity {
 
 				map.setEventMarker(point, event.Title, event.Description,
 						event.EventID, drawable);
-				
+
 				map.postInvalidate();
 				// play audio
 				// lay dia chi cua event
@@ -114,10 +116,11 @@ public class VoiceModeActivity extends MapActivity {
 				// street
 				String street = address.getThoroughfare();
 				if (street != null) {
-					street = street.replace("Đường", "").replace(" ", "")
-							.toLowerCase();
+					street = removeUTF8.execute(street).toLowerCase();
+
 				}
-				if (street != null && audioLibManager.isExistStreetAudio(street)) {
+				if (street != null
+						&& audioLibManager.isExistStreetAudio(street)) {
 					voiceMng.voiceAlertHasEvent(
 							String.valueOf(event.EventTypeID), street);
 					// bat co
@@ -132,8 +135,7 @@ public class VoiceModeActivity extends MapActivity {
 
 					for (int j = 0; j < addressLineCount; j++) {
 						// lay ten duong
-						street = address.getAddressLine(j).replace(" ", "")
-								.toLowerCase();
+						street = removeUTF8.execute(address.getAddressLine(j)).toLowerCase();
 
 						if (street != null
 								&& audioLibManager.isExistStreetAudio(street)) {

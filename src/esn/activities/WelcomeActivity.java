@@ -75,15 +75,7 @@ public class WelcomeActivity extends SherlockActivity {
 	}
 	
 	public void btnLoginfbClicked(View view) {
-		if (!mFacebook.isSessionValid()) {
-			mFacebook.authorize(this, FB_PERMISSIONS, new LoginFaceBookListener(this,mFacebook));
-			
-		}else{			
-			session.put("isLogined", true);
-			Intent intent = new Intent(this, HomeActivity.class);
-			startActivity(intent);
-			finish();
-		}
+		mFacebook.authorize(this, FB_PERMISSIONS, new LoginFaceBookListener(this,mFacebook));
 	}
 
 	public void LoginClicked(View view) {

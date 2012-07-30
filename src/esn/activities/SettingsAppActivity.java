@@ -6,14 +6,10 @@ import org.json.JSONException;
 
 import com.facebook.android.AccessFaceBookListener;
 import com.facebook.android.Facebook;
-import com.facebook.android.LoginFaceBookListener;
-
-import esn.adapters.EsnListAdapter;
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -27,13 +23,11 @@ import android.widget.Toast;
 
 public class SettingsAppActivity extends Activity{
 
-	private EsnListAdapter adapter;
 	private Resources res;
 
 	private Sessions session;
 	private Context context;
 	
-	private ProgressDialog dialog;
 	private Intent intent;
 	
 	UsersManager usersManager;

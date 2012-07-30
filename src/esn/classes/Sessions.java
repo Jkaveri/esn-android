@@ -91,7 +91,13 @@ public class Sessions {
 	public boolean logined() {
 		boolean isLogined = pref.getBoolean("isLogined", false);
 		return isLogined;
-	}	
+	}
+	public double getRadiusForEventAround(){
+		return get("app.setting.event.radius", (float)1.0);
+	}
+	public void setRadiusForEventAround(double r){
+		put("app.setting.event.radius",(float)r);
+	}
 	public boolean restoreFaceBook(Facebook fb){
 		fb.setAccessToken(get("fb_access_token",""));
 		fb.setAccessExpires(get("fb_access_token_expires",Long.MIN_VALUE));

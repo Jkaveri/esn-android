@@ -145,8 +145,6 @@ public class ChangePassActivity extends Activity {
 			EditText txtEmail = (EditText)findViewById(R.id.esn_changepass_email);
 			EditText txtCurrentPassword = (EditText)findViewById(R.id.esn_changepass_currentpassword);
 			EditText txtNewPassword = (EditText)findViewById(R.id.esn_changepass_newpassword);
-			EditText txtRepeatNewPassword = (EditText)findViewById(R.id.esn_changepass_repeatnewpassword);
-			
 			UsersManager usersManager = new UsersManager();
 			
 			Boolean rs = null;

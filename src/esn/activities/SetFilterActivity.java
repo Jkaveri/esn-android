@@ -99,7 +99,7 @@ public class SetFilterActivity extends SherlockActivity implements
 					friendItem.setChecked(false);
 				}
 
-				adapter.add(friendItem);
+				adapter.add(hotItem);
 				//new
 				EsnListItem newItem = new EsnListItem();
 				friendItem.setTitle("New");
@@ -112,7 +112,7 @@ public class SetFilterActivity extends SherlockActivity implements
 					friendItem.setChecked(false);
 				}
 
-				adapter.add(friendItem);
+				adapter.add(newItem);
 				// eventtype
 				List<EventType> eventTypes = session.eventTypes;
 				for (int i = 0; i < eventTypes.size(); i++) {

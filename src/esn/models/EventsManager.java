@@ -108,13 +108,48 @@ public class EventsManager {
 		return events;
 	}
 
-	public Events[] lookingAheadEvents(double lat, double log, double radius,
-			String filter) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
-		
+	public Events[] getEventsAround(double lat, double log, double radius,
+			String filter, int pageNum, int pageSize) throws JSONException,
+			IOException, IllegalArgumentException, IllegalAccessException {
 		Events[] events = null;
 		JSONObject params = new JSONObject();
 		params.put("lat", lat);
-		
+		params.put("lon", log);
+		params.put("radius", radius);
+		params.put("filter", filter);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		// get soap result
+		JSONObject response = helper.invokeWebMethod(
+				"GetListEventsAroundWithPagination", params);
+		// Log.d("esn", response.toString());
+		if (response != null && response.has("d")) {
+			// get event Array
+			JSONArray eventArray = response.getJSONArray("d");
+			// get array count
+			int eventCount = eventArray.length();
+			// init arrays
+			events = new Events[eventCount];
+
+			for (int i = 0; i < eventCount; i++) {
+				JSONObject eventJSON = eventArray.getJSONObject(i);
+				Events event = new Events();
+				Utils.JsonToObject(eventJSON, event);
+				events[i] = event;
+			}
+
+		}
+		return events;
+	}
+
+	public Events[] lookingAheadEvents(double lat, double log, double radius,
+			String filter) throws JSONException, IOException,
+			IllegalArgumentException, IllegalAccessException {
+
+		Events[] events = null;
+		JSONObject params = new JSONObject();
+		params.put("lat", lat);
+
 		params.put("lon", log);
 		params.put("radius", radius);
 		params.put("filter", filter);
