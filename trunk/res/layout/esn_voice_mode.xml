@@ -9,7 +9,40 @@
         android:layout_height="fill_parent"
         android:apiKey="@string/key.maps.googleAPI"
         android:clickable="true" />    
-    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="right|bottom"
+        android:paddingBottom="60dp"
+        android:paddingRight="10dp"
+        >
+        <ImageButton
+	        android:id="@+id/btnDetectLocation"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="btnDetectMyLocation"
+	        android:background="@drawable/bg_access_current_location"
+	        android:padding="2dp"
+	        android:src="@drawable/ic_location_access" />
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="left|bottom"
+        android:paddingBottom="60dp"
+        android:paddingLeft="10dp"
+        >
+        <ImageButton
+	        android:id="@+id/btnDetectVoice"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="25dp"
+	        android:layout_marginTop="50dp"
+	        android:background="@drawable/bg_access_current_voice"
+	        android:onClick="btnVoidMode"
+	        android:padding="2dp"
+	        android:src="@drawable/ic_voice" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -77,7 +77,7 @@ public class SettingsAppActivity extends Activity{
 	
 	public void SettingFriendClicked(View v)
 	{
-		intent = new Intent(this, SettingAppEventActivity.class);
+		intent = new Intent(this, SettingAppFriendActivity.class);
 		startActivity(intent);
 	}
 	

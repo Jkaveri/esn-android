@@ -43,4 +43,6 @@
     <string name="esn.eventDetail.entercontent">Enter message !</string>
     <string name="esn.eventDetail.entereventtitle">Enter event title !</string>
     <string name="esn_eventDetail_eventIsWaiting">Picture is waiting for confirm...</string>
+    <string name="esn_eventDetail_address">Address</string>
+    <string name="esn_eventDetail_commentwaiting">Waiting for a moment.</string>
 </resources>

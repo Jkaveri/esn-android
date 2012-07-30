@@ -3,6 +3,8 @@ package esn.activities;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONException;
 
@@ -15,6 +17,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -77,7 +80,8 @@ public class EventDetailActivity extends SherlockActivity implements
 
 	Resources res;
 
-	@SuppressLint("NewApi")
+	Date lastTime = null;
+	long timeout = 30000;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -588,20 +592,54 @@ public class EventDetailActivity extends SherlockActivity implements
 		}
 	}
 
-	@SuppressLint("NewApi")
 	public void CommentClicked(View view) {
-		EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
+		
+		Date now = new Date();
+		
+		if(lastTime!=null)
+		{	
+			long count = Utils.calculateTime(lastTime, now);
+			
+			if(count>timeout)
+			{
+				EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
 
-		String content = txtComment.getText().toString();
+				String content = txtComment.getText().toString();
 
-		if (content.isEmpty()) {
-			Toast.makeText(context,
-					res.getString(R.string.esn_eventDetail_entercontent),
-					Toast.LENGTH_SHORT).show();
-			return;
+				if (content.isEmpty()) {
+					Toast.makeText(context,
+							res.getString(R.string.esn_eventDetail_entercontent),
+							Toast.LENGTH_SHORT).show();
+					return;					
+				}
+				
+				lastTime = now;
+				
+				new CommentThread(content, session.currentUser.AccID, eventId).start();
+				
+			}
+			else
+			{
+				Toast.makeText(context, res.getString(R.string.esn_eventDetail_commentwaiting), Toast.LENGTH_SHORT).show();
+			}
 		}
+		else
+		{			
+			EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
 
-		new CommentThread(content, session.currentUser.AccID, eventId).start();
+			String content = txtComment.getText().toString();
+
+			if (content.isEmpty()) {
+				Toast.makeText(context,
+						res.getString(R.string.esn_eventDetail_entercontent),
+						Toast.LENGTH_SHORT).show();
+				return;					
+			}
+			
+			lastTime = now;
+			
+			new CommentThread(content, session.currentUser.AccID, eventId).start();
+		}
 	}
 
 	private class CommentThread extends Thread {

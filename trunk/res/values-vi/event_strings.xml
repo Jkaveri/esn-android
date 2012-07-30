@@ -38,4 +38,6 @@
     <string name="esn.eventDetail.likefail">Lỗi, Hãy thực hiện lại.</string>
     <string name="esn.eventDetail.entercontent">Hãy nhập nội dung !</string>
     <string name="esn.eventDetail.entereventtitle">Tiêu đề !</string>
+    <string name="esn_eventDetail_address">Địa Chỉ</string>
+    <string name="esn_eventDetail_commentwaiting">Hãy đợi 30 giây để bình luận tiếp.</string>
 </resources>
