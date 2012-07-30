@@ -23,12 +23,12 @@
                 android:id="@+id/esn.eventDetail.iconEventType"
                 android:layout_width="@dimen/metric_max_height"
                 android:layout_height="@dimen/metric_max_height"
-                android:contentDescription="@string/esn.eventDetail.iconEventType" />
-
+                android:contentDescription="@string/esn.eventDetail.iconEventType"
+                />
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3.27"
                 android:orientation="vertical" >
 
                 <TextView
@@ -48,6 +48,19 @@
                     android:textColor="#33b5e5"
                     android:textSize="11dp"
                     android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="right"
+                android:orientation="vertical" >
+
+               <ImageView
+                android:layout_width="50dp"
+                android:layout_height="@dimen/metric_max_height"
+                android:src="@drawable/ic_share"
+                android:contentDescription="@string/esn.eventDetail.iconEventType" />
             </LinearLayout>
             <!-- Title -->
 
@@ -178,7 +191,38 @@
                     android:textColor="#33b5e5"
                     android:textSize="16dp" />
             </TableRow>
+	
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#ACCC" />
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp" >
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:text="@string/esn_eventDetail_address"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/esn.eventDetail.address"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="2dp"
+                    android:singleLine="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp" />
+            </TableRow>
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
@@ -207,7 +251,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxHeight="180dp"
-                android:maxWidth="300dp" />
+                android:maxWidth="300dp"
+                android:adjustViewBounds="true"/>
         </LinearLayout>
 
         <LinearLayout

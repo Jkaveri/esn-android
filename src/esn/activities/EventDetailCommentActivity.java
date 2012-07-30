@@ -2,10 +2,10 @@ package esn.activities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONException;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,9 +20,9 @@ import android.widget.AbsListView.OnScrollListener;
 
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
-
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.Comments;
 import esn.models.CommentsManager;
 import esn.models.EventsManager;
@@ -55,6 +54,9 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 	private int page = 1;
 	
 	Resources res;
+	
+	Date lastTime = null;
+	long timeout = 30000;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -181,20 +183,52 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 		thr.start();
 	}
 	
-	@SuppressLint("NewApi")
 	public void CommentClicked(View view)
 	{
-		EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
+		Date now = new Date();
 		
-		String content = txtComment.getText().toString();
-		
-		if(content.isEmpty())
-		{
-			Toast.makeText(context, res.getString(R.string.esn_eventDetail_entercontent), Toast.LENGTH_SHORT).show();
-			return;
+		if(lastTime!=null)
+		{	
+			long count = Utils.calculateTime(lastTime, now);
+			
+			if(count>timeout)
+			{
+				EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
+				
+				String content = txtComment.getText().toString();
+				
+				if(content.isEmpty())
+				{
+					Toast.makeText(context, res.getString(R.string.esn_eventDetail_entercontent), Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
+				lastTime = now;
+				
+				new CommentThread(content, session.currentUser.AccID, eventId).start();
+				
+			}
+			else
+			{
+				Toast.makeText(context, res.getString(R.string.esn_eventDetail_commentwaiting), Toast.LENGTH_SHORT).show();
+			}
 		}
-		
-		new CommentThread(content, session.currentUser.AccID, eventId).start();
+		else
+		{
+			EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
+			
+			String content = txtComment.getText().toString();
+			
+			if(content.isEmpty())
+			{
+				Toast.makeText(context, res.getString(R.string.esn_eventDetail_entercontent), Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			lastTime = now;
+			
+			new CommentThread(content, session.currentUser.AccID, eventId).start();
+		}
 	}
 
 	private class CommentThread extends Thread {
@@ -239,7 +273,7 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 
 		@Override
 		public void run() {
-			//Toast.makeText(context, res.getString(R.string.esn_eventDetail_commensuccess) , 10).show();
+			Toast.makeText(context,res.getString(R.string.esn_eventDetail_commensuccess),Toast.LENGTH_SHORT).show();
 			dialog.show();
 			lastScroll=0;
 			dialog.show();
