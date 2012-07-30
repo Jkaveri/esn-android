@@ -12,6 +12,7 @@ public class AppEnums {
 	public static class EventStatus{
 		public static int Waiting = 0;
 		public static int Confirmed = 1;
+		public static int Inactive = 2;
 		public static int Deleted = 3;
 	}
 	public static class ShareTypes

@@ -31,7 +31,8 @@ public class VoiceModeHelper {
 	private Resources res;
 	public Intent service;
 	public AudioLibManager audioLibManager;
-
+	private Sessions session;
+	private double radius;
 	public VoiceModeHelper(Activity _activity, ImageButton btnRecord,
 			TextView tv, Maps _map) {
 		act = _activity;
@@ -45,6 +46,9 @@ public class VoiceModeHelper {
 		voiceMng.setVoiceListener(new VoiceModeListener());
 		// get resource
 		res = act.getResources();
+		//
+		session = Sessions.getInstance(_activity.getApplicationContext());
+		radius = session.getRadiusForEventAround();
 		//
 		audioLibManager = new AudioLibManager();
 	}
@@ -67,7 +71,11 @@ public class VoiceModeHelper {
 	public void destroy() {
 		dynIcon.destroy();
 		voiceMng.destroy();
-		stopService();
+		
+		
+		if (service != null) {
+			act.stopService(service);
+		}
 	}
 
 	private class VoiceModeListener implements VoiceListener {
@@ -86,29 +94,38 @@ public class VoiceModeHelper {
 				dynIcon.stopIconRecord();// Ws post back
 
 				Location currLocation = map.getCurrentLocation();
+				if(currLocation==null){
+					voiceMng.play(R.raw.kichhoatgps);
+					return;
+				}
 				if (result.getAction().equals("KICH_HOAT")) {
-					Utils.showToast(act, "KICH_HOAT", Toast.LENGTH_SHORT);
+					/*Utils.showToast(act, "KICH_HOAT", Toast.LENGTH_SHORT);*/
 					if (service == null) {
 						service = new Intent(act.getApplicationContext(),
 								EsnLookingAheadEventsServices.class);
 						act.startService(service);
+						voiceMng.voiceAlertActivate();
 					}
-					voiceMng.voiceAlertActivate();
+					
 
 				} else if (result.getAction().equals("SAP_TOI")) {
-					String filter = "type:"+EventType.getID(result.getEvent());
+					String filter = "";
+					if(!result.getEvent().equals("KHONG")){
+						filter = "type:"+EventType.getID(result.getEvent());
+					}
+					
 					new LookingEventsThread(currLocation.getLatitude(),
-							currLocation.getLongitude(), filter, 1)
+							currLocation.getLongitude(), filter, radius)
 							.start();
 				} else if (result.getAction().equals("NULL")) {
 					voiceMng.play(R.raw.xinloi);
-					Utils.showToast(act, "Ko nhan dang duoc",
-							Toast.LENGTH_SHORT);
+					/*Utils.showToast(act, "Ko nhan dang duoc",
+							Toast.LENGTH_SHORT);*/
 				} else if (result.getAction().equals("ERROR")) {
 					voiceMng.play(R.raw.xinloi);
-					Utils.showToast(act, "Loi tu webservice",
+					/*Utils.showToast(act, "Loi tu webservice",
 							Toast.LENGTH_SHORT);
-					Log.e(LOG_TAG, result.getStrRecog());
+					Log.e(LOG_TAG, result.getStrRecog());*/
 				}
 
 				// //////////////////////////////
@@ -118,8 +135,8 @@ public class VoiceModeHelper {
 				recordState = STATE_STOPED;
 			} catch (Exception e) {
 				// TODO: thong bao cho nguoi ta co loi bang giong noi
-				Utils.showToast(act, res.getString(R.string.esn_global_Error),
-						Toast.LENGTH_SHORT);
+				/*Utils.showToast(act, res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_SHORT);*/
 				Log.e(LOG_TAG, e.getMessage());
 				e.printStackTrace();
 			}
@@ -133,11 +150,6 @@ public class VoiceModeHelper {
 
 	}
 
-	public void stopService() {
-		if (service != null) {
-			act.stopService(service);
-		}
-	}
 
 	private class LookingEventsThread extends Thread {
 
@@ -163,18 +175,19 @@ public class VoiceModeHelper {
 				
 				Events[] events = _manager.lookingAheadEvents(lat, lon, radius,
 						eventType);
-				Log.d(LOG_TAG, "events: " + events.length);
+				//Log.d(LOG_TAG, "events: " + events.length);
 				// kiem tra co event nao ko
 				if (events != null && events.length > 0) {
 					act.runOnUiThread(new LoadEventsAroundHandler(events));
 				}else{
-					
+					voiceMng.play(R.raw.khongcosukiennao);
 				}
 
 			} catch (Exception e) {
+				voiceMng.play(R.raw.kichhoatmang);
 				// TODO: thong bao cho nguoi ta co loi bang giong noi
-				Utils.showToast(act, res.getString(R.string.esn_global_Error),
-						Toast.LENGTH_SHORT);
+				/*Utils.showToast(act, res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_SHORT);*/
 				Log.e(LOG_TAG, e.getMessage());
 				e.printStackTrace();
 			}
@@ -205,22 +218,15 @@ public class VoiceModeHelper {
 				// lay dia chi cua event
 				Address address = event.getAddress(act
 						.getApplicationContext());
-				// flag, da phat
 				boolean played = false;
-				// duyet cac dong dia chi
-				// neu phat hien 1 dong nao la duong (co tong tai trong
-				// thu vien audio thi play)
-
-				// play audio
-				// lay dia chi cua event
-				// flag, da phat
 				// street
 				String street = address.getThoroughfare();
 				if (street != null) {
-					street = street.replace("Đường", "").replace(" ", "")
-							.toLowerCase();
+					street = removeUTF8.execute(street).toLowerCase();
+
 				}
-				if (street != null && audioLibManager.isExistStreetAudio(street)) {
+				if (street != null
+						&& audioLibManager.isExistStreetAudio(street)) {
 					voiceMng.voiceAlertHasEvent(
 							String.valueOf(event.EventTypeID), street);
 					// bat co
@@ -235,8 +241,8 @@ public class VoiceModeHelper {
 
 					for (int j = 0; j < addressLineCount; j++) {
 						// lay ten duong
-						street = address.getAddressLine(j).replace(" ", "")
-								.toLowerCase();
+						street = removeUTF8.execute(address.getAddressLine(j))
+								.replace(" ", "_").toLowerCase();
 
 						if (street != null
 								&& audioLibManager.isExistStreetAudio(street)) {

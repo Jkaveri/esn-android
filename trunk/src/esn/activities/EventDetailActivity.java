@@ -464,39 +464,6 @@ public class EventDetailActivity extends SherlockActivity implements
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
-					if (manager
-							.isLiked(
-									eventId,
-									Sessions.getInstance(EventDetailActivity.this).currentUser.AccID)) {
-
-						EventDetailActivity.this.runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								/*
-								 * Button btLike = (Button)
-								 * findViewById(R.id.esn_eventDetail_btLike);
-								 * btLike.setVisibility(Button.INVISIBLE);
-								 */
-							}
-						});
-					} else if (manager
-							.isDisliked(
-									eventId,
-									Sessions.getInstance(EventDetailActivity.this).currentUser.AccID)) {
-						EventDetailActivity.this.runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								/*
-								 * Button btDislike = (Button)
-								 * findViewById(R.id.esn_eventDetail_btDislike);
-								 * btDislike.setVisibility(Button.INVISIBLE);
-								 */
-							}
-						});
-					}
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -539,7 +506,7 @@ public class EventDetailActivity extends SherlockActivity implements
 				TextView tvUsername = (TextView) findViewById(R.id.esn_eventDetail_name);
 
 				final ImageView imgEvent = (ImageView) findViewById(R.id.esn_eventDetail_image);
-				imgEvent.setImageResource(R.drawable.ic_no_avata);
+				imgEvent.setImageResource(R.drawable.no_image);
 
 				tvTitle.setText(event.Title);
 				tvDateCreated.setText(Utils.DateToStringByLocale(
@@ -583,9 +550,11 @@ public class EventDetailActivity extends SherlockActivity implements
 						}.start();
 					}
 				} else {
-					TextView tvWaiting = (TextView) findViewById(R.id.esn_eventDetail_notConfirmed);
-					tvWaiting.setVisibility(View.VISIBLE);
-					imgEvent.setVisibility(View.INVISIBLE);
+					if (event.Picture != null && event.Picture.length() > 0) {
+						TextView tvWaiting = (TextView) findViewById(R.id.esn_eventDetail_notConfirmed);
+						tvWaiting.setVisibility(View.VISIBLE);
+						imgEvent.setVisibility(View.INVISIBLE);
+					}
 				}
 				dialog.dismiss();
 			}

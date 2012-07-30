@@ -15,7 +15,6 @@ private class ViewHolder {
 		
 		public TextView eventName;
 		public TextView description;
-		public TextView date;
 		public ImageView image;
 	}
 	

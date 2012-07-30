@@ -115,9 +115,6 @@ public class EsnMapView extends TapControlledMapView {
 					// get current location
 					Location cLocation = map.getCurrentLocation();
 					if (cLocation != null) {
-						GeoPoint cPoint = new GeoPoint((int) (cLocation
-								.getLatitude() * 1E6), (int) (cLocation
-								.getLongitude() * 1E6));
 						// start activity
 						Intent addNewEventIntent = new Intent(context,
 								AddNewEvent.class);

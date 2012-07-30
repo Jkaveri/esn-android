@@ -23,16 +23,13 @@ import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MyLocationOverlay;
 import com.readystatesoftware.maps.OnSingleTapListener;
 import esn.adapters.EsnListAdapterNoSub;
 import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
-import esn.classes.EventOverlayItem;
 import esn.classes.Maps;
 import esn.classes.Sessions;
 import esn.classes.Utils;
-import esn.models.EventType;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
@@ -42,11 +39,10 @@ public class HomeActivity extends SherlockMapActivity implements
 	protected Handler handler;
 	private EsnMapView mapView;
 	public final static int CODE_REQUEST_SET_FILTER = 2;
+	public static final int REQUEST_CODE_HOME_EVENT_LIST = 121;
 	HomeActivity context;
 
 	Sessions sessions;
-	private MyLocationOverlay myLocationOverlay;
-
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -252,19 +248,22 @@ public class HomeActivity extends SherlockMapActivity implements
 				String title = data.getStringExtra("eventTitle");
 				String description = data.getStringExtra("eventDescription");
 				int eventId = data.getIntExtra("eventId", 0);
-
-				int labelId = data.getIntExtra("labelId", 0);
+				int labelIcon = data.getIntExtra("labelIcon", 0);
+			//	int labelId = data.getIntExtra("labelId", 0);
 				if (latitude != Integer.MIN_VALUE
 						&& longtitude != Integer.MIN_VALUE) {
 					GeoPoint point = new GeoPoint((int) (latitude * 1E6),
 							(int) (longtitude * 1E6));
-					map.setEventMarker(point, title, description, eventId, labelId);
+					map.setEventMarker(point, title, description, eventId, labelIcon);
 					mapView.getController().animateTo(point);
 				}
 				break;
 			case CODE_REQUEST_SET_FILTER:
 				mapView.new LoadEventsAroundThread(mapView.calculateRadius())
 						.start();
+				break;
+			case REQUEST_CODE_HOME_EVENT_LIST:
+				
 				break;
 			default:
 				break;
@@ -282,7 +281,8 @@ public class HomeActivity extends SherlockMapActivity implements
 		} else if (itemPosition == 1) {
 			Intent intent = new Intent(context, HomeEventListActivity.class);
 
-			startActivity(intent);
+			startActivityForResult(intent, REQUEST_CODE_HOME_EVENT_LIST);
+			
 		} else {
 			Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
 					Toast.LENGTH_SHORT).show();

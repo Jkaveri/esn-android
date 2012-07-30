@@ -9,6 +9,7 @@ import com.facebook.android.Util;
 import esn.classes.EsnCameras;
 import esn.classes.Sessions;
 import esn.classes.Utils;
+import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.annotation.SuppressLint;
@@ -353,8 +354,8 @@ public class AddNewEvent extends Activity {
 
 				ImageView imgType = (ImageView) findViewById(R.id.esn_addNewEvent_txtEventTypeImage);
 
-				int i = homeData.getIntExtra("labelIcon", 0);
-				imgType.setImageResource(i);
+				int icon = data.getIntExtra("labelIcon", 0);
+				imgType.setImageResource(icon);
 
 				event.EventTypeID = id;
 			}
@@ -453,6 +454,7 @@ public class AddNewEvent extends Activity {
 							dialog.dismiss();
 							homeData.putExtra("eventId", event.EventID);
 							homeData.putExtra("labelId", event.EventTypeID);
+							homeData.putExtra("labelIcon", EventType.getIconId(event.EventTypeID, 0));
 							homeData.putExtra("eventTitle", event.Title);
 							homeData.putExtra("eventDescription",
 									event.Description);
