@@ -30,6 +30,16 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 		this.imageLoader.setDefaultEmptyImage(this.idIcon);
 	}
 	
+	public CustomListAdapter(Activity activity, int layoutRow, int idIcon) {
+		this.activity = activity;
+		this.data = new ArrayList<T>();
+		this.layoutRow = layoutRow;
+		this.idIcon = idIcon;
+		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);		
+		this.imageLoader = new ImageLoader(activity.getApplicationContext());
+		this.imageLoader.setDefaultEmptyImage(this.idIcon);
+	}
+	
 	public CustomListAdapter(Activity activity, ArrayList<T> list, int layoutRow) {
 		this.activity = activity;
 		this.data = list;
@@ -46,6 +56,7 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 		list = null;
 		this.notifyDataSetChanged();
 	}
+	
 	public void add(T item){
 		data.add(item);
 		item = null;
