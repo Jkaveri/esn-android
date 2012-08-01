@@ -814,8 +814,8 @@ containing a value of this type.
         public static final int bg_striped_split_img=0x7f020062;
         public static final int bgbar=0x7f020063;
         public static final int bgstate=0x7f020064;
-        public static final int black=0x7f0200ef;
-        public static final int black_transparent=0x7f0200f0;
+        public static final int black=0x7f0200f0;
+        public static final int black_transparent=0x7f0200f1;
         public static final int blackberry_logo=0x7f020065;
         public static final int bogoc_big=0x7f020066;
         public static final int close=0x7f020067;
@@ -924,7 +924,7 @@ containing a value of this type.
         public static final int icon=0x7f0200ce;
         public static final int ios_logo=0x7f0200cf;
         public static final int label_blue_hot=0x7f0200d0;
-        public static final int light_transparent=0x7f0200f1;
+        public static final int light_transparent=0x7f0200f2;
         public static final int login=0x7f0200d1;
         public static final int login_button=0x7f0200d2;
         public static final int login_down=0x7f0200d3;
@@ -933,32 +933,33 @@ containing a value of this type.
         public static final int logo2=0x7f0200d6;
         public static final int logout=0x7f0200d7;
         public static final int logout_button=0x7f0200d8;
-        public static final int main_color=0x7f0200f3;
+        public static final int main_color=0x7f0200f4;
         public static final int main_logo=0x7f0200d9;
-        public static final int main_transparent=0x7f0200f2;
-        public static final int pointer=0x7f0200da;
-        public static final int rec_load_1=0x7f0200db;
-        public static final int rec_load_10=0x7f0200dc;
-        public static final int rec_load_11=0x7f0200dd;
-        public static final int rec_load_12=0x7f0200de;
-        public static final int rec_load_2=0x7f0200df;
-        public static final int rec_load_3=0x7f0200e0;
-        public static final int rec_load_4=0x7f0200e1;
-        public static final int rec_load_5=0x7f0200e2;
-        public static final int rec_load_6=0x7f0200e3;
-        public static final int rec_load_7=0x7f0200e4;
-        public static final int rec_load_8=0x7f0200e5;
-        public static final int rec_load_9=0x7f0200e6;
-        public static final int rounded_corner_blue=0x7f0200e7;
-        public static final int rounded_corner_white=0x7f0200e8;
-        public static final int rounded_corners=0x7f0200e9;
-        public static final int rounded_corners_left=0x7f0200ea;
-        public static final int search_go=0x7f0200eb;
-        public static final int stub=0x7f0200ec;
-        public static final int transparent=0x7f0200f5;
-        public static final int try_icon_option=0x7f0200ed;
-        public static final int white=0x7f0200f4;
-        public static final int windowsmobile_logo=0x7f0200ee;
+        public static final int main_transparent=0x7f0200f3;
+        public static final int no_image=0x7f0200da;
+        public static final int pointer=0x7f0200db;
+        public static final int rec_load_1=0x7f0200dc;
+        public static final int rec_load_10=0x7f0200dd;
+        public static final int rec_load_11=0x7f0200de;
+        public static final int rec_load_12=0x7f0200df;
+        public static final int rec_load_2=0x7f0200e0;
+        public static final int rec_load_3=0x7f0200e1;
+        public static final int rec_load_4=0x7f0200e2;
+        public static final int rec_load_5=0x7f0200e3;
+        public static final int rec_load_6=0x7f0200e4;
+        public static final int rec_load_7=0x7f0200e5;
+        public static final int rec_load_8=0x7f0200e6;
+        public static final int rec_load_9=0x7f0200e7;
+        public static final int rounded_corner_blue=0x7f0200e8;
+        public static final int rounded_corner_white=0x7f0200e9;
+        public static final int rounded_corners=0x7f0200ea;
+        public static final int rounded_corners_left=0x7f0200eb;
+        public static final int search_go=0x7f0200ec;
+        public static final int stub=0x7f0200ed;
+        public static final int transparent=0x7f0200f6;
+        public static final int try_icon_option=0x7f0200ee;
+        public static final int white=0x7f0200f5;
+        public static final int windowsmobile_logo=0x7f0200ef;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f0500a0;
@@ -1311,19 +1312,22 @@ containing a value of this type.
         public static final int a_xalohanoi=0x7f040050;
         public static final int a_xvnt=0x7f040051;
         public static final int chuy=0x7f040052;
-        public static final int n_cochayno=0x7f040053;
-        public static final int n_codongdat=0x7f040054;
-        public static final int n_coduongchan=0x7f040055;
-        public static final int n_coduongxau=0x7f040056;
-        public static final int n_coketxe=0x7f040057;
-        public static final int n_colocot=0x7f040058;
-        public static final int n_colodat=0x7f040059;
-        public static final int n_colulut=0x7f04005a;
-        public static final int n_cotngt=0x7f04005b;
-        public static final int record_start=0x7f04005c;
-        public static final int record_stop=0x7f04005d;
-        public static final int thongbaokichhoat=0x7f04005e;
-        public static final int xinloi=0x7f04005f;
+        public static final int khongcosukiennao=0x7f040053;
+        public static final int kichhoatgps=0x7f040054;
+        public static final int kichhoatmang=0x7f040055;
+        public static final int n_cochayno=0x7f040056;
+        public static final int n_codongdat=0x7f040057;
+        public static final int n_coduongchan=0x7f040058;
+        public static final int n_coduongxau=0x7f040059;
+        public static final int n_coketxe=0x7f04005a;
+        public static final int n_colocot=0x7f04005b;
+        public static final int n_colodat=0x7f04005c;
+        public static final int n_colulut=0x7f04005d;
+        public static final int n_cotngt=0x7f04005e;
+        public static final int record_start=0x7f04005f;
+        public static final int record_stop=0x7f040060;
+        public static final int thongbaokichhoat=0x7f040061;
+        public static final int xinloi=0x7f040062;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1356,33 +1360,33 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0009;
-        public static final int app_global_Email=0x7f0a00d3;
-        public static final int app_global_RequireAllField=0x7f0a00d4;
-        public static final int app_global_UpdateSuccess=0x7f0a00d6;
-        public static final int app_global_UpdateUnsuccess=0x7f0a00d5;
-        public static final int app_global_camera=0x7f0a00d8;
-        public static final int app_global_cancel=0x7f0a00d9;
-        public static final int app_global_cantnotuploadimage=0x7f0a00db;
-        public static final int app_global_choose=0x7f0a00da;
-        public static final int app_global_friendevent=0x7f0a00dd;
-        public static final int app_global_friendlist=0x7f0a00de;
-        public static final int app_global_gallery=0x7f0a00d7;
-        public static final int app_global_no=0x7f0a00e0;
-        public static final int app_global_search=0x7f0a00dc;
-        public static final int app_global_viewaslist=0x7f0a00e2;
-        public static final int app_global_viewasmap=0x7f0a00e1;
-        public static final int app_global_yes=0x7f0a00df;
-        public static final int app_Setting=0x7f0a0106;
-        public static final int app_Setting_Account=0x7f0a0105;
-        public static final int app_Setting_Account_ChangePassword=0x7f0a0100;
-        public static final int app_Setting_Account_ChangeProfile=0x7f0a0101;
-        public static final int app_Setting_ApplicationSetting=0x7f0a0102;
-        public static final int app_Setting_Help=0x7f0a0104;
-        public static final int app_Setting_Terms=0x7f0a0103;
+        public static final int app_global_Email=0x7f0a00d5;
+        public static final int app_global_RequireAllField=0x7f0a00d6;
+        public static final int app_global_UpdateSuccess=0x7f0a00d8;
+        public static final int app_global_UpdateUnsuccess=0x7f0a00d7;
+        public static final int app_global_camera=0x7f0a00da;
+        public static final int app_global_cancel=0x7f0a00db;
+        public static final int app_global_cantnotuploadimage=0x7f0a00dd;
+        public static final int app_global_choose=0x7f0a00dc;
+        public static final int app_global_friendevent=0x7f0a00df;
+        public static final int app_global_friendlist=0x7f0a00e0;
+        public static final int app_global_gallery=0x7f0a00d9;
+        public static final int app_global_no=0x7f0a00e2;
+        public static final int app_global_search=0x7f0a00de;
+        public static final int app_global_viewaslist=0x7f0a00e4;
+        public static final int app_global_viewasmap=0x7f0a00e3;
+        public static final int app_global_yes=0x7f0a00e1;
+        public static final int app_Setting=0x7f0a0108;
+        public static final int app_Setting_Account=0x7f0a0107;
+        public static final int app_Setting_Account_ChangePassword=0x7f0a0102;
+        public static final int app_Setting_Account_ChangeProfile=0x7f0a0103;
+        public static final int app_Setting_ApplicationSetting=0x7f0a0104;
+        public static final int app_Setting_Help=0x7f0a0106;
+        public static final int app_Setting_Terms=0x7f0a0105;
         /**  app name 
  app name 
          */
-        public static final int app_name=0x7f0a00c2;
+        public static final int app_name=0x7f0a00c4;
         public static final int btn_Friends_Events=0x7f0a00a2;
         public static final int btn_Friends_EvsList=0x7f0a00a4;
         public static final int btn_Friends_FdsList=0x7f0a00a3;
@@ -1393,7 +1397,7 @@ containing a value of this type.
         public static final int btn_Friends_Lists_Diaglog_unfriendnotsuccess=0x7f0a00ae;
         public static final int btn_Friends_Lists_Diaglog_unfriendsuccess=0x7f0a00ad;
         public static final int btn_Friends_Maps=0x7f0a00a5;
-        public static final int choose=0x7f0a00c1;
+        public static final int choose=0x7f0a00c3;
         public static final int esn_addNewEvent_add=0x7f0a0074;
         public static final int esn_addNewEvent_addresss=0x7f0a0078;
         public static final int esn_addNewEvent_cancel=0x7f0a0076;
@@ -1454,25 +1458,25 @@ containing a value of this type.
         public static final int esn_eventDetail_likefail=0x7f0a0097;
         public static final int esn_eventDetail_likesuccess=0x7f0a0095;
         public static final int esn_eventDetail_send=0x7f0a008e;
-        public static final int esn_global_ConnectionError=0x7f0a00d2;
-        public static final int esn_global_Error=0x7f0a00d0;
+        public static final int esn_global_ConnectionError=0x7f0a00d4;
+        public static final int esn_global_Error=0x7f0a00d2;
         /**  Global 
  Global 
          */
-        public static final int esn_global_dateFormat=0x7f0a00cc;
-        public static final int esn_global_find=0x7f0a00cf;
-        public static final int esn_global_loading=0x7f0a00cd;
+        public static final int esn_global_dateFormat=0x7f0a00ce;
+        public static final int esn_global_find=0x7f0a00d1;
+        public static final int esn_global_loading=0x7f0a00cf;
         /**  Login 
  Login 
          */
-        public static final int esn_global_must_enable_gps=0x7f0a00c7;
-        public static final int esn_global_pleaseWait=0x7f0a00ce;
-        public static final int esn_global_tryagain=0x7f0a00d1;
-        public static final int esn_global_your_location_not_found=0x7f0a00c8;
-        public static final int esn_login_email=0x7f0a00be;
-        public static final int esn_login_enteremail=0x7f0a00bc;
-        public static final int esn_login_enterpassword=0x7f0a00bd;
-        public static final int esn_login_password=0x7f0a00bf;
+        public static final int esn_global_must_enable_gps=0x7f0a00c9;
+        public static final int esn_global_pleaseWait=0x7f0a00d0;
+        public static final int esn_global_tryagain=0x7f0a00d3;
+        public static final int esn_global_your_location_not_found=0x7f0a00ca;
+        public static final int esn_login_email=0x7f0a00c0;
+        public static final int esn_login_enteremail=0x7f0a00be;
+        public static final int esn_login_enterpassword=0x7f0a00bf;
+        public static final int esn_login_password=0x7f0a00c1;
         public static final int esn_register_EmailExists=0x7f0a002f;
         public static final int esn_register_Name=0x7f0a0030;
         public static final int esn_register_RequireFistName=0x7f0a002b;
@@ -1539,32 +1543,32 @@ containing a value of this type.
         public static final int esn_setting_app_friend_friendshareplace=0x7f0a0069;
         public static final int esn_setting_app_informationenablebefore=0x7f0a006d;
         public static final int esn_setting_app_informationsaved=0x7f0a006c;
-        public static final int esn_settings_account=0x7f0a00f4;
-        public static final int esn_settings_account_changepass=0x7f0a00fc;
-        public static final int esn_settings_account_editprofile=0x7f0a00fe;
-        public static final int esn_settings_account_sub_changepass=0x7f0a00fd;
-        public static final int esn_settings_account_sub_editprofile=0x7f0a00ff;
+        public static final int esn_settings_account=0x7f0a00f6;
+        public static final int esn_settings_account_changepass=0x7f0a00fe;
+        public static final int esn_settings_account_editprofile=0x7f0a0100;
+        public static final int esn_settings_account_sub_changepass=0x7f0a00ff;
+        public static final int esn_settings_account_sub_editprofile=0x7f0a0101;
         /**  Settings page 
  Settings page 
          */
-        public static final int esn_settings_app_settings=0x7f0a00f2;
-        public static final int esn_settings_help=0x7f0a00f8;
-        public static final int esn_settings_logout=0x7f0a00fa;
-        public static final int esn_settings_provition=0x7f0a00f6;
-        public static final int esn_settings_subscript_account=0x7f0a00f5;
-        public static final int esn_settings_subscript_app_settings=0x7f0a00f3;
-        public static final int esn_settings_subscript_help=0x7f0a00f9;
-        public static final int esn_settings_subscript_logout=0x7f0a00fb;
-        public static final int esn_settings_subscript_provition=0x7f0a00f7;
+        public static final int esn_settings_app_settings=0x7f0a00f4;
+        public static final int esn_settings_help=0x7f0a00fa;
+        public static final int esn_settings_logout=0x7f0a00fc;
+        public static final int esn_settings_provition=0x7f0a00f8;
+        public static final int esn_settings_subscript_account=0x7f0a00f7;
+        public static final int esn_settings_subscript_app_settings=0x7f0a00f5;
+        public static final int esn_settings_subscript_help=0x7f0a00fb;
+        public static final int esn_settings_subscript_logout=0x7f0a00fd;
+        public static final int esn_settings_subscript_provition=0x7f0a00f9;
         public static final int esn_voicemode_state=0x7f0a0071;
         public static final int esn_voicemode_title=0x7f0a0070;
-        public static final int esn_actName_login=0x7f0a00c5;
-        public static final int esn_actName_profile=0x7f0a00c4;
+        public static final int esn_actName_login=0x7f0a00c7;
+        public static final int esn_actName_profile=0x7f0a00c6;
         /**  welcome 
  welcome 
          */
-        public static final int esn_actName_register=0x7f0a00c3;
-        public static final int esn_actName_selectLabel=0x7f0a00c6;
+        public static final int esn_actName_register=0x7f0a00c5;
+        public static final int esn_actName_selectLabel=0x7f0a00c8;
         public static final int esn_addNewEvent_canNotUpload=0x7f0a007a;
         public static final int esn_addNewEvent_chooseeventtype=0x7f0a0080;
         public static final int esn_addNewEvent_noAddress=0x7f0a0083;
@@ -1579,22 +1583,22 @@ containing a value of this type.
         public static final int esn_eventDetail_commentwaiting=0x7f0a009c;
         public static final int esn_eventDetail_eventIsWaiting=0x7f0a009a;
         public static final int esn_global_cancel=0x7f0a008d;
-        public static final int esn_global_lostConnection=0x7f0a00e3;
+        public static final int esn_global_lostConnection=0x7f0a00e5;
         public static final int esn_global_ok=0x7f0a008c;
-        public static final int esn_global_page_eventdetail=0x7f0a00ee;
-        public static final int esn_global_page_eventfriend=0x7f0a00e8;
-        public static final int esn_global_page_feedback=0x7f0a00ef;
-        public static final int esn_global_page_fillter=0x7f0a00ea;
-        public static final int esn_global_page_findfriend=0x7f0a00eb;
-        public static final int esn_global_page_firendlist=0x7f0a00e9;
-        public static final int esn_global_page_login=0x7f0a00e5;
-        public static final int esn_global_page_newevent=0x7f0a00e7;
-        public static final int esn_global_page_profile=0x7f0a00e6;
-        public static final int esn_global_page_recoverypassword=0x7f0a00f1;
-        public static final int esn_global_page_settingevent=0x7f0a00ec;
-        public static final int esn_global_page_settingfacebook=0x7f0a00ed;
-        public static final int esn_global_page_settingfriend=0x7f0a00f0;
-        public static final int esn_global_page_voice=0x7f0a00e4;
+        public static final int esn_global_page_eventdetail=0x7f0a00f0;
+        public static final int esn_global_page_eventfriend=0x7f0a00ea;
+        public static final int esn_global_page_feedback=0x7f0a00f1;
+        public static final int esn_global_page_fillter=0x7f0a00ec;
+        public static final int esn_global_page_findfriend=0x7f0a00ed;
+        public static final int esn_global_page_firendlist=0x7f0a00eb;
+        public static final int esn_global_page_login=0x7f0a00e7;
+        public static final int esn_global_page_newevent=0x7f0a00e9;
+        public static final int esn_global_page_profile=0x7f0a00e8;
+        public static final int esn_global_page_recoverypassword=0x7f0a00f3;
+        public static final int esn_global_page_settingevent=0x7f0a00ee;
+        public static final int esn_global_page_settingfacebook=0x7f0a00ef;
+        public static final int esn_global_page_settingfriend=0x7f0a00f2;
+        public static final int esn_global_page_voice=0x7f0a00e6;
         public static final int esn_home_loadingEvent=0x7f0a00b2;
         public static final int esn_home_menuItem_addNewEvent=0x7f0a00b4;
         public static final int esn_home_menuItem_friends=0x7f0a00b5;
@@ -1604,26 +1608,28 @@ containing a value of this type.
         public static final int esn_home_menuItem_settings=0x7f0a00b6;
         public static final int esn_home_menuItem_zoomIn=0x7f0a00ba;
         public static final int esn_home_menuItem_zoomOut=0x7f0a00bb;
+        public static final int esn_home_navigate_item_viewAsList=0x7f0a00bd;
+        public static final int esn_home_navigate_item_viewAsMap=0x7f0a00bc;
         public static final int esn_home_noEvent=0x7f0a00b3;
         public static final int esn_login_forgotPass=0x7f0a0054;
-        public static final int esn_recoverypassword_enteremail=0x7f0a00c0;
+        public static final int esn_recoverypassword_enteremail=0x7f0a00c2;
         public static final int esn_register_avatar=0x7f0a0053;
-        public static final int esn_userpage_Female=0x7f0a010d;
-        public static final int esn_userpage_Male=0x7f0a010c;
-        public static final int esn_userpage_ofline=0x7f0a010b;
-        public static final int esn_userpage_online=0x7f0a010a;
-        public static final int esn_welcomeScreen_lostConnection=0x7f0a011c;
-        public static final int esn_welcomeScreen_lostConnectionDescription=0x7f0a011d;
+        public static final int esn_userpage_Female=0x7f0a010f;
+        public static final int esn_userpage_Male=0x7f0a010e;
+        public static final int esn_userpage_ofline=0x7f0a010d;
+        public static final int esn_userpage_online=0x7f0a010c;
+        public static final int esn_welcomeScreen_lostConnection=0x7f0a011e;
+        public static final int esn_welcomeScreen_lostConnectionDescription=0x7f0a011f;
         /**  Welcome 
  Welcome 
          */
-        public static final int esn_welcome_login=0x7f0a0107;
-        public static final int esn_welcome_loginWithFacebook=0x7f0a0108;
-        public static final int esn_welcome_signup=0x7f0a0109;
+        public static final int esn_welcome_login=0x7f0a0109;
+        public static final int esn_welcome_loginWithFacebook=0x7f0a010a;
+        public static final int esn_welcome_signup=0x7f0a010b;
         public static final int finding_current_location=0x7f0a0050;
-        public static final int help=0x7f0a00ca;
+        public static final int help=0x7f0a00cc;
         public static final int item=0x7f0a004f;
-        public static final int key_maps_googleAPI=0x7f0a00c9;
+        public static final int key_maps_googleAPI=0x7f0a00cb;
         public static final int lbAccount=0x7f0a0051;
         public static final int map_current_location_subtitle=0x7f0a004e;
         public static final int map_current_location_title=0x7f0a004d;
@@ -1631,14 +1637,14 @@ containing a value of this type.
         public static final int str_Friends_Events_ViewAsList=0x7f0a00a8;
         public static final int str_Friends_Events_ViewAsMap=0x7f0a00a7;
         public static final int str_Friends_Lists_Title=0x7f0a00a9;
-        public static final int str_Friends_UserPage_Title=0x7f0a010f;
+        public static final int str_Friends_UserPage_Title=0x7f0a0111;
         public static final int str_home_viewAsList=0x7f0a00b1;
         /**  Home 
  Home 
          */
         public static final int str_home_viewAsMap=0x7f0a00b0;
-        public static final int term=0x7f0a00cb;
-        public static final int tnt=0x7f0a010e;
+        public static final int term=0x7f0a00cd;
+        public static final int tnt=0x7f0a0110;
         public static final int tv_Edit_Profile_Address=0x7f0a000b;
         /**  EDIT PROFILE 
  EDIT PROFILE 
@@ -1653,18 +1659,18 @@ containing a value of this type.
         public static final int tv_Edit_Profile_updatefail=0x7f0a0013;
         public static final int tv_Edit_Profile_updatesuccessful=0x7f0a0012;
         public static final int txt_Friends_Search=0x7f0a00a6;
-        public static final int txt_esn_userpage_adress=0x7f0a0112;
-        public static final int txt_esn_userpage_birthday=0x7f0a0114;
-        public static final int txt_esn_userpage_country=0x7f0a0113;
-        public static final int txt_esn_userpage_favorite=0x7f0a0116;
-        public static final int txt_esn_userpage_female=0x7f0a0118;
-        public static final int txt_esn_userpage_fullname=0x7f0a0110;
-        public static final int txt_esn_userpage_gender=0x7f0a0115;
-        public static final int txt_esn_userpage_male=0x7f0a0117;
-        public static final int txt_esn_userpage_offline=0x7f0a011a;
-        public static final int txt_esn_userpage_online=0x7f0a0119;
-        public static final int txt_esn_userpage_phone=0x7f0a011b;
-        public static final int txt_esn_userpage_status=0x7f0a0111;
+        public static final int txt_esn_userpage_adress=0x7f0a0114;
+        public static final int txt_esn_userpage_birthday=0x7f0a0116;
+        public static final int txt_esn_userpage_country=0x7f0a0115;
+        public static final int txt_esn_userpage_favorite=0x7f0a0118;
+        public static final int txt_esn_userpage_female=0x7f0a011a;
+        public static final int txt_esn_userpage_fullname=0x7f0a0112;
+        public static final int txt_esn_userpage_gender=0x7f0a0117;
+        public static final int txt_esn_userpage_male=0x7f0a0119;
+        public static final int txt_esn_userpage_offline=0x7f0a011c;
+        public static final int txt_esn_userpage_online=0x7f0a011b;
+        public static final int txt_esn_userpage_phone=0x7f0a011d;
+        public static final int txt_esn_userpage_status=0x7f0a0113;
     }
     public static final class style {
         public static final int DialogWindowTitle_Sherlock=0x7f0b0033;
@@ -1756,21 +1762,32 @@ containing a value of this type.
         public static final int Widget_Sherlock_ProgressBar_Horizontal=0x7f0b0030;
         public static final int Widget_Sherlock_Spinner_DropDown_ActionBar=0x7f0b0024;
         public static final int Widget_Sherlock_TextView_SpinnerItem=0x7f0b0032;
-        public static final int esn_Widget_DropDownItem_Spinner=0x7f0b005b;
-        public static final int esn_Widget_DropDownItem_SpinnerRegister=0x7f0b005e;
+        public static final int esn_Widget_DropDownItem_Spinner=0x7f0b0065;
+        public static final int esn_Widget_DropDownItem_SpinnerProfile=0x7f0b005b;
+        public static final int esn_Widget_DropDownItem_SpinnerRegister=0x7f0b0062;
+        public static final int esn_Widget_DropDownItem_SpinnerShare=0x7f0b005f;
         /**  <item name="android:paddingTop">8dp</item> 
  <item name="android:paddingTop">8dp</item> 
  <item name="android:paddingTop">8dp</item> 
          */
-        public static final int esn_Widget_TextView_SpinnerItem=0x7f0b005c;
+        public static final int esn_Widget_TextView_SpinnerItem=0x7f0b0066;
         /**  <item name="android:paddingTop">8dp</item> 
          */
-        public static final int esn_Widget_TextView_SpinnerItemRegister=0x7f0b005f;
-        public static final int esn_theme_light=0x7f0b0060;
-        public static final int esn_theme_light_actionbar=0x7f0b0061;
-        public static final int esn_theme_light_actionbar_TitleTextStyle=0x7f0b0062;
-        public static final int esn_theme_light_register=0x7f0b0059;
-        public static final int esn_theme_light_register_actionbar=0x7f0b005a;
+        public static final int esn_Widget_TextView_SpinnerItemProfile=0x7f0b005c;
+        /**  <item name="android:paddingTop">8dp</item> 
+ <item name="android:paddingTop">8dp</item> 
+         */
+        public static final int esn_Widget_TextView_SpinnerItemRegister=0x7f0b0063;
+        /**  <item name="android:paddingTop">8dp</item> 
+         */
+        public static final int esn_Widget_TextView_SpinnerItemShare=0x7f0b0060;
+        public static final int esn_theme_light=0x7f0b0067;
+        public static final int esn_theme_light_actionbar=0x7f0b005a;
+        public static final int esn_theme_light_actionbar_TitleTextStyle=0x7f0b0068;
+        public static final int esn_theme_light_editprofile=0x7f0b0059;
+        public static final int esn_theme_light_newevent=0x7f0b005e;
+        public static final int esn_theme_light_register=0x7f0b0061;
+        public static final int esn_theme_light_register_actionbar=0x7f0b0064;
         public static final int esn_theme_light_register_actionbar_TitleTextStyle=0x7f0b005d;
     }
     public static final class styleable {

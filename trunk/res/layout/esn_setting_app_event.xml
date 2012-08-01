@@ -61,6 +61,7 @@
 	            android:paddingLeft="2dp"
 	           android:paddingRight="2dp"
 	           android:singleLine="true"
+	           android:inputType="number"
 	            /> 
         </TableRow>
     </TableLayout> 

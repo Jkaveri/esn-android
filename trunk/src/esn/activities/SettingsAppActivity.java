@@ -126,7 +126,7 @@ public class SettingsAppActivity extends Activity{
 		}
 		else
 		{
-			session.put("app.setting.facebook.enable",false);			
+			session.setSettingFacebook(false);			
 			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -138,19 +138,19 @@ public class SettingsAppActivity extends Activity{
 		
 		if(chk.isChecked())
 		{
-			session.put("app.setting.location.location", true);
+			session.setSettingLocation(true);
 			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
 		}
 		else
 		{
-			session.put("app.setting.location.location", false);
+			session.setSettingLocation(false);
 			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
 		}
 	}
 		
 	public void ShowInfoSettingFb()
 	{
-		Boolean check = session.get("app.setting.facebook.enable",false);
+		Boolean check = session.getSettingFacebook();
 		
 		Switch sw = (Switch)findViewById(R.id.esn_setting_app_facebook_enable);
 				
@@ -168,7 +168,7 @@ public class SettingsAppActivity extends Activity{
 	{
 		CheckBox chkbox = (CheckBox)findViewById(R.id.esn_setting_app_location_check);
 		
-		boolean chk = session.get("app.setting.location.location", false);
+		boolean chk = session.getSettingLocation();
 		
 		if(chk==true)
 		{
@@ -180,7 +180,7 @@ public class SettingsAppActivity extends Activity{
 	{	
 		mFacebook.authorize(this, FB_PERMISSIONS, new AccessFaceBookListener(SettingsAppActivity.this,mFacebook));
 		
-		session.put("app.setting.facebook.enable",true);			
+		session.setSettingFacebook(true);		
 		Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
 						
 	}
