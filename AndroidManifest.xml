@@ -59,13 +59,14 @@
             >
         </activity>
         <activity android:name=".ProfileActivity"
-            android:label="@string/esn_global_page_profile"
+            android:label="@string/esn_global_page_profile"            
             >
         </activity>
         <activity
             android:name=".AddNewEvent"
             android:uiOptions="splitActionBarWhenNarrow"
             android:label="@string/esn_global_page_newevent"
+            android:theme="@style/esn.theme.light.newevent"
             >
         </activity>
         <activity android:name=".SelectEventLabel"
@@ -139,7 +140,7 @@
             android:name=".EditProfileActivity"
             android:icon="@drawable/logo"
             android:label="@string/app_Setting_Account_ChangeProfile"
-            android:theme="@style/esn.theme.light"
+            android:theme="@style/esn.theme.light.editprofile"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity

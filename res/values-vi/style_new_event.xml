@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="esn.theme.light.register" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="android:spinnerItemStyle">@style/esn.Widget.TextView.SpinnerItemRegister</item>
+        <item name="android:spinnerDropDownItemStyle">@style/esn.Widget.DropDownItem.SpinnerRegister</item>
+    </style>
+    <style name="esn.Widget.DropDownItem.SpinnerRegister"  parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    <style name="esn.Widget.TextView.SpinnerItemRegister" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center_vertical</item>
+        <!-- <item name="android:paddingTop">8dp</item> -->
+    </style>
+
+    <style name="esn.theme.light.register.actionbar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffffff</item>
+    </style>  
+</resources>

@@ -7,10 +7,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="5dp"
         android:paddingRight="10dp" 
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:background="#FFFFFF"
         >
         <TableLayout
             android:layout_width="fill_parent"
@@ -96,7 +97,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp"
+                android:onClick="ChangeEventType"
+                >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -108,7 +111,6 @@
                         android:id="@+id/esn.addNewEvent.txtEventTypeImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="ChangeEventType"
                         android:src="@drawable/ic_event_label_1" />
 
                     <TextView

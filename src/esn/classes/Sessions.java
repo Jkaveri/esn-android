@@ -5,24 +5,32 @@ import java.util.ArrayList;
 import com.facebook.android.Facebook;
 
 import esn.models.EventType;
+import esn.models.FriendNotification;
 import esn.models.Users;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Sessions {
+	
 	private static Sessions instance;
 	private Context context;
 	private SharedPreferences pref;
 	public Users currentUser;
 	public ArrayList<EventType> eventTypes;
+	
+	public FriendNotification friendNotification;
+	
+	
 	public Sessions(Context context) {
 		this.context = context;
 		pref = context.getSharedPreferences("ESN", Context.MODE_PRIVATE);
+		friendNotification = new FriendNotification();
 	}
 
 	public static Sessions getInstance(Context context) {
 		if (instance == null) {
 			instance = new Sessions(context);
+			
 		}
 		return instance;
 	}
@@ -95,9 +103,27 @@ public class Sessions {
 	public double getRadiusForEventAround(){
 		return get("app.setting.event.radius", (float)1.0);
 	}
+	
 	public void setRadiusForEventAround(double r){
 		put("app.setting.event.radius",(float)r);
 	}
+	
+	public Boolean getSettingFacebook(){
+		return get("app.setting.facebook.enable", false);
+	}
+	
+	public void setSettingFacebook(Boolean r){
+		put("app.setting.facebook.enable",r);
+	}
+	
+	public Boolean getSettingLocation(){
+		return get("app.setting.location.location", false);
+	}
+	
+	public void setSettingLocation(Boolean r){
+		put("app.setting.location.location",r);
+	}
+	
 	public boolean restoreFaceBook(Facebook fb){
 		fb.setAccessToken(get("fb_access_token",""));
 		fb.setAccessExpires(get("fb_access_token_expires",Long.MIN_VALUE));

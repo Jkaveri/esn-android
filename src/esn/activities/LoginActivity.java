@@ -45,8 +45,6 @@ public class LoginActivity extends SherlockActivity{
 
 	private Sessions session;
 
-
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
