@@ -30,14 +30,18 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,6 +117,28 @@ public class AddNewEvent extends Activity {
 			tvImageEventStatus.setText(String.format(
 					res.getString(R.string.esn_addNewEvent_imageeventstatus),
 					this));
+			
+			Spinner spinner = (Spinner)findViewById(R.id.esn_addNewEvent_sharetype);
+			
+			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			   
+				@Override
+				public void onItemSelected(AdapterView<?> adapter, View arg1,int i, long l) {
+					if(i==0)
+					{
+						TableRow row = (TableRow)findViewById(R.id.ak);
+						row.setEnabled(false);
+					}
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+			});
+			
 		} catch (Exception e) {
 			Utils.showToast(this, res.getString(R.string.esn_global_Error),
 					Toast.LENGTH_SHORT);
@@ -362,6 +388,7 @@ public class AddNewEvent extends Activity {
 		}
 	}
 
+	
 	public class UploadImageTask extends AsyncTask<Uri, Integer, String> {
 		@Override
 		protected void onPreExecute() {

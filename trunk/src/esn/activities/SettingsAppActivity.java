@@ -67,6 +67,7 @@ public class SettingsAppActivity extends Activity{
 		
 		ShowInfoSettingFb();
 		ShowInfoSettingLocation();
+		ShowInfoSettingHeadPhone();
 	}
 	
 	public void SettingFriendClicked(View v)
@@ -87,7 +88,7 @@ public class SettingsAppActivity extends Activity{
 		
 		if(sw.isChecked())
 		{	
-			email = session.currentUser.Email;		
+				email = session.currentUser.Email;		
 			
 				new Thread(){
 					public void run() {						
@@ -105,6 +106,10 @@ public class SettingsAppActivity extends Activity{
 									if(accessToken.isEmpty() || accessToken.equals("_"))
 									{
 										ConnecToFacebook();										
+									}
+									else
+									{
+										session.setSettingFacebook(true);
 									}
 								}
 							});
@@ -147,7 +152,25 @@ public class SettingsAppActivity extends Activity{
 			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+	public void CheckHeadPhoneClicked(View v)
+	{
+		CheckBox chk = (CheckBox)findViewById(R.id.esn_setting_app_headphone_check);
 		
+		if(chk.isChecked())
+		{
+			session.setAccessHeadPhone(true);
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
+		}
+		else
+		{
+			session.setAccessHeadPhone(false);
+			Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
+		}
+	}
+		
+	
+	
 	public void ShowInfoSettingFb()
 	{
 		Boolean check = session.getSettingFacebook();
@@ -176,12 +199,32 @@ public class SettingsAppActivity extends Activity{
 		}
 	}
 	
+	public void ShowInfoSettingHeadPhone()
+	{
+		CheckBox chkbox = (CheckBox)findViewById(R.id.esn_setting_app_headphone_check);
+		
+		boolean chk = session.getAccessHeadPhone();
+		
+		if(chk==true)
+		{
+			chkbox.setChecked(true);
+		}
+	}
+	
 	public void ConnecToFacebook()
 	{	
 		mFacebook.authorize(this, FB_PERMISSIONS, new AccessFaceBookListener(SettingsAppActivity.this,mFacebook));
 		
-		session.setSettingFacebook(true);		
+		session.setSettingFacebook(true);
+		
 		Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved),Toast.LENGTH_SHORT).show();
 						
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		mFacebook.authorizeCallback(requestCode, resultCode, data);
 	}
 }

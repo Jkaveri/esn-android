@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.android.DialogError;
 import com.facebook.android.FacebookError;
@@ -35,33 +36,19 @@ public class AccessFaceBookListener implements DialogListener {
 	@Override
 	public void onComplete(Bundle values) {		
 		try {			
-			session = Sessions.getInstance(context);
+			session = Sessions.getInstance(context);			
 			
 			final String access_token = mFacebook.getAccessToken();
-			session.put("fb_access_token", access_token);
+			
+			session.setAccessToken(access_token);
+			
 			session.put("fb_access_token_expires", mFacebook.getAccessExpires());
 			
-			new  Thread()
-			{
-				public void run() {
-					
-					UsersManager manager = new UsersManager();
-					
-					try {
-						
-						manager.UpdateAccessToken(session.currentUser.AccID,session.get("fb_access_token", "_"));
-						
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				};
-			}.start();
-			act.finish();			
+			AsyncFacebookRunner asyncFacebookRunner = new AsyncFacebookRunner(mFacebook);
+			
+			
+			asyncFacebookRunner.request("me", new RequestGraphMeAccId(act));
+			
 		} catch (Exception e) {
 			Log.e(LOG_TAG, e.getMessage());
 			e.printStackTrace();
@@ -70,12 +57,14 @@ public class AccessFaceBookListener implements DialogListener {
 
 	@Override
 	public void onFacebookError(FacebookError e) {
+		Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
 		Log.e(LOG_TAG, e.getMessage());
 		e.printStackTrace();
 	}
 
 	@Override
 	public void onError(DialogError e) {
+		Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
 		Log.e(LOG_TAG, e.getMessage());
 		e.printStackTrace();
 	}

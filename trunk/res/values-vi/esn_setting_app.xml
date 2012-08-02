@@ -8,6 +8,8 @@
     <string name="esn.setting.app.enableConnectFacebook.small">Cài đặt kết nối facebook.</string>
     <string name="esn.setting.app.enablelocation">Vị trí</string>
     <string name="esn.setting.app.enablelocation.small">Cài đặt cho phép truy cập vị trí hiện tại.</string>
+    <string name="esn.setting.app.enableheadphone">Chế độ tai nghe</string>
+    <string name="esn.setting.app.enableheadphone.small">Cài đặt cho phép sử dụng tai nghe.</string>    
     
     <string name="esn.setting.app.event.enable">Mở</string>
     <string name="esn.setting.app.event.radius">Bán kính</string>

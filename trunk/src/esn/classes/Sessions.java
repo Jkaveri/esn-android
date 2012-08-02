@@ -29,8 +29,7 @@ public class Sessions {
 
 	public static Sessions getInstance(Context context) {
 		if (instance == null) {
-			instance = new Sessions(context);
-			
+			instance = new Sessions(context);			
 		}
 		return instance;
 	}
@@ -122,6 +121,22 @@ public class Sessions {
 	
 	public void setSettingLocation(Boolean r){
 		put("app.setting.location.location",r);
+	}
+	
+	public String getAccessToken(){
+		return get("app.AccessToken", null);
+	}
+	
+	public void setAccessToken(String r){
+		put("app.AccessToken",r);
+	}
+	
+	public Boolean getAccessHeadPhone(){
+		return get("app.AccessHeadPhone", false);
+	}
+	
+	public void setAccessHeadPhone(Boolean r){
+		put("app.AccessHeadPhone",r);
 	}
 	
 	public boolean restoreFaceBook(Facebook fb){
