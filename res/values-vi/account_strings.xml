@@ -43,7 +43,7 @@
     <string name="esn.register.RequirePassword">Nhập mật khẩu !</string>
     <string name="esn.register.ValidateEmail">Email không đúng !</string>
     <string name="esn.register.EmailExists">Email đã được đăng ký !</string>
-    <string name="esn.register.Name">Họ tên !</string>
+    <string name="esn.register.Name">Họ tên</string>
     <string name="esn.register.btLogin">Đăng nhập</string>
     <string name="esn.register.btSignUp">Đăng ký</string>
     <string name="esn.register.txtEmail">Email</string>

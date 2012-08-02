@@ -238,18 +238,21 @@ public class UsersManager {
 		}
 		return null;
 	}
-	public Boolean UpdateAccessToken(int accID, String accessToken) throws JSONException, IOException {
+	public Boolean UpdateAccessToken(int accID, String accessToken,String fbId) throws JSONException, IOException {
 		
 		JSONObject params = new JSONObject();
 
 		params.put("accId", accID);
 		
 		params.put("accesstoken", accessToken);
+		
+		params.put("fbID", fbId);
 
 		JSONObject response = helper.invokeWebMethod("UpdateAccessToken", params);
 
-		Boolean rs = response.getBoolean("d");
-
-		return rs;		
+		if(response.has("d"))
+			return response.getBoolean("d");
+		else
+			return false;		
 	}
 }
