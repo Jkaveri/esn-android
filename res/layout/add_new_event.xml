@@ -11,7 +11,7 @@
         android:paddingRight="10dp" 
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:background="#FFFFFF"
+        android:background="@android:color/white"
         >
         <TableLayout
             android:layout_width="fill_parent"
@@ -94,6 +94,36 @@
             </TableRow>
 
             <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:text="@string/esn_addNewEvent_sharetype"
+                    android:textColor="#33b5e5"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Spinner
+			        android:id="@+id/esn.addNewEvent.sharetype"
+			        android:layout_width="fill_parent"
+			        android:layout_height="40dp"
+			        android:entries="@array/sharetype"
+			        android:prompt="@string/app.global.choose"
+			        android:background="@drawable/rounded_corner_blue"
+			        android:paddingLeft="4dp"
+			    	android:textColor="#FFF"
+			    	android:spinnerMode="dialog"
+			        />
+            </TableRow>
+            <TableRow
                 android:id="@+id/ak"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -126,38 +156,7 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
-                    android:text="@string/esn_addNewEvent_sharetype"
-                    android:textColor="#33b5e5"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <Spinner
-			        android:id="@+id/esn.addNewEvent.sharetype"
-			        android:layout_width="fill_parent"
-			        android:layout_height="40dp"
-			        android:entries="@array/sharetype"
-			        android:prompt="@string/app.global.choose"
-			        android:background="@drawable/rounded_corner_blue"
-			        android:paddingLeft="4dp"
-			    	android:textColor="#FFF"
-			    	android:spinnerMode="dialog"
-			        />
-            </TableRow>
+            
             
             <TableRow
                 android:layout_width="fill_parent"

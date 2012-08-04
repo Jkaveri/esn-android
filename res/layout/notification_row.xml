@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
-    android:background="#FFF"
     >
     
     <ImageView
-        android:id="@+id/esn.home.event.listEventImage"
+        android:id="@+id/esn.notification.avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="4dp"
@@ -21,7 +20,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/esn.home.event.title"
+            android:id="@+id/esn.notification.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13dp"
@@ -29,18 +28,18 @@
             android:padding="4dp"/>
         
         <TextView
-            android:id="@+id/esn.home.event.description"
+            android:id="@+id/esn.notification.message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13dp"
             android:textColor="#33b5e5" 
             android:padding="4dp"/>
-        <TextView
-            android:id="@+id/esn.home.event.date"
+         <TextView
+            android:id="@+id/esn.notification.date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13dp"
             android:textColor="#33b5e5" 
             android:padding="4dp"/>
-    </LinearLayout>
+    </LinearLayout>    
 </LinearLayout>

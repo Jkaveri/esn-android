@@ -27,6 +27,7 @@ import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -108,7 +109,6 @@ public class AddNewEvent extends Activity {
 				}
 				tvAddress.setText(add);
 			} else {
-				//neu tim duoc dia chi boi toa do
 				tvAddress.setText(res
 						.getString(R.string.esn_addNewEvent_noAddress));
 			}
@@ -124,10 +124,15 @@ public class AddNewEvent extends Activity {
 			   
 				@Override
 				public void onItemSelected(AdapterView<?> adapter, View arg1,int i, long l) {
-					if(i==0)
+					if(i==1)
 					{
 						TableRow row = (TableRow)findViewById(R.id.ak);
-						row.setEnabled(false);
+						row.setVisibility(View.GONE);
+					}
+					else
+					{
+						TableRow row = (TableRow)findViewById(R.id.ak);
+						row.setVisibility(View.VISIBLE);
 					}
 				}
 
@@ -171,6 +176,7 @@ public class AddNewEvent extends Activity {
 	public void btnAddClicked() {
 
 		try {
+			
 			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
 			String title = txtTitle.getText().toString();
 
@@ -178,39 +184,42 @@ public class AddNewEvent extends Activity {
 			String description = txtDescription.getText().toString();
 
 			if ((title == null) || title.length() <= 0) {
-				txtTitle.setError("Title is required",
-						res.getDrawable(R.drawable.ic_alerts_and_states_error));
+				txtTitle.setError("Title is required",res.getDrawable(R.drawable.ic_alerts_and_states_error));
 				txtTitle.requestFocus();
 				return;
 			}
 			if (description == null || description.length() <= 0) {
 
-				txtDescription.setError("Description is required",
-						res.getDrawable(R.drawable.ic_alerts_and_states_error));
+				txtDescription.setError("Description is required",res.getDrawable(R.drawable.ic_alerts_and_states_error));
 				txtDescription.requestFocus();
 				return;
 			}
-
-			if (event.EventTypeID <= 0) {
-				Toast.makeText(context, "Ban phai chon loai su kien",
-						Toast.LENGTH_SHORT).show();
-				return;
-			}
-
+			
 			event.AccID = sessions.currentUser.AccID;
 			event.Title = title;
 			event.Description = description;
 
 			event.ShareType = 0;
+			
 			Spinner ddlShareType = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
-
-			String eventtype = ddlShareType.getSelectedItem().toString();
-
-			if (eventtype.equals(res
-					.getString(R.string.esn_addNewEvent_sharetypepublic))) {
+		
+			String sharetype = ddlShareType.getSelectedItem().toString();
+			
+			if (sharetype.equals(res.getString(R.string.esn_addNewEvent_sharetypepublic))) {
 				event.ShareType = 1;
+			}	
+			
+			if(event.ShareType==0)
+			{
+				event.EventTypeID=10;
 			}
-
+			
+			if (event.EventTypeID <= 0) {
+				Toast.makeText(context, "Ban phai chon loai su kien",
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
 			int i = 0;
 			// waiting for upload
 			// if uploaded or upload failed

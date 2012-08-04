@@ -6,6 +6,7 @@
     android:paddingBottom="7dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="#FFFFFF"
     >
     
     <ImageView
