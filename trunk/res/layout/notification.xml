@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF">    
-	<ListView 
-	    android:layout_height="0dp"
-	    android:layout_width="fill_parent"
-	    android:layout_weight="1"
-	    android:id="@+id/esn_findFriend_list">	    
-	</ListView>
+    android:background="@android:color/white"
+    >
+    <ListView 
+        android:id="@+id/esn.notification.listnotification"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        ></ListView>
 </LinearLayout>

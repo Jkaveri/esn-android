@@ -2,8 +2,10 @@ package esn.models;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import org.apache.http.client.ClientProtocolException;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import esn.classes.HttpHelper;
@@ -164,6 +166,7 @@ public class UsersManager {
 			user.Favorite = p.getString("Favorite");
 
 			user.Avatar = p.getString("Avatar");
+			
 			return user;
 		}
 		return null;
@@ -254,5 +257,32 @@ public class UsersManager {
 			return response.getBoolean("d");
 		else
 			return false;		
+	}
+
+	public ArrayList<NotificationDTO> getNotification(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
+		
+		ArrayList<NotificationDTO> listNotification = new ArrayList<NotificationDTO>();
+		
+		JSONObject params = new JSONObject();
+		
+		params.put("accountID", accID);
+		
+		JSONObject result = helper.invokeWebMethod("GetUnReadNotifications", params);
+		
+		if (result != null) {
+			
+			if (result.has("d")) {
+				
+				JSONArray jsonCall = result.getJSONArray("d");
+				
+				for (int i = 0; i < jsonCall.length(); i++) {
+					JSONObject json = jsonCall.getJSONObject(i);
+					NotificationDTO notificationDTO = new NotificationDTO();
+					Utils.JsonToObject(json, notificationDTO);
+					listNotification.add(notificationDTO);					
+				}
+			}
+		}
+		return listNotification;		
 	}
 }

@@ -7,6 +7,7 @@ public class EsnListItem {
 	private int id;
 	private boolean checked;
 	private String tagName;
+	private int type;
 	public EsnListItem(int id){
 		this.id = id;
 	}

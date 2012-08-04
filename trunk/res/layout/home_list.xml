@@ -6,6 +6,7 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="0dp"
+    android:background="#FFF"
     >
      <ListView
 		    android:id="@+id/esn.home.listevent"
