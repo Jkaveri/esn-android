@@ -77,6 +77,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		// requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
 		super.onCreate(savedInstanceState);
@@ -88,11 +89,14 @@ public class HomeEventListActivity extends SherlockActivity implements
 		session = Sessions.getInstance(context);
 
 		res = getResources();
+		
 		setupActionBar();
+		
 		setupListNavigate();
 
 		// detect current location
 		currentLocation = GetCurrentLocation();
+		
 		if(currentLocation!=null){
 			filter = session.get("filterString","");
 			radius = session.get("app.setting.event.radius", (float)1.0);
@@ -114,8 +118,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 				}
 
 				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem,
-						int visibleItemCount, int totalItemCount) {
+				public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
 					int scroll = firstVisibleItem + visibleItemCount;
 					boolean acti = scroll == totalItemCount - 1;
 					if (acti && scroll > lastScroll) {
@@ -156,6 +159,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 	}
 
 	private Location GetCurrentLocation() {
+		
 		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		if (lm != null) {
 			Criteria criteria = new Criteria();
@@ -186,8 +190,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_map2);
 
 		Context context = getSupportActionBar().getThemedContext();
-		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,
-				R.layout.sherlock_spinner_item, mNavigationItems);
+		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,R.layout.sherlock_spinner_item, mNavigationItems);
 		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		getSupportActionBar().setListNavigationCallbacks(list, this);
@@ -262,7 +265,6 @@ public class HomeEventListActivity extends SherlockActivity implements
 		return true;
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		item.getTitle().toString();

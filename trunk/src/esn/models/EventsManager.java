@@ -305,4 +305,33 @@ public class EventsManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public ArrayList<Events> getEventUserList(int pageIndex, int pageSize,int accId)
+			throws JSONException, IOException, IllegalArgumentException,
+			IllegalAccessException, ParseException {
+		ArrayList<Events> listEvent = new ArrayList<Events>();
+
+		JSONObject params = new JSONObject();
+		
+		params.put("accId", accId);
+		params.put("pageNum", pageIndex);
+		params.put("pageSize", pageSize);
+
+		JSONObject result = helper.invokeWebMethod("GetListEventsOfUser", params);
+
+		if (result != null) {
+			if (result.has("d")) {
+				JSONArray jsonCall = result.getJSONArray("d");
+
+				for (int i = 0; i < jsonCall.length(); i++) {
+					JSONObject jsonEvent = jsonCall.getJSONObject(i);
+					Events event = new Events();
+					Utils.JsonToObject(jsonEvent, event);
+					listEvent.add(event);
+				}
+			}
+		}
+
+		return listEvent;
+	}
 }

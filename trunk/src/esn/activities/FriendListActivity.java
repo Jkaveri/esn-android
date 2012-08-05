@@ -292,7 +292,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 								| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		
 		menu.add("FindMoreFriend")
-				.setIcon(R.drawable.ic_friend_event)
+				.setIcon(R.drawable.ic_friend_searchfb)
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
 								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
