@@ -63,13 +63,11 @@ public class HomeActivity extends SherlockMapActivity implements
 	private void setupListNavigate() {
 		mNavigationItems = new EsnListItem[2];
 		mNavigationItems[0] = new EsnListItem(1);
-		mNavigationItems[0].setTitle(res
-				.getString(R.string.app_global_viewasmap));
+		mNavigationItems[0].setTitle(res.getString(R.string.app_global_viewasmap));
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
 
 		mNavigationItems[1] = new EsnListItem(2);
-		mNavigationItems[1].setTitle(res
-				.getString(R.string.app_global_viewaslist));
+		mNavigationItems[1].setTitle(res.getString(R.string.app_global_viewaslist));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();
@@ -198,7 +196,7 @@ public class HomeActivity extends SherlockMapActivity implements
 
 			break;
 		case R.id.esn_home_menuItem_settings:
-			Intent intent = new Intent(this, SettingsActivity.class);
+			Intent intent = new Intent(this, ProfileActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.esn_home_menuItem_labels:

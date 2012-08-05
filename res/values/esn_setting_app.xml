@@ -35,4 +35,10 @@
     <string name="esn.setting.app.informationenablebefore">Enable Facebook Before!</string>
     <string name="esn.setting.app.enterfacebookemail">Enter facebook email !</string>
     <string name="esn.setting.app.enterfacebookpassword">Enter facebook password !</string>
+    
+    <string name="esn.setting.profile.setting">Setting</string>
+    <string name="esn.setting.profile.notification">Message</string>
+    <string name="esn.setting.profile.friend">Friends</string>
+    <string name="esn.setting.profile.information">Information</string>
+    <string name="esn.setting.profile.location">Location</string>
 </resources>

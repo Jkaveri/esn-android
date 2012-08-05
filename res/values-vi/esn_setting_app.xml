@@ -35,4 +35,10 @@
     <string name="esn.setting.app.informationenablebefore">Hãy kích hoạt chức năng này trước !</string>
     <string name="esn.setting.app.enterfacebookemail">Nhập email facebook !</string>
     <string name="esn.setting.app.enterfacebookpassword">Nhập mật khẩu !</string>
+    
+    <string name="esn.setting.profile.setting">Cài Đặt</string>
+    <string name="esn.setting.profile.notification">Tin Nhắn</string>
+    <string name="esn.setting.profile.friend">Bạn Bè</string>
+    <string name="esn.setting.profile.information">Thông Tin</string>
+    <string name="esn.setting.profile.location">Vị Trí</string>
 </resources>

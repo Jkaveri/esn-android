@@ -27,6 +27,7 @@ public class Events{
      public int Dislike;
      public int Status;
      public Users user;
+     //public int Comment;
 
 	public int getLevel(){
 		if(Like>50) return 3;

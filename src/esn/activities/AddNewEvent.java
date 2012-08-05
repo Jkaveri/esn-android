@@ -64,12 +64,10 @@ public class AddNewEvent extends Activity {
 	private static final int SELECT_PICTURE = 1;
 	private static final int SELECT_EVENT_TYPE = 12;
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		try {
-			// TODO Auto-generated method stub
+		try {			
 			super.onCreate(savedInstanceState);
 
 			setContentView(R.layout.add_new_event);
@@ -178,6 +176,7 @@ public class AddNewEvent extends Activity {
 		try {
 			
 			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
+			
 			String title = txtTitle.getText().toString();
 
 			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
