@@ -50,6 +50,16 @@ public class FriendsManager {
 		return result.getBoolean("d");
 	}
 	
+	public boolean addfriend(int accID, int friendID) throws JSONException, IOException {
+		
+		JSONObject params = new JSONObject();
+		params.put("accID", accID);
+		params.put("friendID", friendID);
+		JSONObject result = helper.invokeWebMethod("AddFriend",params);
+				
+		return result.getBoolean("d");
+	}
+	
 
 	public Users RetrieveByAccID(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException{
 		

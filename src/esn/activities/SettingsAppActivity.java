@@ -10,7 +10,9 @@ import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -80,6 +82,34 @@ public class SettingsAppActivity extends Activity{
 	{
 		intent = new Intent(this, SettingAppEventActivity.class);
 		startActivity(intent);
+	}
+	
+	public void LogoutClick(View v)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you want to logout?")
+					.setCancelable(false)
+					.setPositiveButton(res.getString(R.string.app_global_yes), new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							session.clear();
+							
+							Intent intent = new Intent(context, WelcomeActivity.class);
+							startActivity(intent);
+							overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+							finish();
+						}
+					})
+					.setNegativeButton(res.getString(R.string.app_global_no), new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							
+						}
+					});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 	
 	public void SwitchFbClicked(View v)

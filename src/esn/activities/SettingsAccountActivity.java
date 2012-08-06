@@ -47,12 +47,11 @@ public class SettingsAccountActivity extends Activity implements OnItemClickList
 		if (index == 0) {
 			intent = new Intent(this, ChangePassActivity.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		} else if (index == 1) {
 			intent = new Intent(this, EditProfileActivity.class);
 			startActivity(intent);		
-		} else if (index == 2) {
-			intent = new Intent(this, FindFriendsActivity.class);
-			startActivity(intent);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		}
 	} // end onItemClick
 }

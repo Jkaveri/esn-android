@@ -49,14 +49,15 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/esn.setting.isfriend"
             android:layout_width="115dp"
             android:layout_height="30dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/rounded_corner_blue"
-            android:onClick="SettingClicked"
+            android:onClick="FriendClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/esn.setting.profile.setting"
+            android:text="@string/esn_friend_unfriend"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
 
@@ -131,8 +132,7 @@
         <ListView
             android:id="@+id/esn.setting.profile.listeventuser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:divider="@drawable/ic_divider">
+            android:layout_height="wrap_content" >
         </ListView>
     </LinearLayout>
 

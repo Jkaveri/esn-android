@@ -314,9 +314,6 @@ public class AddNewEvent extends Activity {
 		startActivityForResult(intent, SELECT_PICTURE);
 	}
 
-	@TargetApi(13)
-	@SuppressLint("ParserError")
-	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		if (requestCode == EsnCameras.TAKE_PICTURE_REQUEST_CODE) {
@@ -433,7 +430,6 @@ public class AddNewEvent extends Activity {
 
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
 			super.onProgressUpdate(values);
 		}
 
@@ -496,7 +492,6 @@ public class AddNewEvent extends Activity {
 					});
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				Utils.showToast(AddNewEvent.this,

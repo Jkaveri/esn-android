@@ -67,6 +67,7 @@
     <string name="esn.register.rdbFemale">Female</string>
     <string name="esn.register.btDone">Done</string>
     <string name="esn.register.delete">Delete Post</string>
+    <string name="esn.register.cancel">Cancel</string>
     <string name="esn.register.account">ACCOUNT</string>
     <string name="esn.register.information">INFORMATION</string>
     <string name="esn.register.btCancel">Cancel</string>
@@ -83,5 +84,6 @@
     <string name="esn_register_avatar">Avatar</string>
     <string name="esn_login_forgotPass">Forgot your password?</string>
 	
-
+	<string name="esn_friend_unfriend">Unfriend</string>
+	<string name="esn_friend_addfriend">Add Friend</string>
 </resources>
