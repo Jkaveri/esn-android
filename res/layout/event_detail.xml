@@ -242,7 +242,7 @@
 
             <TextView
                 android:id="@+id/esn_eventDetail_notConfirmed"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/esn_eventDetail_eventIsWaiting"
                 android:textSize="@dimen/textSize.medium"
@@ -253,8 +253,8 @@
                 android:contentDescription="@string/esn.eventDetail.image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxHeight="180dp"
-                android:maxWidth="300dp"
+                android:maxHeight="320dp"
+                android:maxWidth="320dp"
                 android:adjustViewBounds="true"/>
         </LinearLayout>
 
@@ -296,7 +296,8 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            >
 
             <ListView
                 android:id="@+id/esn.eventDetails.listComments"
@@ -319,5 +320,4 @@
             android:textColor="@drawable/white"
             android:textSize="10dp" />
     </LinearLayout>
-
 </ScrollView>

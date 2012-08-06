@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 
@@ -76,7 +77,6 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage(getResources().getString(R.string.esn_global_pleaseWait));
-			
 		
 		eventId = data.getIntExtra("EventId", 0);
 		accId = data.getIntExtra("AccId", 0);
@@ -274,6 +274,10 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 		@Override
 		public void run() {
 			Toast.makeText(context,res.getString(R.string.esn_eventDetail_commensuccess),Toast.LENGTH_SHORT).show();
+			
+			EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
+			txtComment.setText(null);
+			
 			dialog.show();
 			lastScroll=0;
 			dialog.show();

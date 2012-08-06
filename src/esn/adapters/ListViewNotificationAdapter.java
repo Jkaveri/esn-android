@@ -26,16 +26,17 @@ public class ListViewNotificationAdapter extends CustomListAdapter<NotificationD
 	@Override
 	protected void customRowView(NotificationDTO rowBean, Object rowHolder) {
 		ViewHolder holder = (ViewHolder) rowHolder;
-		holder.name.setText(rowBean.Name);
-		holder.disc.setText(rowBean.Description);//So ban chung
+		//holder.name.setText(rowBean.SendName);		
+		String mss = rowBean.Description + " " + rowBean.SendName;
+		holder.disc.setText(mss);//So ban chung
 		holder.date.setText(rowBean.DateCreate.toString());//So ban chung
-		displayImage(rowBean.Avatar, holder.image);
+		displayImage(rowBean.Image, holder.image);
 	}
 
 	@Override
 	protected Object createHolder(View convertView) {
 		ViewHolder holder = new ViewHolder();
-		holder.name = (TextView) convertView.findViewById(R.id.esn_notification_name);
+		//holder.name = (TextView) convertView.findViewById(R.id.esn_notification_name);
 		holder.disc = (TextView) convertView.findViewById(R.id.esn_notification_message);
 		holder.date = (TextView) convertView.findViewById(R.id.esn_notification_date);
 		holder.image = (ImageView) convertView.findViewById(R.id.esn_notification_avatar);

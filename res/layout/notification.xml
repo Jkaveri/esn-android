@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
     >
     <ListView 
         android:id="@+id/esn.notification.listnotification"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:divider="@drawable/ic_divider"
         ></ListView>
 </LinearLayout>

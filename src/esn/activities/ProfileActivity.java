@@ -83,16 +83,15 @@ public class ProfileActivity extends Activity  {
 		
 		ShowInforUser();
 		
-		listUserEvent = (ListView)findViewById(R.id.esn_setting_profile_listeventuser);
-		
 		GetListEventUser();
 		
+		listUserEvent = (ListView)findViewById(R.id.esn_setting_profile_listeventuser);
 		
 		listUserEvent.setOnScrollListener(new OnScrollListener() {
 			
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO Auto-generated method stub
+				
 			}
 			
 			@Override
@@ -148,7 +147,7 @@ public class ProfileActivity extends Activity  {
 		
 		startActivity(intent);
 	}
-
+	
 	/*@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		// TODO Auto-generated method stub
@@ -253,6 +252,7 @@ public class ProfileActivity extends Activity  {
 		listUserEvent.setAdapter(null);
 		super.onDestroy();
 	}
+	
 	private void loadEventUsertList(final int pageSize, final int pageIndex) {
 		
 		Thread thr = new Thread(new Runnable() {

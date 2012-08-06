@@ -16,6 +16,7 @@ import esn.models.NotificationDTO;
 import esn.models.UsersManager;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -28,7 +29,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 
-public class Notification extends SherlockActivity implements OnNavigationListener {
+public class Notification extends Activity {
 
 	private ListView lstNofication;
 	private ListViewNotificationAdapter adapter;
@@ -40,9 +41,9 @@ public class Notification extends SherlockActivity implements OnNavigationListen
 	private int accounID = 0;
 	Sessions sessions;
 	Resources res;
-	UsersManager usersManager = new UsersManager();
 	
-	
+	esn.models.NotificationManager notificationManager = new esn.models.NotificationManager();
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -55,26 +56,15 @@ public class Notification extends SherlockActivity implements OnNavigationListen
 		
 		sessions = Sessions.getInstance(context);
 		
-		setupActionBar();
-		setupListNavigate();
+		//setupActionBar();
+		//setupListNavigate();
 		
 		setupNotificationList();
 
 		res = getResources();
 		
 		lstNofication = (ListView) findViewById(R.id.esn_notification_listnotification);
-				
-		lstNofication.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adView, View view, int index, long id) {
-				FriendsListsDTO bean = (FriendsListsDTO) adapter.getItem(index);
-				Intent it = new Intent(context, UserPageActivity.class);
-				it.putExtra("accountID", bean.AccID);
-				startActivity(it);
-			}
-		});
-
+		
 		lstNofication.setOnScrollListener(new OnScrollListener() {
 			
 			@Override
@@ -110,12 +100,15 @@ public class Notification extends SherlockActivity implements OnNavigationListen
 
 				FriendsManager frdMng = new FriendsManager();
 				try {
-					final ArrayList<NotificationDTO> itemList = usersManager.getNotification(sessions.currentUser.AccID);
+					final ArrayList<NotificationDTO> itemList = notificationManager.getNotification(sessions.currentUser.AccID);
 					handler.post(new Runnable() {
 
 						@Override
 						public void run() {
-							adapter = new ListViewNotificationAdapter(context, itemList);
+							adapter = new ListViewNotificationAdapter(Notification.this, itemList);
+							
+							lstNofication.setAdapter(adapter);
+							
 							dialog.dismiss();
 						}
 					});
@@ -136,7 +129,7 @@ public class Notification extends SherlockActivity implements OnNavigationListen
 
 				FriendsManager frdMng = new FriendsManager();
 				try {
-					final ArrayList<NotificationDTO> itemList = usersManager.getNotification(accounID);
+					final ArrayList<NotificationDTO> itemList = notificationManager.getNotification(accounID);
 					handler.post(new Runnable() {
 
 						@Override
@@ -161,13 +154,14 @@ public class Notification extends SherlockActivity implements OnNavigationListen
 		super.onDestroy();
 	}
 
+	/*
 	private void setupListNavigate() {
 		getSupportActionBar().setNavigationMode(ActionBar.DISPLAY_SHOW_TITLE);
 		getSupportActionBar().setTitle(getString(R.string.str_Friends_Lists_Title));
 	}
 
 	private void setupActionBar() {
-		/** setup action bar **/
+		*//** setup action bar **//*
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
 		getSupportActionBar().setDisplayUseLogoEnabled(true);
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -221,6 +215,6 @@ public class Notification extends SherlockActivity implements OnNavigationListen
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		Toast.makeText(this, getString(R.string.str_Friends_Lists_Title), Toast.LENGTH_SHORT).show();
 		return true;
-	}
+	}*/
 	
 }

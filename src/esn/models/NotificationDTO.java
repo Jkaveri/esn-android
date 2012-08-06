@@ -11,6 +11,7 @@ public class NotificationDTO {
 	public Date DateCreate;
 	public int Status;
 	public int TargetType;
-	public String Avatar;
-	public String Name;
+	public String Image;
+	public String RecieveName;
+	public String SendName;
 }
