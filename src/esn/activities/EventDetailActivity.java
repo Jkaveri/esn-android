@@ -33,9 +33,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
-import com.facebook.android.FbUpdateStatusListener;
 
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
