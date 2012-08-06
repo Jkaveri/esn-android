@@ -3,9 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
-    >
-    
+    android:paddingBottom="5dp"
+    android:background="@drawable/rounded_corner_blue"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="5dp"
+    >    
     <ImageView
         android:id="@+id/esn.notification.avatar"
         android:layout_width="50dp"
@@ -17,29 +21,21 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"      
+        >
 
         <TextView
-            android:id="@+id/esn.notification.name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13dp"
-            android:textColor="#33b5e5" 
-            android:padding="4dp"/>
-        
-        <TextView
             android:id="@+id/esn.notification.message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textSize="13dp"
-            android:textColor="#33b5e5" 
-            android:padding="4dp"/>
+            android:padding="4dp"
+            android:textColor="@android:color/white"/>
          <TextView
             android:id="@+id/esn.notification.date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13dp"
-            android:textColor="#33b5e5" 
-            android:padding="4dp"/>
-    </LinearLayout>    
+            android:textColor="#33b5e5"/>
+    </LinearLayout> 
 </LinearLayout>

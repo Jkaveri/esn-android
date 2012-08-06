@@ -552,6 +552,8 @@ public class EventDetailActivity extends SherlockActivity implements
 				} else {
 					if (event.Picture != null && event.Picture.length() > 0) {
 						TextView tvWaiting = (TextView) findViewById(R.id.esn_eventDetail_notConfirmed);
+						imgEvent.setMaxHeight(0);
+						imgEvent.setMaxWidth(0);
 						tvWaiting.setVisibility(View.VISIBLE);
 						imgEvent.setVisibility(View.INVISIBLE);
 					}
@@ -652,6 +654,11 @@ public class EventDetailActivity extends SherlockActivity implements
 			Toast.makeText(context,
 					res.getString(R.string.esn_eventDetail_commensuccess),
 					Toast.LENGTH_SHORT).show();
+			EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
+			
+			txtComment.setText(null);			
+			
+			adapter.clearCache();
 			GetListComment();
 		}
 
@@ -765,6 +772,7 @@ public class EventDetailActivity extends SherlockActivity implements
 	}
 
 	public void ListViewHeight() {
+		
 		ListView lv = (ListView) findViewById(R.id.esn_eventDetails_listComments);
 		ListAdapter listAdapter = lv.getAdapter();
 

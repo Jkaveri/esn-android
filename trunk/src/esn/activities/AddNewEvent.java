@@ -63,6 +63,8 @@ public class AddNewEvent extends Activity {
 
 	private static final int SELECT_PICTURE = 1;
 	private static final int SELECT_EVENT_TYPE = 12;
+	
+	int fb = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -175,8 +177,7 @@ public class AddNewEvent extends Activity {
 
 		try {
 			
-			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
-			
+			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);			
 			String title = txtTitle.getText().toString();
 
 			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
@@ -212,6 +213,8 @@ public class AddNewEvent extends Activity {
 			{
 				event.EventTypeID=10;
 			}
+			
+			int eve = event.EventTypeID;
 			
 			if (event.EventTypeID <= 0) {
 				Toast.makeText(context, "Ban phai chon loai su kien",
@@ -296,25 +299,7 @@ public class AddNewEvent extends Activity {
 
 	public void CameraClicked() {
 
-		// final CharSequence[] items =
-		// {res.getString(R.string.app_global_gallery),
-		// res.getString(R.string.app_global_camera),
-		// res.getString(R.string.app_global_cancel) };
 		OpenCamera();
-
-		/*
-		 * final CharSequence[] items = { "Photo Gallery", "Camera", "Cancel" };
-		 * 
-		 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		 * builder.setTitle("Choose");
-		 * 
-		 * builder.setItems(items, new DialogInterface.OnClickListener() {
-		 * public void onClick(DialogInterface dialog, int item) { if (item ==
-		 * 0) { OpenPhotoGallery(); } else if (item == 1) { OpenCamera(); } else
-		 * { return; } } });
-		 * 
-		 * imageSelectDialog = builder.create(); imageSelectDialog.show();
-		 */
 	}
 
 	public void OpenCamera() {
@@ -546,5 +531,22 @@ public class AddNewEvent extends Activity {
 
 			imgBytes = null;
 		}
+	}
+	
+	public void ShareFbClick(View v)
+	{
+		ImageView im = (ImageView)findViewById(R.id.esn_addNewEvent_sharefb);
+		
+		if(fb==1)
+		{
+			im.setImageDrawable(res.getDrawable(R.drawable.ic_newevent_fb_en));
+			fb=2;
+		}
+		else
+		{
+			im.setImageDrawable(res.getDrawable(R.drawable.ic_newevent_fb_dis));
+			fb=1;
+		}
+		
 	}
 }

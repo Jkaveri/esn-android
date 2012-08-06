@@ -88,4 +88,6 @@
 	<string name="esn_userpage_Female">Nữ</string>
 	
 	<string name="tnt">TÀI NĂNG TRẺ 2012</string>
+	<string name="esn.global.notification">Thông Báo</string>	
+	<string name="esn.global.me">Tôi</string>
 </resources>

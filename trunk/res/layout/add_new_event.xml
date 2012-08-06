@@ -111,17 +111,32 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
-                <Spinner
-			        android:id="@+id/esn.addNewEvent.sharetype"
-			        android:layout_width="fill_parent"
-			        android:layout_height="40dp"
-			        android:entries="@array/sharetype"
-			        android:prompt="@string/app.global.choose"
-			        android:background="@drawable/rounded_corner_blue"
-			        android:paddingLeft="4dp"
-			    	android:textColor="#FFF"
-			    	android:spinnerMode="dialog"
-			        />
+                <LinearLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <Spinner
+                        android:id="@+id/esn.addNewEvent.sharetype"
+                        android:layout_width="260dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:entries="@array/sharetype"
+                        android:paddingLeft="4dp"
+                        android:prompt="@string/app.global.choose"
+                        android:spinnerMode="dialog"
+                        android:textColor="#FFF"
+                        android:layout_marginRight="5dp"
+                        />
+
+                    <ImageView 
+                        android:id="@+id/esn.addNewEvent.sharefb"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_newevent_fb_dis"
+                        android:onClick="ShareFbClick"
+                        />
+                </LinearLayout>
             </TableRow>
             <TableRow
                 android:id="@+id/ak"

@@ -57,11 +57,7 @@
             android:label="@string/esn.register.btSignUp"
             android:theme="@style/esn.theme.light.register"
             >
-        </activity>
-        <activity android:name=".ProfileActivity"
-            android:label="@string/esn_global_page_profile"            
-            >
-        </activity>
+        </activity>      
         <activity
             android:name=".AddNewEvent"
             android:uiOptions="splitActionBarWhenNarrow"
@@ -182,10 +178,8 @@
         </activity>
         <service android:name=".EsnLookingAheadEventsServices"
             android:icon="@drawable/logo"
-            android:label="@string/app_name">
-            
-        </service>
-       
+            android:label="@string/app_name">            
+        </service>       
         <activity 
             android:name=".RecoveryPasswordActivity"
             android:label="@string/esn_global_page_recoverypassword"></activity>        
@@ -193,6 +187,15 @@
             android:name=".SettingAppLocationActivity"
             android:label="@string/esn.setting.app.enablelocation"
             ></activity> 
+        <activity 
+            android:name=".Notification"
+            android:label="@string/esn.global.notification"
+            ></activity>
+        <activity 
+            android:name=".ProfileActivity"
+            android:label="@string/esn.global.me"
+            ></activity>
+        
     </application>
 
 </manifest>
