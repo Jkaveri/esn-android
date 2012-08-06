@@ -259,5 +259,20 @@ public class UsersManager {
 			return false;		
 	}
 
-	
+	public Boolean GetRelationStatus(int accId,int otherId) throws ClientProtocolException, IOException, JSONException
+	{
+		JSONObject params = new JSONObject();
+
+		params.put("accID", accId);
+		
+		params.put("otherID", otherId);
+
+		JSONObject response = helper.invokeWebMethod("GetRelationStatus", params);
+
+		int rs = response.getInt("d");
+		
+		if(rs==1)
+			return true;
+		return false;
+	}
 }

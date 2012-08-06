@@ -116,8 +116,8 @@ public class EsnMapView extends TapControlledMapView {
 						AddNewEvent.class);
 				addNewEventIntent.putExtra("latitude", latitudeE6 / 1E6);
 				addNewEventIntent.putExtra("longtitude", longtitudeE6 / 1E6);
-				activity.startActivityForResult(addNewEventIntent,
-						REQUEST_CODE_ADD_NEW_EVENT);
+				activity.startActivityForResult(addNewEventIntent,REQUEST_CODE_ADD_NEW_EVENT);
+				activity.overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 			} else {
 				Toast.makeText(
 						activity.getApplicationContext(),

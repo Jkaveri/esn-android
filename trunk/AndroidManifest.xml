@@ -213,7 +213,13 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
+        
         <activity android:name=".FriendEventsListActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
+        
+        <activity android:name=".FriendsActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
+        <activity android:name=".Notification"
             android:uiOptions="splitActionBarWhenNarrow"></activity>
     </application>
 

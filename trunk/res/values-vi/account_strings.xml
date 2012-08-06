@@ -66,7 +66,7 @@
     <string name="esn.register.rdbMale">Nam</string>
     <string name="esn.register.rdbFemale">Nữ</string>
     <string name="esn.register.btDone">Xong</string>
-    <string name="esn.register.delete">Delete Post</string>
+    <string name="esn.register.delete">Xoá</string>
     <string name="esn.register.btCancel">Hủy bỏ</string>
     <string name="esn.register.account">TÀI KHOẢN</string>
     <string name="esn.register.information">THÔNG TIN CÁ NHÂN</string>
@@ -84,5 +84,6 @@
     <string name="esn_register_avatar">Ảnh cá nhân</string>
     <string name="esn_login_forgotPass">Quên mật khẩu ?</string>
 	
-
+	<string name="esn_friend_unfriend">Xoá Bạn</string>
+	<string name="esn_friend_addfriend">Thêm Bạn</string>
 </resources>

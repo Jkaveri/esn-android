@@ -209,10 +209,12 @@ public class HomeActivity extends SherlockMapActivity implements
 		case R.id.esn_home_menuItem_settings:
 			Intent intent = new Intent(this, ProfileActivity.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			break;
 		case R.id.esn_home_menuItem_labels:
 			Intent setFilterIntent = new Intent(this, SetFilterActivity.class);
 			startActivityForResult(setFilterIntent, CODE_REQUEST_SET_FILTER);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			break;
 		case R.id.esn_home_menuItem_zoomIn:
 			map.zoomIn();
@@ -231,6 +233,7 @@ public class HomeActivity extends SherlockMapActivity implements
 				addNewEventIntent.putExtra("longtitude", longtitude);
 				startActivityForResult(addNewEventIntent,
 						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 			break;
 		default:
@@ -244,7 +247,6 @@ public class HomeActivity extends SherlockMapActivity implements
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case EsnMapView.REQUEST_CODE_ADD_NEW_EVENT:
-
 				double latitude = data.getDoubleExtra("latitude",
 						Double.MIN_VALUE);
 				double longtitude = data.getDoubleExtra("longtitude",
@@ -268,7 +270,6 @@ public class HomeActivity extends SherlockMapActivity implements
 						.start();
 				break;
 			case REQUEST_CODE_HOME_EVENT_LIST:
-
 				break;
 			default:
 				break;

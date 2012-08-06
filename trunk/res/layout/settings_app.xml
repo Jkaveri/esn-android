@@ -150,9 +150,30 @@
         </TableRow>
         <View
 			android:layout_width="fill_parent"
-			android:layout_height="1dip"
+			android:layout_height="2dip"
 			android:layout_marginBottom="10dp"
 			android:background="#ACCC" />
+        <TableRow 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:onClick="LogoutClick"
+            >           
+            <ImageView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_setting_logout_dark"
+                android:contentDescription="@string/esn.setting.app.enablelocation"
+                android:layout_marginRight="10dp"
+                />
+            <TextView 
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="@string/esn.settings.logout"
+               android:textColor="@color/text_color" 
+                />
+            <TextView />
+        </TableRow>
     </TableLayout>    
     
 </ScrollView>

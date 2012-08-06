@@ -2,6 +2,8 @@ package esn.activities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Currency;
+
 import org.json.JSONException;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -43,6 +45,10 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 	Resources res;
 	FriendsManager friendsManager = new FriendsManager();
 	
+	public final static int CODE_REQUEST_FRIEND_INFO = 3;
+	
+	private int friendId = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -51,7 +57,14 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		handler = new Handler();
 		context = this;
 		
+		friendId = this.getIntent().getIntExtra("accountID", 0);
+		
 		sessions = Sessions.getInstance(context);
+		
+		if(friendId==0)
+		{
+			friendId = sessions.currentUser.AccID;
+		}
 		
 		setContentView(R.layout.friends_list);
 		setupActionBar();
@@ -59,9 +72,8 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		
 		setupFriendList();
 
-		res = getResources();
-		
 		lstFriend = (ListView) findViewById(R.id.lisvFriends);
+		res = getResources();
 		
 		lstFriend.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
@@ -76,9 +88,15 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 			@Override
 			public void onItemClick(AdapterView<?> adView, View view, int index, long id) {
 				FriendsListsDTO bean = (FriendsListsDTO) adapter.getItem(index);
-				Intent it = new Intent(context, UserPageActivity.class);
+				Intent it = new Intent(context, FriendsActivity.class);
+				
+				if(sessions.currentUser.AccID==bean.AccID)
+				{
+					it = new Intent(context, ProfileActivity.class);
+				}
 				it.putExtra("accountID", bean.AccID);
-				startActivity(it);
+				startActivityForResult(it,CODE_REQUEST_FRIEND_INFO);
+				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 		});
 
@@ -103,6 +121,11 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		});
 	}
 
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+	}
+	
 	@Override
 	public void onDestroy() {
 		adapter.stopThread();
@@ -135,8 +158,10 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 			public void run() {
 
 				FriendsManager frdMng = new FriendsManager();
-				try {
-					final ArrayList<FriendsListsDTO> itemList = frdMng.getFriendsList(8, page, sessions.currentUser.AccID);
+				try {					
+
+					final ArrayList<FriendsListsDTO> itemList = frdMng.getFriendsList(8, page, friendId);
+					
 					handler.post(new Runnable() {
 
 						@Override
@@ -180,7 +205,6 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		thr.start();
 	}
 	
-
 	protected void onItemLongClick(AdapterView<?> adView, View view, int index, long id) {
 		
 		final FriendsListsDTO bean = (FriendsListsDTO) adapter.getItem(index);
@@ -192,6 +216,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		dialog.setContentView(R.layout.diag_frd_slec);
 		
 		// dialog.setTitle("Title...");
+		
 		TextView dis = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_Discript);
 		dis.setText("Phone: " + bean.Phone);
 		TextView fullname = (TextView) dialog.findViewById(R.id.txt_Friends_Diaglog_FullName);
@@ -204,11 +229,18 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 			
 			@Override			
 			public void onClick(View v) {			
-				
 				dialog.dismiss();
-				Intent it = new Intent(context, UserPageActivity.class);
+				
+				Intent it = new Intent(context, FriendsActivity.class);
+				
+				if(sessions.currentUser.AccID==bean.AccID)
+				{
+					it = new Intent(context, ProfileActivity.class);
+				}
+				
 				it.putExtra("accountID", bean.AccID);
-				startActivity(it);
+				startActivityForResult(it,CODE_REQUEST_FRIEND_INFO);
+				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 		});
 
@@ -275,8 +307,6 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 		dialog.show();
 	}
 
-	
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add("FriendEvent")

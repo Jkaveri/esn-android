@@ -97,9 +97,9 @@ public class EventDetailActivity extends SherlockActivity implements
 
 		new GetEventDetailThread(eventId).start();
 
-		GetListComment();
-
-		lstCm = (ListView) findViewById(R.id.esn_eventDetails_listComments);
+		
+		
+		GetListComment();		
 
 		lstCm.setOverScrollMode(View.OVER_SCROLL_NEVER);
 		lstCm.setVerticalScrollBarEnabled(false);
