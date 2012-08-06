@@ -124,13 +124,18 @@ public class Sessions {
 	}
 	
 	public String getAccessToken(){
-		return get("app.AccessToken", null);
+		return get("fb_access_token", null);
 	}
 	
 	public void setAccessToken(String r){
-		put("app.AccessToken",r);
+		put("fb_access_token",r);
 	}
-	
+	public void setAccessExpires(long time){
+		put("fb_access_token_expires",time);
+	}
+	public long getAccessExpires(){
+		return get("fb_access_token_expires", (long)0);
+	}
 	public Boolean getAccessHeadPhone(){
 		return get("app.AccessHeadPhone", false);
 	}
@@ -145,8 +150,8 @@ public class Sessions {
 		put("app.setting.event.enable",r);
 	}
 	public boolean restoreFaceBook(Facebook fb){
-		fb.setAccessToken(get("fb_access_token",""));
-		fb.setAccessExpires(get("fb_access_token_expires",Long.MIN_VALUE));
+		fb.setAccessToken(getAccessToken());
+		fb.setAccessExpires(getAccessExpires());
 		return fb.isSessionValid();
 	}
 

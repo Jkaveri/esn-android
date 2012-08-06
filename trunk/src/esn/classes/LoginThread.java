@@ -1,6 +1,8 @@
 package esn.classes;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONException;
 
@@ -158,6 +160,13 @@ public class LoginThread extends Thread {
 				
 				if (user != null) {
 					session.currentUser = user;
+					if(user.AccessToken!=null && user.AccessToken.length()>0){
+						session.setAccessToken(user.AccessToken);
+						//set access expire
+						Calendar now = Calendar.getInstance();
+						now.add(Calendar.DATE, 2);
+						session.setAccessExpires(now.getTimeInMillis());
+					}
 				}else{
 					
 				}

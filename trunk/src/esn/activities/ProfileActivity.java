@@ -1,13 +1,11 @@
 package esn.activities;
+
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.facebook.android.Util;
 import esn.adapters.ListViewEventUserAdapter;
 import esn.classes.Sessions;
@@ -24,22 +22,21 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ProfileActivity extends Activity  {
+public class ProfileActivity extends Activity {
 
 	Intent intent;
-	
+
 	ProfileActivity context;
-	
+
 	private ProgressDialog dialog;
 
 	public Handler handler;
@@ -47,68 +44,75 @@ public class ProfileActivity extends Activity  {
 	EventsManager eventsManager = new EventsManager();
 
 	Sessions session;
-	
+
 	UsersManager usersManager = new UsersManager();
-	
+
 	private ListView listUserEvent;
-	
+
 	private ListViewEventUserAdapter adapter;
-		
+
 	private int page = 1;
 
 	Resources res;
-	
+
 	private int lastScroll = 0;
-	
+
 	Users users = new Users();
-	
+
+	protected ArrayList<Events> itemList;
+
 	public final static int CODE_REQUEST_SET_FILTER = 2;
-	
+
+	private static final int PAGE_SIZE = 8;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.profile);
-		
+
 		context = this;
-		
+
 		res = getResources();
-		
-		//setupActionBar();
-		
+
+		// setupActionBar();
+
 		handler = new Handler();
-		
+
 		session = Sessions.getInstance(context);
-		
+		listUserEvent = (ListView) findViewById(R.id.esn_setting_profile_listeventuser);
+		adapter = new ListViewEventUserAdapter(this, new ArrayList<Events>());
+		listUserEvent.setAdapter(adapter);
+
 		ShowInforUser();
+
 		
-		GetListEventUser();
-		
-		listUserEvent = (ListView)findViewById(R.id.esn_setting_profile_listeventuser);
-		
+
 		listUserEvent.setOnScrollListener(new OnScrollListener() {
-			
+
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				
+
 			}
-			
+
 			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
 				int scroll = firstVisibleItem + visibleItemCount;
-				boolean acti = scroll == totalItemCount-1;
-				if(acti && scroll > lastScroll){
+				boolean acti = scroll == totalItemCount - 1;
+				if (acti && scroll > lastScroll) {
 					lastScroll = scroll;
 					page++;
-					context.loadEventUsertList(8, page);
+					new GetListEventThread(page, PAGE_SIZE).start();
 				}
 			}
 		});
+		new GetListEventThread(1, PAGE_SIZE).start();
 	}
-	
+
 	private void ShowInforUser() {
-		
+
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(this.getResources().getString(
 				R.string.esn_global_loading));
@@ -120,67 +124,39 @@ public class ProfileActivity extends Activity  {
 		showProfileThread.start();
 	}
 
-	public void SettingClicked(View v)
-	{
-		intent = new Intent(context,SettingsAppActivity.class);
-		
+	public void SettingClicked(View v) {
+		intent = new Intent(context, SettingsAppActivity.class);
+
 		startActivity(intent);
 	}
-	
-	public void MessageClicked(View v)
-	{
-		intent = new Intent(context,Notification.class);
-		
+
+	public void MessageClicked(View v) {
+		intent = new Intent(context, Notification.class);
+
 		startActivity(intent);
 	}
-	
-	public void FriendsClicked(View v)
-	{
-		intent = new Intent(context,FriendListActivity.class);
-		
+
+	public void FriendsClicked(View v) {
+		intent = new Intent(context, FriendListActivity.class);
+
 		startActivity(intent);
 	}
-	
-	public void PersonalClicked(View v)
-	{
-		intent = new Intent(context,EditProfileActivity.class);
-		
+
+	public void PersonalClicked(View v) {
+		intent = new Intent(context, EditProfileActivity.class);
+
 		startActivity(intent);
 	}
-	
-	/*@Override
-	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	private void setupActionBar() {
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayUseLogoEnabled(false);
-		getSupportActionBar().setDisplayShowHomeEnabled(false);
-	}
-	
+
+
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
+	public void onDestroy() {
+		adapter.stopThread();
+		adapter.clearCache();
+		listUserEvent.setAdapter(null);
+		super.onDestroy();
+	}
 
-		com.actionbarsherlock.view.MenuInflater menuInfalte = getSupportMenuInflater();
-		menuInfalte.inflate(R.menu.home_menus, menu);
-		MenuItem searchItem = menu.findItem(R.id.esn_home_menuItem_search);
-		View collapsed = searchItem.getActionView();
-		ImageButton btnSearchGo = (ImageButton) collapsed
-				.findViewById(R.id.btnSearchGo);
-		btnSearchGo.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-			}
-		});
-
-		return true;
-	}*/
-
-	
 	@Override
 	public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
 		item.getTitle().toString();
@@ -212,87 +188,18 @@ public class ProfileActivity extends Activity  {
 		return true;
 	}
 
-	public void GetListEventUser()
-	{
-		Thread thr = new Thread(new Runnable() {
-			
-			Handler hd = new Handler();
-			@Override
-			public void run() {
-
-				EventsManager eventsManager = new EventsManager();
-				
-				try {
-					
-					final ArrayList<Events> itemList = eventsManager.getEventUserList(page,8,session.currentUser.AccID);
-					
-					hd.post(new Runnable() {
-
-						@Override
-						public void run() {
-							
-							adapter = new ListViewEventUserAdapter(ProfileActivity.this, itemList);
-							
-							listUserEvent.setAdapter(adapter);						
-						}
-					});
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		thr.start();
-	}
-	
-	@Override
-	public void onDestroy() {
-		adapter.stopThread();
-		adapter.clearCache();
-		listUserEvent.setAdapter(null);
-		super.onDestroy();
-	}
-	
-	private void loadEventUsertList(final int pageSize, final int pageIndex) {
-		
-		Thread thr = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-
-				EventsManager eventsManager = new EventsManager();
-				
-				try {
-					
-					final ArrayList<Events> itemList = eventsManager.getEventUserList(pageIndex,pageSize,session.currentUser.AccID);
-					
-					handler.post(new Runnable() {
-
-						@Override
-						public void run() {
-							adapter.add(itemList);
-						}
-					});
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		thr.start();
-	}
-	
 	public class ShowProfileThread extends Thread {
 
 		public ShowProfileThread() {
 		}
 
 		public void run() {
-			
+
 			if (session.currentUser != null) {
 
 				try {
-					users = usersManager.RetrieveById(session.currentUser.AccID);
+					users = usersManager
+							.RetrieveById(session.currentUser.AccID);
 					session.currentUser = users;
 				} catch (IllegalArgumentException e1) {
 					e1.printStackTrace();
@@ -315,7 +222,7 @@ public class ProfileActivity extends Activity  {
 
 							TextView txtName = (TextView) findViewById(R.id.esn_setting_profile_name);
 							TextView txtAddress = (TextView) findViewById(R.id.esn_setting_profile_address);
-							
+
 							final String url = users.Avatar;
 
 							if (url != null) {
@@ -323,11 +230,12 @@ public class ProfileActivity extends Activity  {
 									public void run() {
 
 										Bitmap bitmap = null;
-										
+
 										try {
-											
-											bitmap = Utils.getBitmapFromURL(url);
-										
+
+											bitmap = Utils
+													.getBitmapFromURL(url);
+
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -339,8 +247,10 @@ public class ProfileActivity extends Activity  {
 								}.start();
 							}
 							txtName.setText(users.Name);
-							txtAddress.setText(users.Address+","+users.Street+","+users.District+","+users.City+","+users.Country);
-							
+							txtAddress.setText(users.Address + ","
+									+ users.Street + "," + users.District + ","
+									+ users.City + "," + users.Country);
+
 						}
 					});
 				} else {
@@ -377,10 +287,56 @@ public class ProfileActivity extends Activity  {
 		public void run() {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
 
-			avatar.setImageBitmap(bitmap) ;
-			
+			avatar.setImageBitmap(bitmap);
+
 			dialog.dismiss();
 		}
 
+	}
+
+	private class GetListEventThread extends Thread {
+		protected static final String LOG_TAG = "GetListEventThread";
+		private int pageNum;
+		private int pageSize;
+		public GetListEventThread(int pageNum, int pageSize){
+			this.pageNum = pageNum;
+			this.pageSize = pageSize;
+		}
+		@Override
+		public void run() {
+			EventsManager eventsManager = new EventsManager();
+
+			try {
+				itemList = eventsManager.getEventUserList(pageNum,pageSize,
+						session.currentUser.AccID);
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						for (Events event : itemList) {
+							Log.d(LOG_TAG, event.Title);
+							adapter.add(event);
+						}
+						adapter.notifyDataSetChanged();
+					}
+				});
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 	}
 }

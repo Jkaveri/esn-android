@@ -62,6 +62,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 				long delta = now - session.get("media_button_last_time_up", (long)0);
 				Log.d(TAG_LOG, "ACTION_UP_" + delta);
 				boolean isRecording = session.get("isRecording", false);
+				Log.d(TAG_LOG,"IsRecording: "+isRecording);
 				if (delta < DOUBLE_CLICK_TIME_OUT) {
 					session.put("media_button_last_time_up", (long)0);
 					Log.d(TAG_LOG, "DOUBLE_CLICK");
