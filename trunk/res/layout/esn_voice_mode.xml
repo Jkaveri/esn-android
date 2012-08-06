@@ -33,13 +33,13 @@
         android:paddingLeft="10dp"
         >
         <ImageButton
-	        android:id="@+id/btnDetectVoice"
+	        android:id="@+id/btnStopService"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginRight="25dp"
 	        android:layout_marginTop="50dp"
 	        android:background="@drawable/bg_access_current_voice"
-	        android:onClick="btnVoidMode"
+	        android:onClick="btnStopServiceClicked"
 	        android:padding="2dp"
 	        android:src="@drawable/ic_voice" />
     </LinearLayout>

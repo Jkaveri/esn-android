@@ -45,4 +45,7 @@ public class S2TResult implements KvmSerializable{
 	public String getResult() {
 		return result;
 	}
+	public void setResult(String result){
+		this.result = result;
+	}
 }

@@ -138,7 +138,12 @@ public class Sessions {
 	public void setAccessHeadPhone(Boolean r){
 		put("app.AccessHeadPhone",r);
 	}
-	
+	public boolean getNotifyEvents(){
+		return get("app.setting.event.enable", false);
+	}
+	public void setNotifyEvents(boolean r){
+		put("app.setting.event.enable",r);
+	}
 	public boolean restoreFaceBook(Facebook fb){
 		fb.setAccessToken(get("fb_access_token",""));
 		fb.setAccessExpires(get("fb_access_token_expires",Long.MIN_VALUE));

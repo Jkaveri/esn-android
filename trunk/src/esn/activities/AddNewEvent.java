@@ -31,7 +31,6 @@ import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -474,7 +473,7 @@ public class AddNewEvent extends Activity {
 							dialog.dismiss();
 							homeData.putExtra("eventId", event.EventID);
 							homeData.putExtra("labelId", event.EventTypeID);
-							homeData.putExtra("labelIcon", EventType.getIconId(event.EventTypeID, 0));
+							homeData.putExtra("labelIcon", EventType.getIconId(event.EventTypeID, 1));
 							homeData.putExtra("eventTitle", event.Title);
 							homeData.putExtra("eventDescription",
 									event.Description);

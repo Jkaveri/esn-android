@@ -4,38 +4,40 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Address;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
-import esn.classes.AudioLibManager;
 import esn.classes.Maps;
-import esn.classes.VoiceManager;
+import esn.classes.Sessions;
 import esn.classes.VoiceModeHelper;
-import esn.classes.removeUTF8;
 import esn.models.EventType;
 import esn.models.Events;
 
 public class VoiceModeActivity extends MapActivity {
+	private static final String LOG_TAG = "VoiceModeActivity";
+	public static final String ACTION_EVENT_AUDIO_ALERT = "esn.actions.ACTION_EVENT_AUDIO_ALERT";
+
 	private VoiceModeHelper helper;
-	private EventAlertReciever receiver;
+	private EventAlertOnMapReceiver receiver;
 	private Maps map;
-	private AudioLibManager audioLibManager;
-	private VoiceManager voiceMng;
+
+	public boolean firstHeadPhoneConnect = false;
+	private Sessions session;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.esn_voice_mode);
 		this.setTitle(getString(R.string.esn_voicemode_title));
-
+		session = Sessions.getInstance(this);
 		TextView txtStates = (TextView) this
 				.findViewById(R.id.esn_voicemode_txt_state);
 		txtStates.setSelected(true);
@@ -46,15 +48,13 @@ public class VoiceModeActivity extends MapActivity {
 		map.displayCurrentLocationMarker();
 
 		helper = new VoiceModeHelper(this, btnRecord, txtStates, map);
-		// instance for voice
-		audioLibManager = new AudioLibManager();
-		voiceMng = new VoiceManager(getResources());
 		// register reciever
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(EventAlertReciever.ACTION_RESP);
-		filter.addAction(EventAlertReciever.ACTION_RESP_CURR);
+		filter.addAction(VoiceModeActivity.ACTION_EVENT_AUDIO_ALERT);
+		filter.addAction(Intent.ACTION_HEADSET_PLUG);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
-		receiver = new EventAlertReciever();
+		//filter.setPriority(1000);
+		receiver = new EventAlertOnMapReceiver();
 		registerReceiver(receiver, filter);
 	}
 
@@ -66,12 +66,29 @@ public class VoiceModeActivity extends MapActivity {
 		}
 	}
 
+	public void btnDetectMyLocation(View view) {
+		map.displayCurrentLocationMarker();
+	}
+
+	public void btnStopServiceClicked(View view) {
+		helper.stopService();
+		
+		session.setNotifyEvents(false);
+		Toast.makeText(this, "Service is stop", Toast.LENGTH_SHORT).show();
+	}
+
 	@Override
 	public void onDestroy() {
 		helper.destroy();
 		unregisterReceiver(receiver);
-		
 		super.onDestroy();
+	}
+
+	@Override
+	protected void onResume() {
+		firstHeadPhoneConnect = true;
+
+		super.onResume();
 	}
 
 	@Override
@@ -79,15 +96,15 @@ public class VoiceModeActivity extends MapActivity {
 		return false;
 	}
 
-	public class EventAlertReciever extends BroadcastReceiver {
-		public static final String ACTION_RESP = "esn.activities.EVENT_ALERT";
-		public static final String ACTION_RESP_CURR = "esn.activities.CURRENT_LOCATION_CHANGED";
+	public class EventAlertOnMapReceiver extends BroadcastReceiver {
+
 		private static final String LOG_TAG = "EventAlertReciever";
 
 		@Override
 		public void onReceive(Context context, Intent data) {
-			Log.d("id", "Recieved");
-			if (data.getAction().equals(ACTION_RESP)) {
+
+			Log.d(LOG_TAG, "Recieved");
+			if (data.getAction().equals(ACTION_EVENT_AUDIO_ALERT)) {
 				// data: lat, long, title, description, id
 				Log.d(LOG_TAG, String.valueOf(data.getIntExtra("eventId", 0)));
 				Events event = new Events();
@@ -108,63 +125,11 @@ public class VoiceModeActivity extends MapActivity {
 						event.EventID, drawable);
 
 				map.postInvalidate();
-				// play audio
-				// lay dia chi cua event
-				Address address = event.getAddress(context);
-				// flag, da phat
-				boolean played = false;
-				// street
-				String street = address.getThoroughfare();
-				if (street != null) {
-					street = removeUTF8.execute(street).toLowerCase();
 
-				}
-				if (street != null
-						&& audioLibManager.isExistStreetAudio(street)) {
-					voiceMng.voiceAlertHasEvent(
-							String.valueOf(event.EventTypeID), street);
-					// bat co
-					played = true;
-
-				} else {
-					// lay so dong dia chi
-					int addressLineCount = address.getMaxAddressLineIndex();
-					// duyet cac dong dia chi
-					// neu phat hien 1 dong nao la duong (co tong tai trong
-					// thu vien audio thi play)
-
-					for (int j = 0; j < addressLineCount; j++) {
-						// lay ten duong
-						street = removeUTF8.execute(address.getAddressLine(j)).toLowerCase();
-
-						if (street != null
-								&& audioLibManager.isExistStreetAudio(street)) {
-							voiceMng.voiceAlertHasEvent(
-									String.valueOf(event.EventID), street);
-							// bat co
-							played = true;
-							break;
-						}
-					}
-				}
-
-				if (!played) {
-					voiceMng.play(audioLibManager.getHasEventTypeAudio(String
-							.valueOf(event.EventTypeID)));
-
-				}
-
-			} else if (data.getAction().equals(ACTION_RESP_CURR)) {
-				double lat = data.getDoubleExtra("lat", 0);
-				double lon = data.getDoubleExtra("long", 0);
-				GeoPoint currPoint = new GeoPoint((int) (lat * 1E6),
-						(int) (lon * 1E6));
-				map.setMarker(currPoint, "vi tri cua ban", "",
-						R.drawable.ic_current_location);
-				Log.d("current location changed",
-						String.valueOf(data.getDoubleExtra("lat", 0)));
 			}
 
 		}
 	}
+
+	
 }

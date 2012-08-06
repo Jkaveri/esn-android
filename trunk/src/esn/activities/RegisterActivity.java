@@ -66,6 +66,12 @@ public class RegisterActivity extends SherlockActivity {
 	UsersManager usersManager = new UsersManager();
 
 	private Resources res;
+
+	private String fbID;
+
+	private String fbAccessToken;
+
+	private long fbAccessExpires;
 	
 	private static boolean checkEmail=false;
 	
@@ -89,13 +95,18 @@ public class RegisterActivity extends SherlockActivity {
 		res = getResources();
 		
 		boolean isFbSignup = intent.getBooleanExtra("facebookSignup", false);
-		
+		fbID = "";
+		fbAccessToken = "";
+		fbAccessExpires = 0;
 		if (isFbSignup) {
 			String first_name = intent.getStringExtra("first_name");
 			String last_name = intent.getStringExtra("last_name");
 			String birthday = intent.getStringExtra("birthday");
 			String gender = intent.getStringExtra("gender");
 			String email = intent.getStringExtra("email");
+			fbID = intent.getStringExtra("fb_id");
+			fbAccessToken = intent.getStringExtra("fb_access_token");
+			fbAccessExpires = intent.getLongExtra("fb_access_expires",0);
 			((TextView) findViewById(R.id.esn_register_txtFullName))
 					.setText(first_name + " " + last_name );
 			((TextView) findViewById(R.id.esn_register_txtEmail))
@@ -402,11 +413,12 @@ public class RegisterActivity extends SherlockActivity {
 			{
 				user.Gender = false;
 			}			
-			user.AccessToken="_";
-			
+			user.AccessToken=fbAccessToken;
+			user.fbID = fbID;
 			int rs = 0;
 			try {
 				rs = usersManager.Register(user);
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

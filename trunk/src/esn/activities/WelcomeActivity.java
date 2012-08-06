@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class WelcomeActivity extends SherlockActivity {
 
 	
-	private final String[] FB_PERMISSIONS = { "email","read_friendlists","publish_actions"," publish_stream","user_birthday" };
+	private final String[] FB_PERMISSIONS = { "email","read_friendlists","publish_actions"," publish_stream","read_stream","user_birthday" };
 	// Login by fB
 	
 	public static final String APP_ID = "257584821008998";

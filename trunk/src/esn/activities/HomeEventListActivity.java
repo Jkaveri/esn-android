@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +34,7 @@ import com.facebook.android.Util;
 import esn.adapters.EsnListAdapterNoSub;
 import esn.adapters.ListViewEventHomeAdapter;
 import esn.classes.EsnListItem;
+import esn.classes.EsnMapView;
 import esn.classes.Sessions;
 import esn.models.Events;
 import esn.models.EventsManager;
@@ -77,7 +77,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		// requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
 		super.onCreate(savedInstanceState);
@@ -89,21 +89,22 @@ public class HomeEventListActivity extends SherlockActivity implements
 		session = Sessions.getInstance(context);
 
 		res = getResources();
-		
+
 		setupActionBar();
-		
+
 		setupListNavigate();
 
 		// detect current location
 		currentLocation = GetCurrentLocation();
-		
-		if(currentLocation!=null){
-			filter = session.get("filterString","");
-			radius = session.get("app.setting.event.radius", (float)1.0);
+
+		if (currentLocation != null) {
+			filter = session.get("filterString", "");
+			radius = session.get("app.setting.event.radius", (float) 1.0);
 			handler = new Handler();
 			// load event
 			dialog = new ProgressDialog(this);
-			dialog.setTitle(getResources().getString(R.string.esn_global_loading));
+			dialog.setTitle(getResources().getString(
+					R.string.esn_global_loading));
 			dialog.setMessage(getResources().getString(
 					R.string.esn_global_pleaseWait));
 			dialog.show();
@@ -113,12 +114,14 @@ public class HomeEventListActivity extends SherlockActivity implements
 			lstEvent.setOnScrollListener(new OnScrollListener() {
 
 				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
+				public void onScrollStateChanged(AbsListView view,
+						int scrollState) {
 					// TODO Auto-generated method stub
 				}
 
 				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
+				public void onScroll(AbsListView view, int firstVisibleItem,
+						int visibleItemCount, int totalItemCount) {
 					int scroll = firstVisibleItem + visibleItemCount;
 					boolean acti = scroll == totalItemCount - 1;
 					if (acti && scroll > lastScroll) {
@@ -141,25 +144,26 @@ public class HomeEventListActivity extends SherlockActivity implements
 
 					it.putExtra("id", bean.EventID);
 					startActivity(it);
-					mNavigationItems = new EsnListItem[2];
 				}
 			});
 			// setup list view
 			// instance adapter
-			adapter = new ListViewEventHomeAdapter(this, new ArrayList<Events>());
+			adapter = new ListViewEventHomeAdapter(this,
+					new ArrayList<Events>());
 			// setup argument
 			lstEvent.setAdapter(adapter);
 			// load event
 			new LoadEventListAround(1, 10).start();
-		}else{
-			Util.showAlert(this, "Alert", res.getString(R.string.esn_global_must_enable_gps));
-			
+		} else {
+			Util.showAlert(this, res.getString(R.string.esn_global_waring),
+					res.getString(R.string.esn_global_must_enable_gps));
+
 		}
-		
+
 	}
 
 	private Location GetCurrentLocation() {
-		
+
 		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		if (lm != null) {
 			Criteria criteria = new Criteria();
@@ -181,16 +185,17 @@ public class HomeEventListActivity extends SherlockActivity implements
 
 		mNavigationItems[0] = new EsnListItem(1);
 		mNavigationItems[0].setTitle(res
-				.getString(R.string.esn_home_navigate_item_viewAsList));
+				.getString(R.string.app_global_viewaslist));
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_list);
 
 		mNavigationItems[1] = new EsnListItem(2);
 		mNavigationItems[1].setTitle(res
-				.getString(R.string.esn_home_navigate_item_viewAsMap));
+				.getString(R.string.app_global_viewasmap));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_map2);
 
 		Context context = getSupportActionBar().getThemedContext();
-		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,R.layout.sherlock_spinner_item, mNavigationItems);
+		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,
+				R.layout.sherlock_spinner_item, mNavigationItems);
 		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		getSupportActionBar().setListNavigationCallbacks(list, this);
@@ -256,8 +261,8 @@ public class HomeEventListActivity extends SherlockActivity implements
 					Toast.LENGTH_SHORT).show();
 		} else if (itemPosition == 1) {
 			Intent intent = new Intent(context, HomeActivity.class);
-
 			startActivity(intent);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		} else {
 			Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
 					Toast.LENGTH_SHORT).show();
@@ -281,7 +286,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 
 			break;
 		case R.id.esn_home_menuItem_settings:
-			Intent intent = new Intent(this, SettingsActivity.class);
+			Intent intent = new Intent(this, ProfileActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.esn_home_menuItem_labels:
@@ -289,6 +294,20 @@ public class HomeEventListActivity extends SherlockActivity implements
 			startActivityForResult(setFilterIntent, CODE_REQUEST_SET_FILTER);
 			break;
 		case R.id.esn_home_menus_addNewEvent:
+			Location currLocation = GetCurrentLocation();
+			if (currLocation != null) {
+				double latitude = currLocation.getLatitude();
+				double longtitude = currLocation.getLongitude();
+				Intent addNewEventIntent = new Intent(context,
+						AddNewEvent.class);
+				addNewEventIntent.putExtra("latitude", latitude);
+				addNewEventIntent.putExtra("longtitude", longtitude);
+				startActivityForResult(addNewEventIntent,
+						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+			} else {
+				Toast.makeText(this, R.string.esn_global_must_enable_gps,
+						Toast.LENGTH_LONG).show();
+			}
 			break;
 		default:
 			break;
@@ -346,14 +365,14 @@ public class HomeEventListActivity extends SherlockActivity implements
 
 		@Override
 		public void run() {
-			if(dialog!=null){
+			if (dialog != null) {
 				dialog.dismiss();
 			}
 			for (Events event : _events) {
 				adapter.add(event);
 			}
 			adapter.notifyDataSetChanged();
-			
+
 		}
 
 	}

@@ -50,6 +50,31 @@ public class Events{
 		}
 		return null;
 	}
+	public String getFullAddress(Context ctx){
+		String result = "";
+		Geocoder coder = new Geocoder(ctx);
+		try {
+			List<Address> addresses = coder.getFromLocation(EventLat, EventLng, 1);
+			if(addresses.size()>0){
+				Address address = addresses.get(0);
+				int count = address.getMaxAddressLineIndex();
+				for (int i = 0; i < count; i++) {
+					String addressLine = address.getAddressLine(i);
+					if(!result.equals("") && !addressLine.equals("")){
+						result+=", ";
+					}
+					result+=addressLine;
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+		return result;
+		
+	}
 	public GeoPoint getPoint(){
 		return new GeoPoint((int)(EventLat*1E6),(int)(EventLng*1E6));
 	}

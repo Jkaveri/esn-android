@@ -1,5 +1,6 @@
 package esn.classes;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import org.ksoap2.SoapEnvelope;
@@ -7,6 +8,7 @@ import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.AndroidHttpTransport;
+import org.xmlpull.v1.XmlPullParserException;
 
 public class EsnWebServices {
 	public String namespace;
@@ -45,13 +47,16 @@ public class EsnWebServices {
 	 * @param methodName
 	 *            - Method name to call
 	 * @return Response - call's result
+	 * @throws XmlPullParserException 
+	 * @throws IOException 
 	 */
 	public SoapObject InvokeMethod(String url, String namespace,
-			String methodName) {
+			String methodName) throws IOException, XmlPullParserException {
 
 		SoapObject request = GetSoapObject(methodName);
 		this.envelope = GetEnvelope(request, true);
 		return MakeCall(url, envelope, namespace, methodName);
+		
 	}
 
 	/**
@@ -66,11 +71,14 @@ public class EsnWebServices {
 	 * @param params
 	 *            - parameters of Web method
 	 * @return Response - call's result
+	 * @throws XmlPullParserException 
+	 * @throws IOException 
 	 */
 	public SoapObject InvokeMethod(String url, String namespace,
-			String methodName, Hashtable<String, Object> params) {
+			String methodName, Hashtable<String, Object> params) throws IOException, XmlPullParserException {
 		// inititalize request
 		SoapObject request = GetSoapObject(methodName);
+		
 
 		// get all keys
 		Enumeration<String> keys = params.keys();
@@ -95,18 +103,20 @@ public class EsnWebServices {
 		return MakeCall(url, this.envelope, namespace, methodName);
 	}
 
-	public SoapObject InvokeMethod(String methodName) {
+	public SoapObject InvokeMethod(String methodName) throws IOException, XmlPullParserException {
 		// inititalize request
 		SoapObject request = GetSoapObject(methodName);
 		// get envelope by request and use .net
 		this.envelope = GetEnvelope(request);
 		return MakeCall(this.url, this.envelope, this.namespace, methodName);
+		
 	}
 
 	public SoapObject InvokeMethod(String methodName,
-			Hashtable<String, Object> params) {
+			Hashtable<String, Object> params) throws IOException, XmlPullParserException {
 		// inititalize request
 		SoapObject request = GetSoapObject(methodName);
+		
 		
 		// get all keys
 		Enumeration<String> keys = params.keys();
@@ -143,23 +153,20 @@ public class EsnWebServices {
 	 * @param methodName
 	 *            - Method name to make call
 	 * @return Response - call's result
+	 * @throws XmlPullParserException 
+	 * @throws IOException 
 	 */
 	private SoapObject MakeCall(String url, SoapSerializationEnvelope envelope,
-			String namespace, String methodName) {
+			String namespace, String methodName) throws IOException, XmlPullParserException {
 		AndroidHttpTransport transport = new AndroidHttpTransport(url);
-		try {
-			String soapAction = namespace;
-			if (!namespace.endsWith("/")) {
-				soapAction += "/" + methodName;
-			} else {
-				soapAction += methodName;
-			}
-			transport.call(soapAction, envelope);
-			return (SoapObject) envelope.bodyIn;
-		} catch (Exception e) {
-			e.printStackTrace();
+		String soapAction = namespace;
+		if (!namespace.endsWith("/")) {
+			soapAction += "/" + methodName;
+		} else {
+			soapAction += methodName;
 		}
-		return null;
+		transport.call(soapAction, envelope);
+		return (SoapObject) envelope.bodyIn;
 	}
 
 	/**

@@ -29,7 +29,6 @@ import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
 import esn.classes.Maps;
 import esn.classes.Sessions;
-import esn.classes.Utils;
 
 public class HomeActivity extends SherlockMapActivity implements
 		OnNavigationListener {
@@ -43,6 +42,7 @@ public class HomeActivity extends SherlockMapActivity implements
 	HomeActivity context;
 
 	Sessions sessions;
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		context = this;
 
 		sessions = Sessions.getInstance(context);
+
 	}
 
 	private void setupListNavigate() {
@@ -100,11 +101,12 @@ public class HomeActivity extends SherlockMapActivity implements
 		mapView = (EsnMapView) findViewById(R.id.gmapView);
 
 		mapView.setActivity(this);
+		// map view
+		mapView.loadEventAround();
 		map = new Maps(this, mapView);
+		map.setZoom(16);
 		map.displayCurrentLocationMarker();
 		// set zoom level to 15
-		map.setZoom(16);
-
 		mapView.setOnSingleTapListener(new OnSingleTapListener() {
 
 			@Override
@@ -121,12 +123,21 @@ public class HomeActivity extends SherlockMapActivity implements
 				map.hideAllBallon();
 			}
 		});
+
 	}
 
 	@Override
 	protected void onResume() {
 		map.enableMyLocation();
+		setupListNavigate();
 		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		map.destroy();
+		
+		super.onDestroy();
 	}
 
 	@Override
@@ -214,17 +225,12 @@ public class HomeActivity extends SherlockMapActivity implements
 			if (currLocation != null) {
 				double latitude = currLocation.getLatitude();
 				double longtitude = currLocation.getLongitude();
-				Intent addNewEventIntent = new Intent(this,
-						SelectEventLabel.class);
+				Intent addNewEventIntent = new Intent(context,
+						AddNewEvent.class);
 				addNewEventIntent.putExtra("latitude", latitude);
 				addNewEventIntent.putExtra("longtitude", longtitude);
 				startActivityForResult(addNewEventIntent,
 						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
-			} else {
-				Utils.showToast(
-						this,
-						res.getString(R.string.esn_global_your_location_not_found),
-						Toast.LENGTH_SHORT);
 			}
 			break;
 		default:
@@ -247,12 +253,13 @@ public class HomeActivity extends SherlockMapActivity implements
 				String description = data.getStringExtra("eventDescription");
 				int eventId = data.getIntExtra("eventId", 0);
 				int labelIcon = data.getIntExtra("labelIcon", 0);
-			//	int labelId = data.getIntExtra("labelId", 0);
+				// int labelId = data.getIntExtra("labelId", 0);
 				if (latitude != Integer.MIN_VALUE
 						&& longtitude != Integer.MIN_VALUE) {
 					GeoPoint point = new GeoPoint((int) (latitude * 1E6),
 							(int) (longtitude * 1E6));
-					map.setEventMarker(point, title, description, eventId, labelIcon);
+					map.setEventMarker(point, title, description, eventId,
+							labelIcon);
 					mapView.getController().animateTo(point);
 				}
 				break;
@@ -261,7 +268,7 @@ public class HomeActivity extends SherlockMapActivity implements
 						.start();
 				break;
 			case REQUEST_CODE_HOME_EVENT_LIST:
-				
+
 				break;
 			default:
 				break;
@@ -280,7 +287,7 @@ public class HomeActivity extends SherlockMapActivity implements
 			Intent intent = new Intent(context, HomeEventListActivity.class);
 
 			startActivityForResult(intent, REQUEST_CODE_HOME_EVENT_LIST);
-			
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		} else {
 			Toast.makeText(this, mNavigationItems[itemPosition].getTitle(),
 					Toast.LENGTH_SHORT).show();

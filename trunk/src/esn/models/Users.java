@@ -35,7 +35,7 @@ public class Users {
 	public String Country;
 	public String Favorite;
 	public String Avatar;
-	
+	public String fbID;
 	
 	public Users(){}	
 }

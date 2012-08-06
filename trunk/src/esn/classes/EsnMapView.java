@@ -3,18 +3,14 @@ package esn.classes;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONException;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -24,7 +20,6 @@ import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
-import com.google.android.maps.Overlay;
 import com.readystatesoftware.maps.TapControlledMapView;
 
 import esn.activities.AddNewEvent;
@@ -44,9 +39,10 @@ public class EsnMapView extends TapControlledMapView {
 	public static final String LOG_TAG = "EsnMapView";
 	private MapActivity activity;
 	public ArrayList<Events> events = new ArrayList<Events>();
-	private EventItemizedOverlays<EventOverlayItem> markers;
 	private Maps map;
 	private Resources res;
+	private boolean isCreateEventByLongPress = true;
+	private boolean isLoadEventAround = true;
 
 	public EsnMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -82,57 +78,53 @@ public class EsnMapView extends TapControlledMapView {
 		this.isFirstComputeScroll = true;
 		// get resource
 		res = context.getResources();
-		// instance HelloItemizedOverlay with image
-		markers = new EventItemizedOverlays<EventOverlayItem>(context
-				.getResources().getDrawable(R.drawable.ic_event_type_0_3), this);
 		// instance Maps object
 		map = new Maps(context, this);
 		// get event around
 
 		lastMapCenter = getMapCenter();
+	}
 
+	public void loadEventAround() {
 		double radius = calculateRadius();
-
 		new LoadEventsAroundThread(radius).start();
 	}
 
 	/**
 	 * On long press event (create event o long press)
 	 */
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		map.hideAllBallon();
+		return super.onSingleTapUp(e);
+	}
 
 	@Override
 	public void onLongPress(MotionEvent e) {
-		if (e.getAction() == MotionEvent.ACTION_DOWN) {
+		if (e.getAction() == MotionEvent.ACTION_DOWN
+				&& isCreateEventByLongPress) {
 			// get current point
 			final GeoPoint p = this.getProjection().fromPixels((int) e.getX(),
 					(int) e.getY());
+			int latitudeE6 = p.getLatitudeE6();
+			int longtitudeE6 = p.getLongitudeE6();
+			// get current location
+			Location cLocation = map.getCurrentLocation();
+			if (cLocation != null) {
+				// start activity
+				Intent addNewEventIntent = new Intent(context,
+						AddNewEvent.class);
+				addNewEventIntent.putExtra("latitude", latitudeE6 / 1E6);
+				addNewEventIntent.putExtra("longtitude", longtitudeE6 / 1E6);
+				activity.startActivityForResult(addNewEventIntent,
+						REQUEST_CODE_ADD_NEW_EVENT);
+			} else {
+				Toast.makeText(
+						activity.getApplicationContext(),
+						res.getString(R.string.esn_global_your_location_not_found),
+						Toast.LENGTH_SHORT).show();
+			}
 
-			new Thread(new Runnable() {
-				public void run() {
-					Looper.prepare();
-					int latitudeE6 = p.getLatitudeE6();
-					int longtitudeE6 = p.getLongitudeE6();
-					// get current location
-					Location cLocation = map.getCurrentLocation();
-					if (cLocation != null) {
-						// start activity
-						Intent addNewEventIntent = new Intent(context,
-								AddNewEvent.class);
-						addNewEventIntent
-								.putExtra("latitude", latitudeE6 / 1E6);
-						addNewEventIntent.putExtra("longtitude",
-								longtitudeE6 / 1E6);
-						activity.startActivityForResult(addNewEventIntent,
-								REQUEST_CODE_ADD_NEW_EVENT);
-					} else {
-						Toast.makeText(
-								activity,
-								res.getString(R.string.esn_global_your_location_not_found),
-								Toast.LENGTH_SHORT).show();
-					}
-
-				}
-			}).start();
 		}
 	}
 
@@ -165,10 +157,11 @@ public class EsnMapView extends TapControlledMapView {
 		} else if (isTouchEnded && isFirstComputeScroll) {
 			isTouchEnded = false;
 			lastMapCenter = this.getMapCenter();
+			if (isLoadEventAround) {
+				double radius = calculateRadius();
+				new LoadEventsAroundThread(radius).start();
+			}
 
-			// Log.d("esn","lastMapCenter: "+lastMapCenter.toString());
-			double radius = calculateRadius();
-			new LoadEventsAroundThread(radius).start();
 		}
 	}
 
@@ -202,98 +195,6 @@ public class EsnMapView extends TapControlledMapView {
 	public void setActivity(MapActivity activity) {
 
 		this.activity = activity;
-	}
-
-	/**
-	 * Set marker for map view
-	 * 
-	 * @param point
-	 *            Coordinate
-	 * @param title
-	 *            Title for marker
-	 * @param subtitle
-	 *            Description
-	 * @param eventId
-	 *            event id
-	 * @param drawable
-	 *            icon for marker
-	 */
-	public void setMarker(GeoPoint point, String title, String subtitle,
-			int eventId, int drawable) {
-		// create overlay item
-		EventOverlayItem item = new EventOverlayItem(point, title, subtitle,
-				eventId);
-		// for clear markers
-		item.setCanRemove(true);
-		// get pointer image
-		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// remove before add
-		if (item.isCanRemove())
-			markers.removeOverlay(item);
-		// add itemOVerlay to itemizedOverlay
-		markers.addOverlay(item, markerIcon);
-		// set marker
-		List<Overlay> mOverlays = getOverlays();
-		mOverlays.remove(markers);
-		mOverlays.add(markers);
-		mOverlays = null;
-		// invalidate();
-	}
-
-	/**
-	 * set marker
-	 * 
-	 * @param point
-	 * @param title
-	 * @param subtitle
-	 * @param drawable
-	 * @param canRemove
-	 */
-	public void setMarker(GeoPoint point, String title, String subtitle,
-			int drawable, boolean canRemove) {
-		// create overlay item
-		EventOverlayItem item = new EventOverlayItem(point, title, subtitle);
-
-		// for clear markers
-		item.setCanRemove(canRemove);
-		// get pointer image
-		Drawable markerIcon = context.getResources().getDrawable(drawable);
-		// remove before add
-
-		markers.removeOverlay(item);
-		// add itemOVerlay to itemizedOverlay
-		markers.addOverlay(item, markerIcon);
-		// set marker
-		List<Overlay> mOverlays = getOverlays();
-		mOverlays.remove(markers);
-		mOverlays.add(markers);
-		mOverlays = null;
-	}
-
-	/**
-	 * Clear Marker: Giup clear marker truoc khi add moi... neu event item set
-	 * canremove = true thi moi remove :))
-	 */
-	public void clearMarkers() {
-		// lay het cac overlays
-		List<Overlay> overlays = getOverlays();
-		// duyet
-		for (int i = 0; i < overlays.size(); i++) {
-			@SuppressWarnings("unchecked")
-			// lay item
-			EventItemizedOverlays<EventOverlayItem> items = (EventItemizedOverlays<EventOverlayItem>) overlays
-					.get(i);
-			// duyet itemized overlay
-			for (int j = 0; j < items.size(); j++) {
-				// remove neu duoc
-				EventOverlayItem item = items.getItem(j);
-				if (item.isCanRemove()) {
-					items.removeOverlay(item);
-				}
-			}
-
-		}
-
 	}
 
 	/**
@@ -370,10 +271,28 @@ public class EsnMapView extends TapControlledMapView {
 						(int) (event.EventLng * 1E6));
 				int icon = EventType.getIconId(event.EventTypeID,
 						event.getLevel());
-				map.setEventMarker(point, event.Title, event.Description, event.EventID, icon);
+				map.setEventMarker(point, event.Title, event.Description,
+						event.EventID, icon);
 			}
 			invalidate();
 			Log.d("esn", "end load events around!");
 		}
 	}
+
+	public boolean isCreateEventByLongPress() {
+		return isCreateEventByLongPress;
+	}
+
+	public void setCreateEventByLongPress(boolean isCreateEventByLongPress) {
+		this.isCreateEventByLongPress = isCreateEventByLongPress;
+	}
+
+	public boolean isLoadEventAround() {
+		return isLoadEventAround;
+	}
+
+	public void setLoadEventAround(boolean isLoadEventAround) {
+		this.isLoadEventAround = isLoadEventAround;
+	}
+
 }

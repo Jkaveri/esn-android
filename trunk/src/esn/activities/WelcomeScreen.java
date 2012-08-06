@@ -1,8 +1,15 @@
 package esn.activities;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Facebook;
+import com.facebook.android.Util;
 
 import esn.classes.LoginThread;
 import esn.classes.Sessions;
@@ -33,7 +40,9 @@ public class WelcomeScreen extends SherlockActivity {
 	private Facebook fb;
 	public double centerLong;
 	public double centerLat;
-	
+	public Object lockObj = new Object();
+	public boolean confirmDialogShowing = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,9 +58,7 @@ public class WelcomeScreen extends SherlockActivity {
 		res = getResources();
 		// check ket noi mang
 		if (Utils.isNetworkAvailable(this)) {
-			
-			
-			
+
 			initConfig();
 			loadModelThread = new LoadModelsThread();
 			loadModelThread.start();
@@ -87,12 +94,50 @@ public class WelcomeScreen extends SherlockActivity {
 
 		boolean firstLauch = session.get("firstLauch", true);
 
+		if (!session.getSettingLocation()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setTitle(R.string.esn_welcomeScreen_GPSLocationService);
+			builder.setMessage(R.string.esn_welcomeScreen_GPSLocationService_Confirm);
+
+			builder.setCancelable(false);
+
+			String ok = res.getString(R.string.esn_global_ok);
+			String cancel = res.getString(R.string.esn_global_cancel);
+
+			builder.setPositiveButton(ok,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							session.setSettingLocation(true);
+							confirmDialogShowing = false;
+							synchronized (lockObj) {
+								lockObj.notify();
+							}
+							dialog.dismiss();
+						}
+					});
+			builder.setNegativeButton(cancel,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							session.setSettingLocation(false);
+							confirmDialogShowing = false;
+							synchronized (lockObj) {
+								lockObj.notify();
+							}
+							dialog.dismiss();
+						}
+					});
+			builder.create().show();
+			confirmDialogShowing = true;
+		}
+
 		if (firstLauch) {
-			/* TODO: confirm user to detect location */
-			
+
 			// set radius for load event around
-			session.put("app.setting.event.radius", (float) 2.0);
-			session.get("firstLauch", false);
+			session.setRadiusForEventAround(2.0);
+			session.put("firstLauch", false);
 			session.put("filterList", "");
 		}
 
@@ -177,8 +222,11 @@ public class WelcomeScreen extends SherlockActivity {
 				list = manager.getList();
 				// store session list to session
 				session.eventTypes = list;
-				
-
+				synchronized (lockObj) {
+					if (confirmDialogShowing) {
+						lockObj.wait();
+					}
+				}
 				// session
 				if (session.logined()) {
 					// neu da tung login thi execute login
@@ -190,9 +238,35 @@ public class WelcomeScreen extends SherlockActivity {
 					startActivity(loginIntent);
 					finish();
 				}
+			} catch (ClientProtocolException e) {
+				runOnUiThread(new Runnable() {
 
-			} catch (Exception e) {
+					@Override
+					public void run() {
+						Util.showAlert(context, res
+								.getString(R.string.esn_global_waring), res
+								.getString(R.string.esn_global_lostConnection));
+					}
+				});
 				Log.e(TAG_LOG, e.getMessage());
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
