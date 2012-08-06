@@ -4,26 +4,26 @@
     <item
         android:id="@+id/esn.home.menus.addNewEvent"
         android:icon="@drawable/ic_add"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/esn_home_menuItem_addNewEvent">
     </item>
     <item
         android:id="@+id/esn_home_menuItem_friends"
         android:icon="@drawable/ic_friends"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/esn_home_menuItem_friends">
     </item>
     <item
         android:id="@+id/esn_home_menuItem_search"
         android:actionLayout="@layout/collapsible_edittext"
         android:icon="@drawable/ic_search"
-        android:showAsAction="always|collapseActionView"
+        android:showAsAction="ifRoom|collapseActionView"
         android:title="@string/esn_home_menuItem_search">
     </item>
     <item
         android:id="@+id/esn_home_menuItem_labels"
         android:icon="@drawable/ic_labels"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/esn_home_menuItem_labels">
     </item>
     <item

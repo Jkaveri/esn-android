@@ -19,9 +19,13 @@ public class RequestGraphMe implements RequestListener {
 	private Activity activity;
 	private Context context;
 	private final String TAG_LOG = "RequestGraphMe";
-	public RequestGraphMe(Activity act){
+	private Facebook mFacebook;
+	public RequestGraphMe(Activity act, Facebook fb){
 		this.activity = act;
 		context = act.getApplicationContext();
+		
+		mFacebook = fb;
+		
 	}
 	@Override
 	public void onComplete(String response, Object state) {
@@ -30,7 +34,8 @@ public class RequestGraphMe implements RequestListener {
 					.parseJson(response);
 			
 			Intent intent = new Intent(context,RegisterActivity.class);
-			
+			intent.putExtra("fb_access_token", mFacebook.getAccessToken());
+			intent.putExtra("fb_access_expires", mFacebook.getAccessExpires());
 			intent.putExtra("facebookSignup", true);
 			intent.putExtra("fb_id",
 					accountInfo.getString("id"));

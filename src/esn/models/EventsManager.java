@@ -3,6 +3,8 @@ package esn.models;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -300,10 +302,34 @@ public class EventsManager {
 		return true;
 	}
 
-	public ArrayList<Events> getListEventsFriends(int accID, int pageIndex,
-			int pAGE_SIZE) {
-		// TODO Auto-generated method stub
-		return null;
+	public Events[] getListFriendEvents(int accID, int pageNum,
+			int pageSize) throws JSONException, ClientProtocolException, IOException, IllegalArgumentException, IllegalAccessException {
+		Events[] events = null;
+		JSONObject params = new JSONObject();
+		params.put("accID", accID);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		// get soap result
+		JSONObject response = helper.invokeWebMethod("GetListFriendEvents",
+				params);
+		// Log.d("esn", response.toString());
+		if (response != null) {
+			// get event Array
+			JSONArray eventArray = response.getJSONArray("d");
+			// get array count
+			int eventCount = eventArray.length();
+			// init arrays
+			events = new Events[eventCount];
+
+			for (int i = 0; i < eventCount; i++) {
+				JSONObject eventJSON = eventArray.getJSONObject(i);
+				Events event = new Events();
+				Utils.JsonToObject(eventJSON, event);
+				
+				events[i] = event;
+			}
+		}
+		return events;
 	}
 	
 	public ArrayList<Events> getEventUserList(int pageIndex, int pageSize,int accId)

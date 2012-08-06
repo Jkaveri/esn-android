@@ -1,14 +1,17 @@
 package esn.activities;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.maps.MapView;
-import esn.adapters.ListViewEventHomeAdapter;
+import com.google.android.maps.GeoPoint;
 import esn.adapters.EsnListAdapterNoSub;
 import esn.classes.EsnListItem;
+import esn.classes.EsnMapView;
 import esn.classes.Maps;
 import esn.classes.Sessions;
 import esn.models.EventType;
@@ -19,128 +22,103 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class FriendEventsActivity extends SherlockMapActivity implements
 		OnNavigationListener, OnItemClickListener {
-	
-	private int pageIndex = 0;
-	private static int PAGE_SIZE = 10;
-	private int lastScroll = 0;
-	
+
 	private EsnListItem[] mNavigationItems;
 	private Maps map;
-	private ListView lstFdEvents;
-	private ListViewEventHomeAdapter adapter;
-	private ArrayList<Events> itemList;
 	private EventsManager eventsMng;
 	private Thread th;
-	private Handler handler;
 	private Activity context;
 	private Sessions sessions;
+	private EsnMapView mapView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.friend_events);
-		
+
 		context = this;
-		
+
 		eventsMng = new EventsManager();
-		handler = new Handler();		
-		sessions = Sessions.getInstance(context);		
-		
-		map = new Maps(this, (MapView) findViewById(R.id.maps_friend_google));
+		sessions = Sessions.getInstance(context);
+		mapView = (EsnMapView) findViewById(R.id.gmapView);
+		mapView.setCreateEventByLongPress(false);
+		mapView.setLoadEventAround(false);
+		map = new Maps(this, mapView);
 		// set zoom level to 14
-		map.setZoom(16);
-		
-		//Setup list
-		lstFdEvents = (ListView) findViewById(R.id.lisvFdEvents);
-		lstFdEvents.setOnItemClickListener(this);
-		adapter = new ListViewEventHomeAdapter(context, new ArrayList<Events>());
-		lstFdEvents.setAdapter(adapter);
-		
-		lstFdEvents.setOnScrollListener(new OnScrollListener() {
-			
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				int scroll = firstVisibleItem + visibleItemCount;
-				boolean acti = scroll == totalItemCount-1;
-				if(acti && scroll > lastScroll){
-					lastScroll = scroll;
-					loadEvent();
-					Toast.makeText(context, "Load data", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-		
+		map.setZoom(10);
 		loadEvent();
-		
 		setupActionBar();
-		setupListNavigate();		
+		setupListNavigate();
 	}
-	
 
 	@Override
 	public void onDestroy() {
-		adapter.stopThread();
-		adapter.clearCache();
-		lstFdEvents.setAdapter(null);
+		map.destroy();
 		super.onDestroy();
 	}
 
 	private void loadEvent() {
-		if(th != null){
+		if (th != null) {
 			th.interrupt();
 			th = null;
 		}
-		
-		th = new Thread(new Runnable() {			
+
+		th = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				pageIndex++;
-				
 				try {
-					itemList = eventsMng.getListEventsFriends(sessions.currentUser.AccID, pageIndex, PAGE_SIZE);
-				} catch (Exception e) {
-					itemList = null;
-					pageIndex --;
-				}
-				
-				if(itemList != null && itemList.size() > 0){
-					handler.post(new Runnable() {
-	
+
+					final Events[] events = eventsMng.getListFriendEvents(
+							sessions.currentUser.AccID, 0, 10);
+					runOnUiThread(new Runnable() {
+
 						@Override
 						public void run() {
-							adapter.add(itemList);
+							map.clearEventMarker();
+							for (int i = 0; i < events.length; i++) {
+								Events event = events[i];
+								GeoPoint point = event.getPoint();
+								int marker = EventType.getIconId(
+										event.EventTypeID, event.getLevel());
+								map.setEventMarker(point, event.Title,
+										event.Description, event.EventID,
+										marker);
+							}
+							map.postInvalidate();
 						}
 					});
-					
-					for (Events ev : itemList) {
-						map.setMarker(ev.getPoint(), ev.Title, ev.Description, EventType.getIconId(ev.EventTypeID, ev.getLevel()));
-					}
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
-		
+
 		th.start();
 	}
-	
+
 	private void setupListNavigate() {
 		mNavigationItems = new EsnListItem[2];
 		mNavigationItems[0] = new EsnListItem();
@@ -170,10 +148,10 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 	}
 
-
 	@Override
-	public void onItemClick(AdapterView<?> adView, View view, int position, long id) {
-		
+	public void onItemClick(AdapterView<?> adView, View view, int position,
+			long id) {
+
 	}
 
 	@Override
@@ -216,15 +194,15 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		String postTitle = mNavigationItems[itemPosition].getTitle().toString();
-		Toast.makeText(this, postTitle, Toast.LENGTH_SHORT).show();
-
 		if (postTitle.equals(getString(R.string.str_Friends_Events_ViewAsMap))) {
-			lstFdEvents.setVisibility(View.INVISIBLE);
-			map.getMap().setVisibility(View.VISIBLE);
-		} else if (postTitle.equals(getString(R.string.str_Friends_Events_ViewAsList))) {
-			lstFdEvents.setVisibility(View.VISIBLE);
-			map.getMap().setVisibility(View.INVISIBLE);
+			Toast.makeText(this, postTitle, Toast.LENGTH_SHORT).show();
+		} else if (postTitle
+				.equals(getString(R.string.str_Friends_Events_ViewAsList))) {
+			Intent intent = new Intent(this, FriendEventsListActivity.class);
+			startActivity(intent);
+			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
 		}
 		return true;
 	}
+
 }

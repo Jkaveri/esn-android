@@ -1,35 +1,25 @@
 package esn.activities;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONException;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,6 +33,9 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.facebook.android.AsyncFacebookRunner;
+import com.facebook.android.Facebook;
+import com.facebook.android.FbUpdateStatusListener;
 
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
@@ -51,6 +44,7 @@ import esn.models.AppEnums;
 import esn.models.Comments;
 import esn.models.CommentsManager;
 import esn.models.EventType;
+import esn.models.Events;
 import esn.models.EventsManager;
 import esn.models.UsersManager;
 
@@ -75,13 +69,14 @@ public class EventDetailActivity extends SherlockActivity implements
 
 	private ListView lstCm;
 	private ListViewCommentsAdapter adapter;
-	private int lastScroll = 0;
 	private int page = 1;
 
 	Resources res;
 
 	Date lastTime = null;
 	long timeout = 30000;
+	public Events event;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -122,8 +117,6 @@ public class EventDetailActivity extends SherlockActivity implements
 				// startActivity(it);
 			}
 		});
-
-		int i = lstCm.getChildCount();
 
 		ListViewHeight();
 	}
@@ -167,6 +160,63 @@ public class EventDetailActivity extends SherlockActivity implements
 
 	}
 
+	Thread Share2FbThread = new Thread(new Runnable() {
+		
+		@Override
+		public void run() {
+			if (event != null) {
+				Facebook mFaceBook = new Facebook(WelcomeActivity.APP_ID);
+				if (session.restoreFaceBook(mFaceBook)) {
+					try {
+						Bundle params = new Bundle();
+
+						params.putString("message", "just for test :)");
+
+						params.putString("name", event.Title);
+						params.putString("caption", "http://jkaveri.com");
+						params.putString("link", "http://jkaveri.com");
+						params.putString("description", event.Description);
+						if (event.Picture != null && event.Picture.length()>0) {
+							params.putString("picture", event.Picture);
+
+						} else {
+							params.putString("picture",
+									"http://twitpic.com/show/thumb/6hqd44");
+						}
+						//mFaceBook.request("me");
+						String response = mFaceBook.request("me/feed", params, "POST");
+						
+						if(response!=null && response.length()>0){
+							Utils.showToast(EventDetailActivity.this, "post thanh cong", Toast.LENGTH_SHORT);
+						}else{
+							Utils.showToast(EventDetailActivity.this, "post that bai", Toast.LENGTH_SHORT);
+							//Toast.makeText(this, "post ko thanh cong", Toast.LENGTH_SHORT).show();
+						}
+					} catch (FileNotFoundException e) {
+						Utils.showToast(EventDetailActivity.this, "post that bai", Toast.LENGTH_SHORT);
+						e.printStackTrace();
+					} catch (MalformedURLException e) {
+						Utils.showToast(EventDetailActivity.this, "accessing an invalid endpoint", Toast.LENGTH_SHORT);
+						//Toast.makeText(this, "accessing an invalid endpoint", Toast.LENGTH_SHORT).show();
+						e.printStackTrace();
+					} catch (IOException e) {
+						Utils.showToast(EventDetailActivity.this, "Loi mang", Toast.LENGTH_SHORT);
+						e.printStackTrace();
+					}
+				}
+				
+			} else {
+
+			}
+		}
+	});
+	
+	public void shareClicked(View view) {
+		
+		Share2FbThread.start();
+
+	}
+
 	public void LikeAction() {
 		IsLikeThread isLikeThread = new IsLikeThread();
 		isLikeThread.start();
@@ -191,7 +241,7 @@ public class EventDetailActivity extends SherlockActivity implements
 							Toast.makeText(
 									context,
 									res.getString(R.string.esn_eventDetail_islike),
-									10).show();
+									Toast.LENGTH_LONG).show();
 
 						}
 					});
@@ -204,7 +254,7 @@ public class EventDetailActivity extends SherlockActivity implements
 							Toast.makeText(
 									context,
 									res.getString(R.string.esn_eventDetail_isdislike),
-									10).show();
+									Toast.LENGTH_SHORT).show();
 
 						}
 					});
@@ -251,7 +301,7 @@ public class EventDetailActivity extends SherlockActivity implements
 							Toast.makeText(
 									context,
 									res.getString(R.string.esn_eventDetail_islike),
-									10).show();
+									Toast.LENGTH_SHORT).show();
 
 						}
 					});
@@ -264,7 +314,7 @@ public class EventDetailActivity extends SherlockActivity implements
 							Toast.makeText(
 									context,
 									res.getString(R.string.esn_eventDetail_isdislike),
-									10).show();
+									Toast.LENGTH_SHORT).show();
 
 						}
 					});
@@ -343,17 +393,16 @@ public class EventDetailActivity extends SherlockActivity implements
 			GetListComment();
 
 			Toast.makeText(context,
-					res.getString(R.string.esn_eventDetail_likesuccess), 10)
-					.show();
+					res.getString(R.string.esn_eventDetail_likesuccess),
+					Toast.LENGTH_SHORT).show();
 
 		}
 	}
 
 	private class LikeFail implements Runnable {
-		private int like;
 
 		public LikeFail(int like) {
-			this.like = like;
+
 		}
 
 		@Override
@@ -365,8 +414,8 @@ public class EventDetailActivity extends SherlockActivity implements
 			 */
 
 			Toast.makeText(context,
-					res.getString(R.string.esn_eventDetail_likefail), 10)
-					.show();
+					res.getString(R.string.esn_eventDetail_likefail),
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -407,7 +456,7 @@ public class EventDetailActivity extends SherlockActivity implements
 						Toast.makeText(
 								context,
 								res.getString(R.string.esn_eventDetail_likefail),
-								10).show();
+								Toast.LENGTH_SHORT).show();
 					}
 				});
 
@@ -436,8 +485,8 @@ public class EventDetailActivity extends SherlockActivity implements
 			GetListComment();
 
 			Toast.makeText(context,
-					res.getString(R.string.esn_eventDetail_dislikesuccess), 10)
-					.show();
+					res.getString(R.string.esn_eventDetail_dislikesuccess),
+					Toast.LENGTH_SHORT).show();
 
 		}
 	}
@@ -453,8 +502,6 @@ public class EventDetailActivity extends SherlockActivity implements
 		public void run() {
 			if (eventId > 0) {
 				EventsManager manager = new EventsManager();
-
-				esn.models.Events event = null;
 
 				try {
 
@@ -504,7 +551,7 @@ public class EventDetailActivity extends SherlockActivity implements
 				TextView tvLike = (TextView) findViewById(R.id.esn_eventDetail_like);
 				ImageView icEventType = (ImageView) findViewById(R.id.esn_eventDetail_iconEventType);
 				TextView tvUsername = (TextView) findViewById(R.id.esn_eventDetail_name);
-
+				TextView tvAddress = (TextView) findViewById(R.id.esn_eventDetail_address);
 				final ImageView imgEvent = (ImageView) findViewById(R.id.esn_eventDetail_image);
 				imgEvent.setImageResource(R.drawable.no_image);
 
@@ -517,7 +564,7 @@ public class EventDetailActivity extends SherlockActivity implements
 				tvLike.setText(String.valueOf(event.Like));
 
 				tvUsername.setText(event.user.Name);
-
+				tvAddress.setText(event.getFullAddress(EventDetailActivity.this));
 				accId = event.AccID;
 
 				icEventType.setImageResource(EventType.getIconId(
@@ -564,38 +611,36 @@ public class EventDetailActivity extends SherlockActivity implements
 	}
 
 	public void CommentClicked(View view) {
-		
+
 		Date now = new Date();
-		
-		if(lastTime!=null)
-		{	
+
+		if (lastTime != null) {
 			long count = Utils.calculateTime(lastTime, now);
-			
-			if(count>timeout)
-			{
+
+			if (count > timeout) {
 				EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
 
 				String content = txtComment.getText().toString();
 
 				if (content.isEmpty()) {
-					Toast.makeText(context,
+					Toast.makeText(
+							context,
 							res.getString(R.string.esn_eventDetail_entercontent),
 							Toast.LENGTH_SHORT).show();
-					return;					
+					return;
 				}
-				
+
 				lastTime = now;
-				
-				new CommentThread(content, session.currentUser.AccID, eventId).start();
-				
+
+				new CommentThread(content, session.currentUser.AccID, eventId)
+						.start();
+
+			} else {
+				Toast.makeText(context,
+						res.getString(R.string.esn_eventDetail_commentwaiting),
+						Toast.LENGTH_SHORT).show();
 			}
-			else
-			{
-				Toast.makeText(context, res.getString(R.string.esn_eventDetail_commentwaiting), Toast.LENGTH_SHORT).show();
-			}
-		}
-		else
-		{			
+		} else {
 			EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
 
 			String content = txtComment.getText().toString();
@@ -604,12 +649,13 @@ public class EventDetailActivity extends SherlockActivity implements
 				Toast.makeText(context,
 						res.getString(R.string.esn_eventDetail_entercontent),
 						Toast.LENGTH_SHORT).show();
-				return;					
+				return;
 			}
-			
+
 			lastTime = now;
-			
-			new CommentThread(content, session.currentUser.AccID, eventId).start();
+
+			new CommentThread(content, session.currentUser.AccID, eventId)
+					.start();
 		}
 	}
 
@@ -669,8 +715,8 @@ public class EventDetailActivity extends SherlockActivity implements
 		@Override
 		public void run() {
 			Toast.makeText(context,
-					res.getString(R.string.esn_eventDetail_commenfail), 10)
-					.show();
+					res.getString(R.string.esn_eventDetail_commenfail),
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -707,15 +753,15 @@ public class EventDetailActivity extends SherlockActivity implements
 										10));
 							} else if (k == 1) {
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-										LinearLayout.LayoutParams.FILL_PARENT,
+										LinearLayout.LayoutParams.MATCH_PARENT,
 										105));
 							} else if (k == 2) {
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-										LinearLayout.LayoutParams.FILL_PARENT,
+										LinearLayout.LayoutParams.MATCH_PARENT,
 										177));
 							} else {
 								lv.setLayoutParams(new LinearLayout.LayoutParams(
-										LinearLayout.LayoutParams.FILL_PARENT,
+										LinearLayout.LayoutParams.MATCH_PARENT,
 										284));
 							}
 

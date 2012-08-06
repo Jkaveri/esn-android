@@ -46,7 +46,10 @@ public class EventItemizedOverlays<item extends OverlayItem> extends
 		items.remove(item);
 		populate();
 	}
-
+	public void clearOverlay(){
+		items.clear();
+		populate();
+	}
 	@Override
 	protected EventOverlayItem createItem(int index) {
 

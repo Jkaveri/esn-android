@@ -316,7 +316,7 @@ public class Utils {
 			@Override
 			public void run() {
 				
-				Toast.makeText(act, text, duration).show();
+				Toast.makeText(act.getApplicationContext(), text, duration).show();
 			}
 		});
 
@@ -333,5 +333,8 @@ public class Utils {
 		long t2 = end.getTime();
 		long t = (t2-t1);
 		return t;		
+	}
+	public static int getPercent(int num, int total){
+		return (num/total)*100;
 	}
 }

@@ -3,21 +3,12 @@ package esn.classes;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,11 +71,11 @@ public class HttpHelper {
 	 * @param params
 	 *            parameter for this method
 	 * @return JSONObject result
+	 * @throws ClientProtocolException 
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public JSONObject invokeWebMethod(String method, JSONObject params)
-			throws JSONException, IOException {
+	public JSONObject invokeWebMethod(String method, JSONObject params) throws ClientProtocolException, IOException, JSONException {
 		// init result
 		JSONObject result = null;
 
@@ -100,6 +91,7 @@ public class HttpHelper {
 		// get input stream
 		InputStream in = response.getEntity().getContent();
 		String jsonString = read(in);
+		
 		// get result
 		if(jsonString!= null && jsonString.length() > 0){
 			result = new JSONObject(jsonString);

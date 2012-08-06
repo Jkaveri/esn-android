@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.android.DialogError;
 import com.facebook.android.FacebookError;
@@ -16,6 +17,7 @@ import com.facebook.android.Facebook.DialogListener;
 
 import esn.activities.WelcomeScreen;
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.Users;
 import esn.models.UsersManager;
 
@@ -77,7 +79,7 @@ public class LoginFaceBookListener implements DialogListener {
 				} else {
 					AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(
 							mFacebook);
-					mAsyncRunner.request("me", new RequestGraphMe(act));
+					mAsyncRunner.request("me", new RequestGraphMe(act,mFacebook));
 				}
 			}
 
@@ -89,12 +91,14 @@ public class LoginFaceBookListener implements DialogListener {
 
 	@Override
 	public void onFacebookError(FacebookError e) {
+		Utils.showToast(act, "Login facebook failed", Toast.LENGTH_LONG);
 		Log.e(LOG_TAG, e.getMessage());
 		e.printStackTrace();
 	}
 
 	@Override
 	public void onError(DialogError e) {
+		Utils.showToast(act, "Login facebook failed", Toast.LENGTH_LONG);
 		Log.e(LOG_TAG, e.getMessage());
 		e.printStackTrace();
 	}

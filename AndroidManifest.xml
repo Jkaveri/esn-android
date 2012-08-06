@@ -11,10 +11,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACTION_HEADSET_PLUG"/>
-	 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	 <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACTION_HEADSET_PLUG" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" >
+    </uses-feature>
+    <uses-feature android:name="android.hardware.microphone" >
     </uses-feature>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -44,30 +47,32 @@
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
-        <activity android:name=".VoiceModeActivity"
-            android:label="@string/esn_global_page_voice"
-            >
+        <activity
+            android:name=".VoiceModeActivity"
+            android:label="@string/esn_global_page_voice" >
         </activity>
-        <activity android:name=".LoginActivity"
-            android:label="@string/esn_global_page_login"
-            >
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/esn_global_page_login" >
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/esn.register.btSignUp"
-            android:theme="@style/esn.theme.light.register"
-            >
-        </activity>      
+            android:theme="@style/esn.theme.light.register" >
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/esn_global_page_profile" >
+        </activity>
         <activity
             android:name=".AddNewEvent"
-            android:uiOptions="splitActionBarWhenNarrow"
             android:label="@string/esn_global_page_newevent"
             android:theme="@style/esn.theme.light.newevent"
-            >
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
-        <activity android:name=".SelectEventLabel"
-            android:label="@string/esn_global_page_newevent"
-            >
+        <activity
+            android:name=".SelectEventLabel"
+            android:label="@string/esn_global_page_newevent" >
         </activity>
         <activity
             android:name=".FriendEventsActivity"
@@ -94,7 +99,7 @@
             android:name=".SettingsActivity"
             android:label="@string/app_Setting"
             android:theme="@style/esn.theme.light"
-            android:uiOptions="splitActionBarWhenNarrow">
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsAccountActivity"
@@ -148,23 +153,28 @@
         </activity>
         <activity
             android:name=".SetFilterActivity"
-            android:uiOptions="splitActionBarWhenNarrow" 
-            android:label="@string/esn_global_page_fillter">
+            android:label="@string/esn_global_page_fillter"
+            android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
-        <activity android:name=".SettingAppEventActivity" 
-            android:label="@string/esn_global_page_settingevent">
+        <activity
+            android:name=".SettingAppEventActivity"
+            android:label="@string/esn_global_page_settingevent" >
         </activity>
-        <activity android:name=".SettingAppFacebookActivity" 
-            android:label="@string/esn_global_page_settingfacebook">
+        <activity
+            android:name=".SettingAppFacebookActivity"
+            android:label="@string/esn_global_page_settingfacebook" >
         </activity>
-        <activity android:name=".EventDetailCommentActivity" 
-            android:label="@string/esn_global_page_eventdetail">
+        <activity
+            android:name=".EventDetailCommentActivity"
+            android:label="@string/esn_global_page_eventdetail" >
         </activity>
-        <activity android:name=".FeedbackActivity" 
-            android:label="@string/esn_global_page_feedback">
+        <activity
+            android:name=".FeedbackActivity"
+            android:label="@string/esn_global_page_feedback" >
         </activity>
-        <activity android:name=".SettingAppFriendActivity" 
-            android:label="@string/esn_global_page_settingfriend">
+        <activity
+            android:name=".SettingAppFriendActivity"
+            android:label="@string/esn_global_page_settingfriend" >
         </activity>
         <activity
             android:name=".HomeEventListActivity"
@@ -173,29 +183,38 @@
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
-        <activity android:name=".FindFriendsActivity" 
-            android:label="@string/esn_global_page_findfriend">
+        <activity
+            android:name=".FindFriendsActivity"
+            android:label="@string/esn_global_page_findfriend" >
         </activity>
-        <service android:name=".EsnLookingAheadEventsServices"
+
+        <service
+            android:name=".EsnLookingAheadEventsServices"
             android:icon="@drawable/logo"
-            android:label="@string/app_name">            
-        </service>       
-        <activity 
+            android:label="@string/app_name" >
+        </service>
+        <service
+            android:name=".EsnServices"
+            android:icon="@drawable/logo"
+            android:label="@string/app_name" >
+        </service>
+
+        <activity
             android:name=".RecoveryPasswordActivity"
-            android:label="@string/esn_global_page_recoverypassword"></activity>        
-        <activity 
+            android:label="@string/esn_global_page_recoverypassword" >
+        </activity>
+        <activity
             android:name=".SettingAppLocationActivity"
-            android:label="@string/esn.setting.app.enablelocation"
-            ></activity> 
-        <activity 
-            android:name=".Notification"
-            android:label="@string/esn.global.notification"
-            ></activity>
-        <activity 
-            android:name=".ProfileActivity"
-            android:label="@string/esn.global.me"
-            ></activity>
-        
+            android:label="@string/esn.setting.app.enablelocation" >
+        </activity>
+
+        <receiver android:name=".MediaButtonReceiver" >
+            <intent-filter android:priority="32000" >
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".FriendEventsListActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
     </application>
 
 </manifest>
