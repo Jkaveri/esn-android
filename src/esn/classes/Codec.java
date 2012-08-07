@@ -18,9 +18,12 @@ public class Codec {
 		init(30);
 	}
 
-	static final private Codec INSTANCE = new Codec();
+	private static Codec INSTANCE;
 	
 	public static Codec instance() {
+		if(INSTANCE == null){
+			INSTANCE = new Codec();
+		}
 		return INSTANCE;
 	}
 }
