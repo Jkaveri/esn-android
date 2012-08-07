@@ -38,7 +38,6 @@ public class AudioRecorder {
 	private int timeOut = 0;
 	private boolean isCallBackOnStarting = false;
 	private String TAG = "AudioRecorder";
-	private static Codec codec;
 	
 	private class DetectTask extends TimerTask {
 		@Override
@@ -75,7 +74,6 @@ public class AudioRecorder {
 	public AudioRecorder(RecordListener recHandler) {
 		callBack = recHandler;
 		REC_BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-		codec = Codec.instance();
 		int truncated;
         
         if (REC_BUFFER_SIZE == AudioRecord.ERROR_BAD_VALUE) {
@@ -129,7 +127,7 @@ public class AudioRecorder {
                         }
 						
 						//iLBC encode block 30msec
-						int encount = codec.encode(buffer, 0, count, bufferEncode, 0);
+						int encount = Codec.instance().encode(buffer, 0, count, bufferEncode, 0);
 						dos.write(bufferEncode, 0, encount);
 						
 						//dos.write(buffer, 0, count);
