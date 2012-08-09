@@ -86,4 +86,6 @@
 	
 	<string name="esn_friend_unfriend">Xoá Bạn</string>
 	<string name="esn_friend_addfriend">Thêm Bạn</string>
+	
+	<string name="esn_account_name">Họ Tên</string>
 </resources>

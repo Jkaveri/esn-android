@@ -202,6 +202,7 @@ public class HomeActivity extends SherlockMapActivity implements
 		case R.id.esn_home_menuItem_friends:
 			Intent intenFdsList = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsList);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			break;
 		case R.id.esn_home_menuItem_navigator:
 
@@ -231,8 +232,7 @@ public class HomeActivity extends SherlockMapActivity implements
 						AddNewEvent.class);
 				addNewEventIntent.putExtra("latitude", latitude);
 				addNewEventIntent.putExtra("longtitude", longtitude);
-				startActivityForResult(addNewEventIntent,
-						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+				startActivityForResult(addNewEventIntent,EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
 				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 			break;

@@ -86,4 +86,6 @@
 	
 	<string name="esn_friend_unfriend">Unfriend</string>
 	<string name="esn_friend_addfriend">Add Friend</string>
+	
+	<string name="esn_account_name">Name</string>
 </resources>

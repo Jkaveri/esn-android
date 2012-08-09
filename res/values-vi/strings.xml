@@ -68,9 +68,9 @@
     <string name="esn.settings.subscript.help">Hướng dẫn sử dụng</string>
     <string name="esn.settings.logout">Đăng xuất</string>
     <string name="esn.settings.subscript.logout">Đăng xuất khỏi ứng dụng</string>
-    <string name="esn.settings.account.changepass">Đổi mật khẩu</string>
+    <string name="esn.settings.account.changepass">Đổi Mật Khẩu</string>
     <string name="esn.settings.account.sub.changepass">Đổi mật khẩu tài khoản</string>
-    <string name="esn.settings.account.editprofile">Sửa thông tin cá nhân</string>
+    <string name="esn.settings.account.editprofile">Thông Tin Cá Nhân</string>
     <string name="esn.settings.account.sub.editprofile">Sửa thông tin cá nhân của bạn</string>
     <string name="app_Setting_Account_ChangePassword">Đổi mật khẩu</string>
     <string name="app_Setting_Account_ChangeProfile">Sửa thông tin cá nhân</string>

@@ -99,8 +99,6 @@ public class FriendsActivity extends Activity {
 				
 		ShowInforFriend();
 		
-		new GetListEventThread(1, PAGE_SIZE).start();
-		
 		listUserEvent.setAdapter(adapter);
 		
 		listUserEvent.setOnScrollListener(new OnScrollListener() {
@@ -257,7 +255,9 @@ public class FriendsActivity extends Activity {
 				}
 				
 				try {
+					
 					isFriend = usersManager.GetRelationStatus(session.currentUser.AccID, friendId);
+				
 				} catch (ClientProtocolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -295,6 +295,7 @@ public class FriendsActivity extends Activity {
 						public void run() {
 							
 							TextView txtName = (TextView) findViewById(R.id.esn_setting_profile_name);
+							TextView txtGender = (TextView)findViewById(R.id.esn_setting_profile_gender);
 							TextView txtAddress = (TextView) findViewById(R.id.esn_setting_profile_address);
 
 							final String url = users.Avatar;
@@ -315,14 +316,35 @@ public class FriendsActivity extends Activity {
 										}
 
 										handler.post(new SetAvatar(bitmap));
-
+											
 									};
 								}.start();
 							}
 							
 							txtName.setText(users.Name);
-							txtAddress.setText(users.Address + ","+ users.Street + "," + users.District + ","
-									+ users.City + "," + users.Country);
+							
+							if(users.Gender==true)
+								txtGender.setText(res.getString(R.string.esn_register_rdbMale));
+							else
+								txtGender.setText(res.getString(R.string.esn_register_rdbFemale));
+							
+							String ad = users.Address;
+							
+							if(users.Street!=null && users.Street.length()>0)
+								ad = ad + ", " + users.Street;
+							
+							if(users.District!=null && users.District.length()>0)
+								ad = ad + ", " + users.District;
+							
+							if(users.City!=null && users.City.length()>0)
+								ad = ad + ", " + users.City;
+							
+							if(users.Country!=null && users.Country.length()>0)
+								ad = ad + ", " + users.Country;
+							
+							txtAddress.setText(ad);
+							
+							new GetListEventThread(1, PAGE_SIZE).start();
 						}
 					});					
 					
@@ -395,19 +417,14 @@ public class FriendsActivity extends Activity {
 					}
 				});
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

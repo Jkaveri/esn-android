@@ -94,6 +94,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 				{
 					it = new Intent(context, ProfileActivity.class);
 				}
+				
 				it.putExtra("accountID", bean.AccID);
 				startActivityForResult(it,CODE_REQUEST_FRIEND_INFO);
 				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);

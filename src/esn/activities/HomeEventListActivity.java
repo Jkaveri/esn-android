@@ -281,6 +281,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 		case R.id.esn_home_menuItem_friends:
 			Intent intenFdsList = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsList);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			break;
 		case R.id.esn_home_menuItem_navigator:
 
@@ -288,22 +289,23 @@ public class HomeEventListActivity extends SherlockActivity implements
 		case R.id.esn_home_menuItem_settings:
 			Intent intent = new Intent(this, ProfileActivity.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			break;
 		case R.id.esn_home_menuItem_labels:
 			Intent setFilterIntent = new Intent(this, SetFilterActivity.class);
 			startActivityForResult(setFilterIntent, CODE_REQUEST_SET_FILTER);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			break;
 		case R.id.esn_home_menus_addNewEvent:
 			Location currLocation = GetCurrentLocation();
 			if (currLocation != null) {
 				double latitude = currLocation.getLatitude();
 				double longtitude = currLocation.getLongitude();
-				Intent addNewEventIntent = new Intent(context,
-						AddNewEvent.class);
+				Intent addNewEventIntent = new Intent(context,AddNewEvent.class);
 				addNewEventIntent.putExtra("latitude", latitude);
 				addNewEventIntent.putExtra("longtitude", longtitude);
-				startActivityForResult(addNewEventIntent,
-						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+				startActivityForResult(addNewEventIntent,EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			} else {
 				Toast.makeText(this, R.string.esn_global_must_enable_gps,
 						Toast.LENGTH_LONG).show();
