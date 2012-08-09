@@ -263,6 +263,10 @@ public class VoiceManager {
 	}
 	
 	public void destroy(){
+		if(isStartLimit){
+			limitTimer.cancel();
+			isStartLimit = false;
+		}
 		player.release();
 		recorder.release();
 		if(thSendWs != null){
