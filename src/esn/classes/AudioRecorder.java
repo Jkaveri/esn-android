@@ -158,12 +158,12 @@ public class AudioRecorder {
 						// -> Recording sound here.
 						if(recording){
 							if(beforeBuff01 != null){
-								int encount = Codec.instance().encode(beforeBuff01, 0, beforeBuff01.length, bufferEncode, 0);
+								int encount = Codec.instance().encode(beforeBuff01, 0, REC_BUFFER_SIZE, bufferEncode, 0);
 								dos.write(bufferEncode, 0, encount);
 								beforeBuff01 = null;
 							}
 							if(beforeBuff02 != null){
-								int encount = Codec.instance().encode(beforeBuff02, 0, beforeBuff02.length, bufferEncode, 0);
+								int encount = Codec.instance().encode(beforeBuff02, 0, REC_BUFFER_SIZE, bufferEncode, 0);
 								dos.write(bufferEncode, 0, encount);
 								beforeBuff02 = null;
 							}
@@ -171,10 +171,7 @@ public class AudioRecorder {
 							dos.write(bufferEncode, 0, encount);
 						}else{
 							beforeBuff01 = beforeBuff02;							
-							beforeBuff02 = new byte[count];
-							for(int i = 0; i < count; i++){
-								beforeBuff02[i] = buffer[i];
-							}
+							beforeBuff02 = buffer;
 						}
 						
 						tempIndex++;
