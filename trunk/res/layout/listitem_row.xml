@@ -1,44 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="5dip"
+    android:gravity="center_vertical"
     >
-
     <ImageView
         android:layout_width="50dip"
         android:layout_height="50dip"
         android:id="@+id/imgViewLogo"
         android:src="@drawable/ic_no_avata"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
-        android:scaleType="fitXY">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp">
     </ImageView>
-
     <TextView
         android:textColor="#33b5e5"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/txtViewTitle"
-        android:layout_toRightOf="@+id/imgViewLogo"
-        android:layout_marginLeft="5dip"
+        android:layout_marginLeft="7dip"
         android:text="@string/btn.Friends.Lists.Diaglog.nofriend"
-        >
-    </TextView>
-
-    <TextView
-        android:textSize="12dp"
-        android:textColor="#33b5e5"
-        android:textStyle="italic"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/txtViewDescription"
-        android:layout_toRightOf="@+id/imgViewLogo"
-        android:layout_below="@+id/txtViewTitle"
-        android:layout_marginLeft="5dip">
-    </TextView>
-
-</RelativeLayout>
+        android:textSize="15dp" />
+</LinearLayout>

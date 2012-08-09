@@ -222,6 +222,7 @@ public class ProfileActivity extends Activity {
 							session.put("AccId", id);
 
 							TextView txtName = (TextView) findViewById(R.id.esn_setting_profile_name);
+							TextView txtGender = (TextView)findViewById(R.id.esn_setting_profile_gender);
 							TextView txtAddress = (TextView) findViewById(R.id.esn_setting_profile_address);
 
 							final String url = users.Avatar;
@@ -236,7 +237,6 @@ public class ProfileActivity extends Activity {
 
 											bitmap = Utils
 													.getBitmapFromURL(url);
-
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -248,9 +248,27 @@ public class ProfileActivity extends Activity {
 								}.start();
 							}
 							txtName.setText(users.Name);
-							txtAddress.setText(users.Address + ","
-									+ users.Street + "," + users.District + ","
-									+ users.City + "," + users.Country);
+							
+							if(users.Gender==true)
+								txtGender.setText(res.getString(R.string.esn_register_rdbMale));
+							else
+								txtGender.setText(res.getString(R.string.esn_register_rdbFemale));
+							
+							String ad = users.Address;
+							
+							if(users.Street!=null && users.Street.length()>0)
+								ad = ad + ", " + users.Street;
+							
+							if(users.District!=null && users.District.length()>0)
+								ad = ad + ", " + users.District;
+							
+							if(users.City!=null && users.City.length()>0)
+								ad = ad + ", " + users.City;
+							
+							if(users.Country!=null && users.Country.length()>0)
+								ad = ad + "," + users.Country;
+							
+							txtAddress.setText(ad);
 
 						}
 					});

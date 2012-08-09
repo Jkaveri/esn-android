@@ -96,12 +96,13 @@ public class EventDetailActivity extends SherlockActivity implements
 		eventId = data.getIntExtra("id", 0);
 
 		new GetEventDetailThread(eventId).start();
-
 		
+		lstCm = (ListView)findViewById(R.id.esn_eventDetails_listComments);
 		
 		GetListComment();		
 
 		lstCm.setOverScrollMode(View.OVER_SCROLL_NEVER);
+		
 		lstCm.setVerticalScrollBarEnabled(false);
 
 		lstCm.setOnItemClickListener(new AdapterView.OnItemClickListener() {

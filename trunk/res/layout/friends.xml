@@ -35,10 +35,18 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/esn.setting.profile.gender"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#33b5e5" 
+                android:layout_marginTop="10dp"/>
+            
+            <TextView
                 android:id="@+id/esn.setting.profile.address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#33b5e5" />
+                android:textColor="#33b5e5" 
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -50,7 +58,7 @@
 
         <Button
             android:id="@+id/esn.setting.isfriend"
-            android:layout_width="115dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/rounded_corner_blue"
@@ -62,11 +70,10 @@
             android:textSize="15dp" />
 
         <Button
-            android:layout_width="115dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/rounded_corner_blue"
-            android:onClick="MessageClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/esn.setting.profile.notification"
@@ -74,7 +81,7 @@
             android:textSize="15dp" />
 
         <ImageButton
-            android:layout_width="55dp"
+            android:layout_width="87dp"
             android:layout_height="30dp"
             android:background="@drawable/rounded_corner_blue"
             android:contentDescription="@string/app.global.camera"
@@ -106,7 +113,6 @@
             android:layout_height="60dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/rounded_corner_blue"
-            android:onClick="PersonalClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:src="@drawable/ic_setting_profile_information"
@@ -132,7 +138,8 @@
         <ListView
             android:id="@+id/esn.setting.profile.listeventuser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:divider="@drawable/ic_divider">
         </ListView>
     </LinearLayout>
 
