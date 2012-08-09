@@ -5,6 +5,9 @@ package esn.classes;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.content.res.Resources;
 import android.media.AudioFormat;
 import android.os.Looper;
@@ -26,6 +29,20 @@ public class VoiceManager {
 	
 	public Resources resource;
 	public AudioLibManager libManager;
+	
+	
+	private Timer limitTimer;
+	private class LimitTask extends TimerTask {
+		public static final int LIMIT = 20000;
+		
+		@Override
+	    public void run() {
+			limitTimer.cancel();
+			limitTimer = null;
+			recorder.stopRecording();
+	    }
+	}
+	
 	public VoiceManager(Resources resource) {
 		s2tParser = new S2TParser();
 		player = new AudioPlayer();
@@ -41,10 +58,16 @@ public class VoiceManager {
 			@Override
 			public void onSpeaking() {
 				//Log.i("VoiceManager", "On Speaking");
+				limitTimer = new Timer();
+				limitTimer.scheduleAtFixedRate(new LimitTask(), 0, LimitTask.LIMIT);
 			}
 
 			@Override
 			public void onSilenting() {
+				if(limitTimer != null){
+					limitTimer.cancel();
+					limitTimer = null;
+				}
 				recorder.stopRecording();//Goi ham nay se phat sinh su kien onStopingRecord()
 				//Log.i("VoiceManager", "On Silenting");
 			}
@@ -113,6 +136,10 @@ public class VoiceManager {
 	}
 	
 	public void stopRecording(){
+		if(limitTimer != null){
+			limitTimer.cancel();
+			limitTimer = null;
+		}
 		recorder.stopRecording();
 	}
 	
