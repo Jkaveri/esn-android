@@ -32,12 +32,16 @@ public class VoiceManager {
 	
 	
 	private Timer limitTimer;
-	private boolean isStartLimit;
 	private class LimitTask extends TimerTask {
+		private int seconds = 0;
 		@Override
 	    public void run() {
-			isStartLimit = false;
-			recorder.stopRecording();
+			seconds++;
+			if(seconds >= 20){
+				limitTimer.cancel();
+				recorder.stopRecording();
+				limitTimer = null;
+			}
 	    }
 	}
 	
@@ -50,7 +54,6 @@ public class VoiceManager {
 		this.resource = resource;
 		this.libManager = new AudioLibManager();
 		wavConver.setDefaultWAVFormat();
-		isStartLimit = false;
 		
 		recorder = new AudioRecorder(new RecordListener() {
 
@@ -58,15 +61,14 @@ public class VoiceManager {
 			public void onSpeaking() {
 				//Log.i("VoiceManager", "On Speaking");
 				limitTimer = new Timer();
-				isStartLimit = true;
-				limitTimer.schedule(new LimitTask(), 20, 1000);
+				limitTimer.scheduleAtFixedRate(new LimitTask(), 0, 1000);
 			}
 
 			@Override
 			public void onSilenting() {
-				if(isStartLimit){
+				if(limitTimer != null){
 					limitTimer.cancel();
-					isStartLimit = false;
+					limitTimer = null;
 				}
 				recorder.stopRecording();//Goi ham nay se phat sinh su kien onStopingRecord()
 				//Log.i("VoiceManager", "On Silenting");
@@ -136,9 +138,9 @@ public class VoiceManager {
 	}
 	
 	public void stopRecording(){
-		if(isStartLimit){
+		if(limitTimer != null){
 			limitTimer.cancel();
-			isStartLimit = false;
+			limitTimer = null;
 		}
 		recorder.stopRecording();
 	}
@@ -261,9 +263,9 @@ public class VoiceManager {
 	}
 	
 	public void destroy(){
-		if(isStartLimit){
+		if(limitTimer != null){
 			limitTimer.cancel();
-			isStartLimit = false;
+			limitTimer = null;
 		}
 		player.release();
 		recorder.release();
