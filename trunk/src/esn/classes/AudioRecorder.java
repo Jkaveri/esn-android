@@ -74,7 +74,7 @@ public class AudioRecorder {
         	 Log.i(TAG, "GET REC_BUFFER_SIZE IS AudioRecord.ERROR_BAD_VALUE");
         }
         
-        // 480 bytes for 30ms(y mode)
+        // 480 bytes for 30ms(y mode)// 960 byte on virtual, 1440 on mobile phone of teacher Duong
         truncated = REC_BUFFER_SIZE % 480;
         if (truncated != 0) {
         	REC_BUFFER_SIZE += 480 - truncated;
@@ -142,7 +142,7 @@ public class AudioRecorder {
 						if (temp > SILENCE_THRESHOLD && recording == false) {
 							//Log.i(TAG, "[2] Bat dau noi");//Bat dau noi
 							recording = true;
-							callBack.onSpeaking();
+							callBack.onSpeaking();//On start speaking
 						}
 
 						if(recording == true){
