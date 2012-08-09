@@ -15,6 +15,7 @@ public class Codec {
 
 	private Codec() {
 		System.loadLibrary("ilbc-codec");
+		//iLBC encode block 30msec
 		init(30);
 	}
 

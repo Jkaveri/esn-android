@@ -36,7 +36,6 @@ public class AudioRecorder {
 	
 	private boolean isSilence = false;
 	private int timeOut = 0;
-	private boolean isCallBackOnStarting = false;
 	private String TAG = "AudioRecorder";
 	
 	private class DetectTask extends TimerTask {
@@ -59,15 +58,10 @@ public class AudioRecorder {
 	public void speakingCall(){
 		isSilence = false;
 		timeOut = 0;
-		if(!isCallBackOnStarting){
-			isCallBackOnStarting = true;
-			callBack.onSpeaking();
-		}
 	}
 	
 	public void reset(){
 		timeOut = 0;
-		isCallBackOnStarting = false;
 		isSilence = false;
 	}
 	
@@ -95,14 +89,14 @@ public class AudioRecorder {
 			public void run() {
 				byte[] buffer = new byte[REC_BUFFER_SIZE];
 				byte[] bufferEncode = new byte[REC_BUFFER_SIZE];
+				byte[] beforeBuff01 = null;
+				byte[] beforeBuff02 = null;
 				DataOutputStream dos = new DataOutputStream(bufferStream);
 				AudioRecord record = new AudioRecord(AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, REC_BUFFER_SIZE);
 				Timer timerDetect = new Timer();
 				boolean recording = false;
 				float tempFloatBuffer[] = new float[3];
 				int tempIndex = 0;
-				int totalReadBytes = 0;
-				byte totalByteBuffer[] = new byte[60 * 44100 * 2];
 				
 				callBack.onStartingRecord();//Goi handler khi chuan bi ghi am
 				
@@ -126,12 +120,6 @@ public class AudioRecorder {
                         	Log.i(TAG, "READ BUFFER_SIZE IS AudioRecord.ERROR");
                         }
 						
-						//iLBC encode block 30msec
-						int encount = Codec.instance().encode(buffer, 0, count, bufferEncode, 0);
-						dos.write(bufferEncode, 0, encount);
-						
-						//dos.write(buffer, 0, count);
-
 						
 						///////////////////////PHAN TICH DANG XEM DANG NOI HAY NGUNG//////////////////
 						// Analyze Sound.
@@ -151,26 +139,44 @@ public class AudioRecorder {
 							tempIndex++;
 						}
 
-						if (temp >SILENCE_THRESHOLD && recording == false) {
+						if (temp > SILENCE_THRESHOLD && recording == false) {
 							//Log.i(TAG, "[2] Bat dau noi");//Bat dau noi
 							recording = true;
-							continue;
+							callBack.onSpeaking();
 						}
 
-						if ((temp >= 0 && temp <=  SILENCE_THRESHOLD) && recording == true) {
-							silenceCall();//Dang ngung noi
-							//Log.i(TAG, "Dang im lang");
-						}else{
-							speakingCall();//Dang noi
-							//Log.i(TAG, "Dang noi");
+						if(recording == true){
+							if ((temp >= 0 && temp <= SILENCE_THRESHOLD)) {
+								silenceCall();//Dang ngung noi
+								//Log.i(TAG, "Dang im lang");
+							}else{
+								speakingCall();//Dang noi
+								//Log.i(TAG, "Dang noi");
+							}
 						}
 
 						// -> Recording sound here.
-						for (int i = 0; i < count; i++){
-							totalByteBuffer[totalReadBytes + i] = buffer[i];
+						if(recording){
+							if(beforeBuff01 != null){
+								int encount = Codec.instance().encode(beforeBuff01, 0, beforeBuff01.length, bufferEncode, 0);
+								dos.write(bufferEncode, 0, encount);
+								beforeBuff01 = null;
+							}
+							if(beforeBuff02 != null){
+								int encount = Codec.instance().encode(beforeBuff02, 0, beforeBuff02.length, bufferEncode, 0);
+								dos.write(bufferEncode, 0, encount);
+								beforeBuff02 = null;
+							}
+							int encount = Codec.instance().encode(buffer, 0, count, bufferEncode, 0);
+							dos.write(bufferEncode, 0, encount);
+						}else{
+							beforeBuff01 = beforeBuff02;							
+							beforeBuff02 = new byte[count];
+							for(int i = 0; i < count; i++){
+								beforeBuff02[i] = buffer[i];
+							}
 						}
 						
-						totalReadBytes += count;
 						tempIndex++;
 						//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//*//
 						
@@ -189,16 +195,7 @@ public class AudioRecorder {
 				//Destroy
 				record.stop();
 				record.release();
-				record = null;
 				timerDetect.cancel();
-				timerDetect = null;
-				
-				//Giai phong bo nho
-				tempFloatBuffer = null;
-				totalByteBuffer = null;
-				buffer = null;
-				bufferEncode = null;
-				dos = null;
 				
 				//Reset nhan dang co dang noi hay khong
 				reset();
