@@ -38,6 +38,7 @@ public class VoiceManager {
 		
 		@Override
 	    public void run() {
+			isStartLimit = false;
 			recorder.stopRecording();
 	    }
 	}
