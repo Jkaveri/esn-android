@@ -34,8 +34,6 @@ public class VoiceManager {
 	private Timer limitTimer;
 	private boolean isStartLimit;
 	private class LimitTask extends TimerTask {
-		public static final int LIMIT = 20000;
-		
 		@Override
 	    public void run() {
 			isStartLimit = false;
@@ -61,7 +59,7 @@ public class VoiceManager {
 				//Log.i("VoiceManager", "On Speaking");
 				limitTimer = new Timer();
 				isStartLimit = true;
-				limitTimer.schedule(new LimitTask(), 0, LimitTask.LIMIT);
+				limitTimer.schedule(new LimitTask(), 20, 1000);
 			}
 
 			@Override
