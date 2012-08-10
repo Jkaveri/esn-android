@@ -11,17 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/main_logo" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tnt"
-        android:textColor="#ffff"
-        android:textSize="30dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        />
-    <Button
+    
+    <ImageButton 
         android:id="@+id/btloginfb"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -29,35 +20,42 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_corner_white"
+        android:src="@drawable/ic_welcome_facebook"
         android:onClick="btnLoginfbClicked"
-        android:text="@string/esn_welcome_loginWithFacebook"
-        android:textColor="#327df2" />
+        android:background="@null"
+        android:textColor="#327df2"
+        />
 
     <Button
         android:id="@+id/btLogin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="264dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corner_white"
         android:onClick="LoginClicked"
         android:text="@string/esn_welcome_login"
-        android:textColor="#327df2" />
+        android:textColor="#327df2"
+        android:textSize="13dp"/>
 
     <Button
         android:id="@+id/btSignUp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="264dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corner_white"
         android:onClick="RegisterClicked"
         android:text="@string/esn_welcome_signup"
-        android:textColor="#327df2" />
-
+        android:textColor="#327df2"
+        android:textSize="13dp" />
+	<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tnt"
+        android:textColor="#ffff"
+        android:textSize="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        />
 </LinearLayout>

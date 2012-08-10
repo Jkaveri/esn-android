@@ -82,14 +82,14 @@
 	<!-- Welcome -->
 	<string name="esn_welcome_login">Đăng Nhập</string>
 	<string name="esn_welcome_loginWithFacebook">Đăng nhập bằng tài khoản facebook </string>
-	<string name="esn_welcome_signup">Đăng ký</string>
+	<string name="esn_welcome_signup">Đăng Ký</string>
 	
 	<string name="esn_userpage_online">Trực tuyến</string>
 	<string name="esn_userpage_ofline">Ngoại tuyến</string>
 	<string name="esn_userpage_Male">Nam</string>
 	<string name="esn_userpage_Female">Nữ</string>
 	
-	<string name="tnt">TÀI NĂNG TRẺ 2012</string>
+	<string name="tnt">Tài Năng Trẻ @ 2012</string>
 	<string name="esn.global.notification">Thông Báo</string>	
 	<string name="esn.global.me">Tôi</string>
 </resources>

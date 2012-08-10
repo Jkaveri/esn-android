@@ -62,13 +62,13 @@ public class LoginActivity extends SherlockActivity{
 		context = this;
 		
 		res = getResources();
-		TextView tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassgord);
+		/*TextView tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassgord);
 
 		tvForgotPassword
 				.setText(Html
 						.fromHtml("<a href=\"http://www.esn.com/forgotpassword\">Forgot your password?</a> "));
 
-		tvForgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
+		tvForgotPassword.setMovementMethod(LinkMovementMethod.getInstance());*/
 		if(intent!=null){
 			String loginResult = intent.getStringExtra("loginResult");
 			if(loginResult!=null && loginResult.length() > 0){

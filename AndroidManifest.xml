@@ -57,8 +57,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/esn.register.btSignUp"
-            android:theme="@style/esn.theme.light.register" >
+            android:theme="@style/esn.theme.light.register">
         </activity>
         <activity
             android:name=".ProfileActivity"
@@ -141,8 +140,7 @@
             android:name=".EditProfileActivity"
             android:icon="@drawable/logo"
             android:label="@string/app_Setting_Account_ChangeProfile"
-            android:theme="@style/esn.theme.light.editprofile"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:theme="@style/esn.theme.light.editprofile">
         </activity>
         <activity
             android:name=".EventDetailActivity"
