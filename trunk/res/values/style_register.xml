@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="esn.theme.light.register" parent="Theme.Sherlock.Light.DarkActionBar">
+    <style name="esn.theme.light.editprofile" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/esn.theme.light.actionbar</item>
-        <item name="android:spinnerItemStyle">@style/esn.Widget.TextView.SpinnerItem</item>
-        <item name="android:spinnerDropDownItemStyle">@style/esn.Widget.DropDownItem.Spinner</item>
+        <item name="android:spinnerItemStyle">@style/esn.Widget.TextView.SpinnerItemProfile</item>
+        <item name="android:spinnerDropDownItemStyle">@style/esn.Widget.DropDownItem.SpinnerProfile</item>
     </style>
-    <style name="esn.theme.light.register.actionbar" parent="Widget.Sherlock.Light.ActionBar.Solid">
+    <style name="esn.theme.light.actionbar" parent="Widget.Sherlock.Light.ActionBar.Solid">
         <item name="background">@drawable/main_transparent</item>
         <item name="android:background">@drawable/main_transparent</item>
         <item name="backgroundSplit">@drawable/black_transparent</item>
         <item name="android:backgroundSplit">@drawable/black_transparent</item>
         <item name="android:titleTextStyle">@style/esn.theme.light.actionbar.TitleTextStyle</item>
     </style>
-    <style name="esn.Widget.DropDownItem.Spinner"  parent="@android:style/Widget.DropDownItem.Spinner">
+    <style name="esn.Widget.DropDownItem.SpinnerProfile"  parent="@android:style/Widget.DropDownItem.Spinner">
         <item name="android:textColor">@color/text_color</item>
         <item name="android:padding">8dp</item>
     </style>
-    <style name="esn.Widget.TextView.SpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
-        <item name="android:textColor">@color/text_color</item>
+    <style name="esn.Widget.TextView.SpinnerItemProfile" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/BgWhite</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">bold</item>
         <!-- <item name="android:paddingTop">8dp</item> -->
     </style>
 

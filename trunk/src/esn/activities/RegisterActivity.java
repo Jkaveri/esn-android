@@ -82,8 +82,9 @@ public class RegisterActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.register);
-
-		getActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayUseLogoEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayShowHomeEnabled(false); 
 		getSupportActionBar().hide();
 		
 		intent = this.getIntent();
@@ -135,7 +136,7 @@ public class RegisterActivity extends SherlockActivity {
 			}
 
 		}
-		TextView sv = (TextView) findViewById(R.id.lkService);
+		/*TextView sv = (TextView) findViewById(R.id.lkService);
 
 		sv.setText(Html
 				.fromHtml("<a href=\"http://www.esn.com/policy\">Term of Service</a> "));
@@ -147,9 +148,10 @@ public class RegisterActivity extends SherlockActivity {
 		po.setText(Html
 				.fromHtml("<a href=\"http://www.esn.com/policy\">Privacy and Policy</a> "));
 
-		po.setMovementMethod(LinkMovementMethod.getInstance());
+		po.setMovementMethod(LinkMovementMethod.getInstance());*/
 
 		// Date time dialog view
+		
 		mDateDisplay = (EditText) findViewById(R.id.esn_register_txtBirthday);
 		
 		mDateDisplay.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +165,7 @@ public class RegisterActivity extends SherlockActivity {
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 		
-		mDateDisplay.setHint(res.getString(R.string.esn_register_txtBirthday));
+		//mDateDisplay.setHint(res.getString(R.string.esn_register_txtBirthday));
 	}
 
 	private void updateDisplay() {
