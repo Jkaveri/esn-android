@@ -2,4 +2,6 @@
 <resources>
     <string name="esn.voicemode.title">ESN Voice Mode</string>
     <string name="esn.voicemode.state">Hi, Welcome to ESN voice mode!</string>
+    <string name="esn.voicemode.services.stop">The function alert events stoped</string>
+    <string name="esn.voicemode.services.start">The function alert events started</string>
 </resources>

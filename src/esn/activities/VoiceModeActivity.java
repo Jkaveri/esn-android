@@ -22,7 +22,7 @@ import esn.models.EventType;
 import esn.models.Events;
 
 public class VoiceModeActivity extends MapActivity {
-	private static final String LOG_TAG = "VoiceModeActivity";
+	//private static final String LOG_TAG = "VoiceModeActivity";
 	public static final String ACTION_EVENT_AUDIO_ALERT = "esn.actions.ACTION_EVENT_AUDIO_ALERT";
 
 	private VoiceModeHelper helper;
@@ -30,6 +30,7 @@ public class VoiceModeActivity extends MapActivity {
 	private Maps map;
 
 	public boolean firstHeadPhoneConnect = false;
+	private boolean servicesAct = false;
 	private Sessions session;
 
 	@Override
@@ -43,11 +44,12 @@ public class VoiceModeActivity extends MapActivity {
 		txtStates.setSelected(true);
 
 		ImageButton btnRecord = (ImageButton) findViewById(R.id.esn_voicemode_btn_record);
+		ImageButton btnServices = (ImageButton) findViewById(R.id.esn_voicemode_btn_Service);
 		MapView mapView = (MapView) findViewById(R.id.esn_google_maps_state);
 		map = new Maps(this, mapView);
 		map.displayCurrentLocationMarker();
 
-		helper = new VoiceModeHelper(this, btnRecord, txtStates, map);
+		helper = new VoiceModeHelper(this, btnServices, btnRecord, txtStates, map);
 		// register reciever
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(VoiceModeActivity.ACTION_EVENT_AUDIO_ALERT);
@@ -70,11 +72,16 @@ public class VoiceModeActivity extends MapActivity {
 		map.displayCurrentLocationMarker();
 	}
 
-	public void btnStopServiceClicked(View view) {
-		helper.stopService();
-		
-		session.setNotifyEvents(false);
-		Toast.makeText(this, "Service is stop", Toast.LENGTH_SHORT).show();
+	public void btnServiceClicked(View view) {
+		if(servicesAct){
+			helper.stopService();		
+			session.setNotifyEvents(false);//Thong bao cho setting
+			servicesAct = false;
+		}else{
+			servicesAct = true;
+			helper.startService();
+			session.setNotifyEvents(true);//Thong bao cho setting
+		}
 	}
 
 	@Override

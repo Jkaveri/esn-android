@@ -8,41 +8,46 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:apiKey="@string/key.maps.googleAPI"
-        android:clickable="true" />    
-    <LinearLayout 
+        android:clickable="true" />
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="right|bottom"
         android:paddingBottom="60dp"
-        android:paddingRight="10dp"
-        >
+        android:paddingRight="10dp" >
+
         <ImageButton
-	        android:id="@+id/btnDetectLocation"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:onClick="btnDetectMyLocation"
-	        android:background="@drawable/bg_access_current_location"
-	        android:padding="2dp"
-	        android:src="@drawable/ic_location_access" />
+            android:id="@+id/btnDetectLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_access_current_location"
+            android:onClick="btnDetectMyLocation"
+            android:padding="2dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_location_access" />
     </LinearLayout>
-    <LinearLayout 
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="left|bottom"
         android:paddingBottom="60dp"
-        android:paddingLeft="10dp"
-        >
+        android:paddingLeft="10dp" >
+
         <ImageButton
-	        android:id="@+id/btnStopService"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginRight="25dp"
-	        android:layout_marginTop="50dp"
-	        android:background="@drawable/bg_access_current_voice"
-	        android:onClick="btnStopServiceClicked"
-	        android:padding="2dp"
-	        android:src="@drawable/ic_voice" />
+            android:id="@+id/esn.voicemode.btn.Service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/app_name"
+            android:background="@drawable/bg_access_current_voice"
+            android:onClick="btnServiceClicked"
+            android:padding="2dp"
+            android:src="@drawable/ic_event_alert_ac" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -65,8 +70,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="bottom"
         android:background="@null"
+        android:gravity="bottom"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -78,6 +83,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="@null" >
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="32dp"
@@ -104,17 +110,18 @@
                     android:orientation="horizontal" >
 
                     <ImageButton
-                        android:contentDescription="@string/app_name"
+                        android:id="@+id/esn.voicemode.btn.record"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:background="@null"
                         android:layout_marginLeft="3dp"
-                        android:id="@+id/esn.voicemode.btn.record"
-                        android:tag="Record"
+                        android:background="@null"
+                        android:contentDescription="@string/app_name"
                         android:onClick="btnRecordClick"
-                        android:src="@drawable/ic_mic_record" />
+                        android:src="@drawable/ic_mic_record"
+                        android:tag="Record" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>    
+    </LinearLayout>
+
 </RelativeLayout>
