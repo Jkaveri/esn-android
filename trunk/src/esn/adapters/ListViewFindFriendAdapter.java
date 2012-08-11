@@ -20,7 +20,7 @@ public class ListViewFindFriendAdapter extends CustomListAdapter<FindFriendDTO>{
 	
 	public ListViewFindFriendAdapter(Activity activity,
 			ArrayList<FindFriendDTO> list, int layoutRow) {
-		super(activity, list, layoutRow);
+		super(activity, list, layoutRow, R.drawable.ic_no_avata);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -1,4 +1,4 @@
-package esn.adapters;
+package esn.activities;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

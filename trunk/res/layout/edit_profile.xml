@@ -38,7 +38,7 @@
 		            android:layout_gravity="top"
 		            android:contentDescription="@string/esn_register_avatar"
 		            android:onClick="AvatarClicked"
-		            android:src="@drawable/avatar"
+		            android:src="@drawable/ic_no_avata"
 		            android:adjustViewBounds="true"
 		            />		        
 		        <LinearLayout 
