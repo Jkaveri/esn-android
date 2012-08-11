@@ -220,7 +220,6 @@ public class FriendEventsListActivity extends Activity implements
 			Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
 			startActivity(intenFdsEvent);
 			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
-			finish();
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);
