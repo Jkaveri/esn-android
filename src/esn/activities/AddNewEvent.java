@@ -12,7 +12,6 @@ import esn.classes.Utils;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +26,6 @@ import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -213,7 +211,6 @@ public class AddNewEvent extends Activity {
 				event.EventTypeID=10;
 			}
 			
-			int eve = event.EventTypeID;
 			
 			if (event.EventTypeID <= 0) {
 				Toast.makeText(context, "Ban phai chon loai su kien",
