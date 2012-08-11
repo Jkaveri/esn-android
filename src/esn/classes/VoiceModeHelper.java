@@ -78,7 +78,7 @@ public class VoiceModeHelper {
 
 		// stopService();
 	}
-	
+
 	public void startService() {
 		if (service == null) {
 			service = new Intent(act.getApplicationContext(),
@@ -86,8 +86,18 @@ public class VoiceModeHelper {
 		}
 
 		if (!isMyServiceRunning()) {
-			btnServices.setImageResource(R.drawable.ic_event_alert_de);
-			//Toast.makeText(act, act.getString(R.string.esn_voicemode_services_start), Toast.LENGTH_SHORT).show();
+			dynIcon.handler.post(new Runnable() {
+
+				@Override
+				public void run() {
+					Toast.makeText(
+							act,
+							act.getString(R.string.esn_voicemode_services_start),
+							Toast.LENGTH_SHORT).show();
+					btnServices.setImageResource(R.drawable.ic_event_alert_de);
+				}
+			});
+
 			act.startService(service);
 		}
 
@@ -101,11 +111,21 @@ public class VoiceModeHelper {
 			if (service == null)
 				service = new Intent(act.getApplicationContext(),
 						EsnLookingAheadEventsServices.class);
-			Toast.makeText(act, act.getString(R.string.esn_voicemode_services_stop), Toast.LENGTH_SHORT).show();
-			act.stopService(service);			
-			btnServices.setImageResource(R.drawable.ic_event_alert_ac);
+			dynIcon.handler.post(new Runnable() {
+
+				@Override
+				public void run() {
+					Toast.makeText(
+							act,
+							act.getString(R.string.esn_voicemode_services_stop),
+							Toast.LENGTH_SHORT).show();
+					btnServices.setImageResource(R.drawable.ic_event_alert_ac);
+				}
+			});
+
+			act.stopService(service);
 		}
-		
+
 	}
 
 	private class VoiceModeListener implements VoiceListener {
@@ -321,5 +341,9 @@ public class VoiceModeHelper {
 
 			Log.d("esn", "end load events around!");
 		}
+	}
+
+	public boolean isActivateServices() {
+		return isMyServiceRunning();
 	}
 }
