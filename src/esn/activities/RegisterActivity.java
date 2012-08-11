@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONException;
@@ -15,7 +13,6 @@ import com.facebook.android.Util;
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -28,8 +25,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 
 import android.view.KeyEvent;
 import android.view.View;
@@ -40,7 +35,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-@SuppressLint("NewApi")
 public class RegisterActivity extends SherlockActivity {
 
 	Intent intent;
@@ -96,9 +90,11 @@ public class RegisterActivity extends SherlockActivity {
 		res = getResources();
 		
 		boolean isFbSignup = intent.getBooleanExtra("facebookSignup", false);
+		
 		fbID = "";
 		fbAccessToken = "";
 		fbAccessExpires = 0;
+		
 		if (isFbSignup) {
 			String first_name = intent.getStringExtra("first_name");
 			String last_name = intent.getStringExtra("last_name");
@@ -136,22 +132,7 @@ public class RegisterActivity extends SherlockActivity {
 			}
 
 		}
-		/*TextView sv = (TextView) findViewById(R.id.lkService);
-
-		sv.setText(Html
-				.fromHtml("<a href=\"http://www.esn.com/policy\">Term of Service</a> "));
-
-		sv.setMovementMethod(LinkMovementMethod.getInstance());
-
-		TextView po = (TextView) findViewById(R.id.lkPolicy);
-
-		po.setText(Html
-				.fromHtml("<a href=\"http://www.esn.com/policy\">Privacy and Policy</a> "));
-
-		po.setMovementMethod(LinkMovementMethod.getInstance());*/
-
-		// Date time dialog view
-		
+				
 		mDateDisplay = (EditText) findViewById(R.id.esn_register_txtBirthday);
 		
 		mDateDisplay.setOnClickListener(new View.OnClickListener() {
@@ -219,21 +200,18 @@ public class RegisterActivity extends SherlockActivity {
 		final EditText email = (EditText)findViewById(R.id.esn_register_txtEmail);
 		
 		if(valid==false)
-		{
-						
-			email.setError(res.getString(R.string.esn_register_ValidateEmail), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+		{		
+			Toast.makeText(context, res.getString(R.string.esn_register_ValidateEmail),Toast.LENGTH_SHORT).show();			
 			return;
 		}
 		else if(require==1)
-		{
-			EditText name = (EditText)findViewById(R.id.esn_register_txtFullName);
-			name.setError(res.getString(R.string.esn_register_RequireFistName), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+		{	
+			Toast.makeText(context, res.getString(R.string.esn_register_RequireFistName),Toast.LENGTH_SHORT).show();			
 			return;
 		}
 		else if(require == 2)
 		{
-			EditText pass = (EditText)findViewById(R.id.esn_register_Password);
-			pass.setError(res.getString(R.string.esn_register_RequirePassword), res.getDrawable(R.drawable.ic_alerts_and_states_error));
+			Toast.makeText(context, res.getString(R.string.esn_register_RequirePassword),Toast.LENGTH_SHORT).show();			
 			return;
 		}
 		else
@@ -390,6 +368,8 @@ public class RegisterActivity extends SherlockActivity {
 			
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");		
 			
+			user.fbID=fbID;
+			
 			try {
 				
 				user.Birthday = format.parse(bd);
@@ -416,7 +396,9 @@ public class RegisterActivity extends SherlockActivity {
 				user.Gender = false;
 			}			
 			user.AccessToken=fbAccessToken;
+			
 			user.fbID = fbID;
+			
 			int rs = 0;
 			try {
 				rs = usersManager.Register(user);

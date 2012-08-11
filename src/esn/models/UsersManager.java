@@ -48,17 +48,20 @@ public class UsersManager {
 		params.put("name", user.Name);
 		params.put("email", user.Email);
 		params.put("password", user.Password);
-
 		params.put("birthday", format.format(user.Birthday));
 		params.put("phone", user.Phone);
 		params.put("gender", user.Gender);
-		params.put("accessToken", user.AccessToken);
+		params.put("access_token", user.AccessToken);
+		params.put("fbID", user.fbID);
+		params.put("location", "");
+		params.put("avatar", "");
 
-		String s = user.Name + user.Email + user.Password + user.Birthday
-				+ user.Phone + user.Gender + user.AccessToken;
-
+		String s = user.Name + "--" + user.Email + "--" + user.Password + "--" + 
+		user.Birthday + "--" + user.Phone + "--" + user.Gender + "--" + user.fbID + "--";
 		JSONObject jsonObject = helper.invokeWebMethod("Register", params);
+		
 		rs = jsonObject.getInt("d");
+		
 		return rs;
 	}
 
