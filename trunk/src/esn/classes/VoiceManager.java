@@ -242,6 +242,7 @@ public class VoiceManager {
 		player.playOutsiteTask();
 		return true;
 	}
+	
 	public void play(int audioId){
 		if(audioId!=AudioLibManager.FILE_NOT_FOUND){
 			byte[] buff = getBufferSoundLib(audioId);
@@ -249,6 +250,17 @@ public class VoiceManager {
 			player.loadBufferPCM(buff);
 			buff = null;//clean up
 			player.playOutsiteTask();
+		}
+		
+	}
+	
+	public void playInsiteThread(int audioId){
+		if(audioId!=AudioLibManager.FILE_NOT_FOUND){
+			byte[] buff = getBufferSoundLib(audioId);
+			setPlayerConfig();
+			player.loadBufferPCM(buff);
+			buff = null;//clean up
+			player.play();
 		}
 		
 	}
