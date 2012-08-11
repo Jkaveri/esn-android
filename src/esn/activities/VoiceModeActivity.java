@@ -9,12 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
-
 import esn.classes.Maps;
 import esn.classes.Sessions;
 import esn.classes.VoiceModeHelper;
@@ -30,7 +27,6 @@ public class VoiceModeActivity extends MapActivity {
 	private Maps map;
 
 	public boolean firstHeadPhoneConnect = false;
-	private boolean servicesAct = false;
 	private Sessions session;
 
 	@Override
@@ -73,12 +69,10 @@ public class VoiceModeActivity extends MapActivity {
 	}
 
 	public void btnServiceClicked(View view) {
-		if(servicesAct){
+		if(helper.isActivateServices()){
 			helper.stopService();		
 			session.setNotifyEvents(false);//Thong bao cho setting
-			servicesAct = false;
 		}else{
-			servicesAct = true;
 			helper.startService();
 			session.setNotifyEvents(true);//Thong bao cho setting
 		}

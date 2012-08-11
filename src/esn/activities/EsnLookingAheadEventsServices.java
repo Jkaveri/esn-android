@@ -55,7 +55,7 @@ public class EsnLookingAheadEventsServices extends Service implements
 		radius = sessions.getRadiusForEventAround();
 		audioLibManager = new AudioLibManager();
 		//play thong bao
-		voiceManager.play(R.raw.thongbaokichhoat);
+		voiceManager.playInsiteThread(R.raw.thongbaokichhoat);
 		// media button
 		if(sessions.getAccessHeadPhone()){
 			auManager = (AudioManager) getSystemService(AUDIO_SERVICE);
