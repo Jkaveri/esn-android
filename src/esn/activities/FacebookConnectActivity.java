@@ -25,7 +25,7 @@ import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 
-public class FacebookConnect extends Activity{
+public class FacebookConnectActivity extends Activity{
 
     public static final String TAG = "FACEBOOK";
     private Facebook mFacebook;
@@ -115,7 +115,7 @@ public class FacebookConnect extends Activity{
                                 fbName = json.getString("name");
                                 //fbEmail = json.getString("email");
 
-                                FacebookConnect.this.runOnUiThread(new Runnable() {
+                                FacebookConnectActivity.this.runOnUiThread(new Runnable() {
                                     public void run() {
                                     username.setText("Welcome: " + fbName + "\n ID: " + fbId);                              
                                     }
