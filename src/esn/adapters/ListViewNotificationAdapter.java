@@ -12,7 +12,7 @@ import esn.models.NotificationDTO;
 public class ListViewNotificationAdapter extends CustomListAdapter<NotificationDTO>{
 	
 	public ListViewNotificationAdapter(Activity activity,ArrayList<NotificationDTO> list) {
-		super(activity, list, R.layout.notification_row,R.drawable.ic_no_avata);
+		super(activity, list, R.layout.notification_row);
 	}
 
 	private class ViewHolder 

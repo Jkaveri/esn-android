@@ -22,7 +22,7 @@ public class ListViewEventUserAdapter extends CustomListAdapter<Events>{
 	}
 	
 	public ListViewEventUserAdapter(Activity activity, ArrayList<Events> list) {
-		super(activity, list,R.layout.event_user_row,R.drawable.ic_no_avata);
+		super(activity, list,R.layout.event_user_row);
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package esn.adapters;
 
 import java.util.ArrayList;
 
+import esn.activities.R;
 import esn.classes.ImageLoader;
 import android.app.Activity;
 import android.content.Context;
@@ -47,6 +48,7 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 		this.activity = activity;
 		this.data = list;
 		list = null;
+		this.idIcon = R.drawable.ic_no_photo;
 		this.layoutRow = layoutRow;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
