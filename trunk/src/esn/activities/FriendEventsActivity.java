@@ -167,6 +167,11 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
 								| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		menu.add("FindMoreFriend")
+		.setIcon(R.drawable.ic_friends_add)
+		.setShowAsAction(
+				MenuItem.SHOW_AS_ACTION_IF_ROOM
+						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		return true;
 	}
 
@@ -177,11 +182,18 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 			item.collapseActionView();
 			return true;
 		} else if (itemTitle.equals("FriendList")) {
-			finish();
 			Intent intenFdsLists = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsLists);
+			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+			finish();
 			return true;
-		} else {
+		} else if (itemTitle.equals("FindMoreFriend")) {
+			Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
+			startActivity(intenFdsEvent);
+			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+			finish();
+			return true;
+		}else {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}
@@ -201,6 +213,7 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 			Intent intent = new Intent(this, FriendEventsListActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+			finish();
 		}
 		return true;
 	}
