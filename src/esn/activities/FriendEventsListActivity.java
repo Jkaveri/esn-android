@@ -197,6 +197,11 @@ public class FriendEventsListActivity extends Activity implements
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
 								| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		menu.add("FindMoreFriend")
+		.setIcon(R.drawable.ic_friends_add)
+		.setShowAsAction(
+				MenuItem.SHOW_AS_ACTION_IF_ROOM
+						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		return true;
 	}
 	@Override
@@ -206,9 +211,16 @@ public class FriendEventsListActivity extends Activity implements
 			item.collapseActionView();
 			return true;
 		} else if (itemTitle.equals("FriendList")) {
-			finish();
 			Intent intenFdsLists = new Intent(this, FriendListActivity.class);
 			startActivity(intenFdsLists);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+			finish();
+			return true;
+		} else if (itemTitle.equals("FindMoreFriend")) {
+			Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
+			startActivity(intenFdsEvent);
+			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+			finish();
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);
@@ -221,6 +233,7 @@ public class FriendEventsListActivity extends Activity implements
 			Intent intent = new Intent(this, FriendEventsActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+			finish();
 		} else if (postTitle
 				.equals(getString(R.string.str_Friends_Events_ViewAsList))) {
 

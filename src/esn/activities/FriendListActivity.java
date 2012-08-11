@@ -2,8 +2,6 @@ package esn.activities;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Currency;
-
 import org.json.JSONException;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -20,6 +18,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
@@ -323,7 +322,7 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 								| MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		
 		menu.add("FindMoreFriend")
-				.setIcon(R.drawable.ic_friend_searchfb)
+				.setIcon(R.drawable.ic_friends_add)
 				.setShowAsAction(
 						MenuItem.SHOW_AS_ACTION_IF_ROOM
 								| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -334,20 +333,23 @@ public class FriendListActivity extends SherlockActivity implements OnNavigation
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		String itemTitle = item.getTitle().toString();
-		if (itemTitle.equals(res.getString(R.string.app_global_search))) {
+		Log.i("FriendListActivity", itemTitle);
+		if (itemTitle.equals("Search")) {
 			item.collapseActionView();
 			return true;
-		} else if (itemTitle.equals(res.getString(R.string.app_global_friendevent))) {
-			finish();
+		} else if (itemTitle.equals("FriendEvent")) {
 			Intent intenFdsEvent = new Intent(this, FriendEventsActivity.class);
 			startActivity(intenFdsEvent);
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+			finish();
 			return true;
 		} else if (itemTitle.equals("FindMoreFriend")) {
-			finish();
 			Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
 			startActivity(intenFdsEvent);
-			return true;			
-		} else {
+			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+			finish();
+			return true;
+		}else {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}

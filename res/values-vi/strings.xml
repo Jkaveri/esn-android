@@ -34,8 +34,6 @@
     <string name="app.global.choose">Chọn</string>
     <string name="app.global.cantnotuploadimage">Không thể upload hình ảnh.</string>
     <string name="app.global.search">Tìm kiếm</string>
-    <string name="app.global.friendevent">FriendEvent</string>
-    <string name="app.global.friendlist">FriendList</string>
     <string name="app.global.yes">Đồng Ý</string>
     <string name="app.global.no">Không</string>
     <string name="app.global.viewasmap">Bản Đồ</string>
