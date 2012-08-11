@@ -25,7 +25,6 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 		this.activity = activity;
 		this.data = list;
 		this.layoutRow = layoutRow;
-		list = null;
 		this.idIcon = idIcon;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -47,7 +46,6 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 	public CustomListAdapter(Activity activity, ArrayList<T> list, int layoutRow) {
 		this.activity = activity;
 		this.data = list;
-		list = null;
 		this.idIcon = R.drawable.ic_no_photo;
 		this.layoutRow = layoutRow;
 		inflater = (LayoutInflater) activity
