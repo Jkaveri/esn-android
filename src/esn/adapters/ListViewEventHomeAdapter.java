@@ -21,8 +21,7 @@ private class ViewHolder {
 	}
 	
 	public ListViewEventHomeAdapter(Activity activity, ArrayList<Events> listEventHome) {
-		
-		super(activity, listEventHome, R.layout.home_event_layout_row, R.drawable.ic_event_default);		
+		super(activity, listEventHome, R.layout.home_event_layout_row);
 	}	
 	
 	@Override
