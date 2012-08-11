@@ -15,6 +15,7 @@ import android.location.Location;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class VoiceModeHelper {
 	public static final int STATE_RECORDING = 1;
@@ -26,6 +27,7 @@ public class VoiceModeHelper {
 	private VoiceManager voiceMng;
 	private DynamicIconRecord dynIcon;
 	private Maps map;
+	private ImageButton btnServices;
 	private TextView tvResult;
 	private Activity act;
 	public Intent service;
@@ -33,11 +35,12 @@ public class VoiceModeHelper {
 	private Sessions session;
 	private double radius;
 
-	public VoiceModeHelper(Activity _activity, ImageButton btnRecord,
-			TextView tv, Maps _map) {
+	public VoiceModeHelper(Activity _activity, ImageButton btnServices,
+			ImageButton btnRecord, TextView tv, Maps _map) {
 		act = _activity;
 		this.map = _map;
 		this.tvResult = tv;
+		this.btnServices = btnServices;
 		// init voice manager
 		voiceMng = new VoiceManager(act.getResources());
 		// init animate icon
@@ -51,7 +54,7 @@ public class VoiceModeHelper {
 		//
 		audioLibManager = new AudioLibManager();
 		//
-		
+
 	}
 
 	public void startRecording() {
@@ -73,16 +76,36 @@ public class VoiceModeHelper {
 		dynIcon.destroy();
 		voiceMng.destroy();
 
-		//stopService();
+		// stopService();
+	}
+	
+	public void startService() {
+		if (service == null) {
+			service = new Intent(act.getApplicationContext(),
+					EsnLookingAheadEventsServices.class);
+		}
+
+		if (!isMyServiceRunning()) {
+			btnServices.setImageResource(R.drawable.ic_event_alert_de);
+			//Toast.makeText(act, act.getString(R.string.esn_voicemode_services_start), Toast.LENGTH_SHORT).show();
+			act.startService(service);
+		}
+
+		if (!isMyServiceRunning()) {
+			voiceMng.play(R.raw.xinloi);
+		}
 	}
 
 	public void stopService() {
 		if (isMyServiceRunning()) {
-			if(service==null)
-			service = new Intent(act.getApplicationContext(),
-					EsnLookingAheadEventsServices.class);
-			act.stopService(service);
+			if (service == null)
+				service = new Intent(act.getApplicationContext(),
+						EsnLookingAheadEventsServices.class);
+			Toast.makeText(act, act.getString(R.string.esn_voicemode_services_stop), Toast.LENGTH_SHORT).show();
+			act.stopService(service);			
+			btnServices.setImageResource(R.drawable.ic_event_alert_ac);
 		}
+		
 	}
 
 	private class VoiceModeListener implements VoiceListener {
@@ -108,7 +131,7 @@ public class VoiceModeHelper {
 				if (result.getAction().equals("KICH_HOAT")) {
 					/* Utils.showToast(act, "KICH_HOAT", Toast.LENGTH_SHORT); */
 					startService();
-					
+
 				} else if (result.getAction().equals("SAP_TOI")) {
 					String filter = "";
 					if (!result.getEvent().equals("KHONG")) {
@@ -157,20 +180,7 @@ public class VoiceModeHelper {
 		}
 
 	}
-	public void startService(){
-		if (service == null) {
-			service = new Intent(act.getApplicationContext(),
-					EsnLookingAheadEventsServices.class);
-			
-			
-		}
-		if(!isMyServiceRunning())
-			act.startService(service);
-		if(!isMyServiceRunning()){
-		
-			voiceMng.play(R.raw.xinloi);
-		}
-	}
+
 	private class LookingEventsThread extends Thread {
 
 		private double lat;
@@ -215,15 +225,20 @@ public class VoiceModeHelper {
 			}
 		}
 	}
+
 	private boolean isMyServiceRunning() {
-	    ActivityManager manager = (ActivityManager) act.getSystemService(Activity.ACTIVITY_SERVICE);
-	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-	        if ("esn.activities.EsnLookingAheadEventsServices".equals(service.service.getClassName())) {
-	            return true;
-	        }
-	    }
-	    return false;
+		ActivityManager manager = (ActivityManager) act
+				.getSystemService(Activity.ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager
+				.getRunningServices(Integer.MAX_VALUE)) {
+			if ("esn.activities.EsnLookingAheadEventsServices"
+					.equals(service.service.getClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
+
 	/**
 	 * Load events around hanlder: run on UI
 	 * 
