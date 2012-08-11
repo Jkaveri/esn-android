@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
@@ -8,24 +7,15 @@
 	android:background="#E8E3DC"
 	android:orientation="vertical"
 	android:focusable="true"
-	android:focusableInTouchMode="true">
-    
-    <LinearLayout 
-	        android:layout_width="fill_parent"
-	    	android:layout_height="fill_parent"
-	    	android:background="@android:color/white"
-	    	android:padding="8dp"
-	    	android:orientation="vertical"
-	    	android:layout_marginTop="10dp"
-	    	android:layout_marginBottom="10dp">
-	    	
-		     <ListView
-				    android:id="@+id/esn.home.listevent"
-				    android:layout_width="fill_parent"
-				    android:layout_height="wrap_content"
-				    android:layout_marginTop="10dp"
-				    android:layout_marginBottom="10dp"
-				    android:divider="@drawable/ic_divider">
-		     </ListView> 
-	</LinearLayout>
+	android:focusableInTouchMode="true">    
+ 
+	<ListView
+		android:id="@+id/esn.home.listevent"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"	
+		android:background="@android:color/white"
+		android:layout_marginTop="10dp"		
+		android:divider="@drawable/ic_divider2"
+		android:scrollbars="none">
+	</ListView>
 </LinearLayout>
