@@ -14,7 +14,7 @@ import android.util.Log;
 @SuppressLint("NewApi")
 public class AudioWebService {
 	public static final String NAMSPACE = "http://www.aprotrain.com/";
-	public static final String URL = "http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";//"http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";
+	public static final String URL = "http://aahcmc.aprotrain.com/ESNSpeechRecognition/ESN2012.asmx";//"http://192.168.1.4/s2tweb/s2tws.asmx";
 	private static final String LOG_TAG = "AudioWebService";
 	private EsnWebServices service;
 	

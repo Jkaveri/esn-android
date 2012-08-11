@@ -34,6 +34,7 @@ public class VoiceManager {
 	private Timer limitTimer;
 	private class LimitTask extends TimerTask {
 		private int seconds = 0;
+		
 		@Override
 	    public void run() {
 			seconds++;

@@ -83,6 +83,7 @@ public class AudioRecorder {
         
 		bufferStream = new ByteArrayOutputStream();		
 		
+		Codec.instance();
 		run = new Runnable() {
 
 			@Override
@@ -145,7 +146,14 @@ public class AudioRecorder {
 							callBack.onSpeaking();//On start speaking
 						}
 
-						if(recording == true){
+						if(recording){
+							if(beforeBuff01 != null){
+								dos.write(beforeBuff01, 0, beforeBuff01.length);
+								beforeBuff01 = null;
+							}
+							int encount = Codec.instance().encode(buffer, 0, count, bufferEncode, 0);
+							dos.write(bufferEncode, 0, encount);
+							
 							if ((temp >= 0 && temp <= SILENCE_THRESHOLD)) {
 								silenceCall();//Dang ngung noi
 								//Log.i(TAG, "Dang im lang");
@@ -154,24 +162,14 @@ public class AudioRecorder {
 								//Log.i(TAG, "Dang noi");
 							}
 						}
-
 						// -> Recording sound here.
-						if(recording){
-							if(beforeBuff01 != null){
-								int encount = Codec.instance().encode(beforeBuff01, 0, beforeBuff01.length, bufferEncode, 0);
-								dos.write(bufferEncode, 0, encount);
-								beforeBuff01 = null;
-							}
-							if(beforeBuff02 != null){
-								int encount = Codec.instance().encode(beforeBuff02, 0, beforeBuff02.length, bufferEncode, 0);
-								dos.write(bufferEncode, 0, encount);
-								beforeBuff02 = null;
-							}
+						else{
+							beforeBuff01 = beforeBuff02;
 							int encount = Codec.instance().encode(buffer, 0, count, bufferEncode, 0);
-							dos.write(bufferEncode, 0, encount);
-						}else{
-							beforeBuff01 = beforeBuff02;							
-							beforeBuff02 = buffer;
+							beforeBuff02 = new byte[encount];
+							for(int i = 0; i < encount; i++){
+								beforeBuff02[i] = bufferEncode[i];
+							}
 						}
 						
 						tempIndex++;
