@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,9 +66,11 @@ public class ProfileActivity extends Activity {
 
 	private static final int PAGE_SIZE = 8;
 
+	public static final String TAG_LOG = "ProfileActivity";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.profile);
@@ -79,11 +82,25 @@ public class ProfileActivity extends Activity {
 		handler = new Handler();
 
 		session = Sessions.getInstance(context);
-		listUserEvent = (ListView) findViewById(R.id.esn_setting_profile_listeventuser);
+		listUserEvent = (ListView) findViewById(R.id.esn_profile_listeventuser);
 		adapter = new ListViewEventUserAdapter(this, new ArrayList<Events>());
+		adapter.setDefaultEmptyImage(R.drawable.no_image);
 		listUserEvent.setAdapter(adapter);
+		listUserEvent
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-		ShowInforUser();		
+					@Override
+					public void onItemClick(AdapterView<?> adView, View view,
+							int index, long id) {
+						Events event = (Events)adapter.getItem(index);
+						Intent intent =  new Intent(context, EventDetailActivity.class);
+						intent.putExtra("id", event.EventID);
+						startActivity(intent);
+						overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+					}
+
+				});
+		ShowInforUser();
 
 		listUserEvent.setOnScrollListener(new OnScrollListener() {
 
@@ -112,10 +129,12 @@ public class ProfileActivity extends Activity {
 		ShowInforUser();
 		super.onRestart();
 	}
+
 	private void ShowInforUser() {
 
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
+		dialog.setTitle(this.getResources().getString(
+				R.string.esn_global_loading));
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
 		dialog.show();
 
@@ -128,6 +147,7 @@ public class ProfileActivity extends Activity {
 		intent = new Intent(context, SettingsAppActivity.class);
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+		finish();
 	}
 
 	public void MessageClicked(View v) {
@@ -148,7 +168,6 @@ public class ProfileActivity extends Activity {
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
-
 
 	@Override
 	public void onDestroy() {
@@ -202,14 +221,31 @@ public class ProfileActivity extends Activity {
 					users = usersManager
 							.RetrieveById(session.currentUser.AccID);
 					session.currentUser = users;
-				} catch (IllegalArgumentException e1) {
-					e1.printStackTrace();
-				} catch (JSONException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (IllegalAccessException e1) {
-					e1.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					Utils.showToast(context,
+							res.getString(R.string.esn_global_Error),
+							Toast.LENGTH_LONG);
+					Log.e(TAG_LOG, e.getMessage());
+					e.printStackTrace();
+				} catch (JSONException e) {
+					Utils.showToast(context,
+							res.getString(R.string.esn_global_Error),
+							Toast.LENGTH_LONG);
+					Log.e(TAG_LOG, e.getMessage());
+					e.printStackTrace();
+				} catch (IOException e) {
+					Utils.showToast(
+							context,
+							res.getString(R.string.esn_global_connection_error),
+							Toast.LENGTH_LONG);
+					Log.e(TAG_LOG, e.getMessage());
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					Utils.showToast(context,
+							res.getString(R.string.esn_global_Error),
+							Toast.LENGTH_LONG);
+					Log.e(TAG_LOG, e.getMessage());
+					e.printStackTrace();
 				}
 
 				if (users != null) {
@@ -221,9 +257,9 @@ public class ProfileActivity extends Activity {
 
 							session.put("AccId", id);
 
-							TextView txtName = (TextView) findViewById(R.id.esn_setting_profile_name);
-							TextView txtGender = (TextView)findViewById(R.id.esn_setting_profile_gender);
-							TextView txtAddress = (TextView) findViewById(R.id.esn_setting_profile_address);
+							TextView txtName = (TextView) findViewById(R.id.esn_profile_name);
+							TextView txtGender = (TextView) findViewById(R.id.esn_profile_gender);
+							TextView txtAddress = (TextView) findViewById(R.id.esn_profile_address);
 
 							final String url = users.Avatar;
 
@@ -248,26 +284,31 @@ public class ProfileActivity extends Activity {
 								}.start();
 							}
 							txtName.setText(users.Name);
-							
-							if(users.Gender==true)
-								txtGender.setText(res.getString(R.string.esn_register_rdbMale));
+
+							if (users.Gender == true)
+								txtGender.setText(res
+										.getString(R.string.esn_register_rdbMale));
 							else
-								txtGender.setText(res.getString(R.string.esn_register_rdbFemale));
-							
+								txtGender.setText(res
+										.getString(R.string.esn_register_rdbFemale));
+
 							String ad = users.Address;
-							
-							if(users.Street!=null && users.Street.length()>0)
+
+							if (users.Street != null
+									&& users.Street.length() > 0)
 								ad = ad + ", " + users.Street;
-							
-							if(users.District!=null && users.District.length()>0)
+
+							if (users.District != null
+									&& users.District.length() > 0)
 								ad = ad + ", " + users.District;
-							
-							if(users.City!=null && users.City.length()>0)
+
+							if (users.City != null && users.City.length() > 0)
 								ad = ad + ", " + users.City;
-							
-							if(users.Country!=null && users.Country.length()>0)
+
+							if (users.Country != null
+									&& users.Country.length() > 0)
 								ad = ad + "," + users.Country;
-							
+
 							txtAddress.setText(ad);
 
 						}
@@ -314,20 +355,22 @@ public class ProfileActivity extends Activity {
 	}
 
 	private class GetListEventThread extends Thread {
-		
+
 		protected static final String LOG_TAG = "GetListEventThread";
 		private int pageNum;
 		private int pageSize;
-		public GetListEventThread(int pageNum, int pageSize){
+
+		public GetListEventThread(int pageNum, int pageSize) {
 			this.pageNum = pageNum;
 			this.pageSize = pageSize;
 		}
+
 		@Override
 		public void run() {
 			EventsManager eventsManager = new EventsManager();
 
 			try {
-				itemList = eventsManager.getEventUserList(pageNum,pageSize,
+				itemList = eventsManager.getEventUserList(pageNum, pageSize,
 						session.currentUser.AccID);
 				runOnUiThread(new Runnable() {
 

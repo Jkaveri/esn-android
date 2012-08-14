@@ -8,15 +8,11 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.facebook.android.Facebook;
-import com.facebook.android.Util;
-
 import esn.classes.LoginThread;
 import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.EventType;
 import esn.models.EventTypeManager;
-import esn.models.UsersManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WelcomeScreen extends SherlockActivity {
 	private Sessions session;
@@ -37,7 +34,6 @@ public class WelcomeScreen extends SherlockActivity {
 	private Resources res;
 	private final String TAG_LOG = "WELCOME_SCREEN";
 	WelcomeScreen context;
-	private Facebook fb;
 	public double centerLong;
 	public double centerLat;
 	public Object lockObj = new Object();
@@ -146,59 +142,30 @@ public class WelcomeScreen extends SherlockActivity {
 	private void executeLogin() {
 		// get email stored
 		email = session.get("email", null);
+		
 		password = session.get("password", null);
-		// instance fb
-		fb = new Facebook(WelcomeActivity.APP_ID);
-
 		// login = account esn
 		// if email + pass != null
 		if (email != null && password != null) {
-			loginThread = new LoginThread(this, email, password, null);
-
+			boolean fbLoginSuccess = session.get("loginFacebookSuccess", false);
 			Intent successIntent = new Intent(this, HomeActivity.class);
 			Intent failIntent = new Intent(this, WelcomeActivity.class);
-			failIntent.putExtra("loginResult", "Login failed");
+			if(fbLoginSuccess){
+				startActivity(successIntent);
+				overridePendingTransition(R.anim.push_up_in, R.anim.push_left_out);
+				finish();
+				
+			}else{
+				loginThread = new LoginThread(this, email, password, null);
+				
+				
+				failIntent.putExtra("loginResult", "Login failed");
 
-			loginThread.setSuccessIntent(successIntent);
-			loginThread.setFailIntent(failIntent);
-			loginThread.start();
-
-		} else if (session.restoreFaceBook(fb)) {
-			new Thread() {
-				@Override
-				public void run() {
-					try {
-						Looper.prepare();
-						session.currentUser = new UsersManager()
-								.RetrieveByAccessToken(session.get(
-										"fb_access_token", ""));
-						if (session.currentUser != null) {
-							runOnUiThread(new Runnable() {
-
-								@Override
-								public void run() {
-									// da login bang fb thi cho vao luon
-									Intent successIntent = new Intent(
-											WelcomeScreen.this,
-											HomeActivity.class);
-									startActivity(successIntent);
-									finish();
-								}
-							});
-						} else {
-
-							session.put("isLogined", false);
-							Intent loginIntent = new Intent(WelcomeScreen.this,
-									WelcomeActivity.class);
-							startActivity(loginIntent);
-							finish();
-						}
-					} catch (Exception e) {
-						Log.e(TAG_LOG, e.getMessage());
-						e.printStackTrace();
-					}
-				};
-			}.start();
+				loginThread.setSuccessIntent(successIntent);
+				loginThread.setFailIntent(failIntent);
+				loginThread.start();
+			}
+			
 
 		} else {// chua login
 			session.put("isLogined", false);
@@ -239,34 +206,47 @@ public class WelcomeScreen extends SherlockActivity {
 					finish();
 				}
 			} catch (ClientProtocolException e) {
-				runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						Util.showAlert(context, res
-								.getString(R.string.esn_global_waring), res
-								.getString(R.string.esn_global_lostConnection));
-					}
-				});
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_connection_error),
+						Toast.LENGTH_LONG);
 				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_connection_error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
+				;
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			}
 

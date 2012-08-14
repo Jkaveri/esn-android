@@ -30,7 +30,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -39,7 +38,7 @@ import android.widget.Toast;
 public class Utils {
 	private static final String EMAIL_PATTERN = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+){1,3}$";
 	private static final String JSON_DATE_TYPE_PATTERN = "^\\/Date\\((\\d+)\\)\\/$";
-	private static int MAX_IMAGE_DIMENSION = 720;
+	private static int MAX_IMAGE_DIMENSION = 360;
 
 	public static Bitmap getBitmapFromURL(String src) throws IOException {
 

@@ -54,16 +54,17 @@ public class EsnLookingAheadEventsServices extends Service implements
 		sessions = Sessions.getInstance(this.getApplicationContext());
 		radius = sessions.getRadiusForEventAround();
 		audioLibManager = new AudioLibManager();
-		//play thong bao
+		// play thong bao
 		voiceManager.playInsiteThread(R.raw.thongbaokichhoat);
 		// media button
-		if(sessions.getAccessHeadPhone()){
+		if (sessions.getAccessHeadPhone()) {
 			auManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-			
-			eventReceiver = new ComponentName(getApplicationContext(), MediaButtonReceiver.class);
+
+			eventReceiver = new ComponentName(getApplicationContext(),
+					MediaButtonReceiver.class);
 			auManager.registerMediaButtonEventReceiver(eventReceiver);
 		}
-		
+
 		super.onCreate();
 	}
 
@@ -86,7 +87,7 @@ public class EsnLookingAheadEventsServices extends Service implements
 		receiver = new EventAlertByAudioReceiver();
 
 		registerReceiver(receiver, filter);
-		
+
 		return START_STICKY;
 	}
 
@@ -115,11 +116,9 @@ public class EsnLookingAheadEventsServices extends Service implements
 			voiceManager.destroy();
 		}
 		unregisterReceiver(receiver);
-		if(sessions.getAccessHeadPhone()){
+		if (sessions.getAccessHeadPhone()) {
 			auManager.unregisterMediaButtonEventReceiver(eventReceiver);
-			eventReceiver=null;
-			
-			
+			eventReceiver = null;
 		}
 		super.onDestroy();
 	}
@@ -224,7 +223,7 @@ public class EsnLookingAheadEventsServices extends Service implements
 
 				if (events != null && events.length > 0) {
 					// send broad cast
-					
+
 					voiceManager.play(R.raw.chuy);
 					for (int i = 0; i < events.length; i++) {
 						Events event = events[i];
@@ -256,9 +255,13 @@ public class EsnLookingAheadEventsServices extends Service implements
 
 	public class EventAlertByAudioReceiver extends BroadcastReceiver {
 
+		private Events event;
+		private boolean played;
+		private String street;
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Events event = new Events();
+			event = new Events();
 			// get data
 			event.EventLat = intent.getDoubleExtra("latitude", 0);
 			event.EventLng = intent.getDoubleExtra("longtitude", 0);
@@ -271,20 +274,19 @@ public class EsnLookingAheadEventsServices extends Service implements
 			// lay dia chi cua event
 			Address address = event.getAddress(context);
 			// flag, da phat
-			boolean played = false;
+			played = false;
 			// street
-			String street = address.getThoroughfare();
+			street = address.getThoroughfare();
 			if (street != null) {
 				street = removeUTF8.execute(street).toLowerCase();
-
 			}
 			if (street != null && audioLibManager.isExistStreetAudio(street)) {
 				voiceManager.voiceAlertHasEvent(
 						String.valueOf(event.EventTypeID), street);
 				// bat co
 				played = true;
-
 			} else {
+
 				// lay so dong dia chi
 				int addressLineCount = address.getMaxAddressLineIndex();
 				// duyet cac dong dia chi
@@ -295,11 +297,10 @@ public class EsnLookingAheadEventsServices extends Service implements
 					// lay ten duong
 					street = removeUTF8.execute(address.getAddressLine(j))
 							.toLowerCase();
-
 					if (street != null
 							&& audioLibManager.isExistStreetAudio(street)) {
 						voiceManager.voiceAlertHasEvent(
-								String.valueOf(event.EventID), street);
+								String.valueOf(event.EventTypeID), street);
 						// bat co
 						played = true;
 						break;
@@ -315,6 +316,4 @@ public class EsnLookingAheadEventsServices extends Service implements
 		}
 	}
 
-
-	
 }

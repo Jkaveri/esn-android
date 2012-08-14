@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="str.Friends.UserPage.Title">Friend Information</string>
-    <string name="txt.esn.userpage.fullname">Full Name:</string>
-    <string name="txt.esn.userpage.status">Status:</string>
-    <string name="txt.esn.userpage.adress">Address:</string>
-    <string name="txt.esn.userpage.country">Country:</string>
-    <string name="txt.esn.userpage.birthday">Birthday:</string>
-    <string name="txt.esn.userpage.gender">Gender:</string>
-    <string name="txt.esn.userpage.favorite">Favorite:</string>
-    <string name="txt.esn.userpage.male">Male</string>
-    <string name="txt.esn.userpage.female">Female</string>
-    <string name="txt.esn.userpage.online">Online</string>
-    <string name="txt.esn.userpage.offline">Offline</string>
-    <string name="txt.esn.userpage.phone">Phone:</string>
+    <string name="str_Friends_UserPage_Title">Friend Information</string>
+    <string name="txt_esn_userpage_fullname">Full Name:</string>
+    <string name="txt_esn_userpage_status">Status:</string>
+    <string name="txt_esn_userpage_adress">Address:</string>
+    <string name="txt_esn_userpage_country">Country:</string>
+    <string name="txt_esn_userpage_birthday">Birthday:</string>
+    <string name="txt_esn_userpage_gender">Gender:</string>
+    <string name="txt_esn_userpage_favorite">Favorite:</string>
+    <string name="txt_esn_userpage_male">Male</string>
+    <string name="txt_esn_userpage_female">Female</string>
+    <string name="txt_esn_userpage_online">Online</string>
+    <string name="txt_esn_userpage_offline">Offline</string>
+    <string name="txt_esn_userpage_phone">Phone:</string>
 </resources>

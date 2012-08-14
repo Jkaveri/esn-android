@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="esn.app.feedback.title">Title</string>
-    <string name="esn.app.feedback.content">Content</string>
-    <string name="esn.app.feedback.send">Send</string>
-    <string name="esn.app.feedback.statussendsuccess">The message have been send</string>
-    <string name="esn.app.feedback.statussendfail">Error. Try again.</string>
+    <string name="esn_app_feedback_title">Title</string>
+    <string name="esn_app_feedback_content">Content</string>
+    <string name="esn_app_feedback_send">Send</string>
+    <string name="esn_app_feedback_statussendsuccess">The message have been send</string>
+    <string name="esn_app_feedback_statussendfail">Error_ Try again_</string>
 </resources>

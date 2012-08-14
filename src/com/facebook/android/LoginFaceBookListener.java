@@ -29,6 +29,7 @@ public class LoginFaceBookListener implements DialogListener {
 	private Sessions session;
 	private Users user;
 	private final Object obj = new Object();
+
 	public LoginFaceBookListener(Activity activity, Facebook fb) {
 		act = activity;
 		ctx = act.getApplicationContext();
@@ -37,56 +38,20 @@ public class LoginFaceBookListener implements DialogListener {
 
 	@Override
 	public void onComplete(Bundle values) {
+		synchronized (mFacebook) {
 
-		// check access token da ton tai chua
-		try {
-			session = Sessions.getInstance(ctx);
-			final String access_token = mFacebook.getAccessToken();
-			
-			user = new Users();
-			synchronized (this.obj) {
-				
-				new Thread() {
-					@Override
-					public void run() {
-						try {
-							synchronized (LoginFaceBookListener.this.obj) {
-								LoginFaceBookListener.this.user = new UsersManager()
-										.RetrieveByAccessToken(access_token);
-								
-								LoginFaceBookListener.this.obj.notify();
-							}
-
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}.start();
-				this.obj.wait();
-				if (user != null) {
-					session.put("fb_access_token", access_token);
-					session.put("fb_access_token_expires", mFacebook.getAccessExpires());
-					session.put("isLogined", true);
-					session.currentUser = user;
-					Intent welcomeScreen = new Intent(ctx, WelcomeScreen.class);
-					welcomeScreen.putExtra("reAuthor", true);
-					act.startActivity(welcomeScreen);
-					act.finish();
-				} else {
-					AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(
-							mFacebook);
-					mAsyncRunner.request("me", new RequestGraphMe(act,mFacebook));
-				}
+			try {
+				AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(
+						mFacebook);
+				mAsyncRunner.request("me", new RequestGraphMe(act, mFacebook));
+				mFacebook.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
-		} catch (Exception e) {
-			Log.e(LOG_TAG, e.getMessage());
-			e.printStackTrace();
 		}
+
 	}
 
 	@Override

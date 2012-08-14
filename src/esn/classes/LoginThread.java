@@ -2,57 +2,104 @@ package esn.classes;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
-
 import org.json.JSONException;
 
-import esn.models.Users;
+import esn.activities.R;
 import esn.models.UsersManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 public class LoginThread extends Thread {
+	public static final String LOG_TAG = null;
 	private Activity activity;
 	private String email;
 	private String password;
 	private ProgressDialog dialog;
 	private Intent successIntent;
 	private Intent failIntent;
+	private Resources res;
+	private Sessions session;
 
 	public LoginThread(Activity activity, String _email, String _password,
 			ProgressDialog dialog) {
 		this.activity = activity;
 		email = _email;
 		password = _password;
+		res = activity.getResources();
+
 		this.dialog = dialog;
+		session = Sessions.getInstance(activity);
+		
 	}
 
 	@Override
 	public void run() {
 		Looper.prepare();
 		UsersManager usermManager = new UsersManager();
+		session.put("loginFacebookSuccess", false);
 		int id = 0;
 		try {
+			// thuc thi login
 			id = usermManager.Login(email, password);
+			// neu login dung
+			if (id > 0) {
+				// lay thong tin user
+				session.currentUser = usermManager.RetrieveById(id);
+				// neu lay duoc thi login thanh cong va nguoc lai
+				if (session.currentUser == null) {
+
+					// chay login fail
+					activity.runOnUiThread(new loginFail(this.activity, dialog,
+							failIntent));
+				} else {
+					// kiem tra access token de reset lai access token
+					if (session.currentUser.AccessToken != null
+							&& session.currentUser.AccessToken.length() > 0) {
+						session.setAccessToken(session.currentUser.AccessToken);
+						// set access expire
+						Calendar now = Calendar.getInstance();
+						now.add(Calendar.DATE, 2);
+						session.setAccessExpires(now.getTimeInMillis());
+					}
+					activity.runOnUiThread(new loginSuccess(this.activity,
+							email, password, dialog, successIntent));
+				}
+
+			} else {
+				// login that bai
+				activity.runOnUiThread(new loginFail(this.activity, dialog,
+						failIntent));
+			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			Utils.showToast(activity, res.getString(R.string.esn_global_Error),
+					Toast.LENGTH_LONG);
+			Log.d(LOG_TAG, e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Utils.showToast(activity,
+					res.getString(R.string.esn_global_connection_error),
+					Toast.LENGTH_LONG);
+			Log.d(LOG_TAG, e.getMessage());
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			Utils.showToast(activity, res.getString(R.string.esn_global_Error),
+					Toast.LENGTH_LONG);
+			Log.d(LOG_TAG, e.getMessage());
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			Utils.showToast(activity, res.getString(R.string.esn_global_Error),
+					Toast.LENGTH_LONG);
+			Log.d(LOG_TAG, e.getMessage());
 			e.printStackTrace();
 		}
-		if (id > 0) {
-			activity.runOnUiThread(new loginSuccess(this.activity, email,
-					password, dialog, successIntent));
-		} else {
-			activity.runOnUiThread(new loginFail(this.activity, dialog,
-					failIntent));
-		}
+
 	}
 
 	public Intent getSuccessIntent() {
@@ -94,12 +141,17 @@ public class LoginThread extends Thread {
 			if (failIntent != null) {
 				Sessions session = Sessions.getInstance(context);
 				session.clear();
+
 				activity.startActivity(failIntent);
+				activity.overridePendingTransition(R.anim.push_up_in,
+						R.anim.push_left_out);
+				activity.finish();
 
 			} else {
 
-				Toast.makeText(context, "Login fail", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(context,
+						res.getString(R.string.esn_login_failed),
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -130,54 +182,14 @@ public class LoginThread extends Thread {
 			session.put("email", email);
 			session.put("password", password);
 			session.put("isLogined", true);
-			new GetUserInfoThread(this.session).start();
 			if (dialog != null) {
 				dialog.dismiss();
 			}
 			if (successIntent != null) {
 				activity.startActivity(successIntent);
+				activity.overridePendingTransition(R.anim.push_up_in,
+						R.anim.push_left_out);
 				activity.finish();
-			}
-		}
-	}
-
-	private class GetUserInfoThread extends Thread {
-		private Sessions session;
-
-		public GetUserInfoThread(Sessions session) {
-			this.session = session;
-		}
-
-		@Override
-		public void run() {
-			Looper.prepare();
-			UsersManager manager = new UsersManager();
-
-			try {
-				String email = session.get("email", "");
-				
-				Users user = manager.RetrieveByEmail(email);
-				
-				if (user != null) {
-					session.currentUser = user;
-					if(user.AccessToken!=null && user.AccessToken.length()>0){
-						session.setAccessToken(user.AccessToken);
-						//set access expire
-						Calendar now = Calendar.getInstance();
-						now.add(Calendar.DATE, 2);
-						session.setAccessExpires(now.getTimeInMillis());
-					}
-				}else{
-					
-				}
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (JSONException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
 			}
 		}
 	}

@@ -3,41 +3,46 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
-    >
-    
+    android:paddingBottom="10dp" >
+
     <ImageView
         android:id="@+id/esn.findfriend.avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="4dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="@string/app_name"
-        />
+        android:padding="4dp"
+        android:src="@drawable/ic_avatar" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/esn.findfriend.name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13dp"
-            android:textColor="#33b5e5" 
-            android:padding="4dp"/>
-        
+            android:padding="4dp"
+            android:text="@string/esn_friend_addfriend"
+            android:textColor="#33b5e5"
+            android:textSize="13dp" />
+
         <TextView
             android:id="@+id/esn.findfriend.email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13dp"
-            android:textColor="#33b5e5" 
-            android:padding="4dp"/>
+            android:padding="4dp"
+            android:text="@string/esn_friend_addfriend"
+            android:textColor="#33b5e5"
+            android:textSize="13dp" />
     </LinearLayout>
-     <Button 
-            android:id="@+id/esn.findfriend.btadd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+
+    <Button
+        android:id="@+id/esn.findfriend.btadd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/esn_friend_addfriend" 
+        android:textSize="12dp"/>
+
 </LinearLayout>

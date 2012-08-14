@@ -25,7 +25,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
-        android:icon="@drawable/app_icon"
+        android:icon="@drawable/logo_200_200"
         android:label="@string/app_name"
         android:theme="@style/esn.theme.light" >
         <uses-library android:name="com.google.android.maps" />
@@ -33,6 +33,7 @@
         <activity android:name=".WelcomeScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,7 +41,7 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48"
             android:label="@string/app_name"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
@@ -55,7 +56,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:theme="@style/esn.theme.light.register">
+            android:theme="@style/esn.theme.light.register" >
         </activity>
         <activity
             android:name=".ProfileActivity"
@@ -63,6 +64,7 @@
         </activity>
         <activity
             android:name=".AddNewEvent"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_newevent"
             android:theme="@style/esn.theme.light.newevent"
             android:uiOptions="splitActionBarWhenNarrow" >
@@ -73,125 +75,138 @@
         </activity>
         <activity
             android:name=".FriendEventsActivity"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_eventfriend"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".FriendListActivity"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_firendlist"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".UserPageActivity"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_name"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_Setting"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsAccountActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_Setting_Account"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsAppActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_Setting_ApplicationSetting"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsHelpActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_Setting_Help"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingsTermActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_Setting_Terms"
             android:theme="@style/esn.theme.light" >
         </activity>
         <activity
             android:name=".SettingsLogoutActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_name"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".ChangePassActivity"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_Setting_Account_ChangePassword"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".EditProfileActivity"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_Setting_Account_ChangeProfile"
-            android:theme="@style/esn.theme.light.editprofile">
+            android:theme="@style/esn.theme.light.editprofile" >
         </activity>
         <activity
             android:name=".EventDetailActivity"
-            android:icon="@drawable/logo"
-            android:label="@string/esn.eventDetail"
+            android:icon="@drawable/logo_48_48_2"
+            android:label="@string/esn_eventDetail"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SetFilterActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_fillter"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".SettingAppEventActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_settingevent" >
         </activity>
         <activity
             android:name=".SettingAppFacebookActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_settingfacebook" >
         </activity>
         <activity
             android:name=".EventDetailCommentActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_eventdetail" >
         </activity>
         <activity
             android:name=".FeedbackActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_feedback" >
         </activity>
         <activity
             android:name=".SettingAppFriendActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_settingfriend" >
         </activity>
         <activity
             android:name=".HomeEventListActivity"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_name"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
             android:name=".FindFriendsActivity"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/esn_global_page_findfriend" >
         </activity>
 
         <service
             android:name=".EsnLookingAheadEventsServices"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_name" >
         </service>
         <service
             android:name=".EsnServices"
-            android:icon="@drawable/logo"
+            android:icon="@drawable/logo_48_48_2"
             android:label="@string/app_name" >
         </service>
 
@@ -201,7 +216,7 @@
         </activity>
         <activity
             android:name=".SettingAppLocationActivity"
-            android:label="@string/esn.setting.app.enablelocation" >
+            android:label="@string/esn_setting_app_enablelocation" >
         </activity>
 
         <receiver android:name=".MediaButtonReceiver" >
@@ -209,14 +224,21 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
-        
-        <activity android:name=".FriendEventsListActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
-        
-        <activity android:name=".FriendsActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
-        <activity android:name=".Notification"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+
+        <activity
+            android:name=".FriendEventsListActivity"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
+            android:name=".FriendsActivity"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
+            android:name=".Notification"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity android:name=".SearchFriendResultActivity" >
+        </activity>
     </application>
 
 </manifest>

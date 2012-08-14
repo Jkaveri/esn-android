@@ -79,7 +79,7 @@
 	            <TextView 
 			            android:layout_width="fill_parent"
 			            android:layout_height="wrap_content"
-			            android:text="@string/esn.register.tvPhone"
+			            android:text="@string/esn_register_tvPhone"
 			            android:layout_marginBottom="5dp"/>
 				<EditText
 		                android:id="@+id/esn.changeprofile.phone"
@@ -111,7 +111,7 @@
 					    <TextView 
 				            android:layout_width="fill_parent"
 				            android:layout_height="wrap_content"
-				            android:text="@string/esn.register.tvGender"
+				            android:text="@string/esn_register_tvGender"
 				            android:layout_marginTop="10dp"
 				            android:layout_marginBottom="5dp"/>	 
 				    	<Spinner
@@ -124,7 +124,7 @@
 			       		    android:paddingLeft="5dp"
 			       		    android:paddingRight="5dp"
 			       		    android:paddingTop="8dp"
-			       		    android:prompt="@string/esn.register.ddlName"
+			       		    android:prompt="@string/esn_register_ddlName"
 			       		    android:textSize="16dp"
 			       		    android:spinnerMode="dialog"/>
 					</LinearLayout>
@@ -137,7 +137,7 @@
 					    <TextView 
 				            android:layout_width="fill_parent"
 				            android:layout_height="wrap_content"
-				            android:text="@string/esn.register.tvBirthday"
+				            android:text="@string/esn_register_tvBirthday"
 				            android:layout_marginTop="10dp"
 				            android:layout_marginBottom="5dp"/>
 					
@@ -152,7 +152,7 @@
 			                android:paddingTop="8dp"
 			                android:textSize="16dp"		                
 			                android:editable="false"
-			                android:hint="@string/esn.register.date"
+			                android:hint="@string/esn_register_date"
 			                android:onClick="DatePickerDialogShow"
 			                android:textColor="@android:color/white"
 			                android:textColorHint="@color/text_color" />
@@ -343,7 +343,7 @@
 		            android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
 			        android:background="@drawable/rounded_corners"
-			        android:text="@string/esn.setting.app.event.ok"
+			        android:text="@string/esn_setting_app_event_ok"
 			        android:textColor="@color/text_color"
 		            />
 	        </LinearLayout>	        	     

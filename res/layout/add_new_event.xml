@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
-                    android:text="@string/esn.addNewEvent.title"
+                    android:text="@string/esn_addNewEvent_title"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content" >
 
                 <EditText
-                    android:id="@+id/esn.addNewEvent.txtTitle"
+                    android:id="@+id/esn_addNewEvent_txtTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
@@ -65,7 +65,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
-                    android:text="@string/esn.addNewEvent.description"
+                    android:text="@string/esn_addNewEvent_description"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content" >
 
                 <EditText
-                    android:id="@+id/esn.addNewEvent.txtDescription"
+                    android:id="@+id/esn_addNewEvent_txtDescription"
                     android:layout_width="fill_parent"
                     android:layout_height="80dp"
                     android:layout_marginLeft="4dp"
@@ -117,20 +117,20 @@
                     android:orientation="horizontal"
                     >
                     <Spinner
-                        android:id="@+id/esn.addNewEvent.sharetype"
+                        android:id="@+id/esn_addNewEvent_sharetype"
                         android:layout_width="260dp"
                         android:layout_height="40dp"
                         android:background="@drawable/rounded_corner_blue"
                         android:entries="@array/sharetype"
                         android:paddingLeft="4dp"
-                        android:prompt="@string/app.global.choose"
+                        android:prompt="@string/app_global_choose"
                         android:spinnerMode="dialog"
                         android:textColor="#FFF"
                         android:layout_marginRight="5dp"
                         />
 
                     <ImageView 
-                        android:id="@+id/esn.addNewEvent.sharefb"
+                        android:id="@+id/esn_addNewEvent_sharefb"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_newevent_fb_dis"
@@ -154,20 +154,20 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:id="@+id/esn.addNewEvent.txtEventTypeImage"
+                        android:id="@+id/esn_addNewEvent_txtEventTypeImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_event_label_1" />
+                        android:src="@drawable/ic_event_type_0_3" />
 
                     <TextView
-                        android:id="@+id/esn.addNewEvent.txtEventTypeName"
+                        android:id="@+id/esn_addNewEvent_txtEventTypeName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:onClick="ChangeEventType"
                         android:textColor="#33b5e5"
                         android:textSize="16dp"
-                        android:text="@string/esn.eventDetail.iconEventType"
+                        android:text="@string/esn_eventDetail_iconEventType"
                         android:textStyle="bold" />
                 </LinearLayout>
             </TableRow>
@@ -188,13 +188,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
-                        android:text="@string/esn.addNewEvent.coordinate"
+                        android:text="@string/esn_addNewEvent_coordinate"
                         android:textColor="#33b5e5"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/esn.addNewEvent.txtCoordinate"
+                        android:id="@+id/esn_addNewEvent_txtCoordinate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -218,13 +218,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
-                        android:text="@string/esn.addNewEvent.addresss"
+                        android:text="@string/esn_addNewEvent_addresss"
                         android:textColor="#33b5e5"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/esn.addNewEvent.tvAddress"
+                        android:id="@+id/esn_addNewEvent_tvAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
@@ -249,13 +249,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
-                        android:text="@string/esn.eventDetail.image"
+                        android:text="@string/esn_eventDetail_image"
                         android:textColor="#33b5e5"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/esn.addNewEvent.txtImageStatus"
+                        android:id="@+id/esn_addNewEvent_txtImageStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"

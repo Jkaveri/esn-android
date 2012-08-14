@@ -164,12 +164,14 @@ public class RegisterActivity extends SherlockActivity {
 		}
 	};
 
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-	        	    	
-	    	intent = new Intent(context,WelcomeActivity.class);
-	    	startActivity(intent);
+	        intent = new Intent(context,WelcomeActivity.class);
+	        startActivity(intent);
+	        finish();
+	        return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
@@ -187,6 +189,7 @@ public class RegisterActivity extends SherlockActivity {
 	public void CancelClicked(View view) {
 
 		intent = new Intent(context, WelcomeActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		finish();
 	}
@@ -430,28 +433,37 @@ public class RegisterActivity extends SherlockActivity {
 			builder.setMessage(res.getString(R.string.esn_register_activeyouraccount))
 			       .setCancelable(false)
 			       .setPositiveButton(res.getString(R.string.esn_register_activeyes), new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
+
+			    	   	   public void onClick(DialogInterface dialog, int id) {
 			        	   
-			        	   EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
+			    	   		Intent intent = new Intent(context, LoginActivity.class);
+			   				startActivity(intent);
+			   				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+			   				finish();
 			        	   
-			        	   String email = txtemail.getText().toString();
-			        	   
-			        	   String[] arr = email.split("@");
-			        	   
-			        	   String url = arr[1].toString();
-			        	   
-			        	   url="http://"+url;
-			        	   
-			        	   Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-			        	   
-			        	   startActivity(browse);
 			           }
 			       })
 			       .setNegativeButton(res.getString(R.string.esn_register_activeno), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
-			        	   Intent intent = new Intent(context, LoginActivity.class);
-			   				startActivity(intent);
-			   				finish();
+			        	   	
+			   				
+			   				EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
+				        	   
+				        	String email = txtemail.getText().toString();
+				        	   
+				        	String[] arr = email.split("@");
+				        	   
+				        	String url = arr[1].toString();
+				        	   
+				        	url="http://"+url;
+				        	   
+				        	Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				        	   
+				        	startActivity(browse);
+				        	   
+				        	overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+				        	
+				        	finish();
 			           }
 			});
 			

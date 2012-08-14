@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="esn.setting.app.enableEventNotification">Event Notification</string>
-    <string name="esn.setting.app.enableEventNotification.small">Event Notification</string>
-    <string name="esn.setting.app.enableFriendNotification">Friend Notification</string>
-    <string name="esn.setting.app.enableFriendNotification.small">Friend Notification</string>
-    <string name="esn.setting.app.enableConnectFacebook">Connect To Facebook</string>
-    <string name="esn.setting.app.enableConnectFacebook.small">Connect To Facebook</string>
-    <string name="esn.setting.app.enablelocation">Loation</string>
-    <string name="esn.setting.app.enablelocation.small">Access location setting.</string>
-    <string name="esn.setting.app.enableheadphone">Headphone</string>
-    <string name="esn.setting.app.enableheadphone.small">Cài đặt cho phép sử dụng tai nghe.</string>
+    <string name="esn_setting_app_enableEventNotification">Event Notification</string>
+    <string name="esn_setting_app_enableEventNotification_small">Event Notification</string>
+    <string name="esn_setting_app_enableFriendNotification">Friend Notification</string>
+    <string name="esn_setting_app_enableFriendNotification_small">Friend Notification</string>
+    <string name="esn_setting_app_enableConnectFacebook">Connect To Facebook</string>
+    <string name="esn_setting_app_enableConnectFacebook_small">Connect To Facebook</string>
+    <string name="esn_setting_app_enablelocation">Loation</string>
+    <string name="esn_setting_app_enablelocation_small">Access location setting_</string>
+    <string name="esn_setting_app_enableheadphone">Headphone</string>
+    <string name="esn_setting_app_enableheadphone_small">Cài đặt cho phép sử dụng tai nghe_</string>
     
-    <string name="esn.setting.app.event.enable">Enable</string>
-    <string name="esn.setting.app.event.radius">Radius</string>
-    <string name="esn.setting.app.event.ok">OK</string>
-    <string name="esn.setting.app.event.enterradius">Enter Radius !</string>
-    <string name="esn.setting.app.eventnotifyenablebefore">Enable event notification Before !</string>
+    <string name="esn_setting_app_event_enable">Enable</string>
+    <string name="esn_setting_app_event_radius">Radius</string>
+    <string name="esn_setting_app_event_ok">OK</string>
+    <string name="esn_setting_app_event_enterradius">Enter Radius !</string>
+    <string name="esn_setting_app_eventnotifyenablebefore">Enable event notification Before !</string>
     
     
-    <string name="esn.setting.app.friend.friendactivity">Friend Activity</string>
-    <string name="esn.setting.app.friend.commentlike">Comment and Like</string>
+    <string name="esn_setting_app_friend_friendactivity">Friend Activity</string>
+    <string name="esn_setting_app_friend_commentlike">Comment and Like</string>
     
-    <string name="esn.setting.app.friend.friendcreateevent">When my friends create new event</string>
-    <string name="esn.setting.app.friend.friendrequest">When I receive a friend request or friend confirmation</string>
-    <string name="esn.setting.app.friend.friendfacebookjoin">When a new friend from Facebook joins ESN</string>
+    <string name="esn_setting_app_friend_friendcreateevent">When my friends create new event</string>
+    <string name="esn_setting_app_friend_friendrequest">When I receive a friend request or friend confirmation</string>
+    <string name="esn_setting_app_friend_friendfacebookjoin">When a new friend from Facebook joins ESN</string>
     
-    <string name="esn.setting.app.friend.friendcomment">When someone comment my event</string>
-    <string name="esn.setting.app.friend.friendlike">When someone vote true or false my event</string>
-    <string name="esn.setting.app.friend.friendshareplace">When my friends share a event, place with me</string>
+    <string name="esn_setting_app_friend_friendcomment">When someone comment my event</string>
+    <string name="esn_setting_app_friend_friendlike">When someone vote true or false my event</string>
+    <string name="esn_setting_app_friend_friendshareplace">When my friends share a event, place with me</string>
     
-    <string name="esn.setting.app.facebook.email">Email</string>
-    <string name="esn.setting.app.facebook.pass">Password</string>
-    <string name="esn.setting.app.informationsaved">Saved</string>
-    <string name="esn.setting.app.informationenablebefore">Enable Facebook Before!</string>
-    <string name="esn.setting.app.enterfacebookemail">Enter facebook email !</string>
-    <string name="esn.setting.app.enterfacebookpassword">Enter facebook password !</string>
+    <string name="esn_setting_app_facebook_email">Email</string>
+    <string name="esn_setting_app_facebook_pass">Password</string>
+    <string name="esn_setting_app_informationsaved">Saved</string>
+    <string name="esn_setting_app_informationenablebefore">Enable Facebook Before!</string>
+    <string name="esn_setting_app_enterfacebookemail">Enter facebook email !</string>
+    <string name="esn_setting_app_enterfacebookpassword">Enter facebook password !</string>
     
-    <string name="esn.setting.profile.setting">Setting</string>
-    <string name="esn.setting.profile.notification">Message</string>
-    <string name="esn.setting.profile.friend">Friends</string>
-    <string name="esn.setting.profile.information">Information</string>
-    <string name="esn.setting.profile.location">Location</string>
+    <string name="esn_setting_profile_setting">Setting</string>
+    <string name="esn_setting_profile_notification">Message</string>
+    <string name="esn_setting_profile_friend">Friends</string>
+    <string name="esn_setting_profile_information">Information</string>
+    <string name="esn_setting_profile_location">Location</string>
 </resources>

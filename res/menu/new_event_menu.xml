@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item 
         android:id="@+id/new_event_add" 
-        android:title="@string/esn.addNewEvent.add"
+        android:title="@string/esn_addNewEvent_add"
         android:icon="@drawable/ic_accept"
         android:showAsAction="ifRoom|withText">       
     </item>
     <item 
         android:id="@+id/new_event_capture" 
-        android:title="@string/esn.addNewEvent.capture"
+        android:title="@string/esn_addNewEvent_capture"
         android:icon="@drawable/ic_add_event_camera"
         android:showAsAction="ifRoom|withText">       
     </item>
     <item 
         android:id="@+id/new_event_cancel" 
-        android:title="@string/esn.addNewEvent.cancel"
+        android:title="@string/esn_addNewEvent_cancel"
         android:icon="@drawable/ic_add_event_cancel"
         android:showAsAction="ifRoom|withText">       
     </item>

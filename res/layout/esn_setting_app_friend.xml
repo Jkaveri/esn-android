@@ -16,7 +16,7 @@
 	    <TextView 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="@string/esn.setting.app.friend.friendactivity"
+	        android:text="@string/esn_setting_app_friend_friendactivity"
 	        android:textColor="@color/text_color"
 	        />
 	    
@@ -52,7 +52,7 @@
 	            <TextView 
 	                android:layout_width="215dp"
 	                android:layout_height="match_parent"
-	                android:text="@string/esn.setting.app.friend.friendcreateevent"
+	                android:text="@string/esn_setting_app_friend_friendcreateevent"
 	                android:singleLine="false"
 	                android:paddingRight="10dp"
 	                android:textSize="13dp"
@@ -76,7 +76,7 @@
 	            <TextView 
 	                android:layout_width="215dp"
 	                android:layout_height="match_parent"
-	                android:text="@string/esn.setting.app.friend.friendrequest"
+	                android:text="@string/esn_setting_app_friend_friendrequest"
 	                android:singleLine="false"
 	                android:paddingRight="10dp"
 	                android:textSize="13dp"
@@ -101,7 +101,7 @@
 	            <TextView 
 	                android:layout_width="215dp"
 	                android:layout_height="match_parent"
-	                android:text="@string/esn.setting.app.friend.friendfacebookjoin"
+	                android:text="@string/esn_setting_app_friend_friendfacebookjoin"
 	                android:layout_marginRight="20dp"
 	                android:textSize="13dp"
 	                android:textColor="@color/text_color"
@@ -117,7 +117,7 @@
 	    <TextView 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="@string/esn.setting.app.friend.commentlike"
+	        android:text="@string/esn_setting_app_friend_commentlike"
 	        android:textColor="@color/text_color"
 	        
 	        />
@@ -151,7 +151,7 @@
 	            <TextView 
 	                android:layout_width="215dp"
 	                android:layout_height="match_parent"
-	                android:text="@string/esn.setting.app.friend.friendcomment"
+	                android:text="@string/esn_setting_app_friend_friendcomment"
 	                android:textColor="@color/text_color"
 	                />
 	        </TableRow>
@@ -172,7 +172,7 @@
 	            <TextView 
 	                android:layout_width="215dp"
 	                android:layout_height="match_parent"
-	                android:text="@string/esn.setting.app.friend.friendlike"
+	                android:text="@string/esn_setting_app_friend_friendlike"
 	                android:textColor="@color/text_color"
 	                />
 	        </TableRow>
@@ -194,7 +194,7 @@
 	            <TextView 
 	                android:layout_width="215dp"
 	                android:layout_height="match_parent"
-	                android:text="@string/esn.setting.app.friend.friendshareplace"
+	                android:text="@string/esn_setting_app_friend_friendshareplace"
 	                android:textColor="@color/text_color"
 	                />
 	        </TableRow>
@@ -214,7 +214,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="@drawable/rounded_corners"
-	        android:text="@string/esn.setting.app.event.ok"
+	        android:text="@string/esn_setting_app_event_ok"
 	        android:onClick="FriendSettingSaved"
 	        android:textColor="#FFF"
 	        />	    

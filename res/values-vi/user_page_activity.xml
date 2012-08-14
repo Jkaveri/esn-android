@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="str.Friends.UserPage.Title">Thông tin bạn bè</string>
-    <string name="txt.esn.userpage.fullname">Họ Tên :</string>
-    <string name="txt.esn.userpage.status">Trạng Thái :</string>
-    <string name="txt.esn.userpage.adress">Địa chỉ :</string>
-    <string name="txt.esn.userpage.country">Quốc gia :</string>
-    <string name="txt.esn.userpage.birthday">Ngày sinh :</string>
-    <string name="txt.esn.userpage.gender">Giới Tính :</string>
-    <string name="txt.esn.userpage.favorite">Sở thích :</string>
-    <string name="txt.esn.userpage.male">Nam</string>
-    <string name="txt.esn.userpage.female">Nữ</string>
-    <string name="txt.esn.userpage.online">Trực tuyến</string>
-    <string name="txt.esn.userpage.offline">Ngoại tuyến</string>
-    <string name="txt.esn.userpage.phone">Điện thoại :</string>
+    <string name="str_Friends_UserPage_Title">Thông tin bạn bè</string>
+    <string name="txt_esn_userpage_fullname">Họ Tên :</string>
+    <string name="txt_esn_userpage_status">Trạng Thái :</string>
+    <string name="txt_esn_userpage_adress">Địa chỉ :</string>
+    <string name="txt_esn_userpage_country">Quốc gia :</string>
+    <string name="txt_esn_userpage_birthday">Ngày sinh :</string>
+    <string name="txt_esn_userpage_gender">Giới Tính :</string>
+    <string name="txt_esn_userpage_favorite">Sở thích :</string>
+    <string name="txt_esn_userpage_male">Nam</string>
+    <string name="txt_esn_userpage_female">Nữ</string>
+    <string name="txt_esn_userpage_online">Trực tuyến</string>
+    <string name="txt_esn_userpage_offline">Ngoại tuyến</string>
+    <string name="txt_esn_userpage_phone">Điện thoại :</string>
 </resources>

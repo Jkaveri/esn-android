@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONException;
 import com.facebook.android.Util;
@@ -111,7 +112,7 @@ public class EditProfileActivity extends Activity {
 	}
 
 	private void updateDisplay() {
-		mDateDisplay.setText(mMonth + "/" + mDay + "/" + mYear);
+		mDateDisplay.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
 	}
 
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -180,7 +181,7 @@ public class EditProfileActivity extends Activity {
 		intent.setType("image/*");
 		startActivityForResult(intent, SELECT_PICTURE);
 	}
- 
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		ImageView image = (ImageView) findViewById(R.id.esn_changeprogile_avatar);
@@ -285,9 +286,8 @@ public class EditProfileActivity extends Activity {
 
 							if (user.Birthday != null) {
 								EditText txtBirthday = (EditText) findViewById(R.id.esn_changeprofile_birthday);
-
-								txtBirthday.setText(Utils.DateToStringByLocale(
-										user.Birthday, 1));
+								SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+								txtBirthday.setText(format.format(user.Birthday));
 							}
 							Boolean gender = user.Gender;
 
@@ -361,7 +361,7 @@ public class EditProfileActivity extends Activity {
 		public void run() {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_changeprogile_avatar);
 
-			avatar.setImageBitmap(bitmap) ;
+			avatar.setImageBitmap(bitmap);
 		}
 
 	}
@@ -410,14 +410,9 @@ public class EditProfileActivity extends Activity {
 				user.Favorite = txtFavorite.getText().toString();
 
 				String bd = txtBirthday.getText().toString();
-
-				SimpleDateFormat format = new SimpleDateFormat("yyyy MM dd");
-				try {
-					user.Birthday = format.parse(bd);
-				} catch (ParseException e1) {
-
-					e1.printStackTrace();
-				}
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(mYear, mMonth, mDay);
+				user.Birthday = calendar.getTime();
 
 				Spinner ddlGender = (Spinner) findViewById(R.id.esn_changeprofile_gender);
 				String gender = ddlGender.getSelectedItem().toString();

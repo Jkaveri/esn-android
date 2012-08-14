@@ -14,7 +14,6 @@ import android.util.Log;
 public class EsnServices extends Service {
 
 	public static final String LOG_TAG = null;
-	public VoiceManager voiceMng;
 	public boolean serviceStated = false;
 	
 
@@ -27,8 +26,7 @@ public class EsnServices extends Service {
 
 	@Override
 	public void onCreate() {
-
-		voiceMng = new VoiceManager(getResources());
+		
 		
 		super.onCreate();
 	}
@@ -36,13 +34,7 @@ public class EsnServices extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
-		/*
-		 * // register headphone pluged receiver headPhoneReceiver = new
-		 * HeadPhonePlugedReceiver(); IntentFilter filter = new IntentFilter();
-		 * filter.addAction(Intent.ACTION_HEADSET_PLUG);
-		 * filter.addCategory(Intent.CATEGORY_DEFAULT);
-		 * registerReceiver(headPhoneReceiver, filter);
-		 */
+	
 
 		
 		return START_NOT_STICKY;
@@ -73,20 +65,20 @@ public class EsnServices extends Service {
 								EsnLookingAheadEventsServices.class);
 
 					}
-					if (!isMyServiceRunning())
+					if (!isMyServiceRunning(""))
 						startService(lookingAheadEventService);
-					if (isMyServiceRunning()) {
+					if (isMyServiceRunning("")) {
 						serviceStated = true;
-						voiceMng.voiceAlertActivate();
+						//voiceMng.voiceAlertActivate();
 					} else {
 
-						voiceMng.play(R.raw.xinloi);
+						//voiceMng.play(R.raw.xinloi);
 					}
 
 				}
 				// disconnected
 				else if (state == 0 && serviceStated) {
-					if (isMyServiceRunning()) {
+					if (isMyServiceRunning("")) {
 						if (lookingAheadEventService == null)
 							lookingAheadEventService = new Intent(
 									getApplicationContext(),
@@ -102,12 +94,11 @@ public class EsnServices extends Service {
 
 	
 
-	private boolean isMyServiceRunning() {
+	private boolean isMyServiceRunning(String eventName) {
 		ActivityManager manager = (ActivityManager) getSystemService(Activity.ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager
 				.getRunningServices(Integer.MAX_VALUE)) {
-			if ("esn.activities.EsnLookingAheadEventsServices"
-					.equals(service.service.getClassName())) {
+			if (eventName.equals(service.service.getClassName())) {
 				return true;
 			}
 		}

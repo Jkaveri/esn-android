@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="esn.login.enteremail">Nhập email !</string>
-    <string name="esn.login.enterpassword">Nhập mật khẩu !</string>
-    <string name="esn.login.email">Email</string>
-    <string name="esn.login.password">Mật khẩu</string>
+    <string name="esn_login_enteremail">Nhập email !</string>
+    <string name="esn_login_enterpassword">Nhập mật khẩu !</string>
+    <string name="esn_login_email">Email</string>
+    <string name="esn_login_password">Mật khẩu</string>
 </resources>

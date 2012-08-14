@@ -139,8 +139,7 @@ public class SetFilterActivity extends SherlockActivity implements
 				EsnListItem showAllItem = new EsnListItem();
 				showAllItem.setTitle("All");
 				showAllItem.setTagName("all");
-				showAllItem.setIcon(R.drawable.ic_select_all);
-				
+				showAllItem.setIcon(R.drawable.ic_select_all);		
 				showAllItem.setChecked(true);
 				adapter.add(showAllItem);
 				// friend
@@ -274,7 +273,7 @@ public class SetFilterActivity extends SherlockActivity implements
 		try {
 			String friendFilter = "";
 			String eventTypeFilter = "";
-
+			String levelFilter = "";
 			boolean flag = false;
 			Iterator<String> keys = filterList.keys();
 
@@ -288,10 +287,14 @@ public class SetFilterActivity extends SherlockActivity implements
 					friendFilter = "friend:" + session.currentUser.AccID;
 				}
 				if(key.equals("hot") && checked){
-					friendFilter += "level:2,3";
+					if(levelFilter.equals(""))
+					levelFilter += "level:2,3";
+					else levelFilter+=",2,3";
 				
 				}else if(key.equals("new") && checked){
-					friendFilter += "level:1";
+					if(levelFilter.equals(""))
+						levelFilter += "level:1";
+						else levelFilter+=",1";
 				}
 				else {
 					if (checked) {
@@ -305,12 +308,7 @@ public class SetFilterActivity extends SherlockActivity implements
 					}
 				}
 			}
-			String result = "";
-			if (!friendFilter.equals("") && eventTypeFilter.equals(""))
-				result = eventTypeFilter + "|" + friendFilter;
-			else
-				result = eventTypeFilter + friendFilter;
-			return result.replace("|", "");
+			return eventTypeFilter + "|" + friendFilter+"|"+levelFilter;
 			
 		} catch (Exception e) {
 			return "";

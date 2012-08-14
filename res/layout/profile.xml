@@ -19,7 +19,7 @@
             android:layout_height="90dp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_avatar"
-            android:contentDescription="@string/esn.global.loading"/>
+            android:contentDescription="@string/esn_global_loading"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -28,7 +28,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/esn.setting.profile.name"
+                android:id="@+id/esn_profile_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#33b5e5"
@@ -36,7 +36,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/esn.setting.profile.gender"
+                android:id="@+id/esn_profile_gender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#33b5e5" 
@@ -44,7 +44,7 @@
                 />
             
             <TextView
-                android:id="@+id/esn.setting.profile.address"
+                android:id="@+id/esn_profile_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#33b5e5" 
@@ -67,7 +67,7 @@
             android:onClick="SettingClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/esn.setting.profile.setting"
+            android:text="@string/esn_setting_profile_setting"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
 
@@ -79,7 +79,7 @@
             android:onClick="MessageClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/esn.setting.profile.notification"
+            android:text="@string/esn_setting_profile_notification"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
 
@@ -87,7 +87,7 @@
             android:layout_width="87dp"
             android:layout_height="30dp"
             android:background="@drawable/rounded_corner_blue"
-            android:contentDescription="@string/app.global.camera"
+            android:contentDescription="@string/app_global_camera"
             android:src="@drawable/ic_setting_profile_no"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
@@ -127,7 +127,7 @@
             android:layout_width="87dp"
             android:layout_height="60dp"
             android:background="@drawable/rounded_corner_blue"
-            android:contentDescription="@string/app.global.camera"
+            android:contentDescription="@string/app_global_camera"
             android:src="@drawable/ic_setting_profile_location"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
@@ -140,7 +140,7 @@
         android:orientation="horizontal" >
 
         <ListView
-            android:id="@+id/esn.setting.profile.listeventuser"
+            android:id="@+id/esn_profile_listeventuser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
             android:divider="@drawable/ic_divider">

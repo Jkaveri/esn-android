@@ -1,10 +1,6 @@
 package com.facebook.android;
 
 
-import java.io.IOException;
-
-import org.json.JSONException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -17,16 +13,14 @@ import com.facebook.android.Facebook.DialogListener;
 
 import esn.classes.Sessions;
 import esn.models.Users;
-import esn.models.UsersManager;
 
 public class AccessFaceBookListener implements DialogListener {
 	private Activity act;
 	private Context context;
 	private Facebook mFacebook;
 	private final String LOG_TAG = "LoginFaceBookListner";
-	private Sessions session;
-	private Users user;
 	private final Object obj = new Object();
+	private Sessions session;
 	public AccessFaceBookListener(Activity activity, Facebook fb) {
 		act = activity;
 		context = act.getApplicationContext();
@@ -35,19 +29,12 @@ public class AccessFaceBookListener implements DialogListener {
 
 	@Override
 	public void onComplete(Bundle values) {		
-		try {			
-			session = Sessions.getInstance(context);			
-			
-			final String access_token = mFacebook.getAccessToken();
-			
-			session.setAccessToken(access_token);
-			
-			session.put("fb_access_token_expires", mFacebook.getAccessExpires());
-			
+		try {						
 			AsyncFacebookRunner asyncFacebookRunner = new AsyncFacebookRunner(mFacebook);
-			
-			
-			asyncFacebookRunner.request("me", new RequestGraphMeAccId(act));
+			asyncFacebookRunner.request("me", new RequestGraphMeAccId(act, mFacebook));
+			session = Sessions.getInstance(context);
+			session.setAccessToken(mFacebook.getAccessToken());
+			session.setAccessExpires(mFacebook.getAccessExpires());
 			
 		} catch (Exception e) {
 			Log.e(LOG_TAG, e.getMessage());

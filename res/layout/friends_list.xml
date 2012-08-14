@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingLeft="8dp"
-    android:paddingTop="8dp"
-    android:paddingRight="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#E8E3DC"
-    >
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp" >
+
     <ListView
-        android:id="@+id/lisvFriends"
-        android:layout_width="fill_parent"
-        android:layout_marginTop="50dip"
-        android:layout_marginBottom="50dip"
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dip"
+        android:layout_marginTop="50dip"
         android:background="@drawable/rounded_corner_list_whilte"
-        android:scrollbars="none"
+        android:paddingBottom="6dp"
         android:paddingTop="6dp"
-        android:paddingBottom="6dp">
-    </ListView>
+        android:scrollbars="none" />
+
+
 </LinearLayout>

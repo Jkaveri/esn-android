@@ -3,8 +3,10 @@ package esn.classes;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -153,10 +155,33 @@ public class Maps {
 			animateTo(cPoint);
 			mOverlays = null;
 		} else {
-			Util.showAlert(
-					context,
-					res.getString(R.string.esn_global_waring),
-					res.getString(R.string.esn_global_must_allow_access_location));
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setTitle(R.string.esn_welcomeScreen_GPSLocationService);
+			builder.setMessage(R.string.esn_welcomeScreen_GPSLocationService_Confirm);
+
+			builder.setCancelable(false);
+
+			String ok = res.getString(R.string.esn_global_ok);
+			String cancel = res.getString(R.string.esn_global_cancel);
+
+			builder.setPositiveButton(ok,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							session.setSettingLocation(true);
+							dialog.dismiss();
+						}
+					});
+			builder.setNegativeButton(cancel,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							session.setSettingLocation(false);
+							dialog.dismiss();
+						}
+					});
+			builder.create().show();
 		}
 
 	}
