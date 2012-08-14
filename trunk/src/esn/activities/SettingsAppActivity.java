@@ -95,15 +95,15 @@ public class SettingsAppActivity extends Activity {
 
 								Intent intent = new Intent(context,
 										WelcomeActivity.class);
-								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-								intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-								intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								
 								startActivity(intent);
 								overridePendingTransition(R.anim.push_left_in,
 										R.anim.push_left_out);
 								finish();
+								Intent logoutIntent = new Intent();
+								logoutIntent.addCategory(Intent.CATEGORY_DEFAULT);
+								logoutIntent.setAction(HomeActivity.LOGOUT_ACTION);
+								sendBroadcast(logoutIntent);
 							}
 						})
 				.setNegativeButton(res.getString(R.string.app_global_no),

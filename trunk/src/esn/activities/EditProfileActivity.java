@@ -104,6 +104,8 @@ public class EditProfileActivity extends Activity {
 		dialog.setTitle(this.getResources().getString(
 				R.string.esn_global_loading));
 		dialog.setMessage(res.getString(R.string.esn_global_Error));
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 
 		ShowProfileThread showProfileThread = new ShowProfileThread();

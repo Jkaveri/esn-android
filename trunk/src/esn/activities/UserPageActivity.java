@@ -68,6 +68,8 @@ public class UserPageActivity extends SherlockActivity implements OnNavigationLi
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(getString(R.string.esn_global_loading));
 		dialog.setMessage(getString(R.string.esn_global_pleaseWait));
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 		
 		Thread thr = new Thread(new Runnable() {

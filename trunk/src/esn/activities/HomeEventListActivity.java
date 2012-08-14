@@ -103,10 +103,10 @@ public class HomeEventListActivity extends SherlockActivity implements
 			handler = new Handler();
 			// load event
 			dialog = new ProgressDialog(this);
-			dialog.setTitle(getResources().getString(
-					R.string.esn_global_loading));
-			dialog.setMessage(getResources().getString(
-					R.string.esn_global_pleaseWait));
+			dialog.setTitle(getResources().getString(R.string.esn_global_loading));
+			dialog.setMessage(getResources().getString(R.string.esn_global_pleaseWait));
+			dialog.setCancelable(false);
+			dialog.setCanceledOnTouchOutside(false);
 			dialog.show();
 
 			lstEvent = (ListView) findViewById(R.id.esn_home_listevent);

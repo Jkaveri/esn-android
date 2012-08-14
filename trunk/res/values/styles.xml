@@ -14,16 +14,16 @@
         <item name="android:titleTextStyle">@style/esn.theme.light.actionbar.TitleTextStyle</item>
     </style>
     <style name="esn.Widget.DropDownItem.Spinner"  parent="@android:style/Widget.DropDownItem.Spinner">
-        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:padding">8dp</item>
     </style>
     <style name="esn.Widget.TextView.SpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
-        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:gravity">center_vertical</item>
         <!-- <item name="android:paddingTop">8dp</item> -->
     </style>
 
     <style name="esn.theme.light.actionbar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">#ffffff</item>
     </style>  
 </resources>

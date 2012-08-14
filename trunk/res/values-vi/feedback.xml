@@ -3,6 +3,6 @@
     <string name="esn_app_feedback_title">Tiêu đề</string>
     <string name="esn_app_feedback_content">Nội dung</string>
     <string name="esn_app_feedback_send">Gửi</string>
-    <string name="esn_app_feedback_statussendsuccess">Thông tin đã được gửi_</string>
-    <string name="esn_app_feedback_statussendfail">Lỗi, Hãy thực hiện lại_</string>
+    <string name="esn_app_feedback_statussendsuccess">Thông tin đã được gửi.</string>
+    <string name="esn_app_feedback_statussendfail">Lỗi, Hãy thực hiện lại.</string>
 </resources>

@@ -68,6 +68,7 @@ public class WelcomeActivity extends SherlockActivity {
 				Toast.makeText(this, loginResult, Toast.LENGTH_LONG).show();
 			}
 		}
+		
 	}
 
 	@Override
@@ -81,7 +82,6 @@ public class WelcomeActivity extends SherlockActivity {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
 							finish();
 						}
 
@@ -112,7 +112,6 @@ public class WelcomeActivity extends SherlockActivity {
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		finish();
-
 	}
 
 	public void RegisterClicked(View view) {
@@ -121,7 +120,6 @@ public class WelcomeActivity extends SherlockActivity {
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		finish();
-
 	}
 
 	@Override

@@ -29,7 +29,6 @@
 		        android:orientation="horizontal"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="5dp"
 		        >
 		        <ImageView
 		            android:id="@+id/esn.changeprogile.avatar"
@@ -38,7 +37,9 @@
 		            android:layout_gravity="top"
 		            android:contentDescription="@string/esn_register_avatar"
 		            android:onClick="AvatarClicked"
-		            android:src="@drawable/ic_no_avata"
+       				android:background="@drawable/ic_avatar2"
+		            android:padding="4dp"
+		            android:scaleType="fitCenter"
 		            android:adjustViewBounds="true"
 		            />		        
 		        <LinearLayout 

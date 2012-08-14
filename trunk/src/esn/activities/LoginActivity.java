@@ -63,7 +63,6 @@ public class LoginActivity extends SherlockActivity{
 	        intent = new Intent(context,WelcomeActivity.class);
 	        startActivity(intent);
 	        finish();
-	        return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}

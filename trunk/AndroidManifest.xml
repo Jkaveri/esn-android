@@ -174,7 +174,7 @@
         <activity
             android:name=".EventDetailCommentActivity"
             android:icon="@drawable/logo_48_48_2"
-            android:label="@string/esn_global_page_eventdetail" >
+            android:label="@string/esn_global_comment" >
         </activity>
         <activity
             android:name=".FeedbackActivity"
@@ -238,6 +238,8 @@
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity android:name=".SearchFriendResultActivity" >
+        </activity>
+        <activity android:name=".PolicyActivity" >
         </activity>
     </application>
 

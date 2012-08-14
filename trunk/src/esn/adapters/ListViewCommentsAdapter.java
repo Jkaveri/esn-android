@@ -28,7 +28,7 @@ public class ListViewCommentsAdapter extends CustomListAdapter<Comments>{
 	
 	public ListViewCommentsAdapter(Activity activity, ArrayList<Comments> listCm) {
 		
-		super(activity, listCm, R.layout.comment_layout_row);
+		super(activity, listCm, R.layout.comment_layout_row,R.drawable.ic_no_avata);
 		
 	}	
 	

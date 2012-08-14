@@ -12,7 +12,7 @@
 	<string name="btn_Friends_Lists_Diaglog_Unfriend">Unfriend</string>
 	<string name="btn_Friends_Lists_Diaglog_Close">Close</string>
 	<string name="btn_Friends_Lists_Diaglog_unfriendsuccess">Unfriend Successfull !</string>
-	<string name="btn_Friends_Lists_Diaglog_unfriendnotsuccess">Error_ Try again_</string>
-	<string name="btn_Friends_Lists_Diaglog_nofriend">No friends_</string>
+	<string name="btn_Friends_Lists_Diaglog_unfriendnotsuccess">Error_ Try again.</string>
+	<string name="btn_Friends_Lists_Diaglog_nofriend">No friends.</string>
 	<string name="btn_Friends_Lists_Diaglog_addfriendsuccess">Add friend Successfull !</string>
 </resources>

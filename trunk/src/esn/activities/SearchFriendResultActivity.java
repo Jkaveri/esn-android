@@ -51,8 +51,9 @@ public class SearchFriendResultActivity extends ListActivity {
 		context = this;
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setTitle(R.string.esn_global_loading);
-		progressDialog
-				.setMessage(res.getString(R.string.esn_global_pleaseWait));
+		progressDialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
+		progressDialog.setCancelable(false);
+		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
 
 		Intent data = getIntent();

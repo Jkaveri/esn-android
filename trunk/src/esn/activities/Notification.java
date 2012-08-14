@@ -91,6 +91,8 @@ public class Notification extends Activity {
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage("Waiting ....");
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 		
 		Thread thr = new Thread(new Runnable() {

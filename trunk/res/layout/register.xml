@@ -26,7 +26,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="ĐĂNG KÝ"
+                android:text="@string/esn_account_dk"
                 android:textColor="#CC0033"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -53,7 +53,6 @@
                 android:singleLine="true"
                 android:textColor="@color/BgWhite"
                 android:textColorHint="@color/BgWhite" />
-
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -164,7 +163,6 @@
                 android:paddingTop="7dp"
                 android:singleLine="true"
                 android:textColor="@color/BgWhite" />
-
             <Button
                 android:id="@+id/btnRegister"
                 android:layout_width="fill_parent"
@@ -176,6 +174,18 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="@string/esn_register_btSignUp"
+                android:textColor="@color/BgWhite"
+                android:textSize="16dp" />
+            <Button
+                android:id="@+id/btnPrivace"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/rounded_corner_blue"
+                android:onClick="PrivatePolicyClicked"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/esn_register_hlPolicy"
                 android:textColor="@color/BgWhite"
                 android:textSize="16dp" />
         </LinearLayout>

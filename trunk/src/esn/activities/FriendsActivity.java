@@ -121,6 +121,11 @@ public class FriendsActivity extends Activity {
 		});	
 	}
 
+	public void DevelopClicked(View view)
+	{
+		Toast.makeText(context, res.getString(R.string.esn_global_function_developing), Toast.LENGTH_SHORT).show();
+	}
+	
 	public void FriendClicked(View v) {
 		
 		if(isFriend==true)
@@ -222,6 +227,8 @@ public class FriendsActivity extends Activity {
 		dialog = new ProgressDialog(this);
 		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 
 		ShowProfileThread showProfileThread = new ShowProfileThread();
@@ -310,7 +317,7 @@ public class FriendsActivity extends Activity {
 											bitmap = Utils.getBitmapFromURL(url);
 
 										} catch (IOException e) {
-											Utils.showToast(FriendsActivity.this,"Image not found", Toast.LENGTH_LONG);
+											
 											Log.d(LOG_TAG, e.getMessage());
 											e.printStackTrace();
 										}
@@ -383,8 +390,8 @@ public class FriendsActivity extends Activity {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
 
 			avatar.setImageBitmap(bitmap);
-
-			dialog.dismiss();
+			if(dialog!=null)
+				dialog.dismiss();
 		}
 
 	}

@@ -148,7 +148,8 @@ public class RegisterActivity extends SherlockActivity {
 		
 		//mDateDisplay.setHint(res.getString(R.string.esn_register_txtBirthday));
 	}
-
+	
+	
 	private void updateDisplay() {
 		mDateDisplay.setText(mMonth + "/" + mDay + "/" + mYear);
 	}
@@ -164,14 +165,13 @@ public class RegisterActivity extends SherlockActivity {
 		}
 	};
 
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-	        intent = new Intent(context,WelcomeActivity.class);
-	        startActivity(intent);
-	        finish();
-	        return true;
+	        	    	
+	    	intent = new Intent(context,WelcomeActivity.class);
+	    	startActivity(intent);
+	    	finish();
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
@@ -184,14 +184,6 @@ public class RegisterActivity extends SherlockActivity {
 					mDay);
 		}
 		return null;
-	}
-
-	public void CancelClicked(View view) {
-
-		intent = new Intent(context, WelcomeActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-		finish();
 	}
 
 	public void RegisterClicked(View view) {
@@ -433,37 +425,30 @@ public class RegisterActivity extends SherlockActivity {
 			builder.setMessage(res.getString(R.string.esn_register_activeyouraccount))
 			       .setCancelable(false)
 			       .setPositiveButton(res.getString(R.string.esn_register_activeyes), new DialogInterface.OnClickListener() {
-
-			    	   	   public void onClick(DialogInterface dialog, int id) {
+			           public void onClick(DialogInterface dialog, int id) {
 			        	   
-			    	   		Intent intent = new Intent(context, LoginActivity.class);
-			   				startActivity(intent);
-			   				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-			   				finish();
+			        	   EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
 			        	   
+			        	   String email = txtemail.getText().toString();
+			        	   
+			        	   String[] arr = email.split("@");
+			        	   
+			        	   String url = arr[1].toString();
+			        	   
+			        	   url="http://"+url;
+			        	   
+			        	   Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			        	   
+			        	   startActivity(browse);
 			           }
 			       })
 			       .setNegativeButton(res.getString(R.string.esn_register_activeno), new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			        	   	
-			   				
-			   				EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
-				        	   
-				        	String email = txtemail.getText().toString();
-				        	   
-				        	String[] arr = email.split("@");
-				        	   
-				        	String url = arr[1].toString();
-				        	   
-				        	url="http://"+url;
-				        	   
-				        	Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-				        	   
-				        	startActivity(browse);
-				        	   
-				        	overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-				        	
-				        	finish();
+			           
+			    	   public void onClick(DialogInterface dialog, int id) {
+			        	   
+			    		   Intent intent = new Intent(context, LoginActivity.class);
+			   				startActivity(intent);
+			   				finish();
 			           }
 			});
 			
@@ -484,5 +469,11 @@ public class RegisterActivity extends SherlockActivity {
 		public void run() {
 			checkEmail = true;			
 		}
+	}
+	
+	public void PrivatePolicyClicked(View v)
+	{
+		intent = new Intent(context,PolicyActivity.class);
+		startActivity(intent);
 	}
 }
