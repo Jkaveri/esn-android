@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="6dp"
-    android:background="@android:color/white" >
+    android:paddingTop="6dp" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -27,7 +27,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/esn.setting.profile.name"
+                android:id="@+id/esn_setting_profile_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#33b5e5"
@@ -35,18 +35,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/esn.setting.profile.gender"
+                android:id="@+id/esn_setting_profile_gender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#33b5e5" 
-                android:layout_marginTop="10dp"/>
-            
+                android:layout_marginTop="10dp"
+                android:textColor="#33b5e5" />
+
             <TextView
-                android:id="@+id/esn.setting.profile.address"
+                android:id="@+id/esn_setting_profile_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#33b5e5" 
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textColor="#33b5e5" />
         </LinearLayout>
     </LinearLayout>
 
@@ -76,7 +76,7 @@
             android:background="@drawable/rounded_corner_blue"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/esn.setting.profile.notification"
+            android:text="@string/esn_setting_profile_notification"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
 
@@ -84,7 +84,7 @@
             android:layout_width="87dp"
             android:layout_height="30dp"
             android:background="@drawable/rounded_corner_blue"
-            android:contentDescription="@string/app.global.camera"
+            android:contentDescription="@string/app_global_camera"
             android:src="@drawable/ic_setting_profile_no"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
@@ -123,7 +123,7 @@
             android:layout_width="87dp"
             android:layout_height="60dp"
             android:background="@drawable/rounded_corner_blue"
-            android:contentDescription="@string/app.global.camera"
+            android:contentDescription="@string/app_global_camera"
             android:src="@drawable/ic_setting_profile_location"
             android:textColor="@android:color/white"
             android:textSize="15dp" />
@@ -136,10 +136,10 @@
         android:orientation="horizontal" >
 
         <ListView
-            android:id="@+id/esn.setting.profile.listeventuser"
+            android:id="@+id/esn_setting_profile_listeventuser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/ic_divider">
+            android:divider="@drawable/ic_divider" >
         </ListView>
     </LinearLayout>
 

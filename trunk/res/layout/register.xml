@@ -1,185 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:paddingLeft="8dp"
-	    android:paddingRight="8dp"
-	    android:background="#E8E3DC"
-	    android:orientation="vertical"
-	    android:focusable="true"
-	    android:focusableInTouchMode="true">
-	    
-	    <LinearLayout 
-	        android:layout_width="fill_parent"
-	    	android:layout_height="fill_parent"
-	    	android:background="@android:color/white"
-	    	android:padding="8dp"
-	    	android:orientation="vertical"
-	    	android:layout_marginTop="10dp"
-	    	android:layout_marginBottom="10dp">
-	    	<TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="ĐĂNG KÝ"
-	    	    android:gravity="center"
-	    	    android:textSize="20dp"
-	    	    android:textColor="#CC0033"
-	    	    android:textStyle="bold"
-	    	    />
-	    	<TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.tvEmail"
-	    	    />
-	        <EditText
-        	    android:id="@+id/esn.register.txtEmail"
-        	    android:layout_width="fill_parent"
-        	    android:layout_height="wrap_content"
-        	    android:layout_marginBottom="5dp"
-        	    android:layout_marginTop="5dp"
-        	    android:background="@drawable/rounded_corner_blue"        	    
-        	    android:paddingBottom="7dp"
-        	    android:paddingLeft="5dp"
-        	    android:paddingRight="5dp"
-        	    android:paddingTop="7dp"
-        	    android:singleLine="true"
-        	    android:textColor="@color/BgWhite"
-        	    android:textColorHint="@color/BgWhite"
-        	    android:maxLength="100"/>
-	        
-	        <TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.tvPassword"
-	    	    android:layout_marginTop="8dp"
-	    	    />
-	        <EditText
-	            android:id="@+id/esn.register.Password"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginTop="5dp"
-	            android:background="@drawable/rounded_corner_blue"
-	            android:inputType="textPassword"
-	            android:paddingBottom="7dp"
-	            android:paddingLeft="5dp"
-	            android:paddingRight="5dp"
-	            android:paddingTop="7dp"
-	            android:singleLine="true"
-	            android:textColor="@color/BgWhite"
-	            android:maxLength="100"/>
-	        
-	        <View 
-				android:layout_width="fill_parent"
-				android:layout_height="1dp"
-				android:background="#E8E3DC"
-				android:layout_marginTop="10dp"
-				android:layout_marginBottom="10dp" />
-	        
-	        <TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.Name"
-	    	    />
-	        
-	        <EditText
-                android:id="@+id/esn.register.txtFullName"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#E8E3DC"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="8dp" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ĐĂNG KÝ"
+                android:textColor="#CC0033"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/esn_register_tvEmail" />
+
+            <EditText
+                android:id="@+id/esn_register_txtEmail"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_corner_blue"
+                android:maxLength="100"
+                android:paddingBottom="7dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="7dp"
+                android:inputType="textEmailAddress"
+               
+                android:singleLine="true"
+                android:textColor="@color/BgWhite"
+                android:textColorHint="@color/BgWhite" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/esn_register_tvPassword" />
+
+            <EditText
+                android:id="@+id/esn_register_Password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_corner_blue"
+                android:inputType="textPassword"
+                android:maxLength="100"
                 android:paddingBottom="7dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="7dp"
                 android:singleLine="true"
-                android:textColor="@color/BgWhite"
-                android:maxLength="255"
-                />
-                 
-	        <TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.tvGender"
-	    	    android:layout_marginTop="8dp"	    	    
-	    	    />
-	        
-             <Spinner
-			        android:id="@+id/esn.register.ddlGender"
-			        android:layout_width="110dp"
-			        android:layout_height="40dp"
-			        android:entries="@array/Gender_arrays"
-			        android:height="30dp"
-			        android:background="@drawable/rounded_corner_blue"
-			        android:layout_marginTop="5dp"
-			        android:layout_marginBottom="5dp"
-			        android:paddingLeft="5dp"
-			        android:spinnerMode="dialog"
-			        android:textColor="#FF0000"/>
-             
-             <TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.date"
-	    	    android:layout_marginTop="8dp"
-	    	    />
-             
+                android:textColor="@color/BgWhite" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#E8E3DC" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/esn_register_Name" />
+
             <EditText
-                android:id="@+id/esn.register.txtBirthday"
+                android:id="@+id/esn_register_txtFullName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_corner_blue"
+                android:maxLength="255"
+                android:paddingBottom="7dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="7dp"
+                android:singleLine="true"
+                android:textColor="@color/BgWhite" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/esn_register_tvGender" />
+
+            <Spinner
+                android:id="@+id/esn_register_ddlGender"
+                android:layout_width="110dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_corner_blue"
+                android:entries="@array/Gender_arrays"
+                android:height="30dp"
+                android:paddingLeft="5dp"
+                android:spinnerMode="dialog"
+                android:textColor="#FF0000" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/esn_register_date" />
+
+            <EditText
+                android:id="@+id/esn_register_txtBirthday"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_corner_blue"
                 android:editable="false"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:height="38dp"
                 android:onClick="DatePickerDialogShow"
+                android:paddingBottom="10dp"
                 android:paddingLeft="5dp"
-                android:textColor="@android:color/white"/>
-            
-            <TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.tvPhone"
-	    	    android:layout_marginTop="8dp"
-	    	    />
-            
+                android:paddingTop="10dp"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/esn_register_tvPhone" />
+
             <EditText
-                android:id="@+id/esn.register.txtPhone"
+                android:id="@+id/esn_register_txtPhone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_corner_blue"
                 android:inputType="number"
+                android:maxLength="255"
                 android:paddingBottom="7dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="7dp"
                 android:singleLine="true"
-                android:textColor="@color/BgWhite"
-                android:maxLength="255"/>        
+                android:textColor="@color/BgWhite" />
 
-          <Button
-              android:id="@+id/btnRegister"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="4dp"
-              android:layout_marginTop="10dp"
-              android:background="@drawable/rounded_corner_blue"
-              android:onClick="RegisterClicked"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp"
-              android:text="@string/esn.register.btSignUp"
-              android:textColor="@color/BgWhite"
-              android:textSize="16dp" />
-          
-	    </LinearLayout>
-	</LinearLayout>
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_corner_blue"
+                android:onClick="RegisterClicked"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/esn_register_btSignUp"
+                android:textColor="@color/BgWhite"
+                android:textSize="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+
 </ScrollView>

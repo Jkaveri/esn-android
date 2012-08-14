@@ -7,7 +7,7 @@
         android:id="@+id/esn.google.maps.state"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="@string/key.maps.googleAPI"
+        android:apiKey="@string/key_maps_googleAPI"
         android:clickable="true" />
 
     <LinearLayout
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="14dp"
             android:paddingRight="14dp"
-            android:text="@string/esn.voicemode.state"
+            android:text="@string/esn_voicemode_state"
             android:textColor="@color/BgWhite"
             android:textSize="16dp"
             android:textStyle="italic" />

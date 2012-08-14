@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="esn.setting.app.enableEventNotification">Sự kiện</string>
-    <string name="esn.setting.app.enableEventNotification.small">Cài đặt thông báo cho sự kiện.</string>
-    <string name="esn.setting.app.enableFriendNotification">Bạn bè</string>
-    <string name="esn.setting.app.enableFriendNotification.small">Cài đặt thông báo bạn bè.</string>
-    <string name="esn.setting.app.enableConnectFacebook">Facebook</string>
-    <string name="esn.setting.app.enableConnectFacebook.small">Cài đặt kết nối facebook.</string>
-    <string name="esn.setting.app.enablelocation">Vị trí</string>
-    <string name="esn.setting.app.enablelocation.small">Cài đặt cho phép truy cập vị trí hiện tại.</string>
-    <string name="esn.setting.app.enableheadphone">Chế độ tai nghe</string>
-    <string name="esn.setting.app.enableheadphone.small">Cài đặt cho phép sử dụng tai nghe.</string>    
+    <string name="esn_setting_app_enableEventNotification">Sự kiện</string>
+    <string name="esn_setting_app_enableEventNotification_small">Cài đặt thông báo cho sự kiện_</string>
+    <string name="esn_setting_app_enableFriendNotification">Bạn bè</string>
+    <string name="esn_setting_app_enableFriendNotification_small">Cài đặt thông báo bạn bè_</string>
+    <string name="esn_setting_app_enableConnectFacebook">Facebook</string>
+    <string name="esn_setting_app_enableConnectFacebook_small">Cài đặt kết nối facebook_</string>
+    <string name="esn_setting_app_enablelocation">Vị trí</string>
+    <string name="esn_setting_app_enablelocation_small">Cài đặt cho phép truy cập vị trí hiện tại_</string>
+    <string name="esn_setting_app_enableheadphone">Chế độ tai nghe</string>
+    <string name="esn_setting_app_enableheadphone_small">Cài đặt cho phép sử dụng tai nghe_</string>    
     
-    <string name="esn.setting.app.event.enable">Mở</string>
-    <string name="esn.setting.app.event.radius">Bán kính</string>
-    <string name="esn.setting.app.event.ok">OK</string>
-    <string name="esn.setting.app.event.enterradius">Nhập bán kính !</string>
-    <string name="esn.setting.app.eventnotifyenablebefore">Hãy kích hoạt chức năng này trước !</string>
+    <string name="esn_setting_app_event_enable">Mở</string>
+    <string name="esn_setting_app_event_radius">Bán kính</string>
+    <string name="esn_setting_app_event_ok">OK</string>
+    <string name="esn_setting_app_event_enterradius">Nhập bán kính !</string>
+    <string name="esn_setting_app_eventnotifyenablebefore">Hãy kích hoạt chức năng này trước !</string>
     
     
-    <string name="esn.setting.app.friend.friendactivity">Họat động của bạn bè.</string>
-    <string name="esn.setting.app.friend.commentlike">Bình luận và Xác nhận.</string>
+    <string name="esn_setting_app_friend_friendactivity">Họat động của bạn bè_</string>
+    <string name="esn_setting_app_friend_commentlike">Bình luận và Xác nhận_</string>
     
-    <string name="esn.setting.app.friend.friendcreateevent">Bạn bè tạo sự kiện.</string>
-    <string name="esn.setting.app.friend.friendrequest">Nhận yêu cầu từ bạn bè.</string>
-    <string name="esn.setting.app.friend.friendfacebookjoin">Khi bạn bè trên facebook tham gia.</string>
+    <string name="esn_setting_app_friend_friendcreateevent">Bạn bè tạo sự kiện_</string>
+    <string name="esn_setting_app_friend_friendrequest">Nhận yêu cầu từ bạn bè_</string>
+    <string name="esn_setting_app_friend_friendfacebookjoin">Khi bạn bè trên facebook tham gia_</string>
     
-    <string name="esn.setting.app.friend.friendcomment">Có người bình luận sự kiện của tôi.</string>
-    <string name="esn.setting.app.friend.friendlike">Có người xác nhận sự kiện của tôi.</string>
-    <string name="esn.setting.app.friend.friendshareplace">Bạn bè chia sẻ sự kiện, vị trí với tôi.</string>
+    <string name="esn_setting_app_friend_friendcomment">Có người bình luận sự kiện của tôi_</string>
+    <string name="esn_setting_app_friend_friendlike">Có người xác nhận sự kiện của tôi_</string>
+    <string name="esn_setting_app_friend_friendshareplace">Bạn bè chia sẻ sự kiện, vị trí với tôi_</string>
     
-    <string name="esn.setting.app.facebook.email">Email</string>
-    <string name="esn.setting.app.facebook.pass">Mật khẩu</string>
-    <string name="esn.setting.app.informationsaved">Đã lưu</string>
-    <string name="esn.setting.app.informationenablebefore">Hãy kích hoạt chức năng này trước !</string>
-    <string name="esn.setting.app.enterfacebookemail">Nhập email facebook !</string>
-    <string name="esn.setting.app.enterfacebookpassword">Nhập mật khẩu !</string>
+    <string name="esn_setting_app_facebook_email">Email</string>
+    <string name="esn_setting_app_facebook_pass">Mật khẩu</string>
+    <string name="esn_setting_app_informationsaved">Đã lưu</string>
+    <string name="esn_setting_app_informationenablebefore">Hãy kích hoạt chức năng này trước !</string>
+    <string name="esn_setting_app_enterfacebookemail">Nhập email facebook !</string>
+    <string name="esn_setting_app_enterfacebookpassword">Nhập mật khẩu !</string>
     
-    <string name="esn.setting.profile.setting">Cài Đặt</string>
-    <string name="esn.setting.profile.notification">Tin Nhắn</string>
-    <string name="esn.setting.profile.friend">Bạn Bè</string>
-    <string name="esn.setting.profile.information">Thông Tin</string>
-    <string name="esn.setting.profile.location">Vị Trí</string>
+    <string name="esn_setting_profile_setting">Cài Đặt</string>
+    <string name="esn_setting_profile_notification">Tin Nhắn</string>
+    <string name="esn_setting_profile_friend">Bạn Bè</string>
+    <string name="esn_setting_profile_information">Thông Tin</string>
+    <string name="esn_setting_profile_location">Vị Trí</string>
 </resources>

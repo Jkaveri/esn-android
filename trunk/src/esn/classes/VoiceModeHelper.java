@@ -99,6 +99,19 @@ public class VoiceModeHelper {
 			});
 
 			act.startService(service);
+		} else {
+			dynIcon.handler.post(new Runnable() {
+
+				@Override
+				public void run() {
+					Toast.makeText(
+							act,
+							act.getString(R.string.esn_voicemode_services_start),
+							Toast.LENGTH_SHORT).show();
+					btnServices.setImageResource(R.drawable.ic_event_alert_de);
+				}
+			});
+			voiceMng.play(R.raw.hiendangbatchucnang);
 		}
 
 		if (!isMyServiceRunning()) {
@@ -124,6 +137,7 @@ public class VoiceModeHelper {
 			});
 
 			act.stopService(service);
+			voiceMng.play(R.raw.datatchucnang);
 		}
 
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="choose">Choose</string>
+    <string name="choose">Lựa chọn</string>
  
     <string-array name="sharetype">
         <item>Cộng đồng</item>

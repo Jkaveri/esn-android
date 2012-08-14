@@ -54,6 +54,11 @@ public class VoiceModeActivity extends MapActivity {
 		//filter.setPriority(1000);
 		receiver = new EventAlertOnMapReceiver();
 		registerReceiver(receiver, filter);
+		//handler btnservice 
+		if(helper.isActivateServices()){
+			btnServices.setImageResource(R.drawable.ic_event_alert_de);
+		}
+
 	}
 
 	public void btnRecordClick(View view) {
@@ -124,7 +129,7 @@ public class VoiceModeActivity extends MapActivity {
 
 				map.setEventMarker(point, event.Title, event.Description,
 						event.EventID, drawable);
-
+				map.animateTo(point);
 				map.postInvalidate();
 
 			}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="esn.voicemode.title">ESN Voice Mode</string>
-    <string name="esn.voicemode.state">Hi, Welcome to ESN voice mode!</string>
-    <string name="esn.voicemode.services.stop">The function alert events stoped</string>
-    <string name="esn.voicemode.services.start">The function alert events started</string>
+    <string name="esn_voicemode_title">ESN Voice Mode</string>
+    <string name="esn_voicemode_state">Hi, Welcome to ESN voice mode!</string>
+    <string name="esn_voicemode_services_stop">The function alert events stoped</string>
+    <string name="esn_voicemode_services_start">The function alert events started</string>
 </resources>

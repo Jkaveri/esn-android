@@ -63,9 +63,10 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 
 	public void add(T item) {
 		data.add(item);
-		item = null;
 	}
-
+	public void clear(){
+		data.clear();
+	}
 	@Override
 	public int getCount() {
 		return data.size();

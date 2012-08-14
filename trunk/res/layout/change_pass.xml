@@ -1,170 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    >
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:orientation="vertical" 
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    android:paddingTop="50dp"
-	    android:background="@android:color/white"
-	    >
-	    
-	    <TableLayout
-	        android:layout_width="match_parent"
-    		android:layout_height="match_parent"
-    		android:stretchColumns="1"
-    		android:layout_marginTop="15dp">
+    android:background="@android:color/white" >
 
-	        <TableRow>       
-        		<TextView 
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/app.global.Email"
-		            android:layout_marginBottom="10dp"
-		            android:background="@drawable/rounded_corners_left"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:textColor="#fff"
-		            />
-		        <EditText
-		            android:id="@+id/esn.changepass.email"
-		           	android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"		            
-		            android:editable="false"
-		            android:maxLength="100"
-		            >
-		            <requestFocus />
-		        </EditText>
-    		</TableRow>
-    		<TableRow>       
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="50dp" >
 
-        		<TextView
-        		    android:layout_width="wrap_content"
-        		    android:layout_height="wrap_content"
-        		    android:layout_marginBottom="10dp"
-        		    android:background="@drawable/rounded_corners_left"
-        		    android:paddingBottom="8dp"
-        		    android:paddingLeft="5dp"
-        		    android:paddingRight="5dp"
-        		    android:paddingTop="8dp"
-        		    android:text="@string/esn.changepassword.tv_current_pass"
-        		    android:textColor="#fff"
-        		    android:textSize="16dp" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:stretchColumns="1" >
 
-		        <EditText
-		            android:id="@+id/esn.changepass.currentpassword"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:singleLine="true"
-		            android:background="#c5eaf8"
-		            android:password="true"
-		            android:maxLength="100">
-		        </EditText>
-    		</TableRow>
-    		<TableRow >
-        
-        		<TextView
-        		    android:layout_width="wrap_content"
-        		    android:layout_height="wrap_content"
-        		    android:layout_marginBottom="10dp"
-        		    android:background="@drawable/rounded_corners_left"
-        		    android:paddingBottom="8dp"
-        		    android:paddingLeft="5dp"
-        		    android:paddingRight="5dp"
-        		    android:paddingTop="8dp"
-        		    android:text="@string/esn.changepassword.tv_new_pass"
-        		    android:textColor="#fff"
-        		    android:textSize="16dp" />
-        		
-		    	<EditText 
-		    	    android:id="@+id/esn.changepass.newpassword"
-			   	    android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:singleLine="true"
-	            	android:textSize="16dp"
-		            android:background="#c5eaf8"
-		            android:password="true"
-			   	    android:maxLength="100"/>
-    		</TableRow>
-    		
-	        <TableRow >
-	        
-	            <TextView
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginBottom="10dp"
-	                android:background="@drawable/rounded_corners_left"
-	                android:paddingBottom="8dp"
-	                android:paddingLeft="5dp"
-	                android:paddingRight="5dp"
-	                android:paddingTop="8dp"
-	                android:text="@string/esn.changepassword.tv_confirm_pass"
-	                android:textColor="#fff"
-	                android:textSize="16dp" />
+            <TableRow>
 
-	            <EditText 
-	                android:id="@+id/esn.changepass.repeatnewpassword"
-			   	    android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_marginBottom="10dp"
-		            android:paddingLeft="5dp"
-		            android:paddingRight="5dp"		            
-	            	android:paddingTop="8dp"
-	            	android:paddingBottom="8dp"
-	            	android:textSize="16dp"
-	            	android:singleLine="true"
-	            	android:password="true"
-		            android:background="#c5eaf8"
-		            android:maxLength="100"/>
-	        </TableRow>
-	        
-		</TableLayout>	
-		
-		<LinearLayout 
-	        android:orientation="horizontal"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:gravity="center"
-	        >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_corners_left"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/app_global_Email"
+                    android:textColor="#fff"
+                    android:textSize="16dp" />
 
-	        <Button
-	            android:id="@+id/btLogin"
-	            android:onClick="ChangePasswordClicked"
-	            android:text="@string/esn.changepassword.btDone" 
-	            android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:background="@drawable/rounded_corners"
-		        android:textColor="#FFF"
-	            />
-	      
-	    </LinearLayout>
-	    
-	</LinearLayout>
+                <EditText
+                    android:id="@+id/esn.changepass.email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="#c5eaf8"
+                    android:editable="false"
+                    android:maxLength="100"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:textSize="16dp" >
+
+                    <requestFocus />
+                </EditText>
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_corners_left"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/esn_changepassword_tv_current_pass"
+                    android:textColor="#fff"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/esn.changepass.currentpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="#c5eaf8"
+                    android:maxLength="100"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:password="true"
+                    android:singleLine="true"
+                    android:textSize="16dp" >
+                </EditText>
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_corners_left"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/esn_changepassword_tv_new_pass"
+                    android:textColor="#fff"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/esn.changepass.newpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="#c5eaf8"
+                    android:maxLength="100"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:password="true"
+                    android:singleLine="true"
+                    android:textSize="16dp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_corners_left"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/esn_changepassword_requirerepeatpassword"
+                    android:textColor="#fff"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/esn.changepass.repeatnewpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="#c5eaf8"
+                    android:maxLength="100"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:password="true"
+                    android:singleLine="true"
+                    android:textSize="16dp" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:onClick="ChangePasswordClicked"
+                android:text="@string/esn_changepassword_btDone"
+                android:textColor="#FFF" />
+        </LinearLayout>
+    </LinearLayout>
+
 </ScrollView>

@@ -14,7 +14,6 @@ import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.Events;
 import esn.models.EventsManager;
-import esn.models.FriendsManager;
 import esn.models.Users;
 import esn.models.UsersManager;
 import android.app.Activity;
@@ -28,7 +27,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,14 +36,13 @@ import android.widget.AbsListView.OnScrollListener;
 public class FriendsActivity extends Activity {
 
 	FriendsActivity context;
-	
+	private static final String LOG_TAG  = "FriendsActivity";
 	private ProgressDialog dialog;
 
 	public Handler handler;
 
 	EventsManager eventsManager = new EventsManager();
 
-	FriendsManager friendsManager = new FriendsManager();
 	
 	Sessions session;
 	
@@ -75,6 +72,8 @@ public class FriendsActivity extends Activity {
 	private static final int PAGE_SIZE = 8;
 	
 	private Boolean isFriend = false;
+	private UsersManager manager = new UsersManager();
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -135,11 +134,11 @@ public class FriendsActivity extends Activity {
 						
 						if(isFriend==true)
 						{
-							rs = friendsManager.unfriend(session.currentUser.AccID, friendId);
+							rs = manager.UnFriend(session.currentUser.AccID, friendId);
 						}
 						else
 						{
-							rs = friendsManager.addfriend(session.currentUser.AccID, friendId);
+							rs = manager.AddFriend(session.currentUser.AccID, friendId);
 						}
 						if(rs==true)
 						{							
@@ -307,11 +306,12 @@ public class FriendsActivity extends Activity {
 										Bitmap bitmap = null;
 
 										try {
-
+											
 											bitmap = Utils.getBitmapFromURL(url);
 
 										} catch (IOException e) {
-											// TODO Auto-generated catch block
+											Utils.showToast(FriendsActivity.this,"Image not found", Toast.LENGTH_LONG);
+											Log.d(LOG_TAG, e.getMessage());
 											e.printStackTrace();
 										}
 

@@ -17,6 +17,7 @@ public class Users {
 	
 	public int AccID;
 	public int RoleID;
+	public String Role;
 	public String Email;	
 	public String Password;
 	public String AccessToken;
@@ -36,6 +37,5 @@ public class Users {
 	public String Favorite;
 	public String Avatar;
 	public String fbID;
-	
 	public Users(){}	
 }

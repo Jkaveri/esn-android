@@ -85,7 +85,7 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 		
 		GetListComment();
 		
-		lstCm = (ListView)findViewById(R.id.esn_eventDetails_listComments);
+		lstCm = (ListView)findViewById(R.id.esn_comments_listComments);
 		
 		lstCm.setOnScrollListener(new OnScrollListener() {
 			
@@ -193,7 +193,7 @@ public class EventDetailCommentActivity extends SherlockActivity implements OnNa
 			
 			if(count>timeout)
 			{
-				EditText txtComment = (EditText)findViewById(R.id.esn_eventDetail_txtComment);
+				EditText txtComment = (EditText)findViewById(R.id.esn_comments_txtComment);
 				
 				String content = txtComment.getText().toString();
 				

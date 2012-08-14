@@ -1,8 +1,10 @@
 package esn.models;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
@@ -16,7 +18,7 @@ public class UsersManager {
 	// String URL = "http://esnservice.somee.com/accountservice.asmx";
 	String NAMESPACE = "http://esn.com.vn/";
 	String URL = "http://bangnl.info/ws/AccountsWS.asmx";
-	
+
 	HttpHelper helper = new HttpHelper(URL);
 
 	public UsersManager() {
@@ -53,15 +55,13 @@ public class UsersManager {
 		params.put("gender", user.Gender);
 		params.put("access_token", user.AccessToken);
 		params.put("fbID", user.fbID);
+		params.put("avatar", "http://myesn.vn/images/interface/esnmainlogo.png");
 		params.put("location", "");
-		params.put("avatar", "");
 
-		String s = user.Name + "--" + user.Email + "--" + user.Password + "--" + 
-		user.Birthday + "--" + user.Phone + "--" + user.Gender + "--" + user.fbID + "--";
 		JSONObject jsonObject = helper.invokeWebMethod("Register", params);
-		
+
 		rs = jsonObject.getInt("d");
-		
+
 		return rs;
 	}
 
@@ -72,7 +72,8 @@ public class UsersManager {
 
 		params.put("email", email);
 
-		JSONObject jsonObject = helper.invokeWebMethod("CheckEmailExisted",params);
+		JSONObject jsonObject = helper.invokeWebMethod("CheckEmailExisted",
+				params);
 
 		boolean rs = jsonObject.getBoolean("d");
 
@@ -135,7 +136,7 @@ public class UsersManager {
 		if (response != null) {
 
 			Users user = new Users();
-			
+
 			JSONObject jsonUser = response.getJSONObject("d");
 
 			JSONObject p = jsonUser.getJSONObject("Profile");
@@ -145,10 +146,9 @@ public class UsersManager {
 			user.Password = jsonUser.getString("Password");
 			user.Email = jsonUser.getString("Email");
 			user.AccessToken = jsonUser.getString("AccessToken");
-			
-			
+
 			user.Name = p.getString("Name");
-			
+
 			user.Birthday = Utils
 					.GetDateFromJSONString(p.getString("Birthday"));
 
@@ -169,7 +169,7 @@ public class UsersManager {
 			user.Favorite = p.getString("Favorite");
 
 			user.Avatar = p.getString("Avatar");
-			
+
 			return user;
 		}
 		return null;
@@ -182,14 +182,51 @@ public class UsersManager {
 
 		params.put("id", id);
 
-		JSONObject response = helper.invokeWebMethod("RetrieveJSON", params);
+		JSONObject response = helper.invokeWebMethod("Retrieve", params);
 
-		if (response != null) {
-
+		if (response != null && response.has("d") && !response.isNull("d")) {
 			Users user = new Users();
 			JSONObject jsonUser = response.getJSONObject("d");
+			user.AccID = jsonUser.getInt("AccID");
+			user.Password = jsonUser.getString("Password");
+			user.AccessToken = jsonUser.getString("AccessToken");
+			user.VerificationCode = jsonUser.getString("VerificationCode");
+			user.Email = jsonUser.getString("Email");
+			user.Role = jsonUser.getString("RoleID");
 
-			Utils.JsonToObject(jsonUser, user);
+			user.DateCreated = Utils.GetDateFromJSONString(jsonUser
+					.getString("DateCreated"));
+			user.fbID = jsonUser.getString("fbID");
+			String status = jsonUser.getString("Status");
+			user.Status = status.equals("Confirmed") ? AppEnums.AccountStatus.Confirmed
+					: status.equals("Confirmed") ? AppEnums.AccountStatus.NotConfirmed
+							: status.equals("Locked") ? AppEnums.AccountStatus.Locked
+									: 3;
+			// profile
+			JSONObject p = jsonUser.getJSONObject("Profile");
+
+			user.Name = p.getString("Name");
+
+			user.Birthday = Utils
+					.GetDateFromJSONString(p.getString("Birthday"));
+
+			user.Gender = p.getBoolean("Gender");
+
+			user.Phone = p.getString("Phone");
+
+			user.Address = p.getString("Address");
+
+			user.Street = p.getString("Street");
+
+			user.District = p.getString("District");
+
+			user.City = p.getString("City");
+
+			user.Country = p.getString("Country");
+
+			user.Favorite = p.getString("Favorite");
+
+			user.Avatar = p.getString("Avatar");
 
 			return user;
 		}
@@ -210,13 +247,24 @@ public class UsersManager {
 			if (response != null && response.has("d") && !response.isNull("d")) {
 				Users user = new Users();
 				JSONObject jsonUser = response.getJSONObject("d");
-
-				JSONObject p = jsonUser.getJSONObject("Profile");
-
-				user.AccID = jsonUser.getInt("ID");
 				user.AccID = jsonUser.getInt("AccID");
 				user.Password = jsonUser.getString("Password");
-				
+				user.AccessToken = jsonUser.getString("AccessToken");
+				user.VerificationCode = jsonUser.getString("VerificationCode");
+				user.Email = jsonUser.getString("Email");
+				user.Role = jsonUser.getString("RoleID");
+
+				user.DateCreated = Utils.GetDateFromJSONString(jsonUser
+						.getString("DateCreated"));
+				user.fbID = jsonUser.getString("fbID");
+				String status = jsonUser.getString("Status");
+				user.Status = status.equals("Confirmed") ? AppEnums.AccountStatus.Confirmed
+						: status.equals("Confirmed") ? AppEnums.AccountStatus.NotConfirmed
+								: status.equals("Locked") ? AppEnums.AccountStatus.Locked
+										: 3;
+				// profile
+				JSONObject p = jsonUser.getJSONObject("Profile");
+
 				user.Name = p.getString("Name");
 
 				user.Birthday = Utils.GetDateFromJSONString(p
@@ -239,43 +287,253 @@ public class UsersManager {
 				user.Favorite = p.getString("Favorite");
 
 				user.Avatar = p.getString("Avatar");
+
 				return user;
 			}
 		}
 		return null;
 	}
-	public Boolean UpdateAccessToken(int accID, String accessToken,String fbId) throws JSONException, IOException {
-		
+
+	public Users RetrieveByFbID(String fbId) throws ClientProtocolException,
+			IOException, JSONException {
+		if (fbId != null && !fbId.equals("")) {
+			HttpHelper helper = new HttpHelper(URL);
+			JSONObject params = new JSONObject();
+
+			params.put("fbId", fbId);
+
+			JSONObject response = helper.invokeWebMethod("GetAccountByFbID",
+					params);
+
+			if (response != null && response.has("d") && !response.isNull("d")) {
+				Users user = new Users();
+				JSONObject jsonUser = response.getJSONObject("d");
+				user.AccID = jsonUser.getInt("AccID");
+				user.Password = jsonUser.getString("Password");
+				user.AccessToken = jsonUser.getString("AccessToken");
+				user.VerificationCode = jsonUser.getString("VerificationCode");
+				user.Email = jsonUser.getString("Email");
+				user.Role = jsonUser.getString("RoleID");
+
+				user.DateCreated = Utils.GetDateFromJSONString(jsonUser
+						.getString("DateCreated"));
+				user.fbID = jsonUser.getString("fbID");
+				String status = jsonUser.getString("Status");
+				user.Status = status.equals("Confirmed") ? AppEnums.AccountStatus.Confirmed
+						: status.equals("Confirmed") ? AppEnums.AccountStatus.NotConfirmed
+								: status.equals("Locked") ? AppEnums.AccountStatus.Locked
+										: 3;
+				// profile
+				JSONObject p = jsonUser.getJSONObject("Profile");
+
+				user.Name = p.getString("Name");
+
+				user.Birthday = Utils.GetDateFromJSONString(p
+						.getString("Birthday"));
+
+				user.Gender = p.getBoolean("Gender");
+
+				user.Phone = p.getString("Phone");
+
+				user.Address = p.getString("Address");
+
+				user.Street = p.getString("Street");
+
+				user.District = p.getString("District");
+
+				user.City = p.getString("City");
+
+				user.Country = p.getString("Country");
+
+				user.Favorite = p.getString("Favorite");
+
+				user.Avatar = p.getString("Avatar");
+
+				return user;
+			}
+		}
+		return null;
+	}
+
+	public Boolean UpdateAccessToken(int accID, String accessToken, String fbId)
+			throws JSONException, IOException {
+
 		JSONObject params = new JSONObject();
 
 		params.put("accId", accID);
-		
+
 		params.put("accesstoken", accessToken);
-		
+
 		params.put("fbID", fbId);
 
-		JSONObject response = helper.invokeWebMethod("UpdateAccessToken", params);
+		JSONObject response = helper.invokeWebMethod("UpdateAccessToken",
+				params);
 
-		if(response.has("d"))
+		if (response.has("d"))
 			return response.getBoolean("d");
 		else
-			return false;		
+			return false;
 	}
 
-	public Boolean GetRelationStatus(int accId,int otherId) throws ClientProtocolException, IOException, JSONException
-	{
+	public Boolean GetRelationStatus(int accId, int otherId)
+			throws ClientProtocolException, IOException, JSONException {
 		JSONObject params = new JSONObject();
 
 		params.put("accID", accId);
-		
+
 		params.put("otherID", otherId);
 
-		JSONObject response = helper.invokeWebMethod("GetRelationStatus", params);
+		JSONObject response = helper.invokeWebMethod("GetRelationStatus",
+				params);
 
 		int rs = response.getInt("d");
-		
-		if(rs==1)
+
+		if (rs == 1)
 			return true;
 		return false;
+	}
+
+	public Users[] GetFbAccountHasRegistered(JSONArray friends, int accId)
+			throws JSONException, IOException {
+		JSONArray fbIds = new JSONArray();
+
+		int count = friends.length();
+		for (int i = 0; i < count; i++) {
+			JSONObject obj = friends.getJSONObject(i);
+			String id = obj.getString("id");
+			fbIds.put(id);
+		}
+
+		HttpHelper helper = new HttpHelper(URL);
+		JSONObject params = new JSONObject();
+
+		params.put("fbIDs", fbIds);
+		params.put("accountID", accId);
+		JSONObject response = helper.invokeWebMethod(
+				"GetFbAccountHasRegistered", params);
+
+		if (response != null && response.has("d") && !response.isNull("d")) {
+			Users user = new Users();
+			JSONArray arrayUsers = response.getJSONArray("d");
+			count = arrayUsers.length();
+			Users[] users = new Users[count];
+			for (int i = 0; i < count; i++) {
+				JSONObject jsonUser = arrayUsers.getJSONObject(i);
+
+				JSONObject p = jsonUser.getJSONObject("Profile");
+
+				user.AccID = jsonUser.getInt("ID");
+				user.AccID = jsonUser.getInt("AccID");
+				user.Password = jsonUser.getString("Password");
+
+				user.Name = p.getString("Name");
+
+				user.Birthday = Utils.GetDateFromJSONString(p
+						.getString("Birthday"));
+
+				user.Gender = p.getBoolean("Gender");
+
+				user.Phone = p.getString("Phone");
+
+				user.Address = p.getString("Address");
+
+				user.Street = p.getString("Street");
+
+				user.District = p.getString("District");
+
+				user.City = p.getString("City");
+
+				user.Country = p.getString("Country");
+
+				user.Favorite = p.getString("Favorite");
+
+				user.Avatar = p.getString("Avatar");
+
+				users[i] = user;
+			}
+			return users;
+
+		}
+
+		return null;
+	}
+
+	public boolean AddFriend(int accID, int friendID) throws JSONException,
+			ClientProtocolException, IOException {
+		JSONObject params = new JSONObject();
+		params.put("accID", accID);
+		params.put("friendID", friendID);
+		HttpHelper helper = new HttpHelper(URL);
+		JSONObject response = helper.invokeWebMethod("AddFriend", params);
+		if (response != null && response.has("d") && !response.isNull("d")) {
+
+			return response.getBoolean("d");
+		} else {
+			return false;
+		}
+
+	}
+
+	public boolean UnFriend(int accID, int friendID) throws JSONException,
+			ClientProtocolException, IOException {
+		JSONObject params = new JSONObject();
+		params.put("accID", accID);
+		params.put("friendID", friendID);
+		JSONObject result = helper.invokeWebMethod("Unfriend", params);
+
+		return result.getBoolean("d");
+	}
+
+	public List<Users> SearchFriend(int accID, String name)
+			throws ClientProtocolException, IOException, JSONException,
+			IllegalArgumentException, IllegalAccessException {
+		JSONObject params = new JSONObject();
+		params.put("accId", accID);
+		params.put("name", name);
+		HttpHelper helper = new HttpHelper(URL);
+		JSONObject response = helper.invokeWebMethod("SearchFriendByName",
+				params);
+		if (response != null && response.has("d") && !response.isNull("d")) {
+			List<Users> users = new ArrayList<Users>();
+			JSONArray arrayUsers = response.getJSONArray("d");
+			int count = arrayUsers.length();
+			for (int i = 0; i < count; i++) {
+				JSONObject userJSON = arrayUsers.getJSONObject(i);
+				Users user = new Users();
+				Utils.JsonToObject(userJSON, user);
+				users.add(user);
+			}
+
+			return users;
+
+		} else {
+			return null;
+		}
+
+	}
+
+	public ArrayList<Users> getFriendsList(int pageNum, int pageSize, int accID)
+			throws JSONException, IOException, IllegalArgumentException,
+			IllegalAccessException, ParseException {
+
+		ArrayList<Users> frds = new ArrayList<Users>();
+		JSONObject params = new JSONObject();
+		params.put("accountID", accID);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		JSONObject result = helper
+				.invokeWebMethod("GetListFriendsJSON", params);
+		if (result != null) {
+			if (result.has("d")) {
+				JSONArray jsonCall = result.getJSONArray("d");
+				for (int i = 0; i < jsonCall.length(); i++) {
+					JSONObject json = jsonCall.getJSONObject(i);
+					Users frd = new Users();
+					Utils.JsonToObject(json, frd);
+					frds.add(frd);
+				}
+			}
+		}
+		return frds;
 	}
 }

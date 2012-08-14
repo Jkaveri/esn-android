@@ -18,37 +18,9 @@ public class FriendsManager {
 		helper = new HttpHelper(URL);
 	}
 
-	public ArrayList<FriendsListsDTO> getFriendsList(int pageSize, int pageIndex, int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException, ParseException {
-		
-		ArrayList<FriendsListsDTO> frds = new ArrayList<FriendsListsDTO>();
-		JSONObject params = new JSONObject();
-		params.put("accountID", accID);
-		params.put("pageNum", pageIndex);
-		params.put("pageSize", pageSize);
-		JSONObject result = helper.invokeWebMethod("GetListFriendsJSON",params);
-		if (result != null) {
-			if (result.has("d")) {
-				JSONArray jsonCall = result.getJSONArray("d");
-				for (int i = 0; i < jsonCall.length(); i++) {
-					JSONObject json = jsonCall.getJSONObject(i);
-					FriendsListsDTO frd = new FriendsListsDTO();
-					Utils.JsonToObject(json, frd);
-					frds.add(frd);
-				}
-			}
-		}
-		return frds;
-	}
+	
 
-	public boolean unfriend(int accID, int friendID) throws JSONException, IOException {
-		
-		JSONObject params = new JSONObject();
-		params.put("accID", accID);
-		params.put("friendID", friendID);
-		JSONObject result = helper.invokeWebMethod("Unfriend",params);
-				
-		return result.getBoolean("d");
-	}
+	
 	
 	public boolean addfriend(int accID, int friendID) throws JSONException, IOException {
 		

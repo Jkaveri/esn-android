@@ -6,77 +6,83 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="8dp"
-    android:paddingRight="8dp" >    
-   
-    <LinearLayout 
+    android:paddingRight="8dp" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/logo_no_grid" />
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
         android:background="#CC0033"
         android:orientation="vertical"
-        android:paddingTop="30dp"
         android:paddingBottom="30dp"
-        >
-        <TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.tvEmail"
-	    	    android:textColor="#FFF"
-	    	    />
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="30dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/esn_register_tvEmail"
+            android:textColor="#FFF" />
+
         <EditText
-	        android:id="@+id/esn_login_Email"
-	        android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"
-        	android:layout_marginBottom="5dp"
-        	android:layout_marginTop="5dp"
-        	android:background="@drawable/rounded_corner_white"        	    
-        	android:paddingBottom="7dp"
-        	android:paddingLeft="5dp"
-        	android:paddingRight="5dp"
-        	android:paddingTop="7dp"
-        	android:singleLine="true"
-        	android:textColor="@color/text_color"
-        	android:maxLength="100"
-        	android:inputType="textEmailAddress"/>
-	
-         <TextView 
-	    	    android:layout_width="fill_parent"
-	    	    android:layout_height="wrap_content"
-	    	    android:text="@string/esn.register.tvPassword"
-	    	    android:layout_marginTop="5dp"
-	    	    android:textColor="#FFF"
-	    	    />
-	    <EditText
-	        android:id="@+id/esn_login_pass"
-	        android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginTop="5dp"
-	            android:background="@drawable/rounded_corner_white"
-	            android:inputType="textPassword"
-	            android:paddingBottom="7dp"
-	            android:paddingLeft="5dp"
-	            android:paddingRight="5dp"
-	            android:paddingTop="7dp"
-	            android:singleLine="true"
-	            android:maxLength="100"
-	            android:textColor="@color/text_color"
-	        />
-	
-	    <Button
-              android:id="@+id/btLogin"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="4dp"
-              android:layout_marginTop="10dp"
-              android:background="@drawable/rounded_corner_white"
-              android:onClick="LoginClicked"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp"
-              android:text="@string/esn.register.btLogin"
-              android:textColor="@color/text_color"
-              android:textSize="16dp" />	  
-	  
+            android:id="@+id/esn_login_Email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corner_white"
+            android:inputType="textEmailAddress"
+            android:maxLength="100"
+            android:paddingBottom="7dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="7dp"
+            android:singleLine="true"
+            android:textColor="@color/text_color" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/esn_register_tvPassword"
+            android:textColor="#FFF" />
+
+        <EditText
+            android:id="@+id/esn_login_pass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_corner_white"
+            android:inputType="textPassword"
+            android:maxLength="100"
+            android:paddingBottom="7dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="7dp"
+            android:singleLine="true"
+            android:textColor="@color/text_color" />
+
+        <Button
+            android:id="@+id/btLogin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corner_white"
+            android:onClick="LoginClicked"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="@string/esn_register_btLogin"
+            android:textColor="@color/text_color"
+            android:textSize="16dp" />
     </LinearLayout>
+
 </LinearLayout>

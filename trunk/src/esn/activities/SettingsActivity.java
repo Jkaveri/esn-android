@@ -29,8 +29,6 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 	private Sessions session;
 	private Context context;
 	
-	private ProgressDialog dialog;
-	
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

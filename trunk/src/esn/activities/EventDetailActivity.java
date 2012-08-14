@@ -1,8 +1,6 @@
 package esn.activities;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,10 +31,9 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.facebook.android.Facebook;
-
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
+import esn.classes.ShareToFacebookThread;
 import esn.classes.Utils;
 import esn.models.AppEnums;
 import esn.models.Comments;
@@ -159,60 +156,11 @@ public class EventDetailActivity extends SherlockActivity implements
 
 	}
 
-	Thread Share2FbThread = new Thread(new Runnable() {
-		
-		@Override
-		public void run() {
-			if (event != null) {
-				Facebook mFaceBook = new Facebook(WelcomeActivity.APP_ID);
-				if (session.restoreFaceBook(mFaceBook)) {
-					try {
-						Bundle params = new Bundle();
-
-						params.putString("message", "just for test :)");
-
-						params.putString("name", event.Title);
-						params.putString("caption", "http://jkaveri.com");
-						params.putString("link", "http://jkaveri.com");
-						params.putString("description", event.Description);
-						if (event.Picture != null && event.Picture.length()>0) {
-							params.putString("picture", event.Picture);
-
-						} else {
-							params.putString("picture",
-									"http://twitpic.com/show/thumb/6hqd44");
-						}
-						//mFaceBook.request("me");
-						String response = mFaceBook.request("me/feed", params, "POST");
-						
-						if(response!=null && response.length()>0){
-							Utils.showToast(EventDetailActivity.this, "post thanh cong", Toast.LENGTH_SHORT);
-						}else{
-							Utils.showToast(EventDetailActivity.this, "post that bai", Toast.LENGTH_SHORT);
-							//Toast.makeText(this, "post ko thanh cong", Toast.LENGTH_SHORT).show();
-						}
-					} catch (FileNotFoundException e) {
-						Utils.showToast(EventDetailActivity.this, "post that bai", Toast.LENGTH_SHORT);
-						e.printStackTrace();
-					} catch (MalformedURLException e) {
-						Utils.showToast(EventDetailActivity.this, "accessing an invalid endpoint", Toast.LENGTH_SHORT);
-						//Toast.makeText(this, "accessing an invalid endpoint", Toast.LENGTH_SHORT).show();
-						e.printStackTrace();
-					} catch (IOException e) {
-						Utils.showToast(EventDetailActivity.this, "Loi mang", Toast.LENGTH_SHORT);
-						e.printStackTrace();
-					}
-				}
-				
-			} else {
-
-			}
-		}
-	});
+	
 	
 	public void shareClicked(View view) {
 		
-		Share2FbThread.start();
+		new ShareToFacebookThread(event, this).start();
 
 	}
 
@@ -568,7 +516,7 @@ public class EventDetailActivity extends SherlockActivity implements
 
 				icEventType.setImageResource(EventType.getIconId(
 						event.EventTypeID, event.getLevel()));
-				if (event.Status == AppEnums.EventStatus.Confirmed) {
+				if (event.Status == AppEnums.EventStatus.Confirmed ||event.Status == AppEnums.EventStatus.Waiting) {
 					DisplayMetrics dm = new DisplayMetrics();
 					getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -765,32 +713,6 @@ public class EventDetailActivity extends SherlockActivity implements
 							}
 
 							// dialog.dismiss();
-						}
-					});
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		thr.start();
-	}
-
-	private void loadCommentList(final int pageSize, final int pageIndex) {
-		Thread thr = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-
-				CommentsManager commentsManager = new CommentsManager();
-				try {
-					final ArrayList<Comments> itemList = commentsManager
-							.GetListComment(eventId, pageIndex, pageSize);
-					handler.post(new Runnable() {
-
-						@Override
-						public void run() {
-							adapter.add(itemList);
 						}
 					});
 				} catch (Exception e) {

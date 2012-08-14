@@ -43,7 +43,6 @@ public class EsnMapView extends TapControlledMapView {
 	private Resources res;
 	private boolean isCreateEventByLongPress = true;
 	private boolean isLoadEventAround = true;
-
 	public EsnMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
@@ -157,6 +156,7 @@ public class EsnMapView extends TapControlledMapView {
 		} else if (isTouchEnded && isFirstComputeScroll) {
 			isTouchEnded = false;
 			lastMapCenter = this.getMapCenter();
+			
 			if (isLoadEventAround) {
 				double radius = calculateRadius();
 				new LoadEventsAroundThread(radius).start();
@@ -263,6 +263,7 @@ public class EsnMapView extends TapControlledMapView {
 
 		@Override
 		public void run() {
+			map.clearEventMarker();
 			for (int i = 0; i < events.length; i++) {
 				Events event = events[i];
 

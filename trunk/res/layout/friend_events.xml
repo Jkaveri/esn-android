@@ -6,6 +6,6 @@
         android:id="@+id/gmapView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="@string/key.maps.googleAPI"
+        android:apiKey="@string/key_maps_googleAPI"
         android:clickable="true"/> 
 </RelativeLayout>

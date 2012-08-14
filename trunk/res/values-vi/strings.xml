@@ -8,36 +8,39 @@
     <string name="esn_actName_profile">Thông tin cá nhân</string>
     <string name="esn_actName_login">Đăng Nhập</string>
     <string name="esn_actName_selectLabel">Chọn</string>
-    <!-- Login -->    
+    <string name="esn_welcome_confirm_exit">Bạn có muốn thoát khỏi ứng dụng không?</string>
+    <!-- Login -->
 
-    <string name="esn.global.must_enable_gps">Hãy mở định vị gps.</string>
-    <string name="esn.global.your_location_not_found">Không tìm thấy vị trí của bạn.</string>
+    <string name="esn_global_must_enable_gps">Hãy mở định vị gps_</string>
+    <string name="esn_global_your_location_not_found">Không tìm thấy vị trí của bạn_</string>
+    <string name="key_maps_googleAPI">0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg</string>
     <string name="help">In this introductory Google Apps webinar</string>
     <string name="term">In this introductory term</string>
 
     <!-- Global -->
-    <string name="esn.global.dateFormat">MM-dd-yyyy</string>
-    <string name="esn.global.loading">Đang tải…</string>
-    <string name="esn.global.pleaseWait">Xin chờ !</string>
-    <string name="esn.global.find">Tìm kiếm</string>
+    <string name="esn_global_dateFormat">MM-dd-yyyy</string>
+    <string name="esn_global_loading">Đang tải…</string>
+    <string name="esn_global_pleaseWait">Xin chờ !</string>
+    <string name="esn_global_find">Tìm kiếm</string>
     <string name="esn_global_ok">OK</string>
-    <string name="esn.global.Error">Lỗi</string>
-    <string name="esn.global.tryagain">Hãy thử lại. </string>
-    <string name="esn.global.ConnectionError">Lỗi kết nối !</string>
-    <string name="app.global.Email">Email</string>
-    <string name="app.global.RequireAllField">Điền đầy đủ thông tin !</string>
-    <string name="app.global.UpdateUnsuccess">Lỗi cập nhật ! Hãy thực hiện lại.</string>
-    <string name="app.global.UpdateSuccess">Cập nhật thành công !</string>
-    <string name="app.global.gallery">Thư viện ảnh</string>
-    <string name="app.global.camera">Máy ảnh</string>
-    <string name="app.global.cancel">Hủy bỏ</string>
-    <string name="app.global.choose">Chọn</string>
-    <string name="app.global.cantnotuploadimage">Không thể upload hình ảnh.</string>
-    <string name="app.global.search">Tìm kiếm</string>
-    <string name="app.global.yes">Đồng Ý</string>
-    <string name="app.global.no">Không</string>
-    <string name="app.global.viewasmap">Bản Đồ</string>
-    <string name="app.global.viewaslist">Danh Sách</string>
+    <string name="esn_global_Error">Lỗi</string>
+    <string name="esn_global_tryagain">Hãy thử lại_ </string>
+    <string name="esn_global_ConnectionError">Lỗi kết nối !</string>
+    <string name="app_global_Email">Email</string>
+    <string name="app_global_RequireAllField">Điền đầy đủ thông tin !</string>
+    <string name="app_global_UpdateUnsuccess">Lỗi cập nhật ! Hãy thực hiện lại_</string>
+    <string name="app_global_UpdateSuccess">Cập nhật thành công !</string>
+    <string name="app_global_gallery">Thư viện ảnh</string>
+    <string name="app_global_camera">Máy ảnh</string>
+    <string name="app_global_cancel">Hủy bỏ</string>
+    <string name="app_global_choose">Chọn</string>
+    <string name="app_global_cantnotuploadimage">Không thể upload hình ảnh_</string>
+    <string name="app_global_search">Tìm kiếm</string>
+    <string name="app_global_yes">Đồng Ý</string>
+    <string name="app_global_no">Không</string>
+    <string name="app_global_viewasmap">Bản Đồ</string>
+    <string name="app_global_viewaslist">Danh Sách</string>
+    <string name="esn_global_lostConnection">Mất kết nối, vui lòng kiểm tra lại cài đặt mạng!</string>
     <string name="esn_global_page_voice">Voice</string>
     <string name="esn_global_page_login">Đăng Nhập</string>
     <string name="esn_global_page_profile">Thông Tin Cá Nhân</string>
@@ -54,21 +57,26 @@
     <string name="esn_global_page_recoverypassword">Khôi Phục Mật Khẩu</string>
     <string name="esn_global_must_allow_access_location">Hiện ứng dụng không được phép truy cập vị trí hiện tại</string>
     <string name="esn_global_waring">Cảnh báo</string>
-      <!-- Settings page -->
-    <string name="esn.settings.app_settings">Cài đặt ứng dụng</string>
-    <string name="esn.settings.subscript.app_settings">Cài đặt cho ứng dụng. </string>
-    <string name="esn.settings.account">Tài khoản</string>
-    <string name="esn.settings.subscript.account">Cài đặt tài khoản</string>
-    <string name="esn.settings.provition">Điều khoản</string>
-    <string name="esn.settings.subscript.provition">Điều khoản sử dụng</string>
-    <string name="esn.settings.help">Trợ giúp</string>
-    <string name="esn.settings.subscript.help">Hướng dẫn sử dụng</string>
-    <string name="esn.settings.logout">Đăng xuất</string>
-    <string name="esn.settings.subscript.logout">Đăng xuất khỏi ứng dụng</string>
-    <string name="esn.settings.account.changepass">Đổi Mật Khẩu</string>
-    <string name="esn.settings.account.sub.changepass">Đổi mật khẩu tài khoản</string>
-    <string name="esn.settings.account.editprofile">Thông Tin Cá Nhân</string>
-    <string name="esn.settings.account.sub.editprofile">Sửa thông tin cá nhân của bạn</string>
+    <string name="esn_global_notification">Notifications</string>
+    <string name="esn_global_must_enable_fb_con">Bạn phải bật kết nối facebook cho tài khoản của bạn!</string>
+    <string name="esn_global_confirm">Xác nhận</string>
+    <string name="esn_global_list_empty">Danh sách hiện đang trống</string>
+    <string name="esn_global_function_developing">Chức năng đang trong giai đoạn hoàn thiện.\n Vui lòng đợi sang phiên bảng sau!</string>
+    <!-- Settings page -->
+    <string name="esn_settings_app_settings">Cài đặt ứng dụng</string>
+    <string name="esn_settings_subscript_app_settings">Cài đặt cho ứng dụng_ </string>
+    <string name="esn_settings_account">Tài khoản</string>
+    <string name="esn_settings_subscript_account">Cài đặt tài khoản</string>
+    <string name="esn_settings_provition">Điều khoản</string>
+    <string name="esn_settings_subscript_provition">Điều khoản sử dụng</string>
+    <string name="esn_settings_help">Trợ giúp</string>
+    <string name="esn_settings_subscript_help">Hướng dẫn sử dụng</string>
+    <string name="esn_settings_logout">Đăng xuất</string>
+    <string name="esn_settings_subscript_logout">Đăng xuất khỏi ứng dụng</string>
+    <string name="esn_settings_account_changepass">Đổi Mật Khẩu</string>
+    <string name="esn_settings_account_sub_changepass">Đổi mật khẩu tài khoản</string>
+    <string name="esn_settings_account_editprofile">Thông Tin Cá Nhân</string>
+    <string name="esn_settings_account_sub_editprofile">Sửa thông tin cá nhân của bạn</string>
     <string name="app_Setting_Account_ChangePassword">Đổi mật khẩu</string>
     <string name="app_Setting_Account_ChangeProfile">Sửa thông tin cá nhân</string>
     <string name="app_Setting_ApplicationSetting">Ứng dụng</string>
@@ -76,17 +84,19 @@
     <string name="app_Setting_Help">Trợ giúp</string>
     <string name="app_Setting_Account">Tài khoản</string>
     <string name="app_Setting">Cài đặt</string>
-	<!-- Welcome -->
-	<string name="esn_welcome_login">Đăng Nhập</string>
-	<string name="esn_welcome_loginWithFacebook">Đăng nhập bằng tài khoản facebook </string>
-	<string name="esn_welcome_signup">Đăng Ký</string>
-	
-	<string name="esn_userpage_online">Trực tuyến</string>
-	<string name="esn_userpage_ofline">Ngoại tuyến</string>
-	<string name="esn_userpage_Male">Nam</string>
-	<string name="esn_userpage_Female">Nữ</string>
-	
-	<string name="tnt">Tài Năng Trẻ @ 2012</string>
-	<string name="esn.global.notification">Thông Báo</string>	
-	<string name="esn.global.me">Tôi</string>
+    <!-- Welcome -->
+    <string name="esn_welcome_login">Đăng Nhập</string>
+    <string name="esn_welcome_loginWithFacebook">Đăng nhập bằng tài khoản facebook </string>
+    <string name="esn_welcome_signup">Đăng Ký</string>
+    <string name="esn_userpage_online">Trực tuyến</string>
+    <string name="esn_userpage_ofline">Ngoại tuyến</string>
+    <string name="esn_userpage_Male">Nam</string>
+    <string name="esn_userpage_Female">Nữ</string>
+    <string name="tnt">Tài Năng Trẻ @ 2012</string>
+    <string name="esn_global_notification">Thông Báo</string>
+    <string name="esn_global_me">Tôi</string>
+    <string name="esn_global_share_facebook_success">Đã chia sẻ sự kiện!</string>
+    <string name="esn_global_share_facebook_error">Chia sẻ lên facebook thất bại!</string>
+    <string name="esn_global_connection_error">Kết nối thất bại!</string>
+
 </resources>

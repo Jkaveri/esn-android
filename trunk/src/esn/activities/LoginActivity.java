@@ -1,35 +1,17 @@
 package esn.activities;
 
-import java.io.IOException;
-
-import org.json.JSONException;
-
 import com.actionbarsherlock.app.SherlockActivity;
 
 import esn.classes.LoginThread;
-import esn.classes.Sessions;
-import esn.models.Users;
-import esn.models.UsersManager;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends SherlockActivity{
@@ -43,7 +25,6 @@ public class LoginActivity extends SherlockActivity{
 	public SharedPreferences pref;
 
 
-	private Sessions session;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +36,6 @@ public class LoginActivity extends SherlockActivity{
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().hide();
 		 
-		session = Sessions.getInstance(context);
 
 		intent = this.getIntent();
 		
@@ -77,17 +57,13 @@ public class LoginActivity extends SherlockActivity{
 		}
 	}
 
-	public void BackClicked(View view) {
-		intent = new Intent(context, WelcomeActivity.class);
-		startActivity(intent);
-		finish();
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
 	        intent = new Intent(context,WelcomeActivity.class);
 	        startActivity(intent);
+	        finish();
+	        return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
@@ -101,14 +77,14 @@ public class LoginActivity extends SherlockActivity{
 		
 		if(email.isEmpty())
 		{
-			Toast.makeText(context, res.getString(R.string.esn_login_enteremail), 10).show();
+			Toast.makeText(context, res.getString(R.string.esn_login_enteremail), Toast.LENGTH_SHORT).show();
 			return;
 		}
 		String password = txtPass.getText().toString();
 		
 		if(password.isEmpty())
 		{
-			Toast.makeText(context, res.getString(R.string.esn_login_enterpassword), 10).show();
+			Toast.makeText(context, res.getString(R.string.esn_login_enterpassword), Toast.LENGTH_SHORT).show();
 			return;
 		}
 		

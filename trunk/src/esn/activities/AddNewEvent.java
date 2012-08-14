@@ -8,6 +8,7 @@ import com.facebook.android.Util;
 
 import esn.classes.EsnCameras;
 import esn.classes.Sessions;
+import esn.classes.ShareToFacebookThread;
 import esn.classes.Utils;
 import esn.models.EventType;
 import esn.models.Events;
@@ -60,13 +61,13 @@ public class AddNewEvent extends Activity {
 
 	private static final int SELECT_PICTURE = 1;
 	private static final int SELECT_EVENT_TYPE = 12;
-	
+
 	int fb = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		try {			
+		try {
 			super.onCreate(savedInstanceState);
 
 			setContentView(R.layout.add_new_event);
@@ -109,26 +110,24 @@ public class AddNewEvent extends Activity {
 				tvAddress.setText(res
 						.getString(R.string.esn_addNewEvent_noAddress));
 			}
-			
+
 			TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
 			tvImageEventStatus.setText(String.format(
 					res.getString(R.string.esn_addNewEvent_imageeventstatus),
 					this));
-			
-			Spinner spinner = (Spinner)findViewById(R.id.esn_addNewEvent_sharetype);
-			
+
+			Spinner spinner = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
+
 			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			   
+
 				@Override
-				public void onItemSelected(AdapterView<?> adapter, View arg1,int i, long l) {
-					if(i==1)
-					{
-						TableRow row = (TableRow)findViewById(R.id.ak);
+				public void onItemSelected(AdapterView<?> adapter, View arg1,
+						int i, long l) {
+					if (i == 1) {
+						TableRow row = (TableRow) findViewById(R.id.ak);
 						row.setVisibility(View.GONE);
-					}
-					else
-					{
-						TableRow row = (TableRow)findViewById(R.id.ak);
+					} else {
+						TableRow row = (TableRow) findViewById(R.id.ak);
 						row.setVisibility(View.VISIBLE);
 					}
 				}
@@ -136,11 +135,11 @@ public class AddNewEvent extends Activity {
 				@Override
 				public void onNothingSelected(AdapterView<?> arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 			});
-			
+
 		} catch (Exception e) {
 			Utils.showToast(this, res.getString(R.string.esn_global_Error),
 					Toast.LENGTH_SHORT);
@@ -173,51 +172,52 @@ public class AddNewEvent extends Activity {
 	public void btnAddClicked() {
 
 		try {
-			
-			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);			
+
+			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
 			String title = txtTitle.getText().toString();
 
 			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
 			String description = txtDescription.getText().toString();
 
 			if ((title == null) || title.length() <= 0) {
-				txtTitle.setError("Title is required",res.getDrawable(R.drawable.ic_alerts_and_states_error));
+				txtTitle.setError("Title is required",
+						res.getDrawable(R.drawable.ic_alerts_and_states_error));
 				txtTitle.requestFocus();
 				return;
 			}
 			if (description == null || description.length() <= 0) {
 
-				txtDescription.setError("Description is required",res.getDrawable(R.drawable.ic_alerts_and_states_error));
+				txtDescription.setError("Description is required",
+						res.getDrawable(R.drawable.ic_alerts_and_states_error));
 				txtDescription.requestFocus();
 				return;
 			}
-			
+
 			event.AccID = sessions.currentUser.AccID;
 			event.Title = title;
 			event.Description = description;
 
 			event.ShareType = 0;
-			
+
 			Spinner ddlShareType = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
-		
+
 			String sharetype = ddlShareType.getSelectedItem().toString();
-			
-			if (sharetype.equals(res.getString(R.string.esn_addNewEvent_sharetypepublic))) {
+
+			if (sharetype.equals(res
+					.getString(R.string.esn_addNewEvent_sharetypepublic))) {
 				event.ShareType = 1;
-			}	
-			
-			if(event.ShareType==0)
-			{
-				event.EventTypeID=10;
 			}
-			
-			
+
+			if (event.ShareType == 0) {
+				event.EventTypeID = 10;
+			}
+
 			if (event.EventTypeID <= 0) {
 				Toast.makeText(context, "Ban phai chon loai su kien",
 						Toast.LENGTH_SHORT).show();
 				return;
 			}
-			
+
 			int i = 0;
 			// waiting for upload
 			// if uploaded or upload failed
@@ -374,7 +374,6 @@ public class AddNewEvent extends Activity {
 		}
 	}
 
-	
 	public class UploadImageTask extends AsyncTask<Uri, Integer, String> {
 		@Override
 		protected void onPreExecute() {
@@ -458,7 +457,11 @@ public class AddNewEvent extends Activity {
 
 				final Events event = manager.setEntity(this.event);
 				if (event.EventID > 0) {
+					if (fb == 2) {
 
+						new ShareToFacebookThread(event, AddNewEvent.this)
+								.start();
+					}
 					runOnUiThread(new Runnable() {
 
 						@Override
@@ -466,7 +469,8 @@ public class AddNewEvent extends Activity {
 							dialog.dismiss();
 							homeData.putExtra("eventId", event.EventID);
 							homeData.putExtra("labelId", event.EventTypeID);
-							homeData.putExtra("labelIcon", EventType.getIconId(event.EventTypeID, 1));
+							homeData.putExtra("labelIcon",
+									EventType.getIconId(event.EventTypeID, 1));
 							homeData.putExtra("eventTitle", event.Title);
 							homeData.putExtra("eventDescription",
 									event.Description);
@@ -523,21 +527,17 @@ public class AddNewEvent extends Activity {
 			imgBytes = null;
 		}
 	}
-	
-	public void ShareFbClick(View v)
-	{
-		ImageView im = (ImageView)findViewById(R.id.esn_addNewEvent_sharefb);
-		
-		if(fb==1)
-		{
+
+	public void ShareFbClick(View v) {
+		ImageView im = (ImageView) findViewById(R.id.esn_addNewEvent_sharefb);
+
+		if (fb == 1) {
 			im.setImageDrawable(res.getDrawable(R.drawable.ic_newevent_fb_en));
-			fb=2;
-		}
-		else
-		{
+			fb = 2;
+		} else {
 			im.setImageDrawable(res.getDrawable(R.drawable.ic_newevent_fb_dis));
-			fb=1;
+			fb = 1;
 		}
-		
+
 	}
 }

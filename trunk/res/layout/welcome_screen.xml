@@ -6,14 +6,7 @@
     android:gravity="center"
     android:background="@drawable/main_color">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tnt"
-        android:textColor="#ffff"
-        android:textSize="30dp"
-        android:layout_marginBottom="50dp"
-        />
+    
 
     <ProgressBar 
         android:id="@+id/esn_welcomeScreen_progressBar"
@@ -24,8 +17,16 @@
         android:id="@+id/esn_welcomeScreen_tvLoading" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/esn.global.loading"
+        android:text="@string/esn_global_loading"
         android:textSize="@dimen/textSize.small"
         android:textColor="#ffff"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tnt"
+        android:textColor="#ffff"
+        android:textSize="10dp"
+        android:layout_marginBottom="50dp"
+        />
 </LinearLayout>

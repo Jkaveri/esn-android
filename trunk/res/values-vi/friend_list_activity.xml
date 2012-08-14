@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="btn.Friends.Events">Sự kiện</string>
-    <string name="btn.Friends.FdsList">Danh Sách Bạn Bè</string>
-    <string name="btn.Friends.EvsList">Danh sách</string>
-    <string name="btn.Friends.Maps">Bản đồ</string>
-    <string name="txt.Friends.Search">Tìm kiếm</string>
-    <string name="str.Friends.Events.ViewAsMap">Bạn bè trên bản đồ</string>
-    <string name="str.Friends.Events.ViewAsList">Danh sách sự kiện bạn bè</string>
-	<string name="str.Friends.Lists.Title">Danh sách bạn bè</string>
-	<string name="btn.Friends.Lists.Diaglog.Visit">Thông Tin</string>
-	<string name="btn.Friends.Lists.Diaglog.Unfriend">Xóa</string>
-	<string name="btn.Friends.Lists.Diaglog.Close">Đóng</string>
-	<string name="btn.Friends.Lists.Diaglog.unfriendsuccess">Xóa bạn thành công !</string>
-	<string name="btn.Friends.Lists.Diaglog.unfriendnotsuccess">Lỗi, Hãy thực hiện lại.</string>
-	<string name="btn.Friends.Lists.Diaglog.nofriend">Không có bạn bè.</string>
-	<string name="btn.Friends.Lists.Diaglog.addfriendsuccess">Add friend Successfull !</string>
+    <string name="btn_Friends_Events">Sự kiện</string>
+    <string name="btn_Friends_FdsList">Danh Sách Bạn Bè</string>
+    <string name="btn_Friends_EvsList">Danh sách</string>
+    <string name="btn_Friends_Maps">Bản đồ</string>
+    <string name="txt_Friends_Search">Tìm kiếm</string>
+    <string name="str_Friends_Events_ViewAsMap">Bạn bè trên bản đồ</string>
+    <string name="str_Friends_Events_ViewAsList">Danh sách sự kiện bạn bè</string>
+	<string name="str_Friends_Lists_Title">Danh sách bạn bè</string>
+	<string name="btn_Friends_Lists_Diaglog_Visit">Thông Tin</string>
+	<string name="btn_Friends_Lists_Diaglog_Unfriend">Xóa</string>
+	<string name="btn_Friends_Lists_Diaglog_Close">Đóng</string>
+	<string name="btn_Friends_Lists_Diaglog_unfriendsuccess">Xóa bạn thành công !</string>
+	<string name="btn_Friends_Lists_Diaglog_unfriendnotsuccess">Lỗi, Hãy thực hiện lại_</string>
+	<string name="btn_Friends_Lists_Diaglog_nofriend">Không có bạn bè_</string>
+	<string name="btn_Friends_Lists_Diaglog_addfriendsuccess">Add friend Successfull !</string>
 </resources>

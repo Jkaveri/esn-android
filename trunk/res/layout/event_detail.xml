@@ -22,10 +22,10 @@
             android:orientation="horizontal" >
 
             <ImageView
-                android:id="@+id/esn.eventDetail.iconEventType"
+                android:id="@+id/esn_eventDetail_iconEventType"
                 android:layout_width="@dimen/metric_max_height"
                 android:layout_height="@dimen/metric_max_height"
-                android:contentDescription="@string/esn.eventDetail.iconEventType" />
+                android:contentDescription="@string/esn_eventDetail_iconEventType" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -34,7 +34,7 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/esn.eventDetail.title"
+                    android:id="@+id/esn_eventDetail_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -43,7 +43,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/esn.eventDetail.dateCreated"
+                    android:id="@+id/esn_eventDetail_dateCreated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:background="@drawable/ic_event_share"
-                    android:contentDescription="@string/esn.eventDetail.iconEventType"
+                    android:contentDescription="@string/esn_eventDetail_iconEventType"
                     android:onClick="shareClicked"
                     android:scaleType="fitCenter" />
             </LinearLayout>
@@ -91,13 +91,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:gravity="right"
-                    android:text="@string/esn.eventDetail.description"
+                    android:text="@string/esn_eventDetail_description"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/esn.eventDetail.description"
+                    android:id="@+id/esn_eventDetail_description"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:paddingRight="2dp"
@@ -123,13 +123,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:gravity="right"
-                    android:text="@string/esn.eventDetail.like"
+                    android:text="@string/esn_eventDetail_like"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/esn.eventDetail.like"
+                    android:id="@+id/esn_eventDetail_like"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#33b5e5"
@@ -152,13 +152,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:gravity="right"
-                    android:text="@string/esn.eventDetail.dislike"
+                    android:text="@string/esn_eventDetail_dislike"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/esn.eventDetail.dislike"
+                    android:id="@+id/esn_eventDetail_dislike"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#33b5e5"
@@ -182,13 +182,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:gravity="right"
-                    android:text="@string/esn.eventDetail.createby"
+                    android:text="@string/esn_eventDetail_createby"
                     android:textColor="#33b5e5"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/esn.eventDetail.name"
+                    android:id="@+id/esn_eventDetail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="false"
@@ -220,7 +220,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/esn.eventDetail.address"
+                    android:id="@+id/esn_eventDetail_address"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:paddingRight="2dp"
@@ -269,12 +269,12 @@
             android:orientation="horizontal" >
 
             <EditText
-                android:id="@+id/esn.eventDetail.txtComment"
+                android:id="@+id/esn_eventDetail_txtComment"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corners"
-                android:hint="@string/esn.eventDetail.comment"
+                android:hint="@string/esn_eventDetail_comment"
                 android:inputType="text"
                 android:maxLength="160"
                 android:paddingBottom="8dp"
@@ -292,7 +292,7 @@
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/rounded_corners"
                 android:onClick="CommentClicked"
-                android:text="@string/esn.eventDetail.send"
+                android:text="@string/esn_eventDetail_send"
                 android:textColor="@drawable/white"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -319,7 +319,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_corners"
             android:onClick="ShowAllCommentClicked"
-            android:text="@string/esn.eventDetail.commentall"
+            android:text="@string/esn_eventDetail_commentall"
             android:textColor="@drawable/white"
             android:textSize="10dp" />
     </LinearLayout>

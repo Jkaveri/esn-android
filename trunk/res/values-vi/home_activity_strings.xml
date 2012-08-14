@@ -13,6 +13,4 @@
 	<string name="esn_home_menuItem_naviagtor">Navigator</string>
 	<string name="esn_home_menuItem_zoomIn">Phóng to</string>
 	<string name="esn_home_menuItem_zoomOut">Thu nhỏ</string>
-	<string name="esn_home_navigate_item_viewAsMap">View As Map</string>
-	<string name="esn_home_navigate_item_viewAsList">View As List</string>
 </resources>

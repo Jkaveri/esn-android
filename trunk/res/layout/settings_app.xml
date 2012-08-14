@@ -23,13 +23,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_setting_enablenotification"
-                android:contentDescription="@string/esn.setting.app.enableEventNotification"
+                android:contentDescription="@string/esn_setting_app_enableEventNotification"
                 android:layout_marginRight="10dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" 
-                android:text="@string/esn.setting.app.enableFriendNotification"
+                android:text="@string/esn_setting_app_enableFriendNotification"
                 android:textColor="@color/text_color"
                 />
             <TextView />
@@ -50,12 +50,12 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_setting_eventnotice"
                 android:layout_marginRight="10dp"
-                android:contentDescription="@string/esn.setting.app.enableEventNotification"
+                android:contentDescription="@string/esn_setting_app_enableEventNotification"
                 />
             <TextView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/esn.setting.app.enableEventNotification"
+                android:text="@string/esn_setting_app_enableEventNotification"
                 android:textColor="@color/text_color"
                 />
             <TextView />
@@ -74,13 +74,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_setting_app_connection"
-                android:contentDescription="@string/esn.setting.app.enableConnectFacebook"
+                android:contentDescription="@string/esn_setting_app_enableConnectFacebook"
                 android:layout_marginRight="10dp"
                 />
             <TextView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/esn.setting.app.enableConnectFacebook"
+                android:text="@string/esn_setting_app_enableConnectFacebook"
                 android:textColor="@color/text_color"
                 />
             <Switch 
@@ -102,13 +102,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_setting_access_location"
-                android:contentDescription="@string/esn.setting.app.enablelocation"
+                android:contentDescription="@string/esn_setting_app_enablelocation"
                 android:layout_marginRight="10dp"
                 />
             <TextView 
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="@string/esn.setting.app.enablelocation"
+                android:text="@string/esn_setting_app_enablelocation"
                android:textColor="@color/text_color" 
                 />
             <CheckBox 
@@ -132,13 +132,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_setting_access_headphone"
-                android:contentDescription="@string/esn.setting.app.enablelocation"
+                android:contentDescription="@string/esn_setting_app_enablelocation"
                 android:layout_marginRight="10dp"
                 />
             <TextView 
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="@string/esn.setting.app.enableheadphone"
+                android:text="@string/esn_setting_app_enableheadphone"
                android:textColor="@color/text_color" 
                 />
             <CheckBox 
@@ -163,13 +163,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_setting_logout_dark"
-                android:contentDescription="@string/esn.setting.app.enablelocation"
+                android:contentDescription="@string/esn_setting_app_enablelocation"
                 android:layout_marginRight="10dp"
                 />
             <TextView 
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="@string/esn.settings.logout"
+                android:text="@string/esn_settings_logout"
                android:textColor="@color/text_color" 
                 />
             <TextView />

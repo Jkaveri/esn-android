@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="esn.voicemode.title">Chế độ tiếng nói</string>
-    <string name="esn.voicemode.state">Xin chào !</string>
-     <string name="esn.voicemode.services.stop">Đã tắt chức năng dẫn đường</string>
-    <string name="esn.voicemode.services.start">Đã mở chức năng dẫn đường</string>
+    <string name="esn_voicemode_title">Chế độ tiếng nói</string>
+    <string name="esn_voicemode_state">Xin chào! </string>
+     <string name="esn_voicemode_services_stop">Đã tắt chức năng dẫn đường</string>
+    <string name="esn_voicemode_services_start">Đã mở chức năng dẫn đường</string>
 </resources>
