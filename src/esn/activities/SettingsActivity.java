@@ -29,7 +29,6 @@ public class SettingsActivity extends Activity implements OnItemClickListener {
 	private Sessions session;
 	private Context context;
 	
-	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);

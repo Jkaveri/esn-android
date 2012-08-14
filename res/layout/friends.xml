@@ -18,7 +18,12 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_avatar" />
+            android:background="@drawable/ic_avatar2"
+		    android:paddingLeft="4dp"
+		    android:paddingRight="4dp"
+		    android:paddingTop="4dp"
+		    android:paddingBottom="4dp"
+		    android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -38,14 +43,14 @@
                 android:id="@+id/esn_setting_profile_gender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:textColor="#33b5e5" />
 
             <TextView
                 android:id="@+id/esn_setting_profile_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
                 android:textColor="#33b5e5" />
         </LinearLayout>
     </LinearLayout>
@@ -78,7 +83,8 @@
             android:paddingRight="5dp"
             android:text="@string/esn_setting_profile_notification"
             android:textColor="@android:color/white"
-            android:textSize="15dp" />
+            android:textSize="15dp" 
+            android:onClick="DevelopClicked"/>
 
         <ImageButton
             android:layout_width="87dp"
@@ -87,7 +93,8 @@
             android:contentDescription="@string/app_global_camera"
             android:src="@drawable/ic_setting_profile_no"
             android:textColor="@android:color/white"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:onClick="DevelopClicked"/>
     </LinearLayout>
 
     <LinearLayout
@@ -117,7 +124,8 @@
             android:paddingRight="5dp"
             android:src="@drawable/ic_setting_profile_information"
             android:textColor="@android:color/white"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:onClick="DevelopClicked"/>
 
         <ImageButton
             android:layout_width="87dp"
@@ -126,13 +134,15 @@
             android:contentDescription="@string/app_global_camera"
             android:src="@drawable/ic_setting_profile_location"
             android:textColor="@android:color/white"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:onClick="DevelopClicked"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal" >
 
         <ListView

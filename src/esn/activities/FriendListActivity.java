@@ -67,9 +67,10 @@ public class FriendListActivity extends ListActivity implements
 		sessions = Sessions.getInstance(this);
 
 		progressDialog = new ProgressDialog(this);
-		progressDialog.setTitle(this.getResources().getString(
-				R.string.esn_global_loading));
+		progressDialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 		progressDialog.setMessage("Waiting ....");
+		progressDialog.setCancelable(false);
+		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
 
 		if (friendId == 0) {

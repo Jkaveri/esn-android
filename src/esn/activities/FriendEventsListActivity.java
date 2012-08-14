@@ -217,9 +217,10 @@ public class FriendEventsListActivity extends Activity implements
 			finish();
 			return true;
 		} else if (itemTitle.equals("FindMoreFriend")) {
-			Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
+			/*Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
 			startActivity(intenFdsEvent);
-			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);*/
+			Toast.makeText(this, R.string.esn_global_function_developing, Toast.LENGTH_LONG).show();
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);

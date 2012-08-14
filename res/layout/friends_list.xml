@@ -4,20 +4,15 @@
     android:layout_height="match_parent"
     android:background="#E8E3DC"
     android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="8dp" >
+    android:padding="8dp">
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dip"
-        android:layout_marginTop="50dip"
+        android:layout_marginBottom="48dip"
+        android:layout_marginTop="48dip"
         android:background="@drawable/rounded_corner_list_whilte"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp"
-        android:scrollbars="none" />
-
-
+        android:scrollbars="none"
+        android:padding="8dp" />        
 </LinearLayout>

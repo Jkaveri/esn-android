@@ -50,6 +50,8 @@ public abstract class CustomListAdapter<T> extends BaseAdapter {
 		this.layoutRow = layoutRow;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.imageLoader = new ImageLoader(activity.getApplicationContext());
+		this.imageLoader.setDefaultEmptyImage(this.idIcon);
 	}
 
 	public void add(ArrayList<T> list) {

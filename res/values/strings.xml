@@ -8,14 +8,14 @@
     <string name="esn_actName_profile">Profile</string>
     <string name="esn_actName_login">Login</string>
     <string name="esn_actName_selectLabel">Select label</string>
+    <string name="esn_welcome_confirm_exit">Exit application ?</string>
     <!-- Login -->
 
     <string name="esn_global_must_enable_gps">You must enable gps</string>
     <string name="esn_global_your_location_not_found">Your Location Not Found</string>
-    <string name="key_maps_googleAPI">0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg</string>
+    <string name="key_maps_googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
     <string name="help">In this introductory Google Apps webinar</string>
     <string name="term">In this introductory term</string>
-
     <!-- Global -->
     <string name="esn_global_dateFormat">MM-dd-yyyy</string>
     <string name="esn_global_loading">Loading…</string>
@@ -27,7 +27,7 @@
     <string name="esn_global_ConnectionError">Connection error !</string>
     <string name="app_global_Email">Email</string>
     <string name="app_global_RequireAllField">Enter all fields !</string>
-    <string name="app_global_UpdateUnsuccess">Update failed ! Try again_</string>
+    <string name="app_global_UpdateUnsuccess">Update failed ! Try again.</string>
     <string name="app_global_UpdateSuccess">Update success !</string>
     <string name="app_global_gallery">Photo gallery</string>
     <string name="app_global_camera">Camera</string>
@@ -58,6 +58,9 @@
     <string name="esn_global_unsuccess">Unsuccess!</string>
     <string name="esn_global_notification">Notifications</string>
     <string name="esn_global_me">Me</string>
+<string name="esn_global_confirm">Xác nhận</string>
+    <string name="esn_global_list_empty">Danh sách hiện đang trống</string>
+    <string name="esn_global_function_developing">Chức năng đang trong giai đoạn hoàn thiện.\n Vui lòng đợi sang phiên bảng sau!</string>
     <!-- Settings page -->
 
     <string name="esn_settings_app_settings">Application Settings</string>
@@ -92,5 +95,9 @@
     <string name="tnt">Tài Năng Trẻ 2012</string>
     <string name="esn_global_notification">Notifications</string>
     <string name="esn_global_me">Me</string>
+<string name="esn_global_share_facebook_success">Đã chia sẻ sự kiện!</string>
+    <string name="esn_global_share_facebook_error">Chia sẻ lên facebook thất bại!</string>
+    <string name="esn_global_connection_error">Kết nối thất bại!</string>
 
+    <string name="esn_global_comment">Comment</string>
 </resources>

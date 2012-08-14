@@ -66,8 +66,9 @@ public class FindFriendsActivity extends Activity {
 		progressDialog = new ProgressDialog(this);
 
 		progressDialog.setTitle(res.getString(R.string.esn_global_loading));
-		progressDialog.setMessage(res
-				.getString(R.string.esn_find_friend_finding));
+		progressDialog.setMessage(res.getString(R.string.esn_find_friend_finding));
+		progressDialog.setCancelable(false);
+		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
 		// setup list view
 		adapter = new ListViewFindFriendAdapter(this, new ArrayList<Users>(),

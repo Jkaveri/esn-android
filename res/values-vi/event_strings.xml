@@ -8,13 +8,14 @@
     <string name="esn_addNewEvent_cancel">Hủy bỏ</string>
     <string name="esn_addNewEvent_coordinate">Tọa độ :</string>
     <string name="esn_addNewEvent_addresss">Địa chỉ :</string>
-    <string name="esn_addNewEvent_imageeventstatus">Chưa có hình ảnh nào_</string>
-    <string name="esn_addNewEvent_canNotUpload">Không thể tải hình lên_</string>
+    <string name="esn_addNewEvent_imageeventstatus">Chưa có hình ảnh nào.</string>
+    <string name="esn_addNewEvent_canNotUpload">Không thể tải hình lên.</string>
     <string name="esn_addNewEvent_wantToContinue">Bạn có muốn tiếp tục không ?</string>
+<string name="esn_addNewEvent_noPicture">No picture!</string>
     <string name="esn_addNewEvent_sharetype">Loại Chia Sẻ :</string>
     <string name="esn_addNewEvent_sharetypepublic">Cộng đồng</string>
     <string name="esn_addNewEvent_sharetypeprivate">Riêng tư</string>
-    <string name="esn_addNewEvent_chooseeventtype">Hãy chọn loại sự kiện_ </string>
+    <string name="esn_addNewEvent_chooseeventtype">Hãy chọn loại sự kiện.</string>
     <string name="esn_addNewEvent_uploading">Vui lòng chờ trong giây lát!</string>
     <string name="esn_addNewEvent_uploadEventImage">Đang tải lên hình ảnh...</string>
     <string name="esn_addNewEvent_noAddress">Không tìm thấy địa chỉ</string>
@@ -35,13 +36,13 @@
     <string name="esn_eventDetail_commensuccess">Thành công</string>
     <string name="esn_eventDetail_commenfail">Lỗi, Hãy thực hiện lại</string>
     <string name="esn_eventDetail_islike">Bạn đã xác nhận đúng rồi_</string>
-    <string name="esn_eventDetail_isdislike">Bạn đã xác nhận sai rồi_</string>
-    <string name="esn_eventDetail_likesuccess">Bạn đã xác nhận đúng_</string>
-    <string name="esn_eventDetail_dislikesuccess">Bạn đã xác nhận sai_</string>
-    <string name="esn_eventDetail_likefail">Lỗi, Hãy thực hiện lại_</string>
+    <string name="esn_eventDetail_isdislike">Bạn đã xác nhận sai rồi.</string>
+    <string name="esn_eventDetail_likesuccess">Bạn đã xác nhận đúng.</string>
+    <string name="esn_eventDetail_dislikesuccess">Bạn đã xác nhận sai.</string>
+    <string name="esn_eventDetail_likefail">Lỗi, Hãy thực hiện lại.</string>
     <string name="esn_eventDetail_entercontent">Hãy nhập nội dung !</string>
     <string name="esn_eventDetail_entereventtitle">Tiêu đề !</string>
     <string name="esn_eventDetail_eventIsWaiting">Ảnh đang chờ kiểm duyệt</string>
     <string name="esn_eventDetail_address">Địa Chỉ</string>
-    <string name="esn_eventDetail_commentwaiting">Hãy đợi 30 giây để bình luận tiếp_</string>
+    <string name="esn_eventDetail_commentwaiting">Hãy đợi 30 giây để bình luận tiếp.</string>
 </resources>

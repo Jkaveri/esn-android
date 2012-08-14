@@ -86,6 +86,8 @@ public class EventDetailActivity extends SherlockActivity implements
 		dialog.setTitle(getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage(getResources().getString(
 				R.string.esn_global_pleaseWait));
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 
 		res = getResources();

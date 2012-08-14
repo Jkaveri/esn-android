@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.json.JSONException;
 
 import com.facebook.android.Util;
+
+import esn.activities.ProfileActivity.LogoutReceiver;
 import esn.adapters.ListViewEventUserAdapter;
 import esn.classes.Sessions;
 import esn.classes.Utils;
@@ -17,7 +19,10 @@ import esn.models.UsersManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -62,6 +67,8 @@ public class ProfileActivity extends Activity {
 
 	protected ArrayList<Events> itemList;
 
+	private LogoutReceiver re;
+
 	public final static int CODE_REQUEST_SET_FILTER = 2;
 
 	private static final int PAGE_SIZE = 8;
@@ -82,6 +89,8 @@ public class ProfileActivity extends Activity {
 		handler = new Handler();
 
 		session = Sessions.getInstance(context);
+				
+		
 		listUserEvent = (ListView) findViewById(R.id.esn_profile_listeventuser);
 		adapter = new ListViewEventUserAdapter(this, new ArrayList<Events>());
 		adapter.setDefaultEmptyImage(R.drawable.no_image);
@@ -122,6 +131,10 @@ public class ProfileActivity extends Activity {
 			}
 		});
 		new GetListEventThread(1, PAGE_SIZE).start();
+		re = new LogoutReceiver();
+		IntentFilter filter = new IntentFilter(HomeActivity.LOGOUT_ACTION);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(re, filter);
 	}
 
 	@Override
@@ -133,9 +146,10 @@ public class ProfileActivity extends Activity {
 	private void ShowInforUser() {
 
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(
-				R.string.esn_global_loading));
+		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 
 		ShowProfileThread showProfileThread = new ShowProfileThread();
@@ -147,7 +161,6 @@ public class ProfileActivity extends Activity {
 		intent = new Intent(context, SettingsAppActivity.class);
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-		finish();
 	}
 
 	public void MessageClicked(View v) {
@@ -168,12 +181,18 @@ public class ProfileActivity extends Activity {
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
+	
+	public void LocationClicked(View view)
+	{
+		Toast.makeText(context, res.getString(R.string.esn_global_function_developing), Toast.LENGTH_SHORT).show();
+	}
 
 	@Override
 	public void onDestroy() {
 		adapter.stopThread();
 		adapter.clearCache();
 		listUserEvent.setAdapter(null);
+		unregisterReceiver(re);
 		super.onDestroy();
 	}
 
@@ -348,7 +367,6 @@ public class ProfileActivity extends Activity {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
 
 			avatar.setImageBitmap(bitmap);
-
 			dialog.dismiss();
 		}
 
@@ -370,19 +388,22 @@ public class ProfileActivity extends Activity {
 			EventsManager eventsManager = new EventsManager();
 
 			try {
-				itemList = eventsManager.getEventUserList(pageNum, pageSize,
-						session.currentUser.AccID);
-				runOnUiThread(new Runnable() {
+				
+				if(session.currentUser!=null)
+				{
+					itemList = eventsManager.getEventUserList(pageNum, pageSize,session.currentUser.AccID);
+						runOnUiThread(new Runnable() {
 
-					@Override
-					public void run() {
-						for (Events event : itemList) {
-							Log.d(LOG_TAG, event.Title);
-							adapter.add(event);
+						@Override
+						public void run() {
+							for (Events event : itemList) {
+								Log.d(LOG_TAG, event.Title);
+								adapter.add(event);
+							}
+							adapter.notifyDataSetChanged();
 						}
-						adapter.notifyDataSetChanged();
-					}
-				});
+					});
+				}
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -401,5 +422,15 @@ public class ProfileActivity extends Activity {
 			}
 
 		}
+	}
+	public class LogoutReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent.getAction().equals(HomeActivity.LOGOUT_ACTION)) {
+				finish();
+			}
+		}
+
 	}
 }

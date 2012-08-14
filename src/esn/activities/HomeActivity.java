@@ -3,8 +3,10 @@ package esn.activities;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.GeoPoint;
 import com.readystatesoftware.maps.OnSingleTapListener;
+
+import esn.activities.HomeActivity.LogoutReceiver;
 import esn.adapters.EsnListAdapterNoSub;
 import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
@@ -39,9 +43,11 @@ public class HomeActivity extends SherlockMapActivity implements
 	private EsnMapView mapView;
 	public final static int CODE_REQUEST_SET_FILTER = 2;
 	public static final int REQUEST_CODE_HOME_EVENT_LIST = 121;
+	public static final String LOGOUT_ACTION = "esn.activities.LOGOUT_ACTION";
 	HomeActivity context;
 
 	Sessions sessions;
+	private LogoutReceiver re;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -58,17 +64,22 @@ public class HomeActivity extends SherlockMapActivity implements
 		context = this;
 
 		sessions = Sessions.getInstance(context);
-
+		re = new LogoutReceiver();
+		IntentFilter filter = new IntentFilter(LOGOUT_ACTION);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+		registerReceiver(re, filter);
 	}
 
 	private void setupListNavigate() {
 		mNavigationItems = new EsnListItem[2];
 		mNavigationItems[0] = new EsnListItem(1);
-		mNavigationItems[0].setTitle(res.getString(R.string.app_global_viewasmap));
+		mNavigationItems[0].setTitle(res
+				.getString(R.string.app_global_viewasmap));
 		mNavigationItems[0].setIcon(R.drawable.ic_view_as_map2);
 
 		mNavigationItems[1] = new EsnListItem(2);
-		mNavigationItems[1].setTitle(res.getString(R.string.app_global_viewaslist));
+		mNavigationItems[1].setTitle(res
+				.getString(R.string.app_global_viewaslist));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
 		Context context = getSupportActionBar().getThemedContext();
@@ -136,10 +147,9 @@ public class HomeActivity extends SherlockMapActivity implements
 	@Override
 	protected void onDestroy() {
 		map.destroy();
-		
+		unregisterReceiver(re);
 		super.onDestroy();
 	}
-
 	@Override
 	protected void onPause() {
 		map.disableMyLocation();
@@ -232,8 +242,10 @@ public class HomeActivity extends SherlockMapActivity implements
 						AddNewEvent.class);
 				addNewEventIntent.putExtra("latitude", latitude);
 				addNewEventIntent.putExtra("longtitude", longtitude);
-				startActivityForResult(addNewEventIntent,EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
-				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+				startActivityForResult(addNewEventIntent,
+						EsnMapView.REQUEST_CODE_ADD_NEW_EVENT);
+				overridePendingTransition(R.anim.push_left_in,
+						R.anim.push_left_out);
 			}
 			break;
 		default:
@@ -305,5 +317,16 @@ public class HomeActivity extends SherlockMapActivity implements
 	public void btnVoidMode(View view) {
 		Intent intent = new Intent(context, VoiceModeActivity.class);
 		startActivity(intent);
+	}
+
+	public class LogoutReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent.getAction().equals(LOGOUT_ACTION)) {
+				finish();
+			}
+		}
+
 	}
 }

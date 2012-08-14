@@ -112,7 +112,7 @@ public class Maps {
 	}
 
 	public void clearEventMarker() {
-
+		if(eventMarkers!=null)
 		eventMarkers.clearOverlay();
 	}
 

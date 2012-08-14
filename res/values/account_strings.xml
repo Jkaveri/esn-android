@@ -10,8 +10,8 @@
     <string name="tv_Edit_Profile_Country">Country</string>
     <string name="tv_Edit_Profile_Other">Edit Other</string>
     <string name="tv_Edit_Profile_Favorite">Favorite</string>
-    <string name="tv_Edit_Profile_updatesuccessful">Update Successfull_</string>
-    <string name="tv_Edit_Profile_updatefail">Update fail_ Try again_</string>
+    <string name="tv_Edit_Profile_updatesuccessful">Update Successfull</string>
+    <string name="tv_Edit_Profile_updatefail">Update fail_ Try again</string>
     <!-- change Password -->
 
     <string name="esn_changepassword_requirecurrentpassword">Current password is required !</string>
@@ -90,4 +90,6 @@
 	<string name="esn_find_friend_finding">Finding#8230</string>
 	
 	<string name="esn_account_name">Name</string>
+	<string name="esn_account_dk">REGISTER</string>
+	<string name="esn_account_rppass">Repeat new password</string>
 </resources>
