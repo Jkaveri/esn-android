@@ -70,9 +70,9 @@ public class FriendsActivity extends Activity {
 	Intent data;
 	private static final int PAGE_SIZE = 8;
 
-	private Boolean isFriend = false;
+	private int isFriend = 0;
 	private UsersManager manager = new UsersManager();
-	private boolean isAddFriendClicked = false;
+	private boolean result = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,45 +127,48 @@ public class FriendsActivity extends Activity {
 				Toast.LENGTH_SHORT).show();
 	}
 
-	public void FriendClicked(View v) {
-		if (isAddFriendClicked) {
+	public void FriendActionClicked(View v) {
+		
 			new Thread() {
 				public void run() {
 
 					try {
 						Boolean rs = false;
 						
-						if (isFriend) {
-							rs = manager.UnFriend(session.currentUser.AccID,
-									friendId);
-						} else {
-							rs = manager.AddFriend(session.currentUser.AccID,
-									friendId);
+						if (isFriend==1) {
+							rs = manager.UnFriend(session.currentUser.AccID,friendId);
+						} else if(isFriend==0) {
+							rs = manager.AddFriend(session.currentUser.AccID,friendId);
 						}
-						isAddFriendClicked = rs;
+						else
+						{
+							return;
+						}
+						
+						result = rs;
+						
 						if (rs == true) {
 							
 							handler.post(new Runnable() {
+								
 								public void run() {
-									// dialog.dismiss();
+									
 									Button bt = (Button) findViewById(R.id.esn_setting_isfriend);
 
-									if (isFriend) {
-										isFriend = false;
-										Toast.makeText(
-												context,
-												res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendsuccess),
-												Toast.LENGTH_SHORT).show();
-										bt.setText(res
-												.getString(R.string.esn_friend_addfriend));
-									} else {
-										isFriend = true;
+									if (isFriend==1) {
+										
+										Toast.makeText(context,
+												res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendsuccess),Toast.LENGTH_SHORT).show();
+										bt.setText(res.getString(R.string.esn_friend_addfriend));
+										isFriend=0;
+									} else if(isFriend==2){
+										
 										Toast.makeText(
 												context,
 												res.getString(R.string.btn_Friends_Lists_Diaglog_addfriendsuccess),
 												Toast.LENGTH_SHORT).show();
-										bt.setText(res
-												.getString(R.string.esn_friend_unfriend));
+										bt.setText(res.getString(R.string.esn_friend_unfriend));
+										isFriend=2;
 									}
 								}
 							});
@@ -193,9 +196,7 @@ public class FriendsActivity extends Activity {
 				};
 
 			}.start();
-		} else {
-			
-		}
+		
 	}
 
 	public void MessageClicked(View v) {
@@ -208,7 +209,7 @@ public class FriendsActivity extends Activity {
 
 	public void FriendsClicked(View v) {
 
-		if (isFriend == true) {
+		if (isFriend == 1) {
 			data = new Intent(context, FriendListActivity.class);
 			data.putExtra("accountID", friendId);
 			startActivity(data);
@@ -266,14 +267,11 @@ public class FriendsActivity extends Activity {
 
 				try {
 
-					isFriend = usersManager.GetRelationStatus(
-							session.currentUser.AccID, friendId);
+					isFriend = usersManager.GetRelationStatus(session.currentUser.AccID, friendId);
 
 				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -287,12 +285,15 @@ public class FriendsActivity extends Activity {
 
 						Button bt = (Button) findViewById(R.id.esn_setting_isfriend);
 
-						if (isFriend == true) {
+						if (isFriend==1) {
 							bt.setText(res
 									.getString(R.string.esn_friend_unfriend));
-						} else {
-							bt.setText(res
-									.getString(R.string.esn_friend_addfriend));
+						} else if(isFriend==2) {
+							bt.setText(res.getString(R.string.esn_friend_waiting));
+						}
+						else
+						{
+							bt.setText(res.getString(R.string.esn_friend_addfriend));							
 						}
 					}
 				});
