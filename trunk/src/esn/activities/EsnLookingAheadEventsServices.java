@@ -116,10 +116,10 @@ public class EsnLookingAheadEventsServices extends Service implements
 			voiceManager.destroy();
 		}
 		unregisterReceiver(receiver);
-		if (sessions.getAccessHeadPhone()) {
+		/*if (sessions.getAccessHeadPhone()) {
 			auManager.unregisterMediaButtonEventReceiver(eventReceiver);
 			eventReceiver = null;
-		}
+		}*/
 		super.onDestroy();
 	}
 

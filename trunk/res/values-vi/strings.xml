@@ -13,7 +13,7 @@
 
     <string name="esn_global_must_enable_gps">Hãy mở định vị gps_</string>
     <string name="esn_global_your_location_not_found">Không tìm thấy vị trí của bạn.</string>
-    <string name="key_maps_googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
+    <string name="key_maps_googleAPI">0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg</string>
     <string name="help">In this introductory Google Apps webinar</string>
     <string name="term">In this introductory term</string>
     <!-- Global -->
@@ -61,6 +61,7 @@
     <string name="esn_global_confirm">Xác nhận</string>
     <string name="esn_global_list_empty">Danh sách hiện đang trống</string>
     <string name="esn_global_function_developing">Chức năng đang trong giai đoạn hoàn thiện.\n Vui lòng đợi sang phiên bảng sau!</string>
+    <string name="esn_global_error_please_login_again">Có lỗi xảy ra, vui lòng đăng nhập lại</string>
     <!-- Settings page -->
     <string name="esn_settings_app_settings">Cài đặt ứng dụng</string>
     <string name="esn_settings_subscript_app_settings">Cài đặt cho ứng dụng.</string>

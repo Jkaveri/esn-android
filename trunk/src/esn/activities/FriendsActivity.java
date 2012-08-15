@@ -36,70 +36,70 @@ import android.widget.AbsListView.OnScrollListener;
 public class FriendsActivity extends Activity {
 
 	FriendsActivity context;
-	private static final String LOG_TAG  = "FriendsActivity";
+	private static final String LOG_TAG = "FriendsActivity";
 	private ProgressDialog dialog;
 
 	public Handler handler;
 
 	EventsManager eventsManager = new EventsManager();
 
-	
 	Sessions session;
-	
+
 	UsersManager usersManager = new UsersManager();
-	
+
 	private ListView listUserEvent;
-	
+
 	private ListViewEventUserAdapter adapter;
-		
+
 	private int page = 1;
 
 	Resources res;
-	
+
 	private int lastScroll = 0;
-	
+
 	Users users = new Users();
 
 	protected ArrayList<Events> itemList;
-	
+
 	public final static int CODE_REQUEST_SET_FILTER = 2;
-	
+
 	public final static int CODE_REQUEST_FRIEND_INFO = 3;
-	
-	private int friendId=0;
-	
+
+	private int friendId = 0;
+
 	Intent data;
 	private static final int PAGE_SIZE = 8;
-	
+
 	private Boolean isFriend = false;
 	private UsersManager manager = new UsersManager();
-	
-	
+	private boolean isAddFriendClicked = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			
+
 		setContentView(R.layout.friends);
-		
+
 		context = this;
-		
+
 		res = getResources();
-		
+
 		data = this.getIntent();
-		
+
 		friendId = this.getIntent().getIntExtra("accountID", 0);
-		
+
 		handler = new Handler();
-		
+
 		session = Sessions.getInstance(context);
-		adapter = new ListViewEventUserAdapter(FriendsActivity.this, new ArrayList<Events>());
-		
-		listUserEvent = (ListView)findViewById(R.id.esn_setting_profile_listeventuser);
-				
+		adapter = new ListViewEventUserAdapter(FriendsActivity.this,
+				new ArrayList<Events>());
+
+		listUserEvent = (ListView) findViewById(R.id.esn_setting_profile_listeventuser);
+
 		ShowInforFriend();
-		
+
 		listUserEvent.setAdapter(adapter);
-		
+
 		listUserEvent.setOnScrollListener(new OnScrollListener() {
 
 			@Override
@@ -118,102 +118,105 @@ public class FriendsActivity extends Activity {
 					new GetListEventThread(page, PAGE_SIZE).start();
 				}
 			}
-		});	
+		});
 	}
 
-	public void DevelopClicked(View view)
-	{
-		Toast.makeText(context, res.getString(R.string.esn_global_function_developing), Toast.LENGTH_SHORT).show();
+	public void DevelopClicked(View view) {
+		Toast.makeText(context,
+				res.getString(R.string.esn_global_function_developing),
+				Toast.LENGTH_SHORT).show();
 	}
-	
+
 	public void FriendClicked(View v) {
-		
-		if(isFriend==true)
-		{
-			new Thread()
-			{
+		if (isAddFriendClicked) {
+			new Thread() {
 				public void run() {
-					
+
 					try {
 						Boolean rs = false;
 						
-						if(isFriend==true)
-						{
-							rs = manager.UnFriend(session.currentUser.AccID, friendId);
+						if (isFriend) {
+							rs = manager.UnFriend(session.currentUser.AccID,
+									friendId);
+						} else {
+							rs = manager.AddFriend(session.currentUser.AccID,
+									friendId);
 						}
-						else
-						{
-							rs = manager.AddFriend(session.currentUser.AccID, friendId);
-						}
-						if(rs==true)
-						{							
+						isAddFriendClicked = rs;
+						if (rs == true) {
+							
 							handler.post(new Runnable() {
 								public void run() {
-									dialog.dismiss();
-									Button bt = (Button)findViewById(R.id.esn_setting_isfriend);
-																		
-									if(isFriend==true)
-									{
-										isFriend=false;
-										Toast.makeText(context, res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendsuccess), Toast.LENGTH_SHORT).show();
-										bt.setText(res.getString(R.string.esn_friend_addfriend));
+									// dialog.dismiss();
+									Button bt = (Button) findViewById(R.id.esn_setting_isfriend);
+
+									if (isFriend) {
+										isFriend = false;
+										Toast.makeText(
+												context,
+												res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendsuccess),
+												Toast.LENGTH_SHORT).show();
+										bt.setText(res
+												.getString(R.string.esn_friend_addfriend));
+									} else {
+										isFriend = true;
+										Toast.makeText(
+												context,
+												res.getString(R.string.btn_Friends_Lists_Diaglog_addfriendsuccess),
+												Toast.LENGTH_SHORT).show();
+										bt.setText(res
+												.getString(R.string.esn_friend_unfriend));
 									}
-									else
-									{
-										isFriend=true;
-										Toast.makeText(context, res.getString(R.string.btn_Friends_Lists_Diaglog_addfriendsuccess), Toast.LENGTH_SHORT).show();
-										bt.setText(res.getString(R.string.esn_friend_unfriend));
-									}
-								}
-							});								
-						}
-						else
-						{
-							handler.post(new Runnable() {
-								
-								@Override
-								public void run() {
-									
-									Toast.makeText(context, res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendnotsuccess), Toast.LENGTH_SHORT).show();
-									
 								}
 							});
-							
+						} else {
+							handler.post(new Runnable() {
+
+								@Override
+								public void run() {
+
+									Toast.makeText(
+											context,
+											res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendnotsuccess),
+											Toast.LENGTH_SHORT).show();
+
+								}
+							});
+
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
+
 				};
-				
-				
+
 			}.start();
+		} else {
+			
 		}
 	}
-	
+
 	public void MessageClicked(View v) {
-		/*data = new Intent(context, Notification.class);
-		startActivity(data);
-		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);*/
+		/*
+		 * data = new Intent(context, Notification.class); startActivity(data);
+		 * overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+		 */
 		return;
 	}
 
 	public void FriendsClicked(View v) {
-		
-		if(isFriend==true)
-		{
+
+		if (isFriend == true) {
 			data = new Intent(context, FriendListActivity.class);
 			data.putExtra("accountID", friendId);
 			startActivity(data);
 			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-		}
-		else
-		{
+		} else {
 			return;
 		}
-		
+
 	}
 
 	public void PersonalClicked(View v) {
@@ -221,11 +224,12 @@ public class FriendsActivity extends Activity {
 		startActivity(data);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
-	
+
 	private void ShowInforFriend() {
-		
+
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
+		dialog.setTitle(this.getResources().getString(
+				R.string.esn_global_loading));
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
 		dialog.setCancelable(false);
 		dialog.setCanceledOnTouchOutside(false);
@@ -233,23 +237,23 @@ public class FriendsActivity extends Activity {
 
 		ShowProfileThread showProfileThread = new ShowProfileThread();
 		showProfileThread.start();
-		
+
 	}
-	
+
 	public class ShowProfileThread extends Thread {
 
 		public ShowProfileThread() {
-			
+
 		}
 
 		public void run() {
 
-			if (friendId!=0) {
+			if (friendId != 0) {
 
 				try {
-					
+
 					users = usersManager.RetrieveById(friendId);
-					
+
 				} catch (IllegalArgumentException e1) {
 					e1.printStackTrace();
 				} catch (JSONException e1) {
@@ -259,11 +263,12 @@ public class FriendsActivity extends Activity {
 				} catch (IllegalAccessException e1) {
 					e1.printStackTrace();
 				}
-				
+
 				try {
-					
-					isFriend = usersManager.GetRelationStatus(session.currentUser.AccID, friendId);
-				
+
+					isFriend = usersManager.GetRelationStatus(
+							session.currentUser.AccID, friendId);
+
 				} catch (ClientProtocolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -274,34 +279,32 @@ public class FriendsActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-					handler.post(new Runnable() {
-						
-						@Override
-						public void run() {
-							
-							
-							Button bt = (Button)findViewById(R.id.esn_setting_isfriend);
-							
-							if(isFriend==true)
-							{
-								bt.setText(res.getString(R.string.esn_friend_unfriend));
-							}
-							else
-							{
-								bt.setText(res.getString(R.string.esn_friend_addfriend));
-							}
+
+				handler.post(new Runnable() {
+
+					@Override
+					public void run() {
+
+						Button bt = (Button) findViewById(R.id.esn_setting_isfriend);
+
+						if (isFriend == true) {
+							bt.setText(res
+									.getString(R.string.esn_friend_unfriend));
+						} else {
+							bt.setText(res
+									.getString(R.string.esn_friend_addfriend));
 						}
-					});
-				
+					}
+				});
+
 				if (users != null) {
 					handler.post(new Runnable() {
 
 						@Override
 						public void run() {
-							
+
 							TextView txtName = (TextView) findViewById(R.id.esn_setting_profile_name);
-							TextView txtGender = (TextView)findViewById(R.id.esn_setting_profile_gender);
+							TextView txtGender = (TextView) findViewById(R.id.esn_setting_profile_gender);
 							TextView txtAddress = (TextView) findViewById(R.id.esn_setting_profile_address);
 
 							final String url = users.Avatar;
@@ -313,48 +316,54 @@ public class FriendsActivity extends Activity {
 										Bitmap bitmap = null;
 
 										try {
-											
-											bitmap = Utils.getBitmapFromURL(url);
+
+											bitmap = Utils
+													.getBitmapFromURL(url);
 
 										} catch (IOException e) {
-											
+
 											Log.d(LOG_TAG, e.getMessage());
 											e.printStackTrace();
 										}
 
 										handler.post(new SetAvatar(bitmap));
-											
+
 									};
 								}.start();
 							}
-							
+
 							txtName.setText(users.Name);
-							
-							if(users.Gender==true)
-								txtGender.setText(res.getString(R.string.esn_register_rdbMale));
+
+							if (users.Gender == true)
+								txtGender.setText(res
+										.getString(R.string.esn_register_rdbMale));
 							else
-								txtGender.setText(res.getString(R.string.esn_register_rdbFemale));
-							
+								txtGender.setText(res
+										.getString(R.string.esn_register_rdbFemale));
+
 							String ad = users.Address;
-							
-							if(users.Street!=null && users.Street.length()>0)
+
+							if (users.Street != null
+									&& users.Street.length() > 0)
 								ad = ad + ", " + users.Street;
-							
-							if(users.District!=null && users.District.length()>0)
+
+							if (users.District != null
+									&& users.District.length() > 0)
 								ad = ad + ", " + users.District;
-							
-							if(users.City!=null && users.City.length()>0)
+
+							if (users.City != null && users.City.length() > 0)
 								ad = ad + ", " + users.City;
-							
-							if(users.Country!=null && users.Country.length()>0)
+
+							if (users.Country != null
+									&& users.Country.length() > 0)
 								ad = ad + ", " + users.Country;
-							
+
 							txtAddress.setText(ad);
-							
+
 							new GetListEventThread(1, PAGE_SIZE).start();
 						}
-					});					
-					
+					});
+
 				} else {
 					handler.post(new Runnable() {
 						@Override
@@ -390,28 +399,32 @@ public class FriendsActivity extends Activity {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
 
 			avatar.setImageBitmap(bitmap);
-			if(dialog!=null)
+			if (dialog != null)
 				dialog.dismiss();
 		}
 
 	}
+
 	private class GetListEventThread extends Thread {
 		protected static final String LOG_TAG = "GetListEventThread";
 		private int pageNum;
 		private int pageSize;
-		public GetListEventThread(int pageNum, int pageSize){
+
+		public GetListEventThread(int pageNum, int pageSize) {
 			this.pageNum = pageNum;
 			this.pageSize = pageSize;
 		}
+
 		@Override
 		public void run() {
-			
+
 			EventsManager eventsManager = new EventsManager();
 
 			try {
-				
-				itemList = eventsManager.getEventUserList(pageNum,pageSize,friendId);
-				
+
+				itemList = eventsManager.getEventUserList(pageNum, pageSize,
+						friendId);
+
 				runOnUiThread(new Runnable() {
 
 					@Override

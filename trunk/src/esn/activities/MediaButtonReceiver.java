@@ -8,6 +8,9 @@ import esn.classes.VoiceManager;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +28,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 	private Maps map;
 	private Context context;
 	private Sessions session;
+
 	public MediaButtonReceiver() {
 		super();
 
@@ -36,16 +40,16 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 		if (voiceManager == null) {
 			// instance voice manager
 			voiceManager = new VoiceManager(context.getResources());
-			
+
 			voiceManager.setVoiceListener(new VoiceModeListener());
-		
+
 		}
-		if(session == null){
+		if (session == null) {
 			session = Sessions.getInstance(context);
 		}
-		//instance map
+		// instance map
 		map = new Maps(context);
-		
+
 		Log.d(TAG_LOG, "Fire");
 		if (intent.getAction().equals("android.intent.action.MEDIA_BUTTON")) {
 			KeyEvent event = (KeyEvent) intent
@@ -55,24 +59,26 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 				return;
 			}
 
-			//int keycode = event.getKeyCode();
+			// int keycode = event.getKeyCode();
 
 			if (event.getAction() == KeyEvent.ACTION_UP) {
 				long now = System.currentTimeMillis();
-				long delta = now - session.get("media_button_last_time_up", (long)0);
+				long delta = now
+						- session.get("media_button_last_time_up", (long) 0);
 				Log.d(TAG_LOG, "ACTION_UP_" + delta);
 				boolean isRecording = session.get("isRecording", false);
-				Log.d(TAG_LOG,"IsRecording: "+isRecording);
+				Log.d(TAG_LOG, "IsRecording: " + isRecording);
 				if (delta < DOUBLE_CLICK_TIME_OUT) {
-					session.put("media_button_last_time_up", (long)0);
+					session.put("media_button_last_time_up", (long) 0);
 					Log.d(TAG_LOG, "DOUBLE_CLICK");
-					
+
 					if (!isRecording) {
 						startRecord();
 					}
 				} else {
 					if (isRecording) {
 						stopRecord();
+						voiceManager.playInsiteThread(R.raw.vuilongdoi);
 					}
 				}
 
@@ -83,26 +89,31 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 
 	private void startRecord() {
 		voiceManager.startRecording();
-		session.put("isRecording",true);
+
+		session.put("isRecording", true);
 	}
 
 	private void stopRecord() {
 		voiceManager.stopRecording();
 		session.put("isRecording", false);
 	}
+
 	private class VoiceModeListener implements VoiceListener {
 		// Goi web service nhan dang giong noi xong
 		@Override
 		public void onS2TPostBack(final S2TParser result) {
 			try {
-				
+
 				Location currLocation = map.getCurrentLocation();
 				if (currLocation == null) {
 					voiceManager.play(R.raw.kichhoatgps);
 					return;
 				}
 				if (result.getAction().equals("KICH_HOAT")) {
-					voiceManager.play(R.raw.thongbaokichhoat);
+					if (!isMyServiceRunning())
+						voiceManager.play(R.raw.thongbaokichhoat);
+					else
+						voiceManager.play(R.raw.hiendangbatchucnang);
 				} else if (result.getAction().equals("SAP_TOI")) {
 					String filter = "";
 					if (!result.getEvent().equals("KHONG")) {
@@ -110,8 +121,8 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 					}
 
 					new LookingEventsThread(currLocation.getLatitude(),
-							currLocation.getLongitude(), filter, session.getRadiusForEventAround())
-							.start();
+							currLocation.getLongitude(), filter,
+							session.getRadiusForEventAround()).start();
 				} else if (result.getAction().equals("NULL")) {
 					voiceManager.play(R.raw.xinloi);
 					/*
@@ -150,14 +161,14 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 		}
 
 	}
-	
-	
+
 	private class LookingEventsThread extends Thread {
 
 		private double lat;
 		private double lon;
 		private String eventType;
 		private double radius;
+
 		public LookingEventsThread(double lat, double lon, String eventType,
 				double radius) {
 			super();
@@ -177,7 +188,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 
 				if (events != null && events.length > 0) {
 					// send broad cast
-					
+
 					voiceManager.play(R.raw.chuy);
 					for (int i = 0; i < events.length; i++) {
 						Events event = events[i];
@@ -200,6 +211,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 			}
 		}
 	}
+
 	public void sendDataToVoiceMode(Events event) {
 		// send broad cast
 		Intent broad = new Intent();
@@ -213,5 +225,18 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 		broad.putExtra("longtitude", event.EventLng);
 		broad.putExtra("eventTypeId", event.EventTypeID);
 		this.context.sendBroadcast(broad);
+	}
+
+	private boolean isMyServiceRunning() {
+		ActivityManager manager = (ActivityManager) context
+				.getSystemService(Activity.ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager
+				.getRunningServices(Integer.MAX_VALUE)) {
+			if ("esn.activities.EsnLookingAheadEventsServices"
+					.equals(service.service.getClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

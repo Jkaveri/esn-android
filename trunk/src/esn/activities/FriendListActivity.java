@@ -1,11 +1,13 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
 import esn.adapters.ListViewFriendsAdapter;
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.Users;
 import esn.models.UsersManager;
 import android.app.ActionBar;
@@ -18,7 +20,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,9 +48,11 @@ public class FriendListActivity extends ListActivity implements
 	Resources res;
 
 	public final static int CODE_REQUEST_FRIEND_INFO = 3;
-	public static final String LOG_TAG = null;
+	public static final String LOG_TAG = "FriendListActivity";
+
 
 	private int friendId = 0;
+	private FriendListActivity context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +61,17 @@ public class FriendListActivity extends ListActivity implements
 		setContentView(R.layout.friends_list);
 
 		res = getResources();
-
+		context = this;
 		friendId = this.getIntent().getIntExtra("accountID", 0);
 		lstFriend = (ListView) findViewById(android.R.id.list);
-		
+
 		adapter = new ListViewFriendsAdapter(this, new ArrayList<Users>());
 
 		sessions = Sessions.getInstance(this);
 
 		progressDialog = new ProgressDialog(this);
-		progressDialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
+		progressDialog.setTitle(this.getResources().getString(
+				R.string.esn_global_loading));
 		progressDialog.setMessage("Waiting ....");
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
@@ -79,8 +83,7 @@ public class FriendListActivity extends ListActivity implements
 
 		setupActionBar();
 		setupListNavigate();
-		
-		
+
 		lstFriend
 				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 					@Override
@@ -156,8 +159,7 @@ public class FriendListActivity extends ListActivity implements
 
 	private void setupListNavigate() {
 		getActionBar().setNavigationMode(ActionBar.DISPLAY_SHOW_TITLE);
-		getActionBar().setTitle(
-				getString(R.string.str_Friends_Lists_Title));
+		getActionBar().setTitle(getString(R.string.str_Friends_Lists_Title));
 	}
 
 	private void setupActionBar() {
@@ -223,6 +225,8 @@ public class FriendListActivity extends ListActivity implements
 				final int fId = bean.AccID;
 				final int aId = sessions.currentUser.AccID;
 				new Thread() {
+					private String TAG_LOG;
+
 					public void run() {
 
 						try {
@@ -234,7 +238,7 @@ public class FriendListActivity extends ListActivity implements
 									public void run() {
 										dialog.dismiss();
 										Toast.makeText(
-												FriendListActivity.this,
+												context,
 												res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendsuccess),
 												Toast.LENGTH_SHORT).show();
 										new LoadListFriendThread(1, PAGE_SIZE)
@@ -248,7 +252,7 @@ public class FriendListActivity extends ListActivity implements
 									public void run() {
 										dialog.dismiss();
 										Toast.makeText(
-												FriendListActivity.this,
+												context,
 												res.getString(R.string.btn_Friends_Lists_Diaglog_unfriendnotsuccess),
 												Toast.LENGTH_SHORT).show();
 
@@ -257,10 +261,16 @@ public class FriendListActivity extends ListActivity implements
 
 							}
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
+							Utils.showToast(context,
+									res.getString(R.string.esn_global_Error),
+									Toast.LENGTH_LONG);
+							Log.e(TAG_LOG, e.getMessage());
 							e.printStackTrace();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							Utils.showToast(context,
+									res.getString(R.string.esn_global_Error),
+									Toast.LENGTH_LONG);
+							Log.e(TAG_LOG, e.getMessage());
 							e.printStackTrace();
 						}
 
@@ -332,13 +342,16 @@ public class FriendListActivity extends ListActivity implements
 			finish();
 			return true;
 		} else if (itemTitle.equals("FindMoreFriend")) {
-			Toast.makeText(this, R.string.esn_global_function_developing, Toast.LENGTH_LONG).show();
-			/*Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
-			startActivity(intenFdsEvent);
-			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
-			finish();*/
+			Toast.makeText(this, R.string.esn_global_function_developing,
+					Toast.LENGTH_LONG).show();
+			/*
+			 * Intent intenFdsEvent = new Intent(this,
+			 * FindFriendsActivity.class); startActivity(intenFdsEvent);
+			 * overridePendingTransition(R.anim.push_left_out,
+			 * R.anim.push_left_in); finish();
+			 */
 			return true;
-		}else {
+		} else {
 			return super.onMenuItemSelected(featureId, item);
 		}
 	}
@@ -347,7 +360,8 @@ public class FriendListActivity extends ListActivity implements
 		if (view != null) {
 			EditText editText = (EditText) findViewById(R.id.searchLocationQuery);
 			String searchQuery = editText.getText().toString();
-			Intent searchIntent = new Intent(this, SearchFriendResultActivity.class);
+			Intent searchIntent = new Intent(this,
+					SearchFriendResultActivity.class);
 			searchIntent.putExtra("query", searchQuery);
 			startActivity(searchIntent);
 		}
@@ -367,33 +381,62 @@ public class FriendListActivity extends ListActivity implements
 		public void run() {
 			Looper.prepare();
 			UsersManager manager = new UsersManager();
+
+			List<Users> itemList;
 			try {
-				List<Users> itemList = manager.getFriendsList(pageNum,
-						pageSize, friendId);
-				
+				itemList = manager.getFriendsList(pageNum, pageSize, friendId);
 				runOnUiThread(new LoadFriendHandler(itemList));
-			} catch (Exception e) {
+			} catch (IllegalArgumentException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(LOG_TAG, e.getMessage());
+				e.printStackTrace();
+			} catch (JSONException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(LOG_TAG, e.getMessage());
+				e.printStackTrace();
+			} catch (IOException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_connection_error),
+						Toast.LENGTH_LONG);
+				Log.e(LOG_TAG, e.getMessage());
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(LOG_TAG, e.getMessage());
+				e.printStackTrace();
+			} catch (ParseException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(LOG_TAG, e.getMessage());
 				e.printStackTrace();
 			}
+
 		}
 	}
-
-	
 
 	private class LoadFriendHandler implements Runnable {
 		private List<Users> users;
 		private boolean doClear;
+
 		public LoadFriendHandler(List<Users> users) {
 			this.users = users;
-			doClear =  false;
+			doClear = false;
 		}
-		
+
 		@Override
 		public void run() {
 			Log.d(LOG_TAG, "load list friend");
 			if (users != null) {
 				Log.d(LOG_TAG, ": " + users.size());
-				if(doClear) adapter.clear();
+				if (doClear)
+					adapter.clear();
 				for (Users user : users) {
 					adapter.add(user);
 				}

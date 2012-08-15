@@ -95,13 +95,13 @@ public class EventDetailActivity extends SherlockActivity implements
 		eventId = data.getIntExtra("id", 0);
 
 		new GetEventDetailThread(eventId).start();
-		
-		lstCm = (ListView)findViewById(R.id.esn_eventDetails_listComments);
-		
-		GetListComment();		
+
+		lstCm = (ListView) findViewById(R.id.esn_eventDetails_listComments);
+
+		GetListComment();
 
 		lstCm.setOverScrollMode(View.OVER_SCROLL_NEVER);
-		
+
 		lstCm.setVerticalScrollBarEnabled(false);
 
 		lstCm.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,9 +121,14 @@ public class EventDetailActivity extends SherlockActivity implements
 
 	@Override
 	public void onDestroy() {
-		adapter.stopThread();
-		adapter.clearCache();
-		lstCm.setAdapter(null);
+		if (adapter != null) {
+			adapter.stopThread();
+			adapter.clearCache();
+		}
+		if (lstCm != null) {
+			lstCm.setAdapter(null);
+		}
+
 		super.onDestroy();
 	}
 
@@ -144,10 +149,11 @@ public class EventDetailActivity extends SherlockActivity implements
 			LikeAction();
 			return true;
 		} else if (item.getItemId() == R.id.esn_detail_event_notice) {
-			data = new Intent(context, FeedbackActivity.class);
+			/*data = new Intent(context, FeedbackActivity.class);
 			data.putExtra("EventId", eventId);
 			data.putExtra("AccId", accId);
-			startActivity(data);
+			startActivity(data);*/
+			Toast.makeText(this, R.string.esn_global_function_developing, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (item.getItemId() == R.id.esn_detail_event_dislike) {
 			DislikeAction();
@@ -158,10 +164,8 @@ public class EventDetailActivity extends SherlockActivity implements
 
 	}
 
-	
-	
 	public void shareClicked(View view) {
-		
+
 		new ShareToFacebookThread(event, this).start();
 
 	}
@@ -513,12 +517,14 @@ public class EventDetailActivity extends SherlockActivity implements
 				tvLike.setText(String.valueOf(event.Like));
 
 				tvUsername.setText(event.user.Name);
-				tvAddress.setText(event.getFullAddress(EventDetailActivity.this));
+				tvAddress.setText(event
+						.getFullAddress(EventDetailActivity.this));
 				accId = event.AccID;
 
 				icEventType.setImageResource(EventType.getIconId(
 						event.EventTypeID, event.getLevel()));
-				if (event.Status == AppEnums.EventStatus.Confirmed ||event.Status == AppEnums.EventStatus.Waiting) {
+				if (event.Status == AppEnums.EventStatus.Confirmed
+						|| event.Status == AppEnums.EventStatus.Waiting) {
 					DisplayMetrics dm = new DisplayMetrics();
 					getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -650,9 +656,9 @@ public class EventDetailActivity extends SherlockActivity implements
 					res.getString(R.string.esn_eventDetail_commensuccess),
 					Toast.LENGTH_SHORT).show();
 			EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
-			
-			txtComment.setText(null);			
-			
+
+			txtComment.setText(null);
+
 			adapter.clearCache();
 			GetListComment();
 		}
@@ -741,7 +747,7 @@ public class EventDetailActivity extends SherlockActivity implements
 	}
 
 	public void ListViewHeight() {
-		
+
 		ListView lv = (ListView) findViewById(R.id.esn_eventDetails_listComments);
 		ListAdapter listAdapter = lv.getAdapter();
 
