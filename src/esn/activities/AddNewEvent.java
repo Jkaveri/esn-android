@@ -61,7 +61,7 @@ public class AddNewEvent extends Activity {
 
 	private static final int SELECT_PICTURE = 1;
 	private static final int SELECT_EVENT_TYPE = 12;
-
+	public static final String uploadURL = "http://bangnl.info/ws/498F5926A3E4493E803AADC0125E39B5.aspx";
 	int fb = 1;
 
 	@Override
@@ -399,8 +399,8 @@ public class AddNewEvent extends Activity {
 				Bundle p = new Bundle();
 				p.putByteArray("photo", imgBytes);
 				p.putString("ext", "jpg");
-				String url = "http://bangnl.info/ws/Upload.aspx";
-				String result = Util.openUrl(url, "POST", p);
+				
+				String result = Util.openUrl(uploadURL, "POST", p);
 				Log.d(LOG_TAG, result);
 
 				// Log.d(LOG_TAG, "up anh xong");
@@ -411,7 +411,7 @@ public class AddNewEvent extends Activity {
 					runOnUiThread(new SetImage(imgBytes));
 
 					isUploaded = true;
-					return url;
+					return uploadURL;
 				} else {
 					isUploadFailed = true;
 					return "";

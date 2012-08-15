@@ -111,11 +111,11 @@ public class VoiceModeHelper {
 					btnServices.setImageResource(R.drawable.ic_event_alert_de);
 				}
 			});
-			voiceMng.play(R.raw.hiendangbatchucnang);
+			voiceMng.playInsiteThread(R.raw.hiendangbatchucnang);
 		}
 
 		if (!isMyServiceRunning()) {
-			voiceMng.play(R.raw.xinloi);
+			voiceMng.playInsiteThread(R.raw.xinloi);
 		}
 	}
 
@@ -137,7 +137,7 @@ public class VoiceModeHelper {
 			});
 
 			act.stopService(service);
-			voiceMng.play(R.raw.datatchucnang);
+			voiceMng.playInsiteThread(R.raw.datatchucnang);
 		}
 
 	}

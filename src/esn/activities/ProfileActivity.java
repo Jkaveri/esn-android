@@ -8,7 +8,6 @@ import org.json.JSONException;
 
 import com.facebook.android.Util;
 
-import esn.activities.ProfileActivity.LogoutReceiver;
 import esn.adapters.ListViewEventUserAdapter;
 import esn.classes.Sessions;
 import esn.classes.Utils;
@@ -75,6 +74,10 @@ public class ProfileActivity extends Activity {
 
 	public static final String TAG_LOG = "ProfileActivity";
 
+	private GetListEventThread loadListEventThread;
+
+	private ShowProfileThread showProfileThread;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -89,8 +92,7 @@ public class ProfileActivity extends Activity {
 		handler = new Handler();
 
 		session = Sessions.getInstance(context);
-				
-		
+
 		listUserEvent = (ListView) findViewById(R.id.esn_profile_listeventuser);
 		adapter = new ListViewEventUserAdapter(this, new ArrayList<Events>());
 		adapter.setDefaultEmptyImage(R.drawable.no_image);
@@ -101,11 +103,13 @@ public class ProfileActivity extends Activity {
 					@Override
 					public void onItemClick(AdapterView<?> adView, View view,
 							int index, long id) {
-						Events event = (Events)adapter.getItem(index);
-						Intent intent =  new Intent(context, EventDetailActivity.class);
+						Events event = (Events) adapter.getItem(index);
+						Intent intent = new Intent(context,
+								EventDetailActivity.class);
 						intent.putExtra("id", event.EventID);
 						startActivity(intent);
-						overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+						overridePendingTransition(R.anim.push_left_in,
+								R.anim.push_left_out);
 					}
 
 				});
@@ -130,7 +134,8 @@ public class ProfileActivity extends Activity {
 				}
 			}
 		});
-		new GetListEventThread(1, PAGE_SIZE).start();
+		loadListEventThread = new GetListEventThread(1, PAGE_SIZE);
+		loadListEventThread.start();
 		re = new LogoutReceiver();
 		IntentFilter filter = new IntentFilter(HomeActivity.LOGOUT_ACTION);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -146,13 +151,15 @@ public class ProfileActivity extends Activity {
 	private void ShowInforUser() {
 
 		dialog = new ProgressDialog(this);
-		dialog.setTitle(this.getResources().getString(R.string.esn_global_loading));
+		dialog.setTitle(this.getResources().getString(
+				R.string.esn_global_loading));
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
-		dialog.setCancelable(false);
-		dialog.setCanceledOnTouchOutside(false);
+		/*
+		 * dialog.setCancelable(false); dialog.setCanceledOnTouchOutside(false);
+		 */
 		dialog.show();
 
-		ShowProfileThread showProfileThread = new ShowProfileThread();
+		showProfileThread = new ShowProfileThread();
 
 		showProfileThread.start();
 	}
@@ -181,18 +188,34 @@ public class ProfileActivity extends Activity {
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
-	
-	public void LocationClicked(View view)
-	{
-		Toast.makeText(context, res.getString(R.string.esn_global_function_developing), Toast.LENGTH_SHORT).show();
+
+	public void LocationClicked(View view) {
+		Toast.makeText(context,
+				res.getString(R.string.esn_global_function_developing),
+				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onDestroy() {
-		adapter.stopThread();
-		adapter.clearCache();
-		listUserEvent.setAdapter(null);
-		unregisterReceiver(re);
+		if (adapter != null) {
+
+			adapter.stopThread();
+			adapter.clearCache();
+		}
+		if (loadListEventThread != null) {
+			loadListEventThread.interrupt();
+		}
+		if (listUserEvent != null) {
+
+			listUserEvent.setAdapter(null);
+		}
+		if (showProfileThread != null) {
+			showProfileThread.interrupt();
+		}
+		if (re != null) {
+
+			unregisterReceiver(re);
+		}
 		super.onDestroy();
 	}
 
@@ -293,7 +316,11 @@ public class ProfileActivity extends Activity {
 											bitmap = Utils
 													.getBitmapFromURL(url);
 										} catch (IOException e) {
-											// TODO Auto-generated catch block
+											Utils.showToast(
+													context,
+													res.getString(R.string.esn_global_Error),
+													Toast.LENGTH_LONG);
+											Log.e(TAG_LOG, e.getMessage());
 											e.printStackTrace();
 										}
 
@@ -367,7 +394,10 @@ public class ProfileActivity extends Activity {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
 
 			avatar.setImageBitmap(bitmap);
-			dialog.dismiss();
+			if (dialog != null) {
+				dialog.dismiss();
+
+			}
 		}
 
 	}
@@ -388,11 +418,11 @@ public class ProfileActivity extends Activity {
 			EventsManager eventsManager = new EventsManager();
 
 			try {
-				
-				if(session.currentUser!=null)
-				{
-					itemList = eventsManager.getEventUserList(pageNum, pageSize,session.currentUser.AccID);
-						runOnUiThread(new Runnable() {
+
+				if (session.currentUser != null) {
+					itemList = eventsManager.getEventUserList(pageNum,
+							pageSize, session.currentUser.AccID);
+					runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
@@ -405,24 +435,40 @@ public class ProfileActivity extends Activity {
 					});
 				}
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_connection_error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			}
 
 		}
 	}
+
 	public class LogoutReceiver extends BroadcastReceiver {
 
 		@Override

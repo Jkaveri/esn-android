@@ -13,6 +13,8 @@ import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.EventType;
 import esn.models.EventTypeManager;
+import esn.models.Users;
+import esn.models.UsersManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +40,61 @@ public class WelcomeScreen extends SherlockActivity {
 	public double centerLat;
 	public Object lockObj = new Object();
 	public boolean confirmDialogShowing = false;
+	public Users user = new Users();
+	private LoadUserThread loadUserThread;
+	
+	private class LoadUserThread extends Thread {
+		private String email;
+		private int Id;
+
+		public LoadUserThread(String email) {
+			this.email = email;
+		}
+
+		public LoadUserThread(int id) {
+			this.Id = id;
+		}
+
+		@Override
+		public void run() {
+			try {
+				synchronized (lockObj) {
+					if (this.Id > 0) {
+						user = (new UsersManager()).RetrieveById(this.Id);
+
+					} else {
+						user = (new UsersManager()).RetrieveByEmail(this.email);
+					}
+					lockObj.notify();
+				}
+
+			} catch (IllegalArgumentException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
+				e.printStackTrace();
+			} catch (JSONException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
+				e.printStackTrace();
+			} catch (IOException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_connection_error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
+				e.printStackTrace();
+			}
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +139,17 @@ public class WelcomeScreen extends SherlockActivity {
 			builder.create().show();
 		}
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (loadModelThread != null) {
+			loadModelThread.interrupt();
+		}
+		if (loadUserThread != null) {
+			loadUserThread.interrupt();
+		}
+		super.onDestroy();
 	}
 
 	private void initConfig() {
@@ -130,7 +198,6 @@ public class WelcomeScreen extends SherlockActivity {
 		}
 
 		if (firstLauch) {
-
 			// set radius for load event around
 			session.setRadiusForEventAround(2.0);
 			session.put("firstLauch", false);
@@ -142,30 +209,72 @@ public class WelcomeScreen extends SherlockActivity {
 	private void executeLogin() {
 		// get email stored
 		email = session.get("email", null);
-		
+
 		password = session.get("password", null);
 		// login = account esn
 		// if email + pass != null
 		if (email != null && password != null) {
 			boolean fbLoginSuccess = session.get("loginFacebookSuccess", false);
 			Intent successIntent = new Intent(this, HomeActivity.class);
-			Intent failIntent = new Intent(this, WelcomeActivity.class);
-			if(fbLoginSuccess){
-				startActivity(successIntent);
-				overridePendingTransition(R.anim.push_up_in, R.anim.push_left_out);
-				finish();
-				
-			}else{
+			final Intent failIntent = new Intent(this, WelcomeActivity.class);
+			if (fbLoginSuccess) {
+				if (session.currentUser == null) {
+					loadUserThread = new LoadUserThread(email);
+					loadUserThread.start();
+					synchronized (lockObj) {
+						try {
+							lockObj.wait();
+						} catch (InterruptedException e) {
+							Utils.showToast(context,
+									res.getString(R.string.esn_global_Error),
+									Toast.LENGTH_LONG);
+							Log.e(TAG_LOG, e.getMessage());
+							e.printStackTrace();
+						}
+					}
+					if (user != null) {
+						session.currentUser = user;
+					} else {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								this);
+						builder.setTitle(res
+								.getString(R.string.esn_global_waring));
+						builder.setMessage(res
+								.getString(R.string.esn_global_error_please_login_again));
+						builder.setIcon(R.drawable.ic_alerts_and_states_error);
+						builder.setCancelable(false);
+						builder.setPositiveButton("OK",
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										dialog.dismiss();
+										startActivity(failIntent);
+										overridePendingTransition(
+												R.anim.push_up_in,
+												R.anim.push_left_out);
+										finish();
+									}
+								});
+						builder.create().show();
+					}
+
+				} else {
+					startActivity(successIntent);
+					overridePendingTransition(R.anim.push_up_in,
+							R.anim.push_left_out);
+					finish();
+				}
+
+			} else {
 				loginThread = new LoginThread(this, email, password, null);
-				
-				
+
 				failIntent.putExtra("loginResult", "Login failed");
 
 				loginThread.setSuccessIntent(successIntent);
 				loginThread.setFailIntent(failIntent);
 				loginThread.start();
 			}
-			
 
 		} else {// chua login
 			session.put("isLogined", false);
@@ -229,7 +338,6 @@ public class WelcomeScreen extends SherlockActivity {
 						Toast.LENGTH_LONG);
 				Log.e(TAG_LOG, e.getMessage());
 				e.printStackTrace();
-				;
 			} catch (IllegalAccessException e) {
 				Utils.showToast(context,
 						res.getString(R.string.esn_global_Error),
