@@ -4,7 +4,7 @@
     <string name="esn_setting_app_enableEventNotification_small">Cài đặt thông báo cho sự kiện.</string>
     <string name="esn_setting_app_enableFriendNotification">Bạn bè</string>
     <string name="esn_setting_app_enableFriendNotification_small">Cài đặt thông báo bạn bè.</string>
-    <string name="esn_setting_app_enableConnectFacebook">Facebook</string>
+    <string name="esn_setting_app_enableConnectFacebook">Kết Nối Facebook</string>
     <string name="esn_setting_app_enableConnectFacebook_small">Cài đặt kết nối facebook.</string>
     <string name="esn_setting_app_enablelocation">Vị trí</string>
     <string name="esn_setting_app_enablelocation_small">Cài đặt cho phép truy cập vị trí hiện tại.</string>

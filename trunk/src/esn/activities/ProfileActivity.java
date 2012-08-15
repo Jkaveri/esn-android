@@ -357,6 +357,10 @@ public class ProfileActivity extends Activity {
 
 							txtAddress.setText(ad);
 
+							if (dialog != null) {
+								dialog.dismiss();
+
+							}
 						}
 					});
 				} else {
@@ -393,11 +397,7 @@ public class ProfileActivity extends Activity {
 		public void run() {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
 
-			avatar.setImageBitmap(bitmap);
-			if (dialog != null) {
-				dialog.dismiss();
-
-			}
+			avatar.setImageBitmap(bitmap);			
 		}
 
 	}

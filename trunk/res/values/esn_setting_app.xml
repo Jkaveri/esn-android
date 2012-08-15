@@ -4,8 +4,8 @@
     <string name="esn_setting_app_enableEventNotification_small">Event Notification</string>
     <string name="esn_setting_app_enableFriendNotification">Friend Notification</string>
     <string name="esn_setting_app_enableFriendNotification_small">Friend Notification</string>
-    <string name="esn_setting_app_enableConnectFacebook">Connect To Facebook</string>
-    <string name="esn_setting_app_enableConnectFacebook_small">Connect To Facebook</string>
+    <string name="esn_setting_app_enableConnectFacebook">Connect Facebook</string>
+    <string name="esn_setting_app_enableConnectFacebook_small">Connect Facebook</string>
     <string name="esn_setting_app_enablelocation">Loation</string>
     <string name="esn_setting_app_enablelocation_small">Access location setting_</string>
     <string name="esn_setting_app_enableheadphone">Headphone</string>

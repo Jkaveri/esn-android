@@ -104,12 +104,14 @@
                 android:src="@drawable/ic_setting_access_location"
                 android:contentDescription="@string/esn_setting_app_enablelocation"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 />
             <TextView 
-                android:layout_width="130dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/esn_setting_app_enablelocation"
                android:textColor="@color/text_color" 
+               android:layout_weight="1"
                 />
             <CheckBox 
                 android:id="@+id/esn_setting_app_location_check"
@@ -134,12 +136,14 @@
                 android:src="@drawable/ic_setting_access_headphone"
                 android:contentDescription="@string/esn_setting_app_enablelocation"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 />
             <TextView 
-                android:layout_width="130dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/esn_setting_app_enableheadphone"
                android:textColor="@color/text_color" 
+               android:layout_weight="1"
                 />
             <CheckBox 
                 android:id="@+id/esn_setting_app_headphone_check"
@@ -165,6 +169,7 @@
                 android:src="@drawable/ic_setting_logout_dark"
                 android:contentDescription="@string/esn_setting_app_enablelocation"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 />
             <TextView 
                 android:layout_width="130dp"
