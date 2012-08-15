@@ -20,6 +20,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -68,6 +70,17 @@ public class SettingsAppActivity extends Activity {
 		ShowInfoSettingFb();
 		ShowInfoSettingLocation();
 		ShowInfoSettingHeadPhone();
+		
+		Switch sw = (Switch) findViewById(R.id.esn_setting_app_facebook_enable);
+		
+		sw.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				
+				SwitchFbClicked();
+			}
+		});
 	}
 
 	public void SettingFriendClicked(View v) {
@@ -119,7 +132,7 @@ public class SettingsAppActivity extends Activity {
 		alert.show();
 	}
 
-	public void SwitchFbClicked(View v) {
+	public void SwitchFbClicked() {
 		Switch sw = (Switch) findViewById(R.id.esn_setting_app_facebook_enable);
 
 		if (sw.isChecked()) {
