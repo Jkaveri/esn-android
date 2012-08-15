@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,7 @@ public class FriendListActivity extends ListActivity implements
 
 	private int friendId = 0;
 	private FriendListActivity context;
+	protected Thread thload;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +75,9 @@ public class FriendListActivity extends ListActivity implements
 		progressDialog.setTitle(this.getResources().getString(
 				R.string.esn_global_loading));
 		progressDialog.setMessage("Waiting ....");
-		progressDialog.setCancelable(false);
-		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.show();
+//		progressDialog.setCancelable(false);
+//		progressDialog.setCanceledOnTouchOutside(false);
+		//progressDialog.show();
 
 		if (friendId == 0) {
 			friendId = sessions.currentUser.AccID;
@@ -133,7 +135,10 @@ public class FriendListActivity extends ListActivity implements
 						lastScroll = scroll;
 						page++;
 						progressDialog.show();
-						new LoadListFriendThread(page, PAGE_SIZE).start();
+						if(thload!= null)
+							thload.interrupt();
+						thload = new LoadListFriendThread(page, PAGE_SIZE);
+						thload.start();
 					}
 				}
 
@@ -141,19 +146,41 @@ public class FriendListActivity extends ListActivity implements
 		});
 
 		lstFriend.setAdapter(adapter);
-		new LoadListFriendThread(1, PAGE_SIZE).start();
+//		thload = new LoadListFriendThread(1, PAGE_SIZE);
+//		thload.start();
 	}
 
 	@Override
-	protected void onRestart() {
+	protected void onResume() {
+		
+		adapter.clear();
+		progressDialog.show();
+		
+		if(thload!= null)
+			thload.interrupt();
+		thload = new LoadListFriendThread(1, PAGE_SIZE);
+		thload.start();
+		
 		super.onRestart();
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        	    	
+	    	finish();
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+	
 	@Override
 	public void onDestroy() {
 		adapter.stopThread();
 		adapter.clearCache();
 		lstFriend.setAdapter(null);
+		if(thload!=null){
+			thload.interrupt();
+		}
 		super.onDestroy();
 	}
 
@@ -217,7 +244,7 @@ public class FriendListActivity extends ListActivity implements
 
 		Button btnUnfriend = (Button) dialog
 				.findViewById(R.id.btn_Friends_Diaglog_Unfriend);
-		// if button is clicked, close the custom dialog
+		
 		btnUnfriend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -423,7 +450,8 @@ public class FriendListActivity extends ListActivity implements
 
 	private class LoadFriendHandler implements Runnable {
 		private List<Users> users;
-		private boolean doClear;
+
+		boolean doClear;
 
 		public LoadFriendHandler(List<Users> users) {
 			this.users = users;
