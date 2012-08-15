@@ -375,7 +375,7 @@ public class UsersManager {
 			return false;
 	}
 
-	public Boolean GetRelationStatus(int accId, int otherId)
+	public int GetRelationStatus(int accId, int otherId)
 			throws ClientProtocolException, IOException, JSONException {
 		JSONObject params = new JSONObject();
 
@@ -388,9 +388,7 @@ public class UsersManager {
 
 		int rs = response.getInt("d");
 
-		if (rs == 1)
-			return true;
-		return false;
+		return rs;
 	}
 
 	public Users[] GetFbAccountHasRegistered(JSONArray friends, int accId)

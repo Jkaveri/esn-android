@@ -14,5 +14,6 @@
 	<string name="btn_Friends_Lists_Diaglog_unfriendsuccess">Xóa bạn thành công !</string>
 	<string name="btn_Friends_Lists_Diaglog_unfriendnotsuccess">Lỗi, Hãy thực hiện lại.</string>
 	<string name="btn_Friends_Lists_Diaglog_nofriend">Không có bạn bè.</string>
-	<string name="btn_Friends_Lists_Diaglog_addfriendsuccess">Add friend Successfull !</string>
+	<string name="btn_Friends_Lists_Diaglog_addfriendsuccess">Thêm bạn thành công !</string>
+	<string name="esn_friend_waiting">Đang Chờ</string>
 </resources>

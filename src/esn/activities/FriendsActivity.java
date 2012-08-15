@@ -170,6 +170,15 @@ public class FriendsActivity extends Activity {
 										bt.setText(res.getString(R.string.esn_friend_unfriend));
 										isFriend=2;
 									}
+									else
+									{
+										Toast.makeText(
+												context,
+												res.getString(R.string.btn_Friends_Lists_Diaglog_addfriendsuccess),
+												Toast.LENGTH_SHORT).show();
+										bt.setText(res.getString(R.string.esn_friend_waiting));
+										isFriend=2;
+									}
 								}
 							});
 						} else {
@@ -362,6 +371,9 @@ public class FriendsActivity extends Activity {
 							txtAddress.setText(ad);
 
 							new GetListEventThread(1, PAGE_SIZE).start();
+							
+							if (dialog != null)
+								dialog.dismiss();
 						}
 					});
 
@@ -400,8 +412,6 @@ public class FriendsActivity extends Activity {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
 
 			avatar.setImageBitmap(bitmap);
-			if (dialog != null)
-				dialog.dismiss();
 		}
 
 	}

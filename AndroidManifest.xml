@@ -111,7 +111,7 @@
         <activity
             android:name=".SettingsAppActivity"
             android:icon="@drawable/logo_48_48_2"
-            android:label="@string/app_Setting_ApplicationSetting"
+            android:label="@string/app_Setting"
             android:theme="@style/esn.theme.light"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
