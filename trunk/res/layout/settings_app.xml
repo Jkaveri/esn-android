@@ -84,8 +84,7 @@
                 android:textColor="@color/text_color"
                 />
             <Switch 
-                android:id="@+id/esn_setting_app_facebook_enable"
-                android:onClick="SwitchFbClicked"
+                android:id="@+id/esn_setting_app_facebook_enable"                                
                 />
         </TableRow>
         <View

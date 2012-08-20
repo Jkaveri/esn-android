@@ -30,6 +30,7 @@ public class SettingsAppActivity extends Activity {
 	private Resources res;
 
 	private Sessions session;
+	
 	private Context context;
 
 	private Intent intent;

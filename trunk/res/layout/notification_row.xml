@@ -21,8 +21,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"      
-        >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/esn.notification.message"
@@ -38,4 +37,16 @@
             android:textSize="13dp"
             android:textColor="#33b5e5"/>
     </LinearLayout> 
+    <Button 
+        android:id="@+id/esn.notification.btactionyes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_global_yes"
+        />
+    <Button 
+        android:id="@+id/esn.notification.btactionno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_global_no"
+        />
 </LinearLayout>

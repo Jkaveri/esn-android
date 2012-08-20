@@ -185,14 +185,13 @@ public class AddNewEvent extends Activity {
 				txtTitle.requestFocus();
 				return;
 			}
-			if (description == null || description.length() <= 0) {
+		/*	if (description == null || description.length() <= 0) {
 
 				txtDescription.setError("Description is required",
 						res.getDrawable(R.drawable.ic_alerts_and_states_error));
 				txtDescription.requestFocus();
 				return;
-			}
-
+			}*/
 			event.AccID = sessions.currentUser.AccID;
 			event.Title = title;
 			event.Description = description;

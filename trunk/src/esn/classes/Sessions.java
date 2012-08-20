@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.facebook.android.Facebook;
 
 import esn.models.EventType;
-import esn.models.FriendNotification;
 import esn.models.Users;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,15 +15,12 @@ public class Sessions {
 	private Context context;
 	private SharedPreferences pref;
 	public Users currentUser;
-	public ArrayList<EventType> eventTypes;
-	
-	public FriendNotification friendNotification;
+	public ArrayList<EventType> eventTypes;	
 	
 	
 	public Sessions(Context context) {
 		this.context = context;
 		pref = context.getSharedPreferences("ESN", Context.MODE_PRIVATE);
-		friendNotification = new FriendNotification();
 	}
 
 	public static Sessions getInstance(Context context) {
@@ -153,6 +149,5 @@ public class Sessions {
 		fb.setAccessToken(getAccessToken());
 		fb.setAccessExpires(getAccessExpires());
 		return fb.isSessionValid();
-	}
-
+	}	
 }

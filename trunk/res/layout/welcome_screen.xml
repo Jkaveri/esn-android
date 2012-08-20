@@ -20,13 +20,4 @@
         android:text="@string/esn_global_loading"
         android:textSize="@dimen/textSize.small"
         android:textColor="#ffff"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tnt"
-        android:textColor="#ffff"
-        android:textSize="10dp"
-        android:layout_marginBottom="50dp"
-        />
 </LinearLayout>

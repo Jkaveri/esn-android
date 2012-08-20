@@ -22,6 +22,7 @@ public class SettingAppFriendActivity extends Activity {
 	
 	Resources res;
 	
+	FriendNotification friendNotification;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -36,6 +37,8 @@ public class SettingAppFriendActivity extends Activity {
 		handler = new Handler();
 		
 		res = getResources();
+		
+		friendNotification = new FriendNotification(session);
 		
 		ShowInfo();
 	}
@@ -56,18 +59,19 @@ public class SettingAppFriendActivity extends Activity {
 		CheckBox chbPhoneFriendRequest = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendrequest);
 		CheckBox chbPhoneSharePlace = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendshareplace);
 		
-		Boolean chb1 = session.friendNotification.emailComment;	
-		Boolean chb2 = session.friendNotification.emailCreateEvent;
-		Boolean chb3 = session.friendNotification.emailFriendFbJoin;
-		Boolean chb4 = session.friendNotification.emailConfirmEvent;
-		Boolean chb5 = session.friendNotification.emailFriendRequest;
-		Boolean chb6 = session.friendNotification.emailSharePlace;
-		Boolean chb7 = session.friendNotification.phoneComment;
-		Boolean chb8 = session.friendNotification.phoneCreateEvent;
-		Boolean chb9 = session.friendNotification.phoneFriendFbJoin;
-		Boolean chb10 = session.friendNotification.phoneConfirmEvent;
-		Boolean chb11 = session.friendNotification.phoneFriendRequest;
-		Boolean chb12 = session.friendNotification.phoneSharePlace;
+		Boolean chb1 = friendNotification.getEmailComment();		
+		Boolean chb2 = friendNotification.getEmailCreateEvent();
+		
+		Boolean chb3 = friendNotification.getEmailFriendFbJoin();
+		Boolean chb4 = friendNotification.getEmailConfirmEvent();
+		Boolean chb5 = friendNotification.getEmailFriendRequest();
+		Boolean chb6 = friendNotification.getEmailSharePlace();
+		Boolean chb7 = friendNotification.getPhoneComment();
+		Boolean chb8 = friendNotification.getPhoneCreateEvent();
+		Boolean chb9 = friendNotification.getPhoneConfirmEvent();
+		Boolean chb10 = friendNotification.getPhoneConfirmEvent();
+		Boolean chb11 = friendNotification.getPhoneFriendRequest();
+		Boolean chb12 = friendNotification.getPhoneSharePlace();
 		
 		if(chb1==true)
 		{
@@ -147,55 +151,54 @@ public class SettingAppFriendActivity extends Activity {
 		CheckBox chbPhoneTrueFalse = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendtruefalse);
 		CheckBox chbPhoneSharePlace = (CheckBox)findViewById(R.id.esn_setting_app_friend_chb_phone_friendshareplace);
 		
-		FriendNotification friendNotification = new FriendNotification();
 		
 		if(chbEmailComment.isChecked())
 		{
-			friendNotification.emailComment = true;
+			friendNotification.setEmailComment(true);
 		}	
 		else
 		{
-			friendNotification.emailComment = false;
+			friendNotification.setEmailComment(false);
 		}
 		if(chbEmailCreateEvent.isChecked())
 		{
-			friendNotification.emailCreateEvent = true;
+			friendNotification.setEmailCreateEvent(true);
 		}
 		else
 		{
-			friendNotification.emailCreateEvent = false;
+			friendNotification.setEmailCreateEvent(false);
 		}
 		if(chbEmailFriendFbJoin.isChecked())
 		{
-			friendNotification.emailFriendFbJoin = true;
+			friendNotification.setEmailFriendFbJoin(true);
 		}
 		else
 		{
-			friendNotification.emailFriendFbJoin = false;
+			friendNotification.setEmailFriendFbJoin(false);
 		}
 		if(chbEmailTrueFalse.isChecked())
 		{
-			friendNotification.emailConfirmEvent = true;
+			friendNotification.setEmailConfirmEvent(true);
 		}
 		else
 		{
-			friendNotification.emailConfirmEvent = false;
+			friendNotification.setEmailConfirmEvent(false);
 		}
 		if(chbEmailFriendRequest.isChecked())
 		{
-			friendNotification.emailFriendRequest = true;
+			friendNotification.setEmailFriendRequest(true);
 		}
 		else
 		{
-			friendNotification.emailFriendRequest = false;
+			friendNotification.setEmailFriendRequest(false);
 		}
 		if(chbEmailSharePlace.isChecked())
 		{
-			friendNotification.emailSharePlace = true;
+			friendNotification.setEmailSharePlace(true);
 		}
 		else
 		{
-			friendNotification.emailSharePlace = false;
+			friendNotification.setEmailSharePlace(false);
 		}		
 		
 		
@@ -203,54 +206,52 @@ public class SettingAppFriendActivity extends Activity {
 		
 		if(chbPhoneComment.isChecked())
 		{
-			friendNotification.phoneComment = true;
+			friendNotification.setPhoneComment(true);
 		}
 		else
 		{
-			friendNotification.phoneComment = false;
+			friendNotification.setPhoneComment(false);
 		}
 		if(chbPhoneCreateEvent.isChecked())
 		{
-			friendNotification.phoneCreateEvent = true;
+			friendNotification.setPhoneCreateEvent(true);
 		}
 		else
 		{
-			friendNotification.phoneCreateEvent =false;
+			friendNotification.setPhoneCreateEvent(false);
 		}
 		if(chbPhoneFriendFbJoin.isChecked())
 		{
-			friendNotification.phoneFriendFbJoin = true;
+			friendNotification.setPhoneFriendFbJoin(true);
 		}
 		else
 		{
-			friendNotification.phoneFriendFbJoin = false;
+			friendNotification.setPhoneFriendFbJoin(false);
 		}
 		if(chbPhoneTrueFalse.isChecked())
 		{
-			friendNotification.phoneConfirmEvent = true;
+			friendNotification.setPhoneConfirmEvent(true);
 		}
 		else
 		{
-			friendNotification.phoneConfirmEvent = false;
+			friendNotification.setPhoneConfirmEvent(false);
 		}
 		if(chbPhoneFriendRequest.isChecked())
 		{
-			friendNotification.phoneFriendRequest = true;
+			friendNotification.setPhoneFriendRequest(true);
 		}
 		else
 		{
-			friendNotification.phoneFriendRequest = false;
+			friendNotification.setPhoneFriendRequest(false);
 		}
 		if(chbPhoneSharePlace.isChecked())
 		{
-			friendNotification.phoneSharePlace = true;
+			friendNotification.setPhoneSharePlace(true);
 		}
 		else
 		{
-			friendNotification.phoneSharePlace = false;
-		}
-		
-		session.friendNotification = friendNotification;
+			friendNotification.setPhoneSharePlace(false);
+		}		
 		
 		Toast.makeText(context, res.getString(R.string.esn_setting_app_informationsaved), Toast.LENGTH_SHORT).show();
 	}
