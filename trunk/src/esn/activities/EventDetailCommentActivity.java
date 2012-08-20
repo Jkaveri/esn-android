@@ -223,7 +223,7 @@ public class EventDetailCommentActivity extends SherlockActivity implements
 						Toast.LENGTH_SHORT).show();
 			}
 		} else {
-			EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
+			EditText txtComment = (EditText) findViewById(R.id.esn_comments_txtComment);
 
 			String content = txtComment.getText().toString();
 
@@ -283,7 +283,7 @@ public class EventDetailCommentActivity extends SherlockActivity implements
 					res.getString(R.string.esn_eventDetail_commensuccess),
 					Toast.LENGTH_SHORT).show();
 
-			EditText txtComment = (EditText) findViewById(R.id.esn_eventDetail_txtComment);
+			EditText txtComment = (EditText) findViewById(R.id.esn_comments_txtComment);
 			txtComment.setText(null);
 
 			dialog.show();

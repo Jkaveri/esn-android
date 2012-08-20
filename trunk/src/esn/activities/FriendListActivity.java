@@ -51,7 +51,6 @@ public class FriendListActivity extends ListActivity implements
 	public final static int CODE_REQUEST_FRIEND_INFO = 3;
 	public static final String LOG_TAG = "FriendListActivity";
 
-
 	private int friendId = 0;
 	private FriendListActivity context;
 	protected Thread thload;
@@ -75,9 +74,9 @@ public class FriendListActivity extends ListActivity implements
 		progressDialog.setTitle(this.getResources().getString(
 				R.string.esn_global_loading));
 		progressDialog.setMessage("Waiting ....");
-//		progressDialog.setCancelable(false);
-//		progressDialog.setCanceledOnTouchOutside(false);
-		//progressDialog.show();
+		// progressDialog.setCancelable(false);
+		// progressDialog.setCanceledOnTouchOutside(false);
+		// progressDialog.show();
 
 		if (friendId == 0) {
 			friendId = sessions.currentUser.AccID;
@@ -135,7 +134,7 @@ public class FriendListActivity extends ListActivity implements
 						lastScroll = scroll;
 						page++;
 						progressDialog.show();
-						if(thload!= null)
+						if (thload != null)
 							thload.interrupt();
 						thload = new LoadListFriendThread(page, PAGE_SIZE);
 						thload.start();
@@ -146,39 +145,39 @@ public class FriendListActivity extends ListActivity implements
 		});
 
 		lstFriend.setAdapter(adapter);
-//		thload = new LoadListFriendThread(1, PAGE_SIZE);
-//		thload.start();
+		// thload = new LoadListFriendThread(1, PAGE_SIZE);
+		// thload.start();
 	}
 
 	@Override
 	protected void onResume() {
-		
+
 		adapter.clear();
 		progressDialog.show();
-		
-		if(thload!= null)
+
+		if (thload != null)
 			thload.interrupt();
 		thload = new LoadListFriendThread(1, PAGE_SIZE);
 		thload.start();
-		
+
 		super.onRestart();
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-	        	    	
-	    	finish();
-	    }
-	    return super.onKeyDown(keyCode, event);
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		adapter.stopThread();
 		adapter.clearCache();
 		lstFriend.setAdapter(null);
-		if(thload!=null){
+		if (thload != null) {
 			thload.interrupt();
 		}
 		super.onDestroy();
@@ -244,7 +243,7 @@ public class FriendListActivity extends ListActivity implements
 
 		Button btnUnfriend = (Button) dialog
 				.findViewById(R.id.btn_Friends_Diaglog_Unfriend);
-		
+
 		btnUnfriend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -369,14 +368,16 @@ public class FriendListActivity extends ListActivity implements
 			finish();
 			return true;
 		} else if (itemTitle.equals("FindMoreFriend")) {
-			Toast.makeText(this, R.string.esn_global_function_developing,
-					Toast.LENGTH_LONG).show();
 			/*
-			 * Intent intenFdsEvent = new Intent(this,
-			 * FindFriendsActivity.class); startActivity(intenFdsEvent);
-			 * overridePendingTransition(R.anim.push_left_out,
-			 * R.anim.push_left_in); finish();
+			 * Toast.makeText(this, R.string.esn_global_function_developing,
+			 * Toast.LENGTH_LONG).show();
 			 */
+
+			Intent intenFdsEvent = new Intent(this, FindFriendsActivity.class);
+			startActivity(intenFdsEvent);
+			overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+			finish();
+
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);

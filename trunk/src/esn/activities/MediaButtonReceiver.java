@@ -158,6 +158,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 		@Override
 		public void onStopedRecord() {// Khi noi xong tu stop
 			session.put("isRecording", false);
+			
 		}
 
 	}

@@ -41,11 +41,11 @@ public class ShareToFacebookThread extends Thread {
 				try {
 					Bundle params = new Bundle();
 
-					params.putString("message", "Event moi ne :)");
+					params.putString("message", event.Title);
 
 					params.putString("name", event.Title);
-					params.putString("caption", "http://myesn.vn");
-					params.putString("link", "http://myesn.vn");
+					params.putString("caption", "Mạng xã hội sự kiện MyESN");
+					params.putString("link", "http://myesn.vn/comment.aspx?ID="+event.EventID);
 					params.putString("description", event.Description);
 					if (event.Picture != null && event.Picture.length() > 0) {
 						params.putString("picture", event.Picture);
