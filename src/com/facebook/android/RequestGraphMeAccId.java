@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.util.Log;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 
 import esn.activities.R;
-import esn.activities.RegisterActivity;
 import esn.classes.Sessions;
 import esn.classes.Utils;
 import esn.models.UsersManager;
@@ -83,7 +81,6 @@ public class RequestGraphMeAccId implements RequestListener {
 	@Override
 	public void onIOException(IOException e, Object state) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

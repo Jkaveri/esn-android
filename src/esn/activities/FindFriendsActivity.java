@@ -52,6 +52,7 @@ public class FindFriendsActivity extends Activity {
 
 	FriendsManager friendsManager = new FriendsManager();
 	private ProgressDialog progressDialog;
+	private Users[] users;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,8 @@ public class FindFriendsActivity extends Activity {
 		progressDialog = new ProgressDialog(this);
 
 		progressDialog.setTitle(res.getString(R.string.esn_global_loading));
-		progressDialog.setMessage(res.getString(R.string.esn_find_friend_finding));
+		progressDialog.setMessage(res
+				.getString(R.string.esn_find_friend_finding));
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.show();
@@ -99,20 +101,22 @@ public class FindFriendsActivity extends Activity {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
-							Intent intent = new Intent(context,SettingsAppActivity.class);
+							Intent intent = new Intent(context,
+									SettingsAppActivity.class);
 							startActivity(intent);
 							finish();
 						}
 
 					});
-			builder.setPositiveButton(R.string.esn_global_cancel,new DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					
-					dialog.dismiss();
-					finish();
-				}
-			});
+			builder.setPositiveButton(R.string.esn_global_cancel,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+							dialog.dismiss();
+							finish();
+						}
+					});
 			builder.create().show();
 		}
 
@@ -127,10 +131,17 @@ public class FindFriendsActivity extends Activity {
 		if (session.restoreFaceBook(mFacebook)) {
 
 			Bundle params = new Bundle();
-			params.putString("fields", "name, picture, location");
-			// params.putInt("offset", pageNum);
-			// params.putInt("limit", pageSize);
-			mAsync.request("me/friends", params, new FriendsRequestListener());
+			/*
+			 * select name, current_location, uid, pic_square from user where
+			 * uid in (select uid2 from friend where uid1=me()) order by name
+			 */
+			String query = "select uid, name, pic_square from user where is_app_user="
+					+ WelcomeActivity.APP_ID
+					+ " and uid in (select uid2 from friend where uid1=me()) order by name";
+			params.putString("method", "fql.query");
+			params.putString("query", query);
+			// params.putString("fields", "name, picture, location");
+			mAsync.request(null, params, new FriendsRequestListener());
 		} else {
 			mFacebook.authorize(this, WelcomeActivity.FB_PERMISSIONS,
 					new LoginFaceBookListener(this, mFacebook));
@@ -146,52 +157,80 @@ public class FindFriendsActivity extends Activity {
 
 	@Override
 	public void onDestroy() {
-		adapter.stopThread();
-		adapter.clearCache();
-		lstFindFriend.setAdapter(null);
+		if (adapter != null) {
+			adapter.stopThread();
+			adapter.clearCache();
+		}
+		if (lstFindFriend != null) {
+			lstFindFriend.setAdapter(null);
+
+		}
+
 		super.onDestroy();
 	}
 
 	public void btnFindClicked(View view) {
 	}
 
+	private void dissmisDialog() {
+		if (progressDialog != null && progressDialog.isShowing()) {
+			progressDialog.dismiss();
+		}
+	}
+
 	private class FriendsRequestListener implements RequestListener {
+
+		protected static final String LOG_TAG = "FriendsRequestListener";
 
 		@Override
 		public void onComplete(String response, Object state) {
 
 			try {
-				JSONObject responseObject = new JSONObject(response);
-				if (responseObject.has("data")) {
-					JSONArray jsonArray = responseObject.getJSONArray("data");
+				JSONArray jsonArray = new JSONArray(response);
+				if (jsonArray != null && jsonArray.length()>0) {
 
-					Users[] users = (new UsersManager())
-							.GetFbAccountHasRegistered(jsonArray,
-									session.currentUser.AccID);
+					UsersManager manager = new UsersManager();
+					users = manager.GetFbAccountHasRegistered(jsonArray,
+							session.currentUser.AccID);
 
-					for (int i = 0; i < users.length; i++) {
+					if (users != null) {
+						runOnUiThread(new Runnable() {
 
-						adapter.add(users[i]);
+							@Override
+							public void run() {
+
+								for (Users user : users) {
+
+									adapter.add(user);
+									Log.d(LOG_TAG, user.Name);
+								}
+								adapter.notifyDataSetChanged();
+								progressDialog.dismiss();
+
+							}
+						});
+					}else{
+						Toast.makeText(FindFriendsActivity.this,
+								R.string.esn_global_list_empty, Toast.LENGTH_SHORT)
+								.show();
+						return;
 					}
-					runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							adapter.notifyDataSetChanged();
-							progressDialog.dismiss();
-						}
-					});
-				} else {
-
+				}else{
+					Toast.makeText(FindFriendsActivity.this,
+							R.string.esn_global_list_empty, Toast.LENGTH_SHORT)
+							.show();
+					return;
 				}
 
 			} catch (JSONException e) {
+				dissmisDialog();
 				Toast.makeText(FindFriendsActivity.this,
 						R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
 						.show();
 				Log.d(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (IOException e) {
+				dissmisDialog();
 				Toast.makeText(FindFriendsActivity.this,
 						R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
 						.show();
@@ -203,6 +242,7 @@ public class FindFriendsActivity extends Activity {
 
 		@Override
 		public void onIOException(IOException e, Object state) {
+			dissmisDialog();
 			Toast.makeText(FindFriendsActivity.this,
 					R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
 					.show();
@@ -213,6 +253,10 @@ public class FindFriendsActivity extends Activity {
 		@Override
 		public void onFileNotFoundException(FileNotFoundException e,
 				Object state) {
+			dissmisDialog();
+			Toast.makeText(FindFriendsActivity.this,
+					R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
+					.show();
 			Log.e(TAG_LOG, e.getMessage());
 			e.printStackTrace();
 		}
@@ -220,12 +264,17 @@ public class FindFriendsActivity extends Activity {
 		@Override
 		public void onMalformedURLException(MalformedURLException e,
 				Object state) {
+			dissmisDialog();
+			Toast.makeText(FindFriendsActivity.this, R.string.esn_global_Error,
+					Toast.LENGTH_SHORT).show();
 			Log.e(TAG_LOG, e.getMessage());
 			e.printStackTrace();
 		}
 
 		@Override
 		public void onFacebookError(FacebookError e, Object state) {
+			Toast.makeText(FindFriendsActivity.this, R.string.esn_global_Error,
+					Toast.LENGTH_SHORT).show();
 			Log.e(TAG_LOG, e.getMessage());
 			e.printStackTrace();
 		}

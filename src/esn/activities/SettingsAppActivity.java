@@ -39,7 +39,7 @@ public class SettingsAppActivity extends Activity {
 	private Facebook mFacebook;
 
 	String accessToken = null;
-
+	String fbId = null;
 	String email;
 
 	Users users;
@@ -172,8 +172,8 @@ public class SettingsAppActivity extends Activity {
 			}
 			if (users != null) {
 				accessToken = users.AccessToken;
-
-				if (accessToken == null || accessToken.isEmpty()
+				fbId = users.fbID;
+				if (fbId == null || fbId.isEmpty() || fbId.equals("null") || accessToken == null || accessToken.isEmpty()
 						|| accessToken.equals("_")) {
 					ConnecToFacebook();
 				} else {

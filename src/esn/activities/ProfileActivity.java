@@ -17,6 +17,7 @@ import esn.models.Users;
 import esn.models.UsersManager;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -171,7 +172,7 @@ public class ProfileActivity extends Activity {
 	}
 
 	public void MessageClicked(View v) {
-		intent = new Intent(context, Notification.class);
+		intent = new Intent(context, NotificationActivity.class);
 		startActivity(intent);
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
@@ -253,6 +254,7 @@ public class ProfileActivity extends Activity {
 	public class ShowProfileThread extends Thread {
 
 		public ShowProfileThread() {
+		
 		}
 
 		public void run() {
@@ -264,18 +266,26 @@ public class ProfileActivity extends Activity {
 							.RetrieveById(session.currentUser.AccID);
 					session.currentUser = users;
 				} catch (IllegalArgumentException e) {
+					runOnUiThread(new dissmissDialog(dialog));
+					
 					Utils.showToast(context,
 							res.getString(R.string.esn_global_Error),
 							Toast.LENGTH_LONG);
 					Log.e(TAG_LOG, e.getMessage());
 					e.printStackTrace();
 				} catch (JSONException e) {
+					if(dialog!=null && dialog.isShowing()){
+						dialog.dismiss();
+					}
 					Utils.showToast(context,
 							res.getString(R.string.esn_global_Error),
 							Toast.LENGTH_LONG);
 					Log.e(TAG_LOG, e.getMessage());
 					e.printStackTrace();
 				} catch (IOException e) {
+					if(dialog!=null && dialog.isShowing()){
+						dialog.dismiss();
+					}
 					Utils.showToast(
 							context,
 							res.getString(R.string.esn_global_connection_error),
@@ -283,6 +293,9 @@ public class ProfileActivity extends Activity {
 					Log.e(TAG_LOG, e.getMessage());
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
+					if(dialog!=null && dialog.isShowing()){
+						dialog.dismiss();
+					}
 					Utils.showToast(context,
 							res.getString(R.string.esn_global_Error),
 							Toast.LENGTH_LONG);
@@ -316,6 +329,9 @@ public class ProfileActivity extends Activity {
 											bitmap = Utils
 													.getBitmapFromURL(url);
 										} catch (IOException e) {
+											if(dialog!=null && dialog.isShowing()){
+												dialog.dismiss();
+											}
 											Utils.showToast(
 													context,
 													res.getString(R.string.esn_global_Error),
@@ -396,12 +412,26 @@ public class ProfileActivity extends Activity {
 		@Override
 		public void run() {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
-
-			avatar.setImageBitmap(bitmap);			
+			avatar.setImageBitmap(bitmap);
+			if (dialog != null) {
+				dialog.dismiss();
+			}
 		}
 
 	}
-
+	public class dissmissDialog implements Runnable{
+		private Dialog dialog;
+		public dissmissDialog(Dialog dialog) {
+			this.dialog = dialog;
+		}
+		@Override
+		public void run() {
+			if(dialog!=null && dialog.isShowing()){
+				dialog.dismiss();
+			}
+		}
+		
+	}
 	private class GetListEventThread extends Thread {
 
 		protected static final String LOG_TAG = "GetListEventThread";
@@ -435,6 +465,7 @@ public class ProfileActivity extends Activity {
 					});
 				}
 			} catch (IllegalArgumentException e) {
+				
 				Utils.showToast(context,
 						res.getString(R.string.esn_global_Error),
 						Toast.LENGTH_LONG);

@@ -10,21 +10,23 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import esn.classes.EsnRequestListener;
 import esn.classes.HttpHelper;
 import esn.classes.Utils;
 
-public class UsersManager {
-	// String NAMESPACE = "http://esnservice.somee.com/";
-	// String URL = "http://esnservice.somee.com/accountservice.asmx";
+public class UsersManager extends BaseManager<Users> {
 	String NAMESPACE = "http://esn.com.vn/";
-	String URL = "http://bangnl.info/ws/AccountsWS.asmx";
-
+	private final static String URL = "http://bangnl.info/ws/AccountsWS.asmx";
+	String DEBUG_URL = "http://10.0.2.2:3333/AccountsWS.asmx";
 	HttpHelper helper = new HttpHelper(URL);
-
-	public UsersManager() {
-
+	public final static String METHOD_REGISTER = "Register";
+	public UsersManager(EsnRequestListener listener) {
+		super(URL, listener);
 	}
-
+	public UsersManager(){
+		super(URL,null);
+	}
 	public int Login(String email, String password) throws JSONException,
 			IOException {
 
@@ -398,11 +400,11 @@ public class UsersManager {
 		int count = friends.length();
 		for (int i = 0; i < count; i++) {
 			JSONObject obj = friends.getJSONObject(i);
-			String id = obj.getString("id");
+			String id = obj.getString("uid");
 			fbIds.put(id);
 		}
 
-		HttpHelper helper = new HttpHelper(URL);
+		HttpHelper helper = new HttpHelper(DEBUG_URL);
 		JSONObject params = new JSONObject();
 
 		params.put("fbIDs", fbIds);
@@ -411,11 +413,12 @@ public class UsersManager {
 				"GetFbAccountHasRegistered", params);
 
 		if (response != null && response.has("d") && !response.isNull("d")) {
-			Users user = new Users();
+
 			JSONArray arrayUsers = response.getJSONArray("d");
 			count = arrayUsers.length();
 			Users[] users = new Users[count];
 			for (int i = 0; i < count; i++) {
+				Users user = new Users();
 				JSONObject jsonUser = arrayUsers.getJSONObject(i);
 
 				JSONObject p = jsonUser.getJSONObject("Profile");
@@ -533,5 +536,36 @@ public class UsersManager {
 			}
 		}
 		return frds;
+	}
+
+	@Override
+	public void Create(Users user) {
+		
+		JSONObject params = new JSONObject();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+
+		try {
+			params.put("name", user.Name);
+			params.put("email", user.Email);
+			params.put("password", user.Password);
+			params.put("birthday", format.format(user.Birthday));
+			params.put("phone", user.Phone);
+			params.put("gender", user.Gender);
+			params.put("access_token", user.AccessToken);
+			params.put("fbID", user.fbID);
+			params.put("avatar",
+					"http://myesn.vn/images/interface/esnmainlogo.png");
+			params.put("location", "");
+			request(METHOD_REGISTER, params);
+		} catch (JSONException e) {
+			listener.onMethodError(METHOD_REGISTER, e.getMessage(), e);
+			e.printStackTrace();
+
+		}
+	}
+
+	@Override
+	public void get(int id) {
+		
 	}
 }

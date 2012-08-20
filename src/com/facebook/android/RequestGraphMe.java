@@ -44,7 +44,7 @@ public class RequestGraphMe implements RequestListener {
 			final String fbId = accountInfo.getString("id");
 			session = Sessions.getInstance(context);
 			final String access_token = mFacebook.getAccessToken();
-
+			
 			user = new Users();
 
 			synchronized (lockObj) {

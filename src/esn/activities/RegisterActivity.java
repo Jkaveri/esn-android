@@ -6,10 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Util;
 
+import esn.classes.EsnRequestListener;
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
@@ -56,8 +60,6 @@ public class RegisterActivity extends SherlockActivity {
 	private ProgressDialog dialog;
 
 	public SharedPreferences pref;
-	
-	UsersManager usersManager = new UsersManager();
 
 	private Resources res;
 
@@ -68,7 +70,7 @@ public class RegisterActivity extends SherlockActivity {
 	private long fbAccessExpires;
 	
 	private static boolean checkEmail=false;
-	
+	public UsersManager usersManager  = new UsersManager();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -476,4 +478,7 @@ public class RegisterActivity extends SherlockActivity {
 		intent = new Intent(context,PolicyActivity.class);
 		startActivity(intent);
 	}
+
+
+	
 }

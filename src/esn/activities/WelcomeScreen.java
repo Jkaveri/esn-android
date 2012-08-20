@@ -42,7 +42,7 @@ public class WelcomeScreen extends SherlockActivity {
 	public boolean confirmDialogShowing = false;
 	public Users user = new Users();
 	private LoadUserThread loadUserThread;
-	
+
 	private class LoadUserThread extends Thread {
 		private String email;
 		private int Id;
@@ -57,6 +57,7 @@ public class WelcomeScreen extends SherlockActivity {
 
 		@Override
 		public void run() {
+			Looper.prepare();
 			try {
 				synchronized (lockObj) {
 					if (this.Id > 0) {
