@@ -47,4 +47,9 @@ public class FriendsManager {
 		}
 		return frd;
 	}
+
+	public Boolean AcceptFriend(int accId, int friendId) {
+				
+		return true;
+	}
 }
