@@ -1,6 +1,8 @@
 package esn.models;
 
 import java.lang.reflect.Field;
+
+import android.content.res.Resources;
 import esn.activities.R;
 
 public class EventType {
@@ -72,5 +74,30 @@ public class EventType {
 		}
 		return 0;
 	}
-
+	
+	public static String GetName(int id, Resources res)
+	{
+		switch (id) {
+		case 1:
+			return res.getString(R.string.event_type_ketxe);
+		case 2:
+			return res.getString(R.string.event_type_locot);
+		case 3:
+			return res.getString(R.string.event_type_tainangiaothong);
+		case 4:
+			return res.getString(R.string.event_type_lulut);
+		case 5:
+			return res.getString(R.string.event_type_lodat);
+		case 6:
+			return res.getString(R.string.event_type_duongxau);
+		case 7:
+			return res.getString(R.string.event_type_chayno);		
+		case 8:
+			return res.getString(R.string.event_type_duongbichan);
+		case 9:
+			return res.getString(R.string.event_type_dongdat);
+		default:
+			return res.getString(R.string.event_type_khac);
+		}
+	}
 }

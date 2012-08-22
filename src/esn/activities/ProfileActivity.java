@@ -335,7 +335,7 @@ public class ProfileActivity extends Activity {
 											Utils.showToast(
 													context,
 													res.getString(R.string.esn_global_Error),
-													Toast.LENGTH_LONG);
+													Toast.LENGTH_SHORT);
 											Log.e(TAG_LOG, e.getMessage());
 											e.printStackTrace();
 										}

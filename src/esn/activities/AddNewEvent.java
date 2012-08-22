@@ -83,19 +83,19 @@ public class AddNewEvent extends Activity {
 			// instance new event
 			event = new Events();
 			// toa do
-			TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate);
+			/*TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate);
 			double lat = homeData.getDoubleExtra("latitude", 0);
 			double lon = homeData.getDoubleExtra("longtitude", 0);
 			event.EventLat = lat;
 			event.EventLng = lon;
-
+*/
 			// display coordinate
-			txtCoordinate.setText(String.format("{%1$s}, {%2$s}", lat, lon));
+			//txtCoordinate.setText(String.format("{%1$s}, {%2$s}", lat, lon));
 			// convert coordinate to address
-			TextView tvAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
-			Geocoder geoCoder = new Geocoder(this);
+			/*TextView tvAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
+			Geocoder geoCoder = new Geocoder(this);*/
 			// hien dia chi
-			List<Address> listAddress = geoCoder.getFromLocation(lat, lon, 1);
+			/*List<Address> listAddress = geoCoder.getFromLocation(lat, lon, 1);
 			if (listAddress.size() > 0) {
 				Address address = listAddress.get(0);
 				int count = address.getMaxAddressLineIndex() + 1;
@@ -110,7 +110,7 @@ public class AddNewEvent extends Activity {
 				tvAddress.setText(res
 						.getString(R.string.esn_addNewEvent_noAddress));
 			}
-
+*/
 			TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
 			tvImageEventStatus.setText(String.format(
 					res.getString(R.string.esn_addNewEvent_imageeventstatus),
@@ -173,18 +173,18 @@ public class AddNewEvent extends Activity {
 
 		try {
 
-			EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
-			String title = txtTitle.getText().toString();
+			//EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
+			String title = "";
 
 			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
 			String description = txtDescription.getText().toString();
 
-			if ((title == null) || title.length() <= 0) {
+			/*if ((title == null) || title.length() <= 0) {
 				txtTitle.setError("Title is required",
 						res.getDrawable(R.drawable.ic_alerts_and_states_error));
 				txtTitle.requestFocus();
 				return;
-			}
+			}*/
 		/*	if (description == null || description.length() <= 0) {
 
 				txtDescription.setError("Description is required",

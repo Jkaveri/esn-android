@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="event_type_ketxe">Kẹt Xe</string>
+   <string name="event_type_locot">Lô Cốt</string>
+   <string name="event_type_tainangiaothong">Tai Nạn Giao Thông</string>
+   <string name="event_type_lulut">Lũ Lụt</string>
+   <string name="event_type_lodat">Lở Đất</string>
+   <string name="event_type_duongxau">Đường Xấu</string>
+   <string name="event_type_chayno">Cháy Nổ</string>
+   <string name="event_type_duongbichan">Đường Bị Chặn</string>
+   <string name="event_type_dongdat">Động Đất</string>
+   <string name="event_type_khac">Khác</string> 
+</resources>

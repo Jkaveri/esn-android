@@ -508,9 +508,10 @@ public class EventDetailActivity extends Activity implements
 				final ImageView imgEvent = (ImageView) findViewById(R.id.esn_eventDetail_image);
 				imgEvent.setImageResource(R.drawable.no_image);
 
-				tvTitle.setText(event.Title);
-				tvDateCreated.setText(Utils.DateToStringByLocale(
-						event.DayCreate, 1));
+				
+				String typeName = EventType.GetName(event.EventTypeID, res);
+				tvTitle.setText(typeName);
+				tvDateCreated.setText(Utils.DateToStringByLocale(event.DayCreate, 1));
 				tvDescription.setText(event.Description);
 
 				tvDislike.setText(String.valueOf(event.Dislike));
