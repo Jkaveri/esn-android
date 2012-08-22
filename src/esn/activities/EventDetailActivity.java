@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.json.JSONException;
 
+import android.app.ActionBar.OnNavigationListener;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,6 +17,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,11 +31,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
 import esn.classes.ShareToFacebookThread;
@@ -43,7 +43,7 @@ import esn.models.Events;
 import esn.models.EventsManager;
 import esn.models.UsersManager;
 
-public class EventDetailActivity extends SherlockActivity implements
+public class EventDetailActivity extends Activity implements
 		OnNavigationListener {
 
 	private Intent data;

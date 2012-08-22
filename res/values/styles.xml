@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="esn.theme.light" parent="Theme.Sherlock.Light.DarkActionBar">
+    <style name="esn.theme.light" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/esn.theme.light.actionbar</item>
         <item name="android:spinnerItemStyle">@style/esn.Widget.TextView.SpinnerItem</item>
+        <item name="spinnerItemStyle">@style/esn.Widget.TextView.SpinnerItem</item>
         <item name="android:spinnerDropDownItemStyle">@style/esn.Widget.DropDownItem.Spinner</item>
+   		<item name="spinnerDropDownItemStyle">@style/esn.Widget.DropDownItem.Spinner</item>
     </style>
-    <style name="esn.theme.light.actionbar" parent="Widget.Sherlock.Light.ActionBar.Solid">
-        <item name="background">@drawable/main_transparent</item>
+    <style name="esn.theme.light.actionbar" parent="@android:style/Widget.Holo.ActionBar.Solid">
         <item name="android:background">@drawable/main_transparent</item>
-        <item name="backgroundSplit">@drawable/black_transparent</item>
         <item name="android:backgroundSplit">@drawable/black_transparent</item>
         <item name="android:titleTextStyle">@style/esn.theme.light.actionbar.TitleTextStyle</item>
     </style>

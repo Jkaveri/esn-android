@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.json.JSONException;
 
-import com.actionbarsherlock.view.MenuItem;
 
 import esn.adapters.EsnListAdapterNoSub;
 import esn.adapters.ListViewEventHomeAdapter;
@@ -21,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -115,8 +115,8 @@ public class FriendEventsListActivity extends Activity implements
 		Context context = getActionBar().getThemedContext();
 
 		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,
-				R.layout.sherlock_spinner_item, mNavigationItems);
-		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+				R.layout.spinner_item, mNavigationItems);
+		list.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setDisplayUseLogoEnabled(false);

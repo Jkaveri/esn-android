@@ -1,12 +1,12 @@
 package esn.activities;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Facebook;
 import com.facebook.android.LoginFaceBookListener;
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,7 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-public class WelcomeActivity extends SherlockActivity {
+public class WelcomeActivity extends Activity {
 
 	public static final String[] FB_PERMISSIONS = { "email",
 			"read_friendlists", "publish_stream", "read_stream",
@@ -41,10 +41,10 @@ public class WelcomeActivity extends SherlockActivity {
 
 		context = this;
 		handler = new Handler();
-		getSupportActionBar().setDisplayShowHomeEnabled(false);
-		getSupportActionBar().setDisplayUseLogoEnabled(false);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().hide();
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayUseLogoEnabled(false);
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().hide();
 		session = Sessions.getInstance(this);
 		// init facebook
 		mFacebook = new Facebook(APP_ID);

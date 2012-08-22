@@ -2,10 +2,6 @@ package esn.activities;
 
 import java.util.ArrayList;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import esn.adapters.ListViewFriendsAdapter;
 import esn.adapters.ListViewNotificationAdapter;
