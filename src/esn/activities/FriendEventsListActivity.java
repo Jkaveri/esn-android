@@ -9,6 +9,7 @@ import esn.adapters.EsnListAdapterNoSub;
 import esn.adapters.ListViewEventHomeAdapter;
 import esn.classes.EsnListItem;
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.app.ActionBar;
@@ -17,6 +18,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -40,6 +42,7 @@ public class FriendEventsListActivity extends Activity implements
 	protected int lastScroll;
 	private EsnListItem[] mNavigationItems;
 
+	private Resources res;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,6 +53,9 @@ public class FriendEventsListActivity extends Activity implements
 		// setup argument
 
 		// set up progress dialog
+		
+		res = this.getResources();
+		
 		dialog = new ProgressDialog(this);
 		dialog.setCancelable(false);
 		dialog.setCanceledOnTouchOutside(false);
@@ -148,16 +154,20 @@ public class FriendEventsListActivity extends Activity implements
 						sessions.currentUser.AccID, pageNum, pageSize);
 				runOnUiThread(new LoadEventListAroundHandler(events));
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, FriendEventsListActivity.this);
+				Utils.showToast(FriendEventsListActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, FriendEventsListActivity.this);
+				Utils.showToast(FriendEventsListActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, FriendEventsListActivity.this);
+				Utils.showToast(FriendEventsListActivity.this, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, FriendEventsListActivity.this);
+				Utils.showToast(FriendEventsListActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}
 		}
@@ -178,8 +188,7 @@ public class FriendEventsListActivity extends Activity implements
 			}
 
 			adapter.notifyDataSetChanged();
-
-			dialog.dismiss();
+			
 		}
 
 	}

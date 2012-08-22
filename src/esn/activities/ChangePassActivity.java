@@ -6,6 +6,7 @@ import org.json.JSONException;
 import com.facebook.android.Util;
 
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.UsersManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -151,8 +152,11 @@ public class ChangePassActivity extends Activity {
 			try {
 				rs = usersManager.ChangePassword(txtEmail.getText().toString(), txtCurrentPassword.getText().toString(), txtNewPassword.getText().toString());
 			} catch (JSONException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
+				Utils.showToast(ChangePassActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+				Utils.DismitDialog(dialog);
+			} catch (IOException e) {				
+				Utils.DismitDialog(dialog);
+				Utils.showToast(ChangePassActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}
 			
@@ -185,4 +189,5 @@ public class ChangePassActivity extends Activity {
 			Toast.makeText(context, res.getString(R.string.app_global_UpdateUnsuccess), Toast.LENGTH_SHORT).show();			
 		}
 	}
+	
 }

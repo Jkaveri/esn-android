@@ -329,14 +329,8 @@ public class ProfileActivity extends Activity {
 											bitmap = Utils
 													.getBitmapFromURL(url);
 										} catch (IOException e) {
-											if(dialog!=null && dialog.isShowing()){
-												dialog.dismiss();
-											}
-											Utils.showToast(
-													context,
-													res.getString(R.string.esn_global_Error),
-													Toast.LENGTH_SHORT);
-											Log.e(TAG_LOG, e.getMessage());
+											Utils.DismitDialog(dialog);
+											Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
 											e.printStackTrace();
 										}
 
@@ -465,35 +459,24 @@ public class ProfileActivity extends Activity {
 					});
 				}
 			} catch (IllegalArgumentException e) {
-				
-				Utils.showToast(context,
-						res.getString(R.string.esn_global_Error),
-						Toast.LENGTH_LONG);
-				Log.e(TAG_LOG, e.getMessage());
+				Utils.DismitDialog(dialog);
+				Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			} catch (JSONException e) {
-				Utils.showToast(context,
-						res.getString(R.string.esn_global_Error),
-						Toast.LENGTH_LONG);
-				Log.e(TAG_LOG, e.getMessage());
+				Utils.DismitDialog(dialog);
+				Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			} catch (IOException e) {
-				Utils.showToast(context,
-						res.getString(R.string.esn_global_connection_error),
-						Toast.LENGTH_LONG);
-				Log.e(TAG_LOG, e.getMessage());
+				Utils.DismitDialog(dialog);
+				Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				Utils.showToast(context,
-						res.getString(R.string.esn_global_Error),
-						Toast.LENGTH_LONG);
-				Log.e(TAG_LOG, e.getMessage());
+				Utils.DismitDialog(dialog);
+				Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			} catch (ParseException e) {
-				Utils.showToast(context,
-						res.getString(R.string.esn_global_Error),
-						Toast.LENGTH_LONG);
-				Log.e(TAG_LOG, e.getMessage());
+				Utils.DismitDialog(dialog);
+				Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			}
 

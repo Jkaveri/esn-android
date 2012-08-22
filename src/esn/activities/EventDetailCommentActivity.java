@@ -1,6 +1,7 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -119,6 +120,7 @@ public class EventDetailCommentActivity extends Activity implements
 	}
 
 	public void GetListComment() {
+		
 		Thread thr = new Thread(new Runnable() {
 
 			Handler hd = new Handler();
@@ -127,26 +129,48 @@ public class EventDetailCommentActivity extends Activity implements
 			public void run() {
 
 				CommentsManager commentsManager = new CommentsManager();
-				try {
+				
+					final ArrayList<Comments> itemList;
+					
+					try {
+						
+						itemList = commentsManager.GetListComment(eventId, page, 8);
+						
+						adapter = new ListViewCommentsAdapter(EventDetailCommentActivity.this, itemList);
 
-					final ArrayList<Comments> itemList = commentsManager
-							.GetListComment(eventId, page, 8);
+						lstCm.setAdapter(adapter);
+
+						dialog.dismiss();
+						
+					} catch (IllegalArgumentException e) {
+						Utils.DismitDialog(dialog,context);
+						Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+						e.printStackTrace();
+					} catch (JSONException e) {
+						Utils.DismitDialog(dialog,context);
+						Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+						e.printStackTrace();
+					} catch (IOException e) {
+						Utils.DismitDialog(dialog,context);
+						Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						Utils.DismitDialog(dialog,context);
+						Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+						e.printStackTrace();
+					} catch (ParseException e) {
+						Utils.DismitDialog(dialog,context);
+						Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+					}
 
 					hd.post(new Runnable() {
 
 						@Override
 						public void run() {
-							adapter = new ListViewCommentsAdapter(
-									EventDetailCommentActivity.this, itemList);
-
-							lstCm.setAdapter(adapter);
-
-							dialog.dismiss();
+							
 						}
 					});
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				
 			}
 		});
 
@@ -185,7 +209,8 @@ public class EventDetailCommentActivity extends Activity implements
 						}
 					});
 				} catch (Exception e) {
-					e.printStackTrace();
+					Utils.DismitDialog(dialog,context);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				}
 			}
 		});
@@ -236,8 +261,7 @@ public class EventDetailCommentActivity extends Activity implements
 
 			lastTime = now;
 
-			new CommentThread(content, session.currentUser.AccID, eventId)
-					.start();
+			new CommentThread(content, session.currentUser.AccID, eventId).start();
 		}
 	}
 
@@ -265,10 +289,12 @@ public class EventDetailCommentActivity extends Activity implements
 					handler.post(new CommentFail());
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, EventDetailCommentActivity.this);
+				Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, EventDetailCommentActivity.this);
+				Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}
 
@@ -298,9 +324,7 @@ public class EventDetailCommentActivity extends Activity implements
 
 		@Override
 		public void run() {
-			Toast.makeText(context,
-					res.getString(R.string.esn_eventDetail_commenfail), 10)
-					.show();
+			Toast.makeText(context,res.getString(R.string.esn_eventDetail_commenfail), 10).show();
 		}
 	}
 }

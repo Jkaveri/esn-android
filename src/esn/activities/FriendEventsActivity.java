@@ -11,6 +11,7 @@ import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
 import esn.classes.Maps;
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
@@ -19,6 +20,7 @@ import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +40,8 @@ public class FriendEventsActivity extends MapActivity implements
 	private Activity context;
 	private Sessions sessions;
 	private EsnMapView mapView;
+	
+	private Resources res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class FriendEventsActivity extends MapActivity implements
 		setContentView(R.layout.friend_events);
 
 		context = this;
-
+		res = this.getResources();
 		eventsMng = new EventsManager();
 		sessions = Sessions.getInstance(context);
 		mapView = (EsnMapView) findViewById(R.id.gmapView);
@@ -98,19 +102,18 @@ public class FriendEventsActivity extends MapActivity implements
 						}
 					});
 				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
+					Utils.showToast(FriendEventsActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Utils.showToast(FriendEventsActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);					
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
+					Utils.showToast(FriendEventsActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					Utils.showToast(FriendEventsActivity.this, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
+					Utils.showToast(FriendEventsActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				}
 			}

@@ -21,8 +21,11 @@ import com.google.android.maps.GeoPoint;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.drm.ProcessedData;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -335,5 +338,23 @@ public class Utils {
 	}
 	public static int getPercent(int num, int total){
 		return (num/total)*100;
+	}
+	
+	public static void DismitDialog(ProgressDialog dialog) {
+		if (dialog != null && dialog.isShowing())
+			dialog.dismiss();
+	}
+	
+	public static void DismitDialog(final ProgressDialog dialog,Activity activity) {
+		if (dialog != null && dialog.isShowing()){
+			activity.runOnUiThread(new Runnable() {
+				public void run() {
+				
+					dialog.dismiss();
+					
+				}
+			});
+		}
+			
 	}
 }
