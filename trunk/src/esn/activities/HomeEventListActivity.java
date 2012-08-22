@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +17,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
@@ -24,11 +30,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+
 import com.facebook.android.Util;
 
 import esn.adapters.EsnListAdapterNoSub;
@@ -40,7 +42,7 @@ import esn.models.Events;
 import esn.models.EventsManager;
 import esn.models.UsersManager;
 
-public class HomeEventListActivity extends SherlockActivity implements
+public class HomeEventListActivity extends Activity implements
 		OnNavigationListener {
 
 	private ProgressDialog dialog;
@@ -193,26 +195,26 @@ public class HomeEventListActivity extends SherlockActivity implements
 				.getString(R.string.app_global_viewasmap));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_map2);
 
-		Context context = getSupportActionBar().getThemedContext();
+		Context context = getActionBar().getThemedContext();
 		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,
-				R.layout.sherlock_spinner_item, mNavigationItems);
-		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		getSupportActionBar().setListNavigationCallbacks(list, this);
+				R.layout.spinner_item, mNavigationItems);
+		list.setDropDownViewResource(R.layout.spinner_dropdown_item);
+		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		getActionBar().setListNavigationCallbacks(list, this);
 	}
 
 	private void setupActionBar() {
 		/** setup action bar **/
-		/* getSupportActionBar().hide(); */
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayUseLogoEnabled(false);
-		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		/* getActionBar().hide(); */
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setDisplayUseLogoEnabled(false);
+		getActionBar().setDisplayShowHomeEnabled(false);
 
 		// setup background for top action bar
-		// getSupportActionBar().setBackgroundDrawable(
+		// getActionBar().setBackgroundDrawable(
 		// getResources().getDrawable(R.drawable.main_transparent));
 		// // setup for split items
-		// getSupportActionBar().setSplitBackgroundDrawable(
+		// getActionBar().setSplitBackgroundDrawable(
 		// getResources().getDrawable(R.drawable.black_transparent));
 
 	}
@@ -221,7 +223,7 @@ public class HomeEventListActivity extends SherlockActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 
-		com.actionbarsherlock.view.MenuInflater menuInfalte = getSupportMenuInflater();
+		MenuInflater menuInfalte = getMenuInflater();
 		menuInfalte.inflate(R.menu.home_menus, menu);
 		MenuItem searchItem = menu.findItem(R.id.esn_home_menuItem_search);
 		View collapsed = searchItem.getActionView();

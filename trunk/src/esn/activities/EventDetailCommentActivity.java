@@ -6,6 +6,8 @@ import java.util.Date;
 
 import org.json.JSONException;
 
+import android.app.ActionBar.OnNavigationListener;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,12 +17,10 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockActivity;
+
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
 import esn.classes.Utils;
@@ -29,7 +29,7 @@ import esn.models.CommentsManager;
 import esn.models.EventsManager;
 import esn.models.UsersManager;
 
-public class EventDetailCommentActivity extends SherlockActivity implements
+public class EventDetailCommentActivity extends Activity implements
 		OnNavigationListener {
 
 	private Intent data;

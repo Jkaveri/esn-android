@@ -14,37 +14,70 @@ public class NotificationManager {
 
 	String NAMESPACE = "http://esn.com.vn/";
 	String URL = "http://bangnl.info/ws/ApplicationsWS.asmx";
-	
+
 	HttpHelper helper = new HttpHelper(URL);
-	
+
 	public NotificationManager() {
-	
+
 	}
-	
-	public ArrayList<NotificationDTO> getNotification(int accID) throws JSONException, IOException, IllegalArgumentException, IllegalAccessException {
-		
+
+	public ArrayList<NotificationDTO> getNotification(int accID)
+			throws JSONException, IOException, IllegalArgumentException,
+			IllegalAccessException {
+
 		ArrayList<NotificationDTO> listNotification = new ArrayList<NotificationDTO>();
-		
+
 		JSONObject params = new JSONObject();
-		
+
 		params.put("accountID", accID);
-		
-		JSONObject result = helper.invokeWebMethod("GetUnReadNotifications", params);
-		
+		JSONObject result = helper.invokeWebMethod("GetUnReadNotifications",
+				params);
+
 		if (result != null) {
-			
+
 			if (result.has("d")) {
-				
+
 				JSONArray jsonCall = result.getJSONArray("d");
-				
+
 				for (int i = 0; i < jsonCall.length(); i++) {
 					JSONObject json = jsonCall.getJSONObject(i);
 					NotificationDTO notificationDTO = new NotificationDTO();
 					Utils.JsonToObject(json, notificationDTO);
-					listNotification.add(notificationDTO);					
+					listNotification.add(notificationDTO);
 				}
 			}
 		}
-		return listNotification;		
+		return listNotification;
+	}
+
+	public ArrayList<NotificationDTO> getNotification(int accID, int pageNum,
+			int pageSize) throws JSONException, IOException,
+			IllegalArgumentException, IllegalAccessException {
+
+		ArrayList<NotificationDTO> listNotification = new ArrayList<NotificationDTO>();
+
+		JSONObject params = new JSONObject();
+
+		params.put("accountID", accID);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		JSONObject result = helper.invokeWebMethod("GetUnReadNotifications",
+				params);
+
+		if (result != null) {
+
+			if (result.has("d")) {
+
+				JSONArray jsonCall = result.getJSONArray("d");
+
+				for (int i = 0; i < jsonCall.length(); i++) {
+					JSONObject json = jsonCall.getJSONObject(i);
+					NotificationDTO notificationDTO = new NotificationDTO();
+					Utils.JsonToObject(json, notificationDTO);
+					listNotification.add(notificationDTO);
+				}
+			}
+		}
+		return listNotification;
 	}
 }

@@ -60,7 +60,7 @@ public class EsnListAdapterNoSub extends ArrayAdapter<EsnListItem> {
 		View view = convertView;
 		if (view == null) {
 			LayoutInflater li = LayoutInflater.from(parent.getContext());
-			view = li.inflate(R.layout.sherlock_spinner_dropdown_item, null);
+			view = li.inflate(R.layout.spinner_dropdown_item, null);
 		}
 		EsnListItem item = items.get(index);
 
@@ -87,7 +87,7 @@ public class EsnListAdapterNoSub extends ArrayAdapter<EsnListItem> {
 		View view = convertView;
 		if (view == null) {
 			LayoutInflater li = LayoutInflater.from(parent.getContext());
-			view = li.inflate(R.layout.sherlock_spinner_item, null);
+			view = li.inflate(R.layout.spinner_item, null);
 		}
 		EsnListItem item = items.get(position);
 

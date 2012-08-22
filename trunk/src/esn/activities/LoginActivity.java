@@ -1,8 +1,8 @@
 package esn.activities;
 
-import com.actionbarsherlock.app.SherlockActivity;
 
 import esn.classes.LoginThread;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends SherlockActivity{
+public class LoginActivity extends Activity{
 
 	Intent intent;
 
@@ -34,7 +34,7 @@ public class LoginActivity extends SherlockActivity{
 		setContentView(R.layout.login);
 		
 		getActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().hide();
+		getActionBar().hide();
 		 
 
 		intent = this.getIntent();

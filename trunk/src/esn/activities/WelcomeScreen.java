@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import esn.classes.LoginThread;
 import esn.classes.Sessions;
 import esn.classes.Utils;
@@ -15,6 +14,7 @@ import esn.models.EventType;
 import esn.models.EventTypeManager;
 import esn.models.Users;
 import esn.models.UsersManager;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,7 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WelcomeScreen extends SherlockActivity {
+public class WelcomeScreen extends Activity {
 	private Sessions session;
 	private String password;
 	private String email;
@@ -103,7 +103,7 @@ public class WelcomeScreen extends SherlockActivity {
 		setContentView(R.layout.welcome_screen);
 
 		// getActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().hide();
+		getActionBar().hide();
 
 		context = this;
 

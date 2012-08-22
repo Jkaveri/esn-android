@@ -21,12 +21,15 @@ public class UsersManager extends BaseManager<Users> {
 	String DEBUG_URL = "http://10.0.2.2:3333/AccountsWS.asmx";
 	HttpHelper helper = new HttpHelper(URL);
 	public final static String METHOD_REGISTER = "Register";
+
 	public UsersManager(EsnRequestListener listener) {
 		super(URL, listener);
 	}
-	public UsersManager(){
-		super(URL,null);
+
+	public UsersManager() {
+		super(URL, null);
 	}
+
 	public int Login(String email, String password) throws JSONException,
 			IOException {
 
@@ -485,6 +488,26 @@ public class UsersManager extends BaseManager<Users> {
 		return result.getBoolean("d");
 	}
 
+	public boolean ConfirmAddFriendRequest(int relationID)
+			throws JSONException, ClientProtocolException, IOException {
+		JSONObject params = new JSONObject();
+		params.put("relationID", relationID);
+		JSONObject result = helper.invokeWebMethod("ConfirmAddFriendRequest",
+				params);
+
+		return result.getBoolean("d");
+	}
+
+	public boolean NotConfirmAddFriendRequest(int relationID)
+			throws JSONException, ClientProtocolException, IOException {
+		JSONObject params = new JSONObject();
+		params.put("relationID", relationID);
+		JSONObject result = helper.invokeWebMethod("NotConfirmAddFriendRequest",
+				params);
+
+		return result.getBoolean("d");
+	}
+
 	public List<Users> SearchFriend(int accID, String name)
 			throws ClientProtocolException, IOException, JSONException,
 			IllegalArgumentException, IllegalAccessException {
@@ -538,9 +561,8 @@ public class UsersManager extends BaseManager<Users> {
 		return frds;
 	}
 
-	@Override
 	public void Create(Users user) {
-		
+
 		JSONObject params = new JSONObject();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -564,8 +586,7 @@ public class UsersManager extends BaseManager<Users> {
 		}
 	}
 
-	@Override
 	public void get(int id) {
-		
+
 	}
 }

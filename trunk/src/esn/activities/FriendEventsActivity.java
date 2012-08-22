@@ -3,12 +3,9 @@ package esn.activities;
 import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
-
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockMapActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+
 import esn.adapters.EsnListAdapterNoSub;
 import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
@@ -18,17 +15,20 @@ import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
 import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class FriendEventsActivity extends SherlockMapActivity implements
+public class FriendEventsActivity extends MapActivity implements
 		OnNavigationListener, OnItemClickListener {
 
 	private EsnListItem[] mNavigationItems;
@@ -131,21 +131,21 @@ public class FriendEventsActivity extends SherlockMapActivity implements
 				.setTitle(getString(R.string.str_Friends_Events_ViewAsList));
 		mNavigationItems[1].setIcon(R.drawable.ic_view_as_list);
 
-		Context context = getSupportActionBar().getThemedContext();
+		Context context = getActionBar().getThemedContext();
 
 		EsnListAdapterNoSub list = new EsnListAdapterNoSub(context,
-				R.layout.sherlock_spinner_item, mNavigationItems);
-		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+				R.layout.spinner_item, mNavigationItems);
+		list.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
-		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		getSupportActionBar().setListNavigationCallbacks(list, this);
+		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		getActionBar().setListNavigationCallbacks(list, this);
 	}
 
 	private void setupActionBar() {
 		/** setup action bar **/
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayUseLogoEnabled(false);
-		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setDisplayUseLogoEnabled(false);
+		getActionBar().setDisplayShowHomeEnabled(false);
 	}
 
 	@Override

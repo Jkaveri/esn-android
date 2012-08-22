@@ -10,13 +10,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.facebook.android.Util;
 
 import esn.classes.EsnRequestListener;
 import esn.classes.Sessions;
 import esn.models.Users;
 import esn.models.UsersManager;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -39,7 +39,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RegisterActivity extends SherlockActivity {
+public class RegisterActivity extends Activity {
 
 	Intent intent;
 
@@ -74,14 +74,13 @@ public class RegisterActivity extends SherlockActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.register);
-		getSupportActionBar().setDisplayUseLogoEnabled(false);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayShowHomeEnabled(false); 
-		getSupportActionBar().hide();
+		getActionBar().setDisplayUseLogoEnabled(false);
+		getActionBar().setDisplayShowTitleEnabled(false);
+		getActionBar().setDisplayShowHomeEnabled(false); 
+		getActionBar().hide();
 		
 		intent = this.getIntent();
 		context = this;

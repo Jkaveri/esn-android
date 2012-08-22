@@ -43,6 +43,9 @@ public class EsnMapView extends TapControlledMapView {
 	private Resources res;
 	private boolean isCreateEventByLongPress = true;
 	private boolean isLoadEventAround = true;
+
+	private LoadEventsAroundThread loadEventsAroundThread;
+
 	public EsnMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
@@ -85,8 +88,12 @@ public class EsnMapView extends TapControlledMapView {
 	}
 
 	public void loadEventAround() {
+		if (loadEventsAroundThread != null) {
+			loadEventsAroundThread.interrupt();
+		}
 		double radius = calculateRadius();
-		new LoadEventsAroundThread(radius).start();
+		loadEventsAroundThread = new LoadEventsAroundThread(radius);
+		loadEventsAroundThread.start();
 	}
 
 	/**
@@ -115,8 +122,10 @@ public class EsnMapView extends TapControlledMapView {
 						AddNewEvent.class);
 				addNewEventIntent.putExtra("latitude", latitudeE6 / 1E6);
 				addNewEventIntent.putExtra("longtitude", longtitudeE6 / 1E6);
-				activity.startActivityForResult(addNewEventIntent,REQUEST_CODE_ADD_NEW_EVENT);
-				activity.overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+				activity.startActivityForResult(addNewEventIntent,
+						REQUEST_CODE_ADD_NEW_EVENT);
+				activity.overridePendingTransition(R.anim.push_up_in,
+						R.anim.push_up_out);
 			} else {
 				Toast.makeText(
 						activity.getApplicationContext(),
@@ -156,10 +165,9 @@ public class EsnMapView extends TapControlledMapView {
 		} else if (isTouchEnded && isFirstComputeScroll) {
 			isTouchEnded = false;
 			lastMapCenter = this.getMapCenter();
-			
+
 			if (isLoadEventAround) {
-				double radius = calculateRadius();
-				new LoadEventsAroundThread(radius).start();
+				loadEventAround();
 			}
 
 		}

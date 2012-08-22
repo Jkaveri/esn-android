@@ -6,15 +6,15 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
 
 import esn.adapters.ListMultiChoiceAdapter;
 import esn.adapters.ListMultiChoiceAdapter.onItemCheckedListener;
@@ -22,7 +22,7 @@ import esn.classes.EsnListItem;
 import esn.classes.Sessions;
 import esn.models.EventType;
 
-public class SetFilterActivity extends SherlockActivity implements
+public class SetFilterActivity extends Activity implements
 		onItemCheckedListener {
 	private static final String LOG_TAG = "SetFilterActivity";
 	private JSONObject filterListJson=null;
@@ -188,7 +188,7 @@ public class SetFilterActivity extends SherlockActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.set_filter_menus, menu);
+		getMenuInflater().inflate(R.menu.set_filter_menus, menu);
 		return true;
 	}
 
