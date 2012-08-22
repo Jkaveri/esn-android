@@ -149,11 +149,13 @@ public class EventDetailActivity extends Activity implements
 			LikeAction();
 			return true;
 		} else if (item.getItemId() == R.id.esn_detail_event_notice) {
-			/*data = new Intent(context, FeedbackActivity.class);
-			data.putExtra("EventId", eventId);
-			data.putExtra("AccId", accId);
-			startActivity(data);*/
-			Toast.makeText(this, R.string.esn_global_function_developing, Toast.LENGTH_SHORT).show();
+			/*
+			 * data = new Intent(context, FeedbackActivity.class);
+			 * data.putExtra("EventId", eventId); data.putExtra("AccId", accId);
+			 * startActivity(data);
+			 */
+			Toast.makeText(this, R.string.esn_global_function_developing,
+					Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (item.getItemId() == R.id.esn_detail_event_dislike) {
 			DislikeAction();
@@ -221,10 +223,12 @@ public class EventDetailActivity extends Activity implements
 					});
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(EventDetailActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(EventDetailActivity.this, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}
 		}
@@ -282,10 +286,12 @@ public class EventDetailActivity extends Activity implements
 					});
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(EventDetailActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(EventDetailActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}
 		}
@@ -306,10 +312,12 @@ public class EventDetailActivity extends Activity implements
 				like = manager.like(eventId, session.currentUser.AccID);
 
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(EventDetailActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(EventDetailActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}
 
@@ -389,10 +397,12 @@ public class EventDetailActivity extends Activity implements
 				dislike = manager.dislike(eventId, session.currentUser.AccID);
 
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}
 
@@ -461,20 +471,25 @@ public class EventDetailActivity extends Activity implements
 					try {
 						event = manager.retrieve(eventId);
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
+						Utils.DismitDialog(dialog);
+						Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 						e.printStackTrace();
 					}
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				}
 				EventDetailActivity.this.runOnUiThread(new GetDetailSuccess(
@@ -508,10 +523,10 @@ public class EventDetailActivity extends Activity implements
 				final ImageView imgEvent = (ImageView) findViewById(R.id.esn_eventDetail_image);
 				imgEvent.setImageResource(R.drawable.no_image);
 
-				
 				String typeName = EventType.GetName(event.EventTypeID, res);
 				tvTitle.setText(typeName);
-				tvDateCreated.setText(Utils.DateToStringByLocale(event.DayCreate, 1));
+				tvDateCreated.setText(Utils.DateToStringByLocale(
+						event.DayCreate, 1));
 				tvDescription.setText(event.Description);
 
 				tvDislike.setText(String.valueOf(event.Dislike));
@@ -639,10 +654,12 @@ public class EventDetailActivity extends Activity implements
 					handler.post(new CommentFail());
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog);
+				Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			}
 
@@ -685,11 +702,10 @@ public class EventDetailActivity extends Activity implements
 			public void run() {
 
 				CommentsManager commentsManager = new CommentsManager();
+
+				final ArrayList<Comments> itemList;
 				try {
-
-					final ArrayList<Comments> itemList = commentsManager
-							.GetListComment(eventId, page, 3);
-
+					itemList = commentsManager.GetListComment(eventId, page, 3);
 					hd.post(new Runnable() {
 
 						@Override
@@ -724,7 +740,25 @@ public class EventDetailActivity extends Activity implements
 							// dialog.dismiss();
 						}
 					});
-				} catch (Exception e) {
+				} catch (IllegalArgumentException e) {					
+					e.printStackTrace();
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+				} catch (JSONException e) {	
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+					e.printStackTrace();
+				} catch (IOException e) {
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
+					e.printStackTrace();
+				} catch (ParseException e) {
+					Utils.DismitDialog(dialog);
+					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				}
 			}

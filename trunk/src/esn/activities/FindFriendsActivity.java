@@ -17,6 +17,7 @@ import com.facebook.android.Util;
 
 import esn.adapters.ListViewFindFriendAdapter;
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.FriendsManager;
 import esn.models.Users;
 import esn.models.UsersManager;
@@ -51,7 +52,7 @@ public class FindFriendsActivity extends Activity {
 	Context context;
 
 	FriendsManager friendsManager = new FriendsManager();
-	private ProgressDialog progressDialog;
+	private ProgressDialog dialog;
 	private Users[] users;
 
 	@Override
@@ -64,14 +65,14 @@ public class FindFriendsActivity extends Activity {
 		context = this;
 		session = Sessions.getInstance(context);
 		// progress dialog
-		progressDialog = new ProgressDialog(this);
+		dialog = new ProgressDialog(this);
 
-		progressDialog.setTitle(res.getString(R.string.esn_global_loading));
-		progressDialog.setMessage(res
+		dialog.setTitle(res.getString(R.string.esn_global_loading));
+		dialog.setMessage(res
 				.getString(R.string.esn_find_friend_finding));
-		progressDialog.setCancelable(false);
-		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.show();
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.show();
 		// setup list view
 		adapter = new ListViewFindFriendAdapter(this, new ArrayList<Users>(),
 				R.layout.find_friend_facebook_row);
@@ -91,7 +92,7 @@ public class FindFriendsActivity extends Activity {
 
 			GetFriendFacebook(1, PAGE_SIZE);
 		} else {
-			progressDialog.dismiss();
+			dialog.dismiss();
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.esn_global_waring);
 			builder.setMessage(R.string.esn_global_must_enable_fb_con);
@@ -173,8 +174,8 @@ public class FindFriendsActivity extends Activity {
 	}
 
 	private void dissmisDialog() {
-		if (progressDialog != null && progressDialog.isShowing()) {
-			progressDialog.dismiss();
+		if (dialog != null && dialog.isShowing()) {
+			dialog.dismiss();
 		}
 	}
 
@@ -205,7 +206,7 @@ public class FindFriendsActivity extends Activity {
 									Log.d(LOG_TAG, user.Name);
 								}
 								adapter.notifyDataSetChanged();
-								progressDialog.dismiss();
+								dialog.dismiss();
 
 							}
 						});
@@ -223,18 +224,12 @@ public class FindFriendsActivity extends Activity {
 				}
 
 			} catch (JSONException e) {
-				dissmisDialog();
-				Toast.makeText(FindFriendsActivity.this,
-						R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
-						.show();
-				Log.d(TAG_LOG, e.getMessage());
+				Utils.DismitDialog(dialog, FindFriendsActivity.this);
+				Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			} catch (IOException e) {
-				dissmisDialog();
-				Toast.makeText(FindFriendsActivity.this,
-						R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
-						.show();
-				Log.d(TAG_LOG, e.getMessage());
+				Utils.DismitDialog(dialog,FindFriendsActivity.this);
+				Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			}
 
@@ -242,40 +237,31 @@ public class FindFriendsActivity extends Activity {
 
 		@Override
 		public void onIOException(IOException e, Object state) {
-			dissmisDialog();
-			Toast.makeText(FindFriendsActivity.this,
-					R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
-					.show();
-			Log.d(TAG_LOG, e.getMessage());
+			Utils.DismitDialog(dialog,FindFriendsActivity.this);
+			Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 
 		@Override
 		public void onFileNotFoundException(FileNotFoundException e,
 				Object state) {
-			dissmisDialog();
-			Toast.makeText(FindFriendsActivity.this,
-					R.string.esn_global_ConnectionError, Toast.LENGTH_SHORT)
-					.show();
-			Log.e(TAG_LOG, e.getMessage());
+			Utils.DismitDialog(dialog,FindFriendsActivity.this);
+			Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 
 		@Override
 		public void onMalformedURLException(MalformedURLException e,
 				Object state) {
-			dissmisDialog();
-			Toast.makeText(FindFriendsActivity.this, R.string.esn_global_Error,
-					Toast.LENGTH_SHORT).show();
-			Log.e(TAG_LOG, e.getMessage());
+			Utils.DismitDialog(dialog,FindFriendsActivity.this);
+			Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 
 		@Override
 		public void onFacebookError(FacebookError e, Object state) {
-			Toast.makeText(FindFriendsActivity.this, R.string.esn_global_Error,
-					Toast.LENGTH_SHORT).show();
-			Log.e(TAG_LOG, e.getMessage());
+			Utils.DismitDialog(dialog,FindFriendsActivity.this);
+			Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 		}
 

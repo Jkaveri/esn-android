@@ -235,12 +235,20 @@ public class EditProfileActivity extends Activity {
 							.RetrieveById(sessions.currentUser.AccID);
 					sessions.currentUser = user;
 				} catch (IllegalArgumentException e1) {
+					DismitDialog();
+					Utils.showToast(EditProfileActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e1.printStackTrace();
 				} catch (JSONException e1) {
+					DismitDialog();
+					Utils.showToast(EditProfileActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e1.printStackTrace();
 				} catch (IOException e1) {
+					DismitDialog();
+					Utils.showToast(EditProfileActivity.this, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 					e1.printStackTrace();
 				} catch (IllegalAccessException e1) {
+					DismitDialog();
+					Utils.showToast(EditProfileActivity.this, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e1.printStackTrace();
 				}
 
@@ -276,7 +284,6 @@ public class EditProfileActivity extends Activity {
 											bitmap = Utils
 													.getBitmapFromURL(url);
 										} catch (IOException e) {
-											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
 
@@ -296,8 +303,7 @@ public class EditProfileActivity extends Activity {
 							if (gender == true) {
 								Spinner sp = (Spinner) findViewById(R.id.esn_changeprofile_gender);
 								if (sp != null) {
-									ArrayAdapter<String> arr = (ArrayAdapter<String>) sp
-											.getAdapter();
+									ArrayAdapter<String> arr = (ArrayAdapter<String>) sp.getAdapter();
 
 									int pos = arr.getPosition(res
 											.getString(R.string.esn_register_rdbMale));
@@ -309,11 +315,9 @@ public class EditProfileActivity extends Activity {
 								Spinner sp = (Spinner) findViewById(R.id.esn_changeprofile_gender);
 
 								if (sp != null) {
-									ArrayAdapter arr = (ArrayAdapter) sp
-											.getAdapter();
+									ArrayAdapter arr = (ArrayAdapter) sp.getAdapter();
 
-									int pos = arr.getPosition(res
-											.getString(R.string.esn_register_rdbFemale));
+									int pos = arr.getPosition(res.getString(R.string.esn_register_rdbFemale));
 
 									sp.setSelection(pos);
 								}
@@ -437,12 +441,14 @@ public class EditProfileActivity extends Activity {
 					runOnUiThread(new Runnable() {
 						public void run() {
 							Toast.makeText(context,res.getString(R.string.esn_global_Error),Toast.LENGTH_SHORT).show();
+							DismitDialog();
 						}
 					});
 				} catch (IOException e) {
 					runOnUiThread(new Runnable() {
 						public void run() {
-							Toast.makeText(context,res.getString(R.string.esn_global_Error),Toast.LENGTH_SHORT).show();
+							Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
+							DismitDialog();
 						}
 					});
 				}
@@ -515,7 +521,6 @@ public class EditProfileActivity extends Activity {
 
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
 			super.onProgressUpdate(values);
 		}
 
@@ -528,5 +533,10 @@ public class EditProfileActivity extends Activity {
 			}
 		}
 
+	}
+	
+	public void DismitDialog() {
+		if (dialog != null && dialog.isShowing())
+			dialog.dismiss();
 	}
 }

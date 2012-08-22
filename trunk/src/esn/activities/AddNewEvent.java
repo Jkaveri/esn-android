@@ -67,7 +67,6 @@ public class AddNewEvent extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		try {
 			super.onCreate(savedInstanceState);
 
 			setContentView(R.layout.add_new_event);
@@ -139,39 +138,20 @@ public class AddNewEvent extends Activity {
 				}
 
 			});
-
-		} catch (Exception e) {
-			Utils.showToast(this, res.getString(R.string.esn_global_Error),
-					Toast.LENGTH_SHORT);
-			Log.e(LOG_TAG, e.getMessage());
-			e.printStackTrace();
-		}
-
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		try {
-
+	
 			MenuInflater menuInflater = new MenuInflater(this);
 
 			menuInflater.inflate(R.menu.new_event_menu, menu);
 
-			return true;
-		} catch (Exception e) {
-			Log.e(LOG_TAG, e.getMessage());
-			Utils.showToast(this, res.getString(R.string.esn_global_Error),
-					Toast.LENGTH_SHORT);
-			e.printStackTrace();
-			return false;
-		}
+			return true;	
 
 	}
 
-	@TargetApi(9)
 	public void btnAddClicked() {
-
-		try {
 
 			//EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
 			String title = "";
@@ -222,9 +202,12 @@ public class AddNewEvent extends Activity {
 			// if uploaded or upload failed
 			while (!isUploaded && !isUploadFailed && i < 25) {
 
-				Log.d(LOG_TAG, "waiting for upload image");
-
-				Thread.sleep(200);
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
+					DismitDialog();
+				}
 				i++;
 
 			}
@@ -255,12 +238,7 @@ public class AddNewEvent extends Activity {
 				dialog.show();
 				new CreateEventsThread(event).start();
 			}
-		} catch (Exception e) {
-			Log.e(LOG_TAG, e.getMessage());
-			Utils.showToast(this, res.getString(R.string.esn_global_Error),
-					Toast.LENGTH_SHORT);
-			e.printStackTrace();
-		}
+		
 	}
 
 	public void btnCancelClicked() {
@@ -538,5 +516,10 @@ public class AddNewEvent extends Activity {
 			fb = 1;
 		}
 
+	}
+	
+	public void DismitDialog() {
+		if (dialog != null && dialog.isShowing())
+			dialog.dismiss();
 	}
 }

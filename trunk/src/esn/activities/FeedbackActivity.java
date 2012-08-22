@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
+import esn.classes.Utils;
 import esn.models.CommentsManager;
 import esn.models.EventsManager;
 import esn.models.UsersManager;
@@ -119,10 +120,12 @@ public class FeedbackActivity extends Activity {
 					});
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, context);
+				Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				Utils.DismitDialog(dialog, context);
+				Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 				e.printStackTrace();
 			}		
 		}
