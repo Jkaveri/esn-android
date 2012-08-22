@@ -280,7 +280,10 @@ public class EsnMapView extends TapControlledMapView {
 						(int) (event.EventLng * 1E6));
 				int icon = EventType.getIconId(event.EventTypeID,
 						event.getLevel());
-				map.setEventMarker(point, event.Title, event.Description,
+				
+				String typeName = EventType.GetName(event.EventTypeID, res);
+				
+				map.setEventMarker(point, typeName, event.Description,
 						event.EventID, icon);
 			}
 			invalidate();

@@ -434,8 +434,17 @@ public class EditProfileActivity extends Activity {
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(context,res.getString(R.string.esn_global_Error),Toast.LENGTH_SHORT).show();
+						}
+					});
 				} catch (IOException e) {
-					e.printStackTrace();
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(context,res.getString(R.string.esn_global_Error),Toast.LENGTH_SHORT).show();
+						}
+					});
 				}
 			}
 		}
