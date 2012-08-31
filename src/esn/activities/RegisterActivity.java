@@ -71,6 +71,7 @@ public class RegisterActivity extends Activity {
 	
 	private static boolean checkEmail=false;
 	public UsersManager usersManager  = new UsersManager();
+	boolean isFbSignup = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class RegisterActivity extends Activity {
 		
 		res = getResources();
 		
-		boolean isFbSignup = intent.getBooleanExtra("facebookSignup", false);
+		isFbSignup = intent.getBooleanExtra("facebookSignup", false);
 		
 		fbID = "";
 		fbAccessToken = "";
@@ -420,40 +421,58 @@ public class RegisterActivity extends Activity {
 		@Override
 		public void run() {
 			dialog.dismiss();			
+			EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
+     	   
+     	   	final String email = txtemail.getText().toString();
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+     	    EditText txtpass = (EditText)findViewById(R.id.esn_register_Password);
+     	   
+     	    String password = txtpass.getText().toString();
+     	    
+     	   	if(isFbSignup)
+			{
+				sessions.put("email", email);
+				sessions.put("password", password);		
+				sessions.put("loginFacebookSuccess", true);
+				
+				Intent intent = new Intent(context, WelcomeScreen.class);
+				startActivity(intent);
+				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+				finish();
+			}
+			else
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				
+				builder.setMessage(res.getString(R.string.esn_register_activeyouraccount))
+				       .setCancelable(false)
+				       .setPositiveButton(res.getString(R.string.esn_register_activeyes), new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				        	   
+				        	   String[] arr = email.split("@");
+				        	   
+				        	   String url = arr[1].toString();
+				        	   
+				        	   url="http://"+url;
+				        	   
+				        	   Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				        	   
+				        	   startActivity(browse);
+				           }
+				       })
+				       .setNegativeButton(res.getString(R.string.esn_register_activeno), new DialogInterface.OnClickListener() {
+				           
+				    	   public void onClick(DialogInterface dialog, int id) {
+				        	   
+				    		   Intent intent = new Intent(context, LoginActivity.class);
+				   				startActivity(intent);
+				   				finish();
+				           }
+				   
+				       	});
 			
-			builder.setMessage(res.getString(R.string.esn_register_activeyouraccount))
-			       .setCancelable(false)
-			       .setPositiveButton(res.getString(R.string.esn_register_activeyes), new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			        	   
-			        	   EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
-			        	   
-			        	   String email = txtemail.getText().toString();
-			        	   
-			        	   String[] arr = email.split("@");
-			        	   
-			        	   String url = arr[1].toString();
-			        	   
-			        	   url="http://"+url;
-			        	   
-			        	   Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-			        	   
-			        	   startActivity(browse);
-			           }
-			       })
-			       .setNegativeButton(res.getString(R.string.esn_register_activeno), new DialogInterface.OnClickListener() {
-			           
-			    	   public void onClick(DialogInterface dialog, int id) {
-			        	   
-			    		   Intent intent = new Intent(context, LoginActivity.class);
-			   				startActivity(intent);
-			   				finish();
-			           }
-			});
-			
-			builder.show();
+				builder.show();
+			}
 		}
 	}
 	private class registerFail implements Runnable{
