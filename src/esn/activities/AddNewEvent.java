@@ -64,6 +64,7 @@ public class AddNewEvent extends Activity {
 	public static final String uploadURL = "http://bangnl.info/ws/498F5926A3E4493E803AADC0125E39B5.aspx";
 	int fb = 1;
 
+	String eventTypeName="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -82,12 +83,12 @@ public class AddNewEvent extends Activity {
 			// instance new event
 			event = new Events();
 			// toa do
-			/*TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate);
+			/*TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate); */
 			double lat = homeData.getDoubleExtra("latitude", 0);
 			double lon = homeData.getDoubleExtra("longtitude", 0);
 			event.EventLat = lat;
 			event.EventLng = lon;
-*/
+
 			// display coordinate
 			//txtCoordinate.setText(String.format("{%1$s}, {%2$s}", lat, lon));
 			// convert coordinate to address
@@ -153,27 +154,11 @@ public class AddNewEvent extends Activity {
 
 	public void btnAddClicked() {
 
-			//EditText txtTitle = (EditText) findViewById(R.id.esn_addNewEvent_txtTitle);
-			String title = "";
-
 			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
 			String description = txtDescription.getText().toString();
 
-			/*if ((title == null) || title.length() <= 0) {
-				txtTitle.setError("Title is required",
-						res.getDrawable(R.drawable.ic_alerts_and_states_error));
-				txtTitle.requestFocus();
-				return;
-			}*/
-		/*	if (description == null || description.length() <= 0) {
-
-				txtDescription.setError("Description is required",
-						res.getDrawable(R.drawable.ic_alerts_and_states_error));
-				txtDescription.requestFocus();
-				return;
-			}*/
 			event.AccID = sessions.currentUser.AccID;
-			event.Title = title;
+			event.Title = eventTypeName;
 			event.Description = description;
 
 			event.ShareType = 0;
@@ -330,7 +315,7 @@ public class AddNewEvent extends Activity {
 			if (resultCode == RESULT_OK) {
 				int id = data.getIntExtra("labelId", 0);
 
-				String eventTypeName = data.getStringExtra("labelName");
+				eventTypeName = data.getStringExtra("labelName");
 
 				TextView txteventTypeName = (TextView) findViewById(R.id.esn_addNewEvent_txtEventTypeName);
 
