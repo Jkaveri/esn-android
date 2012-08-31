@@ -537,10 +537,8 @@ public class EventDetailActivity extends Activity implements
 						.getFullAddress(EventDetailActivity.this));
 				accId = event.AccID;
 
-				icEventType.setImageResource(EventType.getIconId(
-						event.EventTypeID, event.getLevel()));
-				if (event.Status == AppEnums.EventStatus.Confirmed
-						|| event.Status == AppEnums.EventStatus.Waiting) {
+				icEventType.setImageResource(EventType.getIconId(event.EventTypeID, event.getLevel()));
+				if (event.Status == AppEnums.EventStatus.Confirmed) {
 					DisplayMetrics dm = new DisplayMetrics();
 					getWindowManager().getDefaultDisplay().getMetrics(dm);
 
