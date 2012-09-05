@@ -330,7 +330,7 @@ public class ProfileActivity extends Activity {
 													.getBitmapFromURL(url);
 										} catch (IOException e) {
 											Utils.DismitDialog(dialog);
-											Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
+											Utils.showToast(context,res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 											e.printStackTrace();
 										}
 

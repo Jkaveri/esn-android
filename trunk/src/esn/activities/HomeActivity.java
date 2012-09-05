@@ -32,9 +32,9 @@ import esn.classes.EsnListItem;
 import esn.classes.EsnMapView;
 import esn.classes.Maps;
 import esn.classes.Sessions;
+import esn.models.EventType;
 
-public class HomeActivity extends MapActivity implements
-		OnNavigationListener {
+public class HomeActivity extends MapActivity implements OnNavigationListener {
 	private EsnListItem[] mNavigationItems;
 	private Maps map;
 	private Resources res;
@@ -115,7 +115,13 @@ public class HomeActivity extends MapActivity implements
 		mapView.loadEventAround();
 		map = new Maps(this, mapView);
 		map.setZoom(16);
-		map.displayCurrentLocationMarker();
+		Location location = map.getCurrentLocation();
+		if (location != null) {
+			GeoPoint point = new GeoPoint((int) (location.getLatitude() * 1E6),
+					(int) (location.getLongitude() * 1E6));
+			map.animateTo(point);
+		}
+
 		// set zoom level to 15
 		mapView.setOnSingleTapListener(new OnSingleTapListener() {
 
@@ -149,6 +155,7 @@ public class HomeActivity extends MapActivity implements
 		unregisterReceiver(re);
 		super.onDestroy();
 	}
+
 	@Override
 	protected void onPause() {
 		map.disableMyLocation();
@@ -262,11 +269,11 @@ public class HomeActivity extends MapActivity implements
 						Double.MIN_VALUE);
 				double longtitude = data.getDoubleExtra("longtitude",
 						Double.MIN_VALUE);
-				String title = data.getStringExtra("eventTitle");
 				String description = data.getStringExtra("eventDescription");
 				int eventId = data.getIntExtra("eventId", 0);
 				int labelIcon = data.getIntExtra("labelIcon", 0);
-				// int labelId = data.getIntExtra("labelId", 0);
+				int eventTypeId = data.getIntExtra("labelId", 0);
+				String title = EventType.GetName(eventTypeId, res);
 				if (latitude != Integer.MIN_VALUE
 						&& longtitude != Integer.MIN_VALUE) {
 					GeoPoint point = new GeoPoint((int) (latitude * 1E6),

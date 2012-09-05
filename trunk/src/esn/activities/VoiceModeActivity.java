@@ -19,7 +19,7 @@ import esn.models.EventType;
 import esn.models.Events;
 
 public class VoiceModeActivity extends MapActivity {
-	//private static final String LOG_TAG = "VoiceModeActivity";
+	// private static final String LOG_TAG = "VoiceModeActivity";
 	public static final String ACTION_EVENT_AUDIO_ALERT = "esn.actions.ACTION_EVENT_AUDIO_ALERT";
 
 	private VoiceModeHelper helper;
@@ -29,14 +29,15 @@ public class VoiceModeActivity extends MapActivity {
 	public boolean firstHeadPhoneConnect = false;
 	private Sessions session;
 
+	private TextView txtStates;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.esn_voice_mode);
 		this.setTitle(getString(R.string.esn_voicemode_title));
 		session = Sessions.getInstance(this);
-		TextView txtStates = (TextView) this
-				.findViewById(R.id.esn_voicemode_txt_state);
+		txtStates = (TextView) this.findViewById(R.id.esn_voicemode_txt_state);
 		txtStates.setSelected(true);
 
 		ImageButton btnRecord = (ImageButton) findViewById(R.id.esn_voicemode_btn_record);
@@ -45,17 +46,18 @@ public class VoiceModeActivity extends MapActivity {
 		map = new Maps(this, mapView);
 		map.displayCurrentLocationMarker();
 
-		helper = new VoiceModeHelper(this, btnServices, btnRecord, txtStates, map);
+		helper = new VoiceModeHelper(this, btnServices, btnRecord, txtStates,
+				map);
 		// register reciever
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(VoiceModeActivity.ACTION_EVENT_AUDIO_ALERT);
 		filter.addAction(Intent.ACTION_HEADSET_PLUG);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
-		//filter.setPriority(1000);
+		// filter.setPriority(1000);
 		receiver = new EventAlertOnMapReceiver();
 		registerReceiver(receiver, filter);
-		//handler btnservice 
-		if(helper.isActivateServices()){
+		// handler btnservice
+		if (helper.isActivateServices()) {
 			btnServices.setImageResource(R.drawable.ic_event_alert_de);
 		}
 
@@ -74,12 +76,12 @@ public class VoiceModeActivity extends MapActivity {
 	}
 
 	public void btnServiceClicked(View view) {
-		if(helper.isActivateServices()){
-			helper.stopService();		
-			session.setNotifyEvents(false);//Thong bao cho setting
-		}else{
+		if (helper.isActivateServices()) {
+			helper.stopService();
+			session.setNotifyEvents(false);// Thong bao cho setting
+		} else {
 			helper.startService();
-			session.setNotifyEvents(true);//Thong bao cho setting
+			session.setNotifyEvents(true);// Thong bao cho setting
 		}
 	}
 
@@ -122,6 +124,10 @@ public class VoiceModeActivity extends MapActivity {
 				event.EventID = data.getIntExtra("eventId", 0);
 				event.EventTypeID = data.getIntExtra("eventTypeId", 0);
 
+				String resultString = data.getStringExtra("resultString");
+				if (resultString != null && txtStates != null) {
+					txtStates.setText(resultString);
+				}
 				int level = data.getIntExtra("level", 0);
 				// set marker
 				GeoPoint point = event.getPoint();
@@ -137,5 +143,4 @@ public class VoiceModeActivity extends MapActivity {
 		}
 	}
 
-	
 }

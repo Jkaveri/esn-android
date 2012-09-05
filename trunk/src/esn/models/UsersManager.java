@@ -407,7 +407,7 @@ public class UsersManager extends BaseManager<Users> {
 			fbIds.put(id);
 		}
 
-		HttpHelper helper = new HttpHelper(DEBUG_URL);
+		HttpHelper helper = new HttpHelper(URL);
 		JSONObject params = new JSONObject();
 
 		params.put("fbIDs", fbIds);

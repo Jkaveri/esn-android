@@ -1,10 +1,12 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 
 import esn.classes.LoginThread;
@@ -219,7 +221,8 @@ public class WelcomeScreen extends Activity {
 			Intent successIntent = new Intent(this, HomeActivity.class);
 			final Intent failIntent = new Intent(this, WelcomeActivity.class);
 			if (fbLoginSuccess) {
-				if (session.currentUser == null) {
+				if (session.currentUser == null
+						|| session.currentUser.AccID <= 0) {
 					loadUserThread = new LoadUserThread(email);
 					loadUserThread.start();
 					synchronized (lockObj) {
@@ -233,31 +236,43 @@ public class WelcomeScreen extends Activity {
 							e.printStackTrace();
 						}
 					}
-					if (user != null) {
+					if (user != null && user.AccID > 0) {
 						session.currentUser = user;
+						startActivity(successIntent);
+						overridePendingTransition(R.anim.push_up_in,
+								R.anim.push_left_out);
+						finish();
 					} else {
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								this);
-						builder.setTitle(res
-								.getString(R.string.esn_global_waring));
-						builder.setMessage(res
-								.getString(R.string.esn_global_error_please_login_again));
-						builder.setIcon(R.drawable.ic_alerts_and_states_error);
-						builder.setCancelable(false);
-						builder.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										dialog.dismiss();
-										startActivity(failIntent);
-										overridePendingTransition(
-												R.anim.push_up_in,
-												R.anim.push_left_out);
-										finish();
-									}
-								});
-						builder.create().show();
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										WelcomeScreen.this);
+								builder.setTitle(res
+										.getString(R.string.esn_global_waring));
+								builder.setMessage(res
+										.getString(R.string.esn_global_error_please_login_again));
+								builder.setIcon(R.drawable.ic_alerts_and_states_error);
+								builder.setCancelable(false);
+								builder.setPositiveButton("OK",
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												dialog.dismiss();
+												startActivity(failIntent);
+												overridePendingTransition(
+														R.anim.push_up_in,
+														R.anim.push_left_out);
+												finish();
+											}
+										});
+								builder.create().show();
+							}
+						});
+
 					}
 
 				} else {
@@ -315,6 +330,18 @@ public class WelcomeScreen extends Activity {
 					startActivity(loginIntent);
 					finish();
 				}
+			} catch (ConnectTimeoutException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_connection_error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
+				e.printStackTrace();
+			} catch (SocketTimeoutException e) {
+				Utils.showToast(context,
+						res.getString(R.string.esn_global_connection_error),
+						Toast.LENGTH_LONG);
+				Log.e(TAG_LOG, e.getMessage());
+				e.printStackTrace();
 			} catch (ClientProtocolException e) {
 				Utils.showToast(context,
 						res.getString(R.string.esn_global_connection_error),
