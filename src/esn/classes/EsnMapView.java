@@ -1,8 +1,11 @@
 package esn.classes;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.ArrayList;
+
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 
 import android.content.Context;
@@ -243,10 +246,14 @@ public class EsnMapView extends TapControlledMapView {
 					Log.d("esn", e.getMessage());
 					e.printStackTrace();
 				} catch (IOException e) {
-					Log.d("esn", e.getMessage());
+					Utils.showToast(
+							activity,
+							res.getString(R.string.esn_global_connection_error),
+							Toast.LENGTH_LONG);
+					Log.e(LOG_TAG, e.getMessage());
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					Log.d("esn", e.getMessage());
+					Log.d(LOG_TAG, e.getMessage());
 					e.printStackTrace();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -280,9 +287,9 @@ public class EsnMapView extends TapControlledMapView {
 						(int) (event.EventLng * 1E6));
 				int icon = EventType.getIconId(event.EventTypeID,
 						event.getLevel());
-				
+
 				String typeName = EventType.GetName(event.EventTypeID, res);
-				
+				Log.d(LOG_TAG,typeName+": type name");
 				map.setEventMarker(point, typeName, event.Description,
 						event.EventID, icon);
 			}

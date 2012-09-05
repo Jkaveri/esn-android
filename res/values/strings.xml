@@ -12,12 +12,14 @@
     <!-- Login -->
 
     <string name="esn_global_must_enable_gps">You must enable gps</string>
+    <string name="esn_global_must_allow_access_location">You must allow access your location!</string>
     <string name="esn_global_your_location_not_found">Your Location Not Found</string>
-    <string name="key_maps_googleAPI">0ezFEAxXs_cfKsmZ7AnYVHB4duMAMa9k1TCuZDg</string>
+    <string name="key_maps_googleAPI">0h0BZtvM4N9hBlSkuCv1yYGJejz1l8c9_awMvSg</string>
     <string name="help">In this introductory Google Apps webinar</string>
     <string name="term">In this introductory term</string>
     <!-- Global -->
     <string name="esn_global_dateFormat">MM-dd-yyyy</string>
+    <string name="esn_global_waring">Waring</string>
     <string name="esn_global_loading">Loading…</string>
     <string name="esn_global_pleaseWait">Please wait!</string>
     <string name="esn_global_find">Find</string>

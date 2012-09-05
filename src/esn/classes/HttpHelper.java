@@ -9,6 +9,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,8 +28,17 @@ public class HttpHelper {
 	private HttpResponse post(String url, Bundle headers,
 			JSONObject params) throws ClientProtocolException,
 			IOException {
+		HttpParams httpParameters = new BasicHttpParams();
+		// Set the timeout in milliseconds until a connection is established.
+		// The default value is zero, that means the timeout is not used. 
+		int timeoutConnection = 60000;
+		HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+		// Set the default socket timeout (SO_TIMEOUT) 
+		// in milliseconds which is the timeout for waiting for data.
+		int timeoutSocket = 60000;
+		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 		// instance client
-		HttpClient client = new DefaultHttpClient();
+		HttpClient client = new DefaultHttpClient(httpParameters);
 		// instance HttpPost object
 		HttpPost httpPost = new HttpPost(url);
 		// add header

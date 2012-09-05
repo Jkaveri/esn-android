@@ -15,8 +15,10 @@ import android.app.ActionBar.OnNavigationListener;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -54,6 +56,7 @@ public class FriendListActivity extends ListActivity implements
 	private int friendId = 0;
 	private FriendListActivity context;
 	protected Thread thload;
+	private Thread loadImageThread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -214,9 +217,28 @@ public class FriendListActivity extends ListActivity implements
 		TextView fullname = (TextView) dialog
 				.findViewById(R.id.txt_Friends_Diaglog_FullName);
 		fullname.setText(bean.Name);
-		ImageView image = (ImageView) dialog
+		final ImageView image = (ImageView) dialog
 				.findViewById(R.id.img_Friends_Diaglog_Avatar);
-		adapter.displayImage(bean.Avatar, image);
+		if (bean.Avatar != null && bean.Avatar.length() > 0) {
+			loadImageThread = new Thread() {
+				public void run() {
+					try {
+						final Bitmap img = Utils
+								.getBitmapFromURL(bean.Avatar);
+						runOnUiThread(new Runnable() {
+							public void run() {
+								image.setImageBitmap(img);
+							}
+						});
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			loadImageThread.start();
+		}
+
 		Button btnVisit = (Button) dialog
 				.findViewById(R.id.btn_Friends_Diaglog_Visit);
 		// if button is clicked, close the custom dialog
@@ -315,6 +337,24 @@ public class FriendListActivity extends ListActivity implements
 			}
 		});
 		dialog.show();
+		dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				if (loadImageThread != null) {
+					loadImageThread.interrupt();
+				}
+			}
+		});
+		dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				if (loadImageThread != null) {
+					loadImageThread.interrupt();
+				}
+			}
+		});
 	}
 
 	@Override

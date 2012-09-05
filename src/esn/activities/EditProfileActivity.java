@@ -493,7 +493,7 @@ public class EditProfileActivity extends Activity {
 				Bundle p = new Bundle();
 				p.putByteArray("photo", imgBytes);
 				p.putString("ext", "jpg");
-				String url = "http://bangnl.info/ws/Upload.aspx";
+				String url = AddNewEvent.uploadURL;
 				String result = Util.openUrl(url, "POST", p);
 				Log.d(LOG_TAG, result);
 

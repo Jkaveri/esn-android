@@ -19,6 +19,7 @@
     <string name="esn_addNewEvent_uploading">Please wait!</string>
     <string name="esn_addNewEvent_uploadEventImage">Uploading image…</string>
     <string name="esn_addNewEvent_noAddress">Không tìm thấy địa chỉ</string>
+    <string name="esn_addNewEvent_required">Required</string>
     <!-- EventDetail -->
     <string name="esn_eventDetail">Event detail</string>
     <string name="esn_eventDetail_like">True</string>

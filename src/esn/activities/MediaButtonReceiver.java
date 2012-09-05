@@ -28,7 +28,8 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 	private Maps map;
 	private Context context;
 	private Sessions session;
-
+	private LookingEventsThread lookingEventThread;
+	private String resultString;
 	public MediaButtonReceiver() {
 		super();
 
@@ -119,10 +120,16 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 					if (!result.getEvent().equals("KHONG")) {
 						filter = "type:" + EventType.getID(result.getEvent());
 					}
-
-					new LookingEventsThread(currLocation.getLatitude(),
+					if (lookingEventThread != null
+							&& !lookingEventThread.isInterrupted()) {
+						lookingEventThread.interrupt();
+					}
+					resultString = result.getStrRecog();
+					lookingEventThread = new LookingEventsThread(
+							currLocation.getLatitude(),
 							currLocation.getLongitude(), filter,
-							session.getRadiusForEventAround()).start();
+							session.getRadiusForEventAround());
+					lookingEventThread.start();
 				} else if (result.getAction().equals("NULL")) {
 					voiceManager.play(R.raw.xinloi);
 					/*
@@ -158,7 +165,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 		@Override
 		public void onStopedRecord() {// Khi noi xong tu stop
 			session.put("isRecording", false);
-			
+
 		}
 
 	}
@@ -218,6 +225,7 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 		Intent broad = new Intent();
 		broad.setAction(VoiceModeActivity.ACTION_EVENT_AUDIO_ALERT);
 		broad.addCategory(Intent.CATEGORY_DEFAULT);
+		broad.putExtra("resultString", resultString);
 		broad.putExtra("eventId", event.EventID);
 		broad.putExtra("eventTitle", event.Title);
 		broad.putExtra("eventDescription", event.Title);

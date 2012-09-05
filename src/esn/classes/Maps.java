@@ -17,7 +17,6 @@ import android.location.LocationManager;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
-import com.facebook.android.Util;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import esn.activities.R;
 import esn.classes.Utils;
+import esn.models.EventType;
 import esn.models.Events;
 
 public class ListViewEventUserAdapter extends CustomListAdapter<Events>{
@@ -30,7 +31,7 @@ public class ListViewEventUserAdapter extends CustomListAdapter<Events>{
 		
 		ViewHolder holder = (ViewHolder) rowHolder;
 		
-		holder.eventName.setText(rowBean.Title);
+		holder.eventName.setText(EventType.GetName(rowBean.EventTypeID, holder.eventName.getResources()));
 		
 		String day = Utils.DateToStringByLocale(rowBean.DayCreate, 1);
 		

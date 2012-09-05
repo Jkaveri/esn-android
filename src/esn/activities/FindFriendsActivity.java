@@ -7,14 +7,11 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.facebook.android.LoginFaceBookListener;
-import com.facebook.android.Util;
-
 import esn.adapters.ListViewFindFriendAdapter;
 import esn.classes.Sessions;
 import esn.classes.Utils;
@@ -188,7 +185,7 @@ public class FindFriendsActivity extends Activity {
 
 			try {
 				JSONArray jsonArray = new JSONArray(response);
-				if (jsonArray != null && jsonArray.length()>0) {
+				if (jsonArray != null && jsonArray.length() > 0) {
 
 					UsersManager manager = new UsersManager();
 					users = manager.GetFbAccountHasRegistered(jsonArray,
@@ -210,26 +207,32 @@ public class FindFriendsActivity extends Activity {
 
 							}
 						});
-					}else{
-						Toast.makeText(FindFriendsActivity.this,
-								R.string.esn_global_list_empty, Toast.LENGTH_SHORT)
-								.show();
+					} else {
+						Utils.showToast(FindFriendsActivity.this,
+								res.getString(R.string.esn_global_list_empty),
+								Toast.LENGTH_SHORT);
 						return;
 					}
-				}else{
-					Toast.makeText(FindFriendsActivity.this,
-							R.string.esn_global_list_empty, Toast.LENGTH_SHORT)
-							.show();
+				} else {
+					Utils.showToast(FindFriendsActivity.this,
+							res.getString(R.string.esn_global_list_empty),
+							Toast.LENGTH_SHORT);
 					return;
 				}
 
 			} catch (JSONException e) {
 				Utils.DismitDialog(dialog, FindFriendsActivity.this);
-				Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
+				Utils.showToast(FindFriendsActivity.this,
+						res.getString(R.string.esn_global_Error),
+						Toast.LENGTH_SHORT);
+				Log.d(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			} catch (IOException e) {
 				Utils.DismitDialog(dialog,FindFriendsActivity.this);
-				Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
+				Utils.showToast(FindFriendsActivity.this,
+						res.getString(R.string.esn_global_ConnectionError),
+						Toast.LENGTH_SHORT);
+				Log.d(TAG_LOG, e.getMessage());
 				e.printStackTrace();
 			}
 
@@ -238,7 +241,10 @@ public class FindFriendsActivity extends Activity {
 		@Override
 		public void onIOException(IOException e, Object state) {
 			Utils.DismitDialog(dialog,FindFriendsActivity.this);
-			Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
+			Utils.showToast(FindFriendsActivity.this,
+					res.getString(R.string.esn_global_ConnectionError),
+					Toast.LENGTH_SHORT);
+			Log.d(TAG_LOG, e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -246,7 +252,10 @@ public class FindFriendsActivity extends Activity {
 		public void onFileNotFoundException(FileNotFoundException e,
 				Object state) {
 			Utils.DismitDialog(dialog,FindFriendsActivity.this);
-			Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
+			Utils.showToast(FindFriendsActivity.this,
+					res.getString(R.string.esn_global_ConnectionError),
+					Toast.LENGTH_SHORT);
+			Log.e(TAG_LOG, e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -254,7 +263,10 @@ public class FindFriendsActivity extends Activity {
 		public void onMalformedURLException(MalformedURLException e,
 				Object state) {
 			Utils.DismitDialog(dialog,FindFriendsActivity.this);
-			Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
+			Utils.showToast(FindFriendsActivity.this,
+					res.getString(R.string.esn_global_Error),
+					Toast.LENGTH_SHORT);
+			Log.e(TAG_LOG, e.getMessage());
 			e.printStackTrace();
 		}
 

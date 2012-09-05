@@ -167,6 +167,8 @@ public class RegisterActivity extends Activity {
 		}
 	};
 
+	public Users user;
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -346,7 +348,7 @@ public class RegisterActivity extends Activity {
 		@Override
 		public void run() {			
 			
-			Users user = new Users();
+			user = new Users();
 			
 			EditText txtEmail = (EditText)findViewById(R.id.esn_register_txtEmail);
 						
@@ -420,19 +422,11 @@ public class RegisterActivity extends Activity {
 	private class registerSuccesful implements Runnable{
 		@Override
 		public void run() {
-			dialog.dismiss();			
-			EditText txtemail = (EditText)findViewById(R.id.esn_register_txtEmail);
-     	   
-     	   	final String email = txtemail.getText().toString();
-			
-     	    EditText txtpass = (EditText)findViewById(R.id.esn_register_Password);
-     	   
-     	    String password = txtpass.getText().toString();
-     	    
+			dialog.dismiss();			     	    
      	   	if(isFbSignup)
 			{
-				sessions.put("email", email);
-				sessions.put("password", password);		
+				sessions.put("email", user.Email);
+				sessions.put("password", user.Password);		
 				sessions.put("loginFacebookSuccess", true);
 				
 				Intent intent = new Intent(context, WelcomeScreen.class);
@@ -449,7 +443,7 @@ public class RegisterActivity extends Activity {
 				       .setPositiveButton(res.getString(R.string.esn_register_activeyes), new DialogInterface.OnClickListener() {
 				           public void onClick(DialogInterface dialog, int id) {
 				        	   
-				        	   String[] arr = email.split("@");
+				        	   String[] arr = user.Email.split("@");
 				        	   
 				        	   String url = arr[1].toString();
 				        	   
