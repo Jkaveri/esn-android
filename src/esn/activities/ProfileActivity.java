@@ -330,7 +330,13 @@ public class ProfileActivity extends Activity {
 													.getBitmapFromURL(url);
 										} catch (IOException e) {
 											Utils.DismitDialog(dialog);
-											Utils.showToast(context,res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
+											handler.post(new Runnable() {
+												
+												@Override
+												public void run() {
+													Toast.makeText(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT).show();
+												}
+											});											
 											e.printStackTrace();
 										}
 
@@ -339,7 +345,7 @@ public class ProfileActivity extends Activity {
 									};
 								}.start();
 							}
-							txtName.setText(users.Name);
+							txtName.setText(users.Name);							
 
 							if (users.Gender == true)
 								txtGender.setText(res

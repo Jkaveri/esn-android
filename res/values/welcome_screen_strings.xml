@@ -4,5 +4,5 @@
    <string name="esn_welcomeScreen_lostConnectionDescription">Check your internet settings, ESN will be closed!</string>
    <string name="esn_welcomeScreen_GPSLocationService">GPS Location Service</string>
    <string name="esn_welcomeScreen_GPSLocationService_Confirm">Allow this app access your location?</string>
-<string name="esn_login_failed">Login Failed</string>
+   <string name="esn_login_failed">Incorrect emain or password!</string>
 </resources>

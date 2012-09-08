@@ -18,8 +18,6 @@ public class ListViewFriendsAdapter extends CustomListAdapter<Users> {
 		super(activity, listFrd, R.layout.listitem_row, R.drawable.ic_no_avata);
 	}
 	
-	
-
 	@Override
 	protected void customRowView(Users rowBean, Object rowHolder) {
 		ViewHolder holder = (ViewHolder) rowHolder;

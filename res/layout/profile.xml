@@ -6,7 +6,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="6dp"
-    android:background="@android:color/white" >
+    android:background="#B8AFA5" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -15,43 +15,46 @@
 
         <ImageView
             android:id="@+id/esn_setting_profile_avataruser"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/ic_avatar2"
-            android:padding="4dp"
-            android:maxWidth="90dp"
-            android:maxHeight="90dp"
+            android:background="@drawable/ic_profile_avatar"
+            android:padding="2dp"
+            android:maxWidth="75dp"
+            android:maxHeight="75dp"
             android:scaleType="fitXY"
             android:contentDescription="@string/esn_global_loading"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="90dp"
+            android:layout_height="75dp"
             android:layout_marginLeft="5dp"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:background="@drawable/ic_profile_header"
+            >
             <TextView
                 android:id="@+id/esn_profile_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#33b5e5"
-                android:textSize="16dp"
+                android:textColor="@color/textbrown"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/esn_profile_gender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#33b5e5" 
-                android:layout_marginTop="6dp"
+                android:textSize="12dp"
+                android:textColor="@color/textbrown"
                 />
             
             <TextView
                 android:id="@+id/esn_profile_address"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:textColor="#33b5e5" 
-                android:layout_marginTop="6dp"
+                android:textSize="12dp"
+                android:textColor="@color/textbrown"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -59,40 +62,40 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal" >
 
         <Button
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/rounded_corner_blue"
+            android:background="@drawable/ic_profile_button"
             android:onClick="SettingClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/esn_setting_profile_setting"
-            android:textColor="@android:color/white"
-            android:textSize="15dp" />
+            android:textColor="#B8AFA5"
+            android:textSize="13dp" />
 
         <Button
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/rounded_corner_blue"
+            android:background="@drawable/ic_profile_button"
             android:onClick="MessageClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/esn_setting_profile_notification"
-            android:textColor="@android:color/white"
-            android:textSize="15dp" />
+            android:textColor="#B8AFA5"
+            android:textSize="13dp" />
 
         <ImageButton
             android:layout_width="87dp"
             android:layout_height="30dp"
-            android:background="@drawable/rounded_corner_blue"
+            android:background="@drawable/ic_profile_button"
             android:contentDescription="@string/app_global_camera"
-            android:src="@drawable/ic_setting_profile_no"
-            android:textColor="@android:color/white"
+            android:src="@drawable/ic_report_event"
+            android:layout_weight="1"
             android:textSize="15dp"
             android:onClick="LocationClicked"/>
     </LinearLayout>
@@ -100,40 +103,36 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/rounded_corner_blue"
             android:onClick="FriendsClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:src="@drawable/ic_setting_profile_friend"
-            android:textColor="@android:color/white"
+            android:src="@drawable/ic_profile_friends"
+            android:contentDescription="@string/app_global_camera"
             android:textSize="15dp" />
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/rounded_corner_blue"
             android:onClick="PersonalClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:src="@drawable/ic_setting_profile_information"
-            android:textColor="@android:color/white"
+            android:src="@drawable/ic_profile_info"
+            android:contentDescription="@string/app_global_camera"
             android:textSize="15dp" />
 
         <ImageButton
             android:layout_width="87dp"
             android:layout_height="60dp"
-            android:background="@drawable/rounded_corner_blue"
+            android:layout_weight="1"
             android:contentDescription="@string/app_global_camera"
-            android:src="@drawable/ic_setting_profile_location"
-            android:textColor="@android:color/white"
+            android:src="@drawable/ic_profile_location"
             android:textSize="15dp"
             android:onClick="LocationClicked"/>
     </LinearLayout>
@@ -141,15 +140,14 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal" >
 
         <ListView
             android:id="@+id/esn_profile_listeventuser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:divider="@drawable/ic_divider">
+            android:layout_height="wrap_content">
         </ListView>
     </LinearLayout>
 
