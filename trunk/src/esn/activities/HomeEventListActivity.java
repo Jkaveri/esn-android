@@ -157,9 +157,7 @@ public class HomeEventListActivity extends Activity implements
 			// load event
 			new LoadEventListAround(1, 10).start();
 		} else {
-			Util.showAlert(this, res.getString(R.string.esn_global_waring),
-					res.getString(R.string.esn_global_must_enable_gps));
-
+			Util.showAlert(this, res.getString(R.string.esn_global_waring),res.getString(R.string.esn_global_must_enable_gps));
 		}
 
 	}

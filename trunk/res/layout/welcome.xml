@@ -51,4 +51,13 @@
         android:text="@string/esn_welcome_signup"
         android:textColor="#327df2"
         android:textSize="13dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tnt"
+        android:textColor="#ffff"
+        android:textSize="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        />
 </LinearLayout>

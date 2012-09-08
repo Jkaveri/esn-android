@@ -4,5 +4,5 @@
    <string name="esn_welcomeScreen_lostConnectionDescription">Vui lòng kiểm tra lại cài đặt mạng của bạn.</string>
    <string name="esn_welcomeScreen_GPSLocationService">Truy cập GPS</string>
    <string name="esn_welcomeScreen_GPSLocationService_Confirm">Cho phép truy cập vị trí của bạn ko?</string>
-<string name="esn_login_failed">Đăng nhập thất bại</string>
+<string name="esn_login_failed">Không đúng email hoặc mật khẩu!</string>
 </resources>

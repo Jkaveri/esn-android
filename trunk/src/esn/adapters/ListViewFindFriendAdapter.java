@@ -32,7 +32,6 @@ public class ListViewFindFriendAdapter extends CustomListAdapter<Users> {
 	public ListViewFindFriendAdapter(Activity activity, ArrayList<Users> list,
 			int layoutRow) {
 		super(activity, list, layoutRow, R.drawable.ic_no_avata);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -81,13 +80,10 @@ public class ListViewFindFriendAdapter extends CustomListAdapter<Users> {
 							});
 							super.run();
 						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
