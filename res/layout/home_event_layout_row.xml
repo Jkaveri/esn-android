@@ -29,7 +29,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:textSize="15dp"
-		        android:textColor="#9A9B91"
+		        android:textColor="#7B7369"
 		        android:layout_margin="4dp"
 		        android:text="@string/esn_addNewEvent_title"
 		        android:layout_marginRight="10dp"/> 
@@ -38,7 +38,7 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:textSize="13dp"
-		        android:textColor="#9A9B91"
+		        android:textColor="#7B7369"
 		        android:text="@string/esn_addNewEvent_description"
 		        android:layout_marginLeft="4dp"/>        
         </LinearLayout>
@@ -91,7 +91,7 @@
 	        android:textSize="13dp"
 	        android:text="0"
 	        android:padding="4dp"
-	        android:textColor="#9A9B91"/>
+	        android:textColor="#7B7369"/>
 	   	<ImageView
 	   	    android:layout_width="wrap_content"
 	   	    android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
 	        android:layout_marginRight="20dp"
 	        android:layout_marginLeft="5dp"
 	        android:text="0"
-	        android:textColor="#9A9B91"
+	        android:textColor="#7B7369"
 	        android:padding="4dp"/>  	    
 	</LinearLayout>   	
 </LinearLayout>

@@ -44,7 +44,7 @@
 				        android:layout_width="match_parent"
 				        android:layout_height="wrap_content"
 				        android:textSize="15dp"
-				        android:textColor="#9A9B91"
+				        android:textColor="#7C7369"
 				        android:layout_margin="4dp"
 				        android:layout_marginRight="10dp"/> 
 				    <TextView
@@ -52,7 +52,7 @@
 				        android:layout_width="match_parent"
 				        android:layout_height="wrap_content"
 				        android:textSize="13dp"
-				        android:textColor="#9A9B91"
+				        android:textColor="#7C7369"
 				        android:layout_marginLeft="4dp"/>
 		        </LinearLayout>
 			</LinearLayout>
@@ -69,7 +69,7 @@
 	                    android:layout_height="wrap_content"
 	                    android:singleLine="false"
 	                    android:textAppearance="?android:attr/textAppearanceMedium"
-	                    android:textColor="#9A9B91"
+	                    android:textColor="#7C7369"
 	                    android:textSize="12dp" />	
 			    <ImageView
 			        android:id="@+id/esn_eventDetail_image"
@@ -95,7 +95,7 @@
 			        android:layout_height="wrap_content"
 			        android:textSize="13dp"
 			        android:layout_weight="1"
-			        android:textColor="#9A9B91"
+			        android:textColor="#7C7369"
 			        android:text="01-01-2012"
 			        android:padding="4dp"/>
 			    <ImageView 
@@ -113,7 +113,7 @@
 			        android:textSize="13dp"
 			        android:text="0"
 			        android:padding="4dp"
-			        android:textColor="#9A9B91"/>
+			        android:textColor="#7C7369"/>
 			   	<ImageView 
 			   	    android:layout_width="wrap_content"
 			   	    android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
 			        android:textSize="13dp"
 			        android:text="0"
 			        android:padding="4dp"
-			        android:textColor="#9A9B91"/>
+			        android:textColor="#7C7369"/>
 			   	<ImageView
 			   	    android:layout_width="wrap_content"
 			   	    android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
 			        android:layout_marginRight="10dp"
 			        android:layout_marginLeft="4dp"
 			        android:text="0"
-			        android:textColor="#9A9B91"
+			        android:textColor="#7C7369"
 			        android:padding="4dp"/> 
 			 </LinearLayout>      	    
 		</LinearLayout>
@@ -179,7 +179,7 @@
                 android:inputType="text"
                 android:maxLength="160"
                 android:paddingLeft="5dp"
-                android:textColor="#9A9B91"
+                android:textColor="#7C7369"
                 android:textColorHint="#9A9B91"
                 android:textSize="14dp" >
             </EditText>
@@ -190,7 +190,7 @@
                 android:background="@drawable/rounded_corners"
                 android:onClick="CommentClicked"
                 android:text="@string/esn_eventDetail_send"
-                android:textColor="#9A9B91"                
+                android:textColor="#7C7369"                
                 android:textSize="16dp" />
         </LinearLayout>
         <ListView
@@ -206,7 +206,7 @@
             android:background="#B8AFA5"
             android:onClick="ShowAllCommentClicked"
             android:text="@string/esn_eventDetail_commentall"
-            android:textColor="#9A9B91"
+            android:textColor="#7C7369"
             android:textSize="10dp"/>
 	</LinearLayout>
 </ScrollView>

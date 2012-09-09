@@ -23,7 +23,7 @@
             <TextView 
 		    	android:layout_width="0dip"
 		        android:layout_height="wrap_content"
-		        android:textColor="#9A9B91"
+		        android:textColor="#7C7369"
 				android:layout_weight="1"		        
 		        android:text="@string/esn_setting_app_event_enable"
 		        android:textSize="16dp"		        
@@ -44,7 +44,7 @@
 		    	android:layout_width="0dip"
 		        android:layout_height="wrap_content"
 		        android:layout_weight="1"
-		        android:textColor="#9A9B91"
+		        android:textColor="#7C7369"
 		        android:textSize="16dp"
 		        android:text="@string/esn_setting_app_event_radius"/>
 		    <EditText 
