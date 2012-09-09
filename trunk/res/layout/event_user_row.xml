@@ -71,7 +71,7 @@
 	        android:layout_height="wrap_content"
 	        android:textSize="13dp"
 	        android:layout_weight="1"
-	        android:textColor="@android:color/white"
+	        android:textColor="#9A9B91"
 	        android:text="01-01-2012"
 	        android:padding="4dp"/>
 	    <ImageView 

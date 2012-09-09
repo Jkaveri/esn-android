@@ -155,9 +155,7 @@ public class ProfileActivity extends Activity {
 		dialog.setTitle(this.getResources().getString(
 				R.string.esn_global_loading));
 		dialog.setMessage(res.getString(R.string.esn_global_pleaseWait));
-		/*
-		 * dialog.setCancelable(false); dialog.setCanceledOnTouchOutside(false);
-		 */
+		
 		dialog.show();
 
 		showProfileThread = new ShowProfileThread();

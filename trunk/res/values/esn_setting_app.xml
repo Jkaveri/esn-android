@@ -7,7 +7,7 @@
     <string name="esn_setting_app_enableConnectFacebook">Connect Facebook</string>
     <string name="esn_setting_app_enableConnectFacebook_small">Connect Facebook</string>
     <string name="esn_setting_app_enablelocation">Loation</string>
-    <string name="esn_setting_app_enablelocation_small">Access location setting_</string>
+    <string name="esn_setting_app_enablelocation_small">Access location setting</string>
     <string name="esn_setting_app_enableheadphone">Headphone</string>
     <string name="esn_setting_app_enableheadphone_small">Cài đặt cho phép sử dụng tai nghe.</string>
     

@@ -54,13 +54,8 @@ public class NotificationActivity extends Activity {
 		adapter = new ListViewNotificationAdapter(NotificationActivity.this,
 				new ArrayList<NotificationDTO>());
 
-		// setupActionBar();
-		// setupListNavigate();
-
 		setupNotificationList();
-
 		res = getResources();
-
 		lstNofication = (ListView) findViewById(R.id.esn_notification_listnotification);
 		lstNofication.setAdapter(adapter);
 		lstNofication.setOnScrollListener(new OnScrollListener() {

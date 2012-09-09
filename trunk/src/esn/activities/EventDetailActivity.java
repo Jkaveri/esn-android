@@ -513,28 +513,27 @@ public class EventDetailActivity extends Activity implements
 				TextView tvTitle = (TextView) findViewById(R.id.esn_eventDetail_title);
 				TextView tvDescription = (TextView) findViewById(R.id.esn_eventDetail_description);
 				TextView tvDateCreated = (TextView) findViewById(R.id.esn_eventDetail_dateCreated);
-				// TextView tvEventType =
-				// (TextView)findViewById(R.id.esn_eventDetail_eventType);
 				TextView tvDislike = (TextView) findViewById(R.id.esn_eventDetail_dislike);
 				TextView tvLike = (TextView) findViewById(R.id.esn_eventDetail_like);
 				ImageView icEventType = (ImageView) findViewById(R.id.esn_eventDetail_iconEventType);
-				TextView tvUsername = (TextView) findViewById(R.id.esn_eventDetail_name);
+				//TextView tvUsername = (TextView) findViewById(R.id.esn_eventDetail_name);
 				TextView tvAddress = (TextView) findViewById(R.id.esn_eventDetail_address);
 				final ImageView imgEvent = (ImageView) findViewById(R.id.esn_eventDetail_image);
 				imgEvent.setImageResource(R.drawable.no_image);
 
 				String typeName = EventType.GetName(event.EventTypeID, res);
 				tvTitle.setText(typeName);
-				tvDateCreated.setText(Utils.DateToStringByLocale(
-						event.DayCreate, 1));
-				tvDescription.setText(event.Description);
+
+				tvDateCreated.setText(Utils.DateToStringByLocale(event.DayCreate, 1));
+				
+				String des = event.Description +". "+ res.getString(R.string.esn_eventDetail_createby) + " : " + event.user.Name;
+				tvDescription.setText(des);
 
 				tvDislike.setText(String.valueOf(event.Dislike));
 				tvLike.setText(String.valueOf(event.Like));
 
-				tvUsername.setText(event.user.Name);
-				tvAddress.setText(event
-						.getFullAddress(EventDetailActivity.this));
+				//tvUsername.setText(event.user.Name);
+				tvAddress.setText(res.getString(R.string.esn_eventDetail_address)+ " : "+event.getFullAddress(EventDetailActivity.this));
 				accId = event.AccID;
 
 				icEventType.setImageResource(EventType.getIconId(event.EventTypeID, event.getLevel()));
@@ -567,10 +566,10 @@ public class EventDetailActivity extends Activity implements
 					}
 				} else {
 					if (event.Picture != null && event.Picture.length() > 0) {
-						TextView tvWaiting = (TextView) findViewById(R.id.esn_eventDetail_notConfirmed);
+						//TextView tvWaiting = (TextView) findViewById(R.id.esn_eventDetail_notConfirmed);
 						imgEvent.setMaxHeight(0);
 						imgEvent.setMaxWidth(0);
-						tvWaiting.setVisibility(View.VISIBLE);
+						//tvWaiting.setVisibility(View.VISIBLE);
 						imgEvent.setVisibility(View.INVISIBLE);
 					}
 				}

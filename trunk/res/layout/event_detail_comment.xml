@@ -3,11 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@android:color/white"
+    android:background="#B8AFA5"
     >    
     <LinearLayout 
             android:layout_width="fill_parent"
@@ -15,33 +13,30 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginTop="10dp"
+            android:layout_margin="5dp"
             >                       
             <EditText
-                    android:id="@+id/esn_comments_txtComment"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corners"
-                    android:inputType="text"
-                    android:textColorHint="#FFF"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:paddingTop="8dp"
-                    android:textColor="#ffffff"
-                    android:hint="@string/esn_eventDetail_comment"
-                    android:textSize="16dp"
-                    android:maxLength="160"
-                    />
+               	android:id="@+id/esn_comments_txtComment"
+                android:layout_width="0dip"
+                android:layout_height="35dp"
+                android:layout_weight="1"                    
+                android:textColor="#9A9B91"
+                android:textColorHint="#9A9B91"
+                android:background="@drawable/rounded_corners"
+                android:inputType="text"
+                android:hint="@string/esn_eventDetail_comment"
+                android:textSize="14dp"
+                android:paddingLeft="5dp"
+                android:maxLength="160"/>
             <Button 
                 android:layout_width="50dp"
-                android:layout_height="38dp"
+                android:layout_height="35dp"
                 android:text="@string/esn_eventDetail_send"
                 android:background="@drawable/rounded_corners"
                 android:layout_marginLeft="3dp"
                 android:onClick="CommentClicked"
                 android:textSize="16dp"
-                android:textColor="@drawable/white"
+                android:textColor="#9A9B91"
                 />
         </LinearLayout>
      <ListView
@@ -49,7 +44,11 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_marginTop="10dp"
-		    android:layout_marginBottom="10dp">
+		    android:layout_marginLeft="5dp"
+		    android:layout_marginRight="5dp"
+		    android:layout_marginBottom="10dp"
+		    android:divider="@drawable/ic_divider2"
+		    >
      </ListView> 
 
 </LinearLayout>
