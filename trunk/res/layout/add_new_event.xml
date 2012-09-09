@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:onClick="ChangeEventType"
-                        android:textColor="#9A9B91"
+                        android:textColor="#7C7369"
                         android:textSize="16dp"
                         android:text="@string/esn_eventDetail_iconEventType"
                         />
@@ -62,8 +62,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
                     android:text="@string/esn_addNewEvent_description"
-                    android:textColor="#9A9B91"
-                    android:textSize="16dp"/>
+                    android:textColor="#7C7369"
+                    android:textSize="14dp"/>
             </TableRow>
 
             <TableRow
@@ -81,7 +81,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:paddingTop="8dp"
-                    android:textColor="#ffffff"
+                    android:textColor="#7C7369"
                     android:textSize="16dp"
                     android:maxLength="100"
                     />
@@ -89,15 +89,18 @@
 
             <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="4dp"
                     android:text="@string/esn_addNewEvent_sharetype"
-                    android:textColor="#9A9B91"
-                    android:textSize="16dp"/>
+                    android:textColor="#7C7369"
+                    android:textSize="14dp"/>
             </TableRow>
             <TableRow
                 android:layout_width="fill_parent"
@@ -144,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
                         android:text="@string/esn_eventDetail_image"
-                        android:textColor="#9A9B91"
+                        android:textColor="#7C7369"
                         android:textSize="16dp"/>
 
                     <TextView
@@ -152,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:textColor="#9A9B91"
+                        android:textColor="#7C7369"
                         android:textSize="16dp" />
                 </LinearLayout>
             </TableRow>
