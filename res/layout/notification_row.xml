@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingBottom="5dp"
-    android:background="@drawable/rounded_corner_blue"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="5dp"
     >    
     <ImageView
         android:id="@+id/esn.notification.avatar"
@@ -17,12 +12,10 @@
         android:padding="4dp"
         android:contentDescription="@string/app_name"
         />
-
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/esn.notification.message"
             android:layout_width="match_parent"
@@ -47,6 +40,5 @@
         android:id="@+id/esn.notification.btactionno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_global_no"
-        />
+        android:text="@string/app_global_no"/>
 </LinearLayout>
