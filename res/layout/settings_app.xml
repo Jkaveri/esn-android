@@ -39,7 +39,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content" 
 	                android:text="@string/esn_setting_app_enableFriendNotification"
-	                android:textColor="@color/text_color"
+	                android:textColor="#7C7369"
 	                />
 	            <TextView />
 	        </TableRow>
@@ -67,7 +67,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:text="@string/esn_setting_app_enableEventNotification"
-	                android:textColor="@color/text_color"
+	                android:textColor="#7C7369"
 	                />
 	            <TextView />
 	        </TableRow>
@@ -94,7 +94,7 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:text="@string/esn_setting_app_enableConnectFacebook"
-	                android:textColor="@color/text_color"
+	                android:textColor="#7C7369"
 	                android:layout_weight="1"
 	                />
 	            <Switch 
@@ -123,7 +123,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:text="@string/esn_setting_app_enablelocation"
-	               	android:textColor="@color/text_color" 
+	               	android:textColor="#7C7369" 
 	               	android:layout_weight="1"
 	                />
 	            <CheckBox 
@@ -156,7 +156,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:text="@string/esn_setting_app_enableheadphone"
-	               android:textColor="@color/text_color" 
+	               android:textColor="#7C7369" 
 	               android:layout_weight="1"
 	                />
 	            <CheckBox 
@@ -170,7 +170,7 @@
 				android:layout_width="fill_parent"
 				android:layout_height="2dip"
 				android:layout_marginBottom="5dp"
-				android:layout_marginTop="5dp"
+				android:layout_marginTop="10dp"
 				android:background="#ACCC" />
 	        <TableRow 
 	            android:layout_width="fill_parent"
@@ -190,8 +190,9 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:text="@string/esn_settings_logout"
-	               	android:textColor="@color/text_color" 
+	               	android:textColor="#7C7369" 
 	               	android:layout_weight="1"
+	               	android:layout_marginBottom="10dp"
 	                />
 	            <TextView />
 	        </TableRow>

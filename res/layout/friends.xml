@@ -76,7 +76,7 @@
             android:paddingRight="5dp"
             android:text="@string/esn_setting_profile_setting"
             android:textColor="#B8AFA5"
-            android:textSize="13dp" />
+            android:textSize="12dp" />
 
         <Button
             android:layout_width="100dp"
@@ -88,7 +88,7 @@
             android:paddingRight="5dp"
             android:text="@string/esn_setting_profile_notification"
             android:textColor="#B8AFA5"
-            android:textSize="13dp" />
+            android:textSize="12dp" />
 
         <ImageButton
             android:layout_width="87dp"
@@ -104,7 +104,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
 
         <ImageButton
             android:layout_width="100dp"
@@ -113,7 +114,7 @@
             android:onClick="FriendsClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:src="@drawable/ic_profile_friends"
+            android:background="@drawable/ic_profile_friends"
             android:contentDescription="@string/app_global_camera"
             android:textSize="15dp" />
 
@@ -124,7 +125,7 @@
             android:onClick="DevelopClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:src="@drawable/ic_profile_info"
+            android:background="@drawable/ic_profile_info"
             android:contentDescription="@string/app_global_camera"
             android:textSize="15dp" />
 
@@ -132,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:contentDescription="@string/app_global_camera"
+            android:background="@string/app_global_camera"
             android:src="@drawable/ic_profile_location"
             android:textSize="15dp"
             android:onClick="DevelopClicked"/>

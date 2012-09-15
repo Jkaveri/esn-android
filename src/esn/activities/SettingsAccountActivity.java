@@ -33,9 +33,8 @@ public class SettingsAccountActivity extends Activity implements OnItemClickList
 		// Edit profile
 		adapter.add(new EsnListItem(res.getString(R.string.esn_settings_account_editprofile),
 				res.getString(R.string.esn_settings_account_sub_editprofile), R.drawable.ic_setting_acc_dark));
-		
-		settingList.setAdapter(adapter);
-		
+
+		settingList.setAdapter(adapter);	
 		
 		settingList.setOnItemClickListener(this);
 	}

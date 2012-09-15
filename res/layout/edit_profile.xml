@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8E3DC"
+    android:background="#B8AFA5"
     >
 	<LinearLayout
 	    android:layout_width="fill_parent"
@@ -52,6 +52,7 @@
 			            android:layout_width="fill_parent"
 			            android:layout_height="wrap_content"
 			            android:text="@string/esn_account_name"
+			            android:textColor="#7C7369"
 			            android:layout_marginBottom="8dp"
 			            />
 		       		<EditText
@@ -60,12 +61,12 @@
 		       		    android:layout_height="wrap_content"
 		       		    android:layout_marginBottom="10dp"
 		       		    android:background="@drawable/rounded_corner_blue"
+		       		    android:textColor="@android:color/white"
 		       		    android:paddingBottom="8dp"
 		       		    android:paddingLeft="5dp"
 		       		    android:paddingRight="5dp"
 		       		    android:paddingTop="8dp"
 		       		    android:textSize="16dp"		       		     
-		       		    android:textColor="@android:color/white"
 		       		    android:singleLine="true"
 		       		    android:maxLength="255"
 		       		    />	       				       		
@@ -81,6 +82,7 @@
 			            android:layout_width="fill_parent"
 			            android:layout_height="wrap_content"
 			            android:text="@string/esn_register_tvPhone"
+			            android:textColor="#7C7369"
 			            android:layout_marginBottom="5dp"/>
 				<EditText
 		                android:id="@+id/esn.changeprofile.phone"
@@ -114,6 +116,7 @@
 				            android:layout_height="wrap_content"
 				            android:text="@string/esn_register_tvGender"
 				            android:layout_marginTop="10dp"
+				            android:textColor="#7C7369"
 				            android:layout_marginBottom="5dp"/>	 
 				    	<Spinner
 			       		    android:id="@+id/esn.changeprofile.gender"
@@ -140,6 +143,7 @@
 				            android:layout_height="wrap_content"
 				            android:text="@string/esn_register_tvBirthday"
 				            android:layout_marginTop="10dp"
+				            android:textColor="#7C7369"
 				            android:layout_marginBottom="5dp"/>
 					
 						<EditText
@@ -184,6 +188,7 @@
 				            android:layout_height="wrap_content"
 				            android:text="@string/tv_Edit_Profile_Address"
 				            android:layout_marginTop="10dp"
+				            android:textColor="#7C7369"
 				            android:layout_marginBottom="5dp"/>
 						<EditText
 				    	    android:id="@+id/esn.changeprofile.address"
@@ -210,6 +215,7 @@
 				            android:layout_height="wrap_content"
 				            android:text="@string/tv_Edit_Profile_Street"
 				            android:layout_marginTop="10dp"
+				            android:textColor="#7C7369"
 				            android:layout_marginBottom="5dp"/>
 						<EditText
 				    	    android:id="@+id/esn.changeprofile.street"
@@ -244,6 +250,7 @@
 				            android:layout_height="wrap_content"
 				            android:text="@string/tv_Edit_Profile_District"
 				            android:layout_marginTop="10dp"
+				            android:textColor="#7C7369"
 				            android:layout_marginBottom="5dp"/>
 						<EditText
 				    	    android:id="@+id/esn.changeprofile.district"
@@ -270,6 +277,7 @@
 				            android:layout_height="wrap_content"
 				            android:text="@string/tv_Edit_Profile_City"
 				            android:layout_marginTop="10dp"
+				            android:textColor="#7C7369"
 				            android:layout_marginBottom="5dp"/>
 						<EditText
 				    	    android:id="@+id/esn.changeprofile.city"
@@ -292,6 +300,7 @@
 			            android:layout_height="wrap_content"
 			            android:text="@string/tv_Edit_Profile_Country"
 			            android:layout_marginTop="10dp"
+			            android:textColor="#7C7369"
 			            android:layout_marginBottom="5dp"/>
 				<EditText
 			    	    android:id="@+id/esn.changeprofile.country"
@@ -318,6 +327,7 @@
 			            android:layout_height="wrap_content"
 			            android:text="@string/tv_Edit_Profile_Favorite"
 			            android:layout_marginTop="10dp"
+			            android:textColor="#7C7369"
 			            android:layout_marginBottom="5dp"/>
 				<EditText
 			    	    android:id="@+id/esn.changeprofile.favorite"
@@ -343,9 +353,9 @@
 		            android:onClick="UpdateProfileClicked"	            
 		            android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:background="@drawable/rounded_corners"
+			        android:background="@drawable/rounded_corner_blue"			        
 			        android:text="@string/esn_setting_app_event_ok"
-			        android:textColor="@color/text_color"
+			        android:textColor="#FFF"
 		            />
 	        </LinearLayout>	        	     
 	    </LinearLayout>

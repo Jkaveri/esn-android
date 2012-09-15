@@ -11,8 +11,6 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:id="@+id/setting_acc_list"
-	    android:background="#FFFFFF"
-	    android:cacheColorHint="#000000"
-	    >
+	    android:background="@drawable/rounded_corner_list_whilte">
 	</ListView>
 </LinearLayout>

@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#B8AFA5"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="6dp"
-    android:background="#B8AFA5" >
+    android:paddingTop="6dp" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -19,20 +19,20 @@
             android:layout_height="75dp"
             android:adjustViewBounds="true"
             android:background="@drawable/ic_profile_avatar"
-            android:padding="2dp"
-            android:maxWidth="75dp"
+            android:contentDescription="@string/esn_global_loading"
             android:maxHeight="75dp"
-            android:scaleType="fitXY"
-            android:contentDescription="@string/esn_global_loading"/>
+            android:maxWidth="75dp"
+            android:padding="2dp"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="75dp"
             android:layout_marginLeft="5dp"
-            android:orientation="vertical"
-            android:padding="5dp"
             android:background="@drawable/ic_profile_header"
-            >
+            android:orientation="vertical"
+            android:padding="5dp" >
+
             <TextView
                 android:id="@+id/esn_profile_name"
                 android:layout_width="fill_parent"
@@ -45,17 +45,15 @@
                 android:id="@+id/esn_profile_gender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
                 android:textColor="@color/textbrown"
-                />
-            
+                android:textSize="12dp" />
+
             <TextView
                 android:id="@+id/esn_profile_address"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:textSize="12dp"
                 android:textColor="@color/textbrown"
-                />
+                android:textSize="12dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -75,7 +73,7 @@
             android:paddingRight="5dp"
             android:text="@string/esn_setting_profile_setting"
             android:textColor="#B8AFA5"
-            android:textSize="13dp" />
+            android:textSize="12dp" />
 
         <Button
             android:layout_width="100dp"
@@ -87,67 +85,68 @@
             android:paddingRight="5dp"
             android:text="@string/esn_setting_profile_notification"
             android:textColor="#B8AFA5"
-            android:textSize="13dp" />
+            android:textSize="12dp" />
 
         <ImageButton
             android:layout_width="87dp"
             android:layout_height="30dp"
+            android:layout_weight="1"
             android:background="@drawable/ic_profile_button"
             android:contentDescription="@string/app_global_camera"
+            android:onClick="LocationClicked"
             android:src="@drawable/ic_report_event"
-            android:layout_weight="1"
-            android:textSize="15dp"
-            android:onClick="LocationClicked"/>
+            android:textSize="12dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal" >
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_marginRight="5dp"
-            android:onClick="FriendsClicked"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:src="@drawable/ic_profile_friends"
+            android:background="@drawable/ic_profile_friends"
             android:contentDescription="@string/app_global_camera"
+            android:onClick="FriendsClicked"
+            android:paddingRight="5dp"
+            android:scaleType="fitXY"
             android:textSize="15dp" />
 
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:layout_marginRight="5dp"
+            android:background="@drawable/ic_profile_info"
+            android:contentDescription="@string/app_global_camera"
             android:onClick="PersonalClicked"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:src="@drawable/ic_profile_info"
-            android:contentDescription="@string/app_global_camera"
             android:textSize="15dp" />
 
         <ImageButton
             android:layout_width="87dp"
             android:layout_height="60dp"
             android:layout_weight="1"
+            android:background="@drawable/ic_profile_location"
             android:contentDescription="@string/app_global_camera"
-            android:src="@drawable/ic_profile_location"
-            android:textSize="15dp"
-            android:onClick="LocationClicked"/>
+            android:onClick="LocationClicked"
+            android:textSize="15dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal" >
 
         <ListView
             android:id="@+id/esn_profile_listeventuser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" >
         </ListView>
     </LinearLayout>
 
