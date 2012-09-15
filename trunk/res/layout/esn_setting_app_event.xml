@@ -30,7 +30,7 @@
 		        />
 		    <Switch 
 		        android:id="@+id/esn.setting.app.event.enable"
-		    	android:layout_width="95dp"
+		    	android:layout_width="105dp"
 		        android:layout_height="wrap_content"
 		        android:gravity="right">						               
 		    </Switch>

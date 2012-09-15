@@ -16,7 +16,7 @@
         <item name="android:padding">8dp</item>
     </style>
     <style name="esn.Widget.TextView.SpinnerItemProfile" parent="@android:style/Widget.TextView.SpinnerItem">
-        <item name="android:textColor">@color/BgWhite</item>
+        <item name="android:textColor">#FFF</item>
         <item name="android:gravity">center_vertical</item>
         <!-- <item name="android:paddingTop">8dp</item> -->
     </style>
