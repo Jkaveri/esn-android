@@ -19,7 +19,8 @@
     <string name="esn_addNewEvent_uploading">Vui lòng chờ trong giây lát!</string>
     <string name="esn_addNewEvent_uploadEventImage">Đang tải lên hình ảnh...</string>
     <string name="esn_addNewEvent_noAddress">Không tìm thấy địa chỉ</string>
-       <string name="esn_addNewEvent_required">Bắt buộc</string>
+   <string name="esn_addNewEvent_required">Bắt buộc</string>
+   <string name="esn_addNewEvent_not_logged_in">Bạn chưa đăng nhập!</string>
 	<!-- EventDetail -->
     <string name="esn_eventDetail">Chi Tiết Sự Kiện</string>
     <string name="esn_eventDetail_like">Đúng</string>
