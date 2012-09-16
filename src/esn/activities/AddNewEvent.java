@@ -1,22 +1,29 @@
 package esn.activities;
 
 import java.io.IOException;
+import java.util.Currency;
 import java.util.List;
 
 import org.json.JSONException;
 import com.facebook.android.Util;
 
 import esn.classes.EsnCameras;
+import esn.classes.LoginThread;
+import esn.classes.Maps;
 import esn.classes.Sessions;
 import esn.classes.ShareToFacebookThread;
 import esn.classes.Utils;
 import esn.models.EventType;
 import esn.models.Events;
 import esn.models.EventsManager;
+import esn.models.Users;
+import esn.models.UsersManager;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -26,6 +33,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,172 +66,316 @@ public class AddNewEvent extends Activity {
 	private final String LOG_TAG = "esn.addNewEvent";
 	private UploadImageTask task;
 	private EsnCameras mCamera;
-
+	private Users user;
 	private static final int SELECT_PICTURE = 1;
 	private static final int SELECT_EVENT_TYPE = 12;
 	public static final String uploadURL = "http://bangnl.info/ws/498F5926A3E4493E803AADC0125E39B5.aspx";
 	int fb = 1;
 
-	String eventTypeName="";
+	String eventTypeName = "";
+	protected Object lockObj = new Object();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-			super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 
-			setContentView(R.layout.add_new_event);
+		setContentView(R.layout.add_new_event);
 
-			res = getResources();
+		res = getResources();
 
-			homeData = getIntent();
+		homeData = getIntent();
 
-			context = this;
-			// instance session
-			sessions = Sessions.getInstance(context);
+		context = this;
 
-			// instance new event
-			event = new Events();
-			// toa do
-			/*TextView txtCoordinate = (TextView) findViewById(R.id.esn_addNewEvent_txtCoordinate); */
-			double lat = homeData.getDoubleExtra("latitude", 0);
-			double lon = homeData.getDoubleExtra("longtitude", 0);
-			event.EventLat = lat;
-			event.EventLng = lon;
+		String action = homeData.getAction();
 
-			// display coordinate
-			//txtCoordinate.setText(String.format("{%1$s}, {%2$s}", lat, lon));
-			// convert coordinate to address
-			/*TextView tvAddress = (TextView) findViewById(R.id.esn_addNewEvent_tvAddress);
-			Geocoder geoCoder = new Geocoder(this);*/
-			// hien dia chi
-			/*List<Address> listAddress = geoCoder.getFromLocation(lat, lon, 1);
-			if (listAddress.size() > 0) {
-				Address address = listAddress.get(0);
-				int count = address.getMaxAddressLineIndex() + 1;
-				String add = "";
-				for (int i = 0; i < count; i++) {
-					if (i > 0)
-						add += ", ";
-					add += address.getAddressLine(i);
-				}
-				tvAddress.setText(add);
-			} else {
-				tvAddress.setText(res
-						.getString(R.string.esn_addNewEvent_noAddress));
-			}
-*/
-			TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
-			tvImageEventStatus.setText(String.format(
-					res.getString(R.string.esn_addNewEvent_imageeventstatus),
-					this));
+		// instance session
+		sessions = Sessions.getInstance(context);
 
-			Spinner spinner = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
+		// instance new event
+		event = new Events();
+		//
+		double lat = homeData.getDoubleExtra("latitude", 0);
+		double lon = homeData.getDoubleExtra("longtitude", 0);
+		event.EventLat = lat;
+		event.EventLng = lon;
 
-			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		Bundle extras = homeData.getExtras();
+		if (Intent.ACTION_SEND.equals(action)) {
+			if (extras.containsKey(Intent.EXTRA_STREAM)) {
+				// login
+				final String email = sessions.get("email", "");
+				if (sessions.logined() && !email.equals("")) {
 
-				@Override
-				public void onItemSelected(AdapterView<?> adapter, View arg1,
-						int i, long l) {
-					if (i == 1) {
-						TableRow row = (TableRow) findViewById(R.id.ak);
-						row.setVisibility(View.GONE);
-					} else {
-						TableRow row = (TableRow) findViewById(R.id.ak);
-						row.setVisibility(View.VISIBLE);
+					new Thread() {
+						@Override
+						public void run() {
+							try {
+								user = (new UsersManager())
+										.RetrieveByEmail(email);
+								synchronized (lockObj) {
+									lockObj.notify();
+								}
+							} catch (IllegalArgumentException e) {
+								Utils.showToast(AddNewEvent.this,
+										e.getMessage(), Toast.LENGTH_SHORT);
+								e.printStackTrace();
+								synchronized (lockObj) {
+									lockObj.notify();
+								}
+							} catch (JSONException e) {
+								Utils.showToast(AddNewEvent.this,
+										e.getMessage(), Toast.LENGTH_SHORT);
+								e.printStackTrace();
+								synchronized (lockObj) {
+									lockObj.notify();
+								}
+							} catch (IOException e) {
+								Utils.showToast(
+										AddNewEvent.this,
+										res.getString(R.string.esn_global_lostConnection),
+										Toast.LENGTH_SHORT);
+								e.printStackTrace();
+								synchronized (lockObj) {
+									lockObj.notify();
+								}
+							} catch (IllegalAccessException e) {
+								Utils.showToast(AddNewEvent.this,
+										e.getMessage(), Toast.LENGTH_SHORT);
+								e.printStackTrace();
+								synchronized (lockObj) {
+									lockObj.notify();
+								}
+
+							}
+
+						}
+
+					}.start();
+					synchronized (lockObj) {
+						try {
+							lockObj.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
+					if (user != null) {
+						// get current location
+						Maps map = new Maps(context);
+						Location currLocation = map.getCurrentLocation();
+						if (currLocation != null) {
+							event.EventLat = currLocation.getLatitude();
+							event.EventLng = currLocation.getLongitude();
+							// Get resource path from intent callee
+							Uri uri = (Uri) extras
+									.getParcelable(Intent.EXTRA_STREAM);
+							new UploadImageTask().execute(uri);
+							sessions.currentUser = user;
+						} else {
+							AlertDialog.Builder builder = new AlertDialog.Builder(
+									context);
+							builder.setTitle(res
+									.getString(R.string.esn_global_waring));
+							builder.setMessage(res
+									.getString(R.string.esn_global_location_not_found));
+							builder.setCancelable(false);
+							builder.setNegativeButton(R.string.esn_global_ok,
+									new DialogInterface.OnClickListener() {
+
+										@Override
+										public void onClick(
+												DialogInterface dialog,
+												int which) {
+											finish();
+										}
+									});
+							builder.create().show();
+						}
+
+					} else {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								context);
+						builder.setTitle(res
+								.getString(R.string.esn_global_waring));
+						builder.setMessage(res
+								.getString(R.string.esn_global_location_not_found));
+						builder.setCancelable(false);
+						builder.setNegativeButton(R.string.esn_global_ok,
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(
+											DialogInterface dialog,
+											int which) {
+										finish();
+									}
+								});
+						builder.create().show();
+					}
+
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							context);
+					builder.setTitle(res
+							.getString(R.string.esn_global_waring));
+					builder.setMessage(res
+							.getString(R.string.esn_addNewEvent_not_logged_in));
+					builder.setCancelable(false);
+					builder.setNegativeButton(R.string.esn_global_ok,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(
+										DialogInterface dialog,
+										int which) {
+									finish();
+								}
+							});
+					builder.create().show();
 				}
 
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						context);
+				builder.setTitle(res
+						.getString(R.string.esn_global_waring));
+				builder.setMessage(res
+						.getString(R.string.esn_addNewEvent_not_logged_in));
+				builder.setCancelable(false);
+				builder.setNegativeButton(R.string.esn_global_ok,
+						new DialogInterface.OnClickListener() {
 
+							@Override
+							public void onClick(
+									DialogInterface dialog,
+									int which) {
+								finish();
+							}
+						});
+				builder.create().show();
+			}
+		}
+		// toa do
+
+		TextView tvImageEventStatus = (TextView) findViewById(R.id.esn_addNewEvent_txtImageStatus);
+		tvImageEventStatus
+				.setText(String.format(res
+						.getString(R.string.esn_addNewEvent_imageeventstatus),
+						this));
+
+		Spinner spinner = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
+
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> adapter, View arg1,
+					int i, long l) {
+				if (i == 1) {
+					TableRow row = (TableRow) findViewById(R.id.ak);
+					row.setVisibility(View.GONE);
+				} else {
+					TableRow row = (TableRow) findViewById(R.id.ak);
+					row.setVisibility(View.VISIBLE);
 				}
+			}
 
-			});
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	
-			MenuInflater menuInflater = new MenuInflater(this);
 
-			menuInflater.inflate(R.menu.new_event_menu, menu);
+		MenuInflater menuInflater = new MenuInflater(this);
 
-			return true;	
+		menuInflater.inflate(R.menu.new_event_menu, menu);
+
+		return true;
 
 	}
 
 	public void btnAddClicked() {
 
-			EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
-			String description = txtDescription.getText().toString();
+		EditText txtDescription = (EditText) findViewById(R.id.esn_addNewEvent_txtDescription);
+		String description = txtDescription.getText().toString();
 
-			event.AccID = sessions.currentUser.AccID;
-			event.Title = eventTypeName;
-			event.Description = description;
+		event.AccID = sessions.currentUser.AccID;
+		event.Title = eventTypeName;
+		event.Description = description;
 
-			event.ShareType = 0;
+		event.ShareType = 0;
 
-			Spinner ddlShareType = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
+		Spinner ddlShareType = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
 
-			String sharetype = ddlShareType.getSelectedItem().toString();
+		String sharetype = ddlShareType.getSelectedItem().toString();
 
-			if (sharetype.equals(res
-					.getString(R.string.esn_addNewEvent_sharetypepublic))) {
-				event.ShareType = 1;
-			}
+		if (sharetype.equals(res
+				.getString(R.string.esn_addNewEvent_sharetypepublic))) {
+			event.ShareType = 1;
+		}
 
-			if (event.ShareType == 0) {
-				event.EventTypeID = 10;
-			}
+		if (event.ShareType == 0) {
+			event.EventTypeID = 10;
+		}
 
-			if (event.EventTypeID <= 0) {
-				Toast.makeText(context, "Ban phai chon loai su kien",
+		if (event.EventTypeID <= 0) {
+			Toast.makeText(context, "Ban phai chon loai su kien",
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		int i = 0;
+		// waiting for upload
+		// if uploaded or upload failed
+		while (!isUploaded && !isUploadFailed && i < 25) {
+
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				Toast.makeText(context,
+						res.getString(R.string.esn_global_Error),
 						Toast.LENGTH_SHORT).show();
-				return;
+				DismitDialog();
 			}
+			i++;
 
-			int i = 0;
-			// waiting for upload
-			// if uploaded or upload failed
-			while (!isUploaded && !isUploadFailed && i < 25) {
+		}
 
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					Toast.makeText(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT).show();
-					DismitDialog();
+		if (isUploadFailed || i >= 25) {
+			if (task != null) {
+				task.cancel(true);
+			}
+			dialog.dismiss();
+			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+			alertBuilder.setTitle(res
+					.getString(R.string.esn_addNewEvent_canNotUpload));
+			alertBuilder.setMessage(res
+					.getString(R.string.esn_addNewEvent_wantToContinue));
+			alertBuilder.setPositiveButton("OK", new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					new CreateEventsThread(event).start();
 				}
-				i++;
+			});
 
-			}
+		} else {
+			// show dialog
+			dialog = new ProgressDialog(context);
+			dialog.setTitle(res.getString(R.string.esn_global_loading));
+			dialog.setTitle(res.getString(R.string.esn_global_pleaseWait));
+			dialog.show();
+			new CreateEventsThread(event).start();
+		}
 
-			if (isUploadFailed || i >= 25) {
-				if (task != null) {
-					task.cancel(true);
-				}
-				dialog.dismiss();
-				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-				alertBuilder.setTitle(res
-						.getString(R.string.esn_addNewEvent_canNotUpload));
-				alertBuilder.setMessage(res
-						.getString(R.string.esn_addNewEvent_wantToContinue));
-				alertBuilder.setPositiveButton("OK", new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						new CreateEventsThread(event).start();
-					}
-				});
-
-			} else {
-				// show dialog
-				dialog = new ProgressDialog(context);
-				dialog.setTitle(res.getString(R.string.esn_global_loading));
-				dialog.setTitle(res.getString(R.string.esn_global_pleaseWait));
-				dialog.show();
-				new CreateEventsThread(event).start();
-			}
-		
 	}
 
 	public void btnCancelClicked() {
@@ -361,7 +513,7 @@ public class AddNewEvent extends Activity {
 				Bundle p = new Bundle();
 				p.putByteArray("photo", imgBytes);
 				p.putString("ext", "jpg");
-				
+
 				String result = Util.openUrl(uploadURL, "POST", p);
 				Log.d(LOG_TAG, result);
 
@@ -502,7 +654,7 @@ public class AddNewEvent extends Activity {
 		}
 
 	}
-	
+
 	public void DismitDialog() {
 		if (dialog != null && dialog.isShowing())
 			dialog.dismiss();

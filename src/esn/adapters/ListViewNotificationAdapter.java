@@ -46,7 +46,7 @@ public class ListViewNotificationAdapter extends
 		holder.date.setText(rowBean.DateCreate.toString());// So ban chung
 		displayImage(rowBean.Image, holder.image);
 
-		if (rowBean.TargetTypeName.equals("Relation")) {
+		if (rowBean.TargetTypeName!= null && rowBean.TargetTypeName.equals("Relation")) {
 			holder.btYes.setVisibility(View.INVISIBLE);
 			holder.btNo.setVisibility(View.INVISIBLE);
 			holder.btYes.setOnClickListener(new OnClickListener() {
