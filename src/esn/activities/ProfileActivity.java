@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -313,7 +314,9 @@ public class ProfileActivity extends Activity {
 							TextView txtName = (TextView) findViewById(R.id.esn_profile_name);
 							TextView txtGender = (TextView) findViewById(R.id.esn_profile_gender);
 							TextView txtAddress = (TextView) findViewById(R.id.esn_profile_address);
-
+							
+							ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
+							
 							final String url = users.Avatar;
 
 							if (url != null) {
@@ -337,8 +340,10 @@ public class ProfileActivity extends Activity {
 											});											
 											e.printStackTrace();
 										}
-
-										handler.post(new SetAvatar(bitmap));
+										if(bitmap!=null)
+										{
+											handler.post(new SetAvatar(bitmap));
+										}
 
 									};
 								}.start();

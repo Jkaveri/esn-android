@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import esn.activities.R.drawable;
 import esn.adapters.ListViewCommentsAdapter;
 import esn.classes.Sessions;
 import esn.classes.ShareToFacebookThread;
@@ -117,6 +118,25 @@ public class EventDetailActivity extends Activity implements
 		});
 
 		ListViewHeight();
+		
+		try{
+			Boolean checkLike = manager.isLiked(eventId,session.currentUser.AccID);
+			boolean checkDislike = manager.isDisliked(eventId,session.currentUser.AccID);
+			
+			if(checkLike==true)
+			{
+				ImageView lk = (ImageView)findViewById(R.id.esn_eventdeail_btlike);
+				lk.setImageResource(R.drawable.ic_true_selected);
+			}
+			if(checkDislike==true)
+			{
+				ImageView dk = (ImageView)findViewById(R.id.esn_eventdeail_btdislike);
+				dk.setImageResource(R.drawable.ic_false_selected);
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
@@ -142,6 +162,15 @@ public class EventDetailActivity extends Activity implements
 		return true;
 	}
 
+	public void Like(View view)
+	{
+		LikeAction();
+	}
+	public void Dislike(View view)
+	{
+		DislikeAction();
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -477,19 +506,15 @@ public class EventDetailActivity extends Activity implements
 					}
 				} catch (IllegalArgumentException e) {
 					Utils.DismitDialog(dialog);
-					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (JSONException e) {
 					Utils.DismitDialog(dialog);
-					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (IOException e) {
 					Utils.DismitDialog(dialog);
-					Utils.showToast(context, res.getString(R.string.esn_global_ConnectionError), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
 					Utils.DismitDialog(dialog);
-					Utils.showToast(context, res.getString(R.string.esn_global_Error), Toast.LENGTH_SHORT);
 					e.printStackTrace();
 				}
 				EventDetailActivity.this.runOnUiThread(new GetDetailSuccess(
@@ -510,6 +535,10 @@ public class EventDetailActivity extends Activity implements
 		public void run() {
 
 			if (event != null) {
+				final ImageView imgEvent = (ImageView) findViewById(R.id.esn_eventDetail_image);
+				
+				imgEvent.setImageDrawable(res.getDrawable(R.drawable.ic_default_loading));
+				
 				TextView tvTitle = (TextView) findViewById(R.id.esn_eventDetail_title);
 				TextView tvDescription = (TextView) findViewById(R.id.esn_eventDetail_description);
 				TextView tvDateCreated = (TextView) findViewById(R.id.esn_eventDetail_dateCreated);
@@ -518,7 +547,7 @@ public class EventDetailActivity extends Activity implements
 				ImageView icEventType = (ImageView) findViewById(R.id.esn_eventDetail_iconEventType);
 				//TextView tvUsername = (TextView) findViewById(R.id.esn_eventDetail_name);
 				TextView tvAddress = (TextView) findViewById(R.id.esn_eventDetail_address);
-				final ImageView imgEvent = (ImageView) findViewById(R.id.esn_eventDetail_image);
+				
 				imgEvent.setImageResource(R.drawable.no_image);
 
 				String typeName = EventType.GetName(event.EventTypeID, res);
@@ -535,7 +564,7 @@ public class EventDetailActivity extends Activity implements
 				//tvUsername.setText(event.user.Name);
 				tvAddress.setText(res.getString(R.string.esn_eventDetail_address)+ " : "+event.getFullAddress(EventDetailActivity.this));
 				accId = event.AccID;
-
+				
 				icEventType.setImageResource(EventType.getIconId(event.EventTypeID, event.getLevel()));
 				if (event.Status == AppEnums.EventStatus.Confirmed) {
 					DisplayMetrics dm = new DisplayMetrics();
@@ -564,6 +593,9 @@ public class EventDetailActivity extends Activity implements
 							};
 						}.start();
 					}
+					else{
+						imgEvent.setImageDrawable(res.getDrawable(R.drawable.ic_default_event_picture));
+					}
 				} else {
 					if (event.Picture != null && event.Picture.length() > 0) {
 						//TextView tvWaiting = (TextView) findViewById(R.id.esn_eventDetail_notConfirmed);
@@ -571,6 +603,9 @@ public class EventDetailActivity extends Activity implements
 						imgEvent.setMaxWidth(0);
 						//tvWaiting.setVisibility(View.VISIBLE);
 						imgEvent.setVisibility(View.INVISIBLE);
+					}
+					else{
+						imgEvent.setImageDrawable(res.getDrawable(R.drawable.ic_default_event_picture));
 					}
 				}
 				dialog.dismiss();
