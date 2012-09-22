@@ -3,6 +3,7 @@ package esn.adapters;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,8 +42,6 @@ public class ListViewEventUserAdapter extends CustomListAdapter<Events>{
 		
 		holder.Dislike.setText(String.valueOf(rowBean.Dislike));
 		
-		//holder.Comment.setText(rowBean.Comment);
-		
 		displayImage(rowBean.Picture, holder.image);
 	}
 	
@@ -58,8 +57,6 @@ public class ListViewEventUserAdapter extends CustomListAdapter<Events>{
 		holder.Like = (TextView) convertView.findViewById(R.id.esn_setting_profile_list_eventlike);
 		
 		holder.Dislike = (TextView) convertView.findViewById(R.id.esn_setting_profile_list_eventdislike);
-		
-		//holder.Comment = (TextView) convertView.findViewById(R.id.esn_setting_profile_comment);
 		
 		holder.image = (ImageView) convertView.findViewById(R.id.esn_setting_profile_list_eventimage);
 		

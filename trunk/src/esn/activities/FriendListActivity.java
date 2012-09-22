@@ -105,8 +105,7 @@ public class FriendListActivity extends ListActivity implements
 			public void onItemClick(AdapterView<?> adView, View view,
 					int index, long id) {
 				Users bean = (Users) adapter.getItem(index);
-				Intent it = new Intent(FriendListActivity.this,
-						FriendsActivity.class);
+				Intent it = new Intent(context,FriendsActivity.class);
 
 				if (sessions.currentUser.AccID == bean.AccID) {
 					it = new Intent(FriendListActivity.this,
@@ -114,9 +113,8 @@ public class FriendListActivity extends ListActivity implements
 				}
 
 				it.putExtra("accountID", bean.AccID);
-				startActivityForResult(it, CODE_REQUEST_FRIEND_INFO);
-				overridePendingTransition(R.anim.push_left_in,
-						R.anim.push_left_out);
+				startActivity(it);
+				overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 			}
 		});
 

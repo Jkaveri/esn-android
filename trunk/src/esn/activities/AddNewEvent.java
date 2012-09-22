@@ -310,7 +310,7 @@ public class AddNewEvent extends Activity {
 		event.AccID = sessions.currentUser.AccID;
 		event.Title = eventTypeName;
 		event.Description = description;
-
+		event.Picture = "http://myesn.vn/Images/Pictures/default_event_picture_middle.jpg";
 		event.ShareType = 0;
 
 		Spinner ddlShareType = (Spinner) findViewById(R.id.esn_addNewEvent_sharetype);
@@ -531,7 +531,6 @@ public class AddNewEvent extends Activity {
 					return "";
 				}
 			} catch (Exception e) {
-
 				isUploadFailed = true;
 				Log.e(LOG_TAG, e.getMessage());
 				return "";

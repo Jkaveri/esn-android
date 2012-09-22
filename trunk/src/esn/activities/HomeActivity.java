@@ -217,6 +217,7 @@ public class HomeActivity extends MapActivity implements OnNavigationListener {
 			break;
 		case R.id.esn_home_menuItem_friends:
 			Intent intenFdsList = new Intent(this, FriendListActivity.class);
+			intenFdsList.putExtra("accountID", sessions.currentUser.AccID);
 			startActivity(intenFdsList);
 			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			break;

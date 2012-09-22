@@ -37,7 +37,7 @@
 		            android:layout_gravity="top"
 		            android:contentDescription="@string/esn_register_avatar"
 		            android:onClick="AvatarClicked"
-       				android:background="@drawable/ic_avatar2"
+       				android:background="@drawable/ic_profile_avatar"
 		            android:padding="4dp"
 		            android:scaleType="fitCenter"
 		            android:adjustViewBounds="true"

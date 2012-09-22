@@ -410,8 +410,12 @@ public class FriendsActivity extends Activity {
 		@Override
 		public void run() {
 			ImageView avatar = (ImageView) findViewById(R.id.esn_setting_profile_avataruser);
-
-			avatar.setImageBitmap(bitmap);
+			try
+			{
+				avatar.setImageBitmap(bitmap);
+			}catch (Exception e) {
+				
+			}
 		}
 
 	}
@@ -433,8 +437,7 @@ public class FriendsActivity extends Activity {
 
 			try {
 
-				itemList = eventsManager.getEventUserList(pageNum, pageSize,
-						friendId);
+				itemList = eventsManager.getEventUserList(pageNum, pageSize,friendId);
 
 				runOnUiThread(new Runnable() {
 
